@@ -1,0 +1,65 @@
+# Продовый стек: app + postgres + caddy. Запуск: docker compose -f docker-compose.prod.yml up -d --build
+# Секреты — в .env рядом с этим файлом на сервере (не в репозитории): DOMAIN, POSTGRES_PASSWORD,
+# DATABASE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: buty
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте в .env на сервере}
+      POSTGRES_DB: buty
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U buty -d buty"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://buty:${POSTGRES_PASSWORD}@db:5432/buty?schema=public
+      MOCK_OCR: "true"
+      PAYMENTS_PROVIDER: mock
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      DOMAIN: ${DOMAIN:?задайте в .env на сервере}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - internal
+
+networks:
+  internal:
+
+volumes:
+  db-data:
+  caddy-data:
+  caddy-config:

@@ -61,6 +61,35 @@ pnpm dev                    # http://localhost:3000
 
 Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: пользователи и подписки, заявки брендов, нераспознанные токены, добавление/правка продуктов и ингредиентов, базовая аналитика для брендов.
 
-## Деплой
+## Деплой (продакшен, VPS)
 
-Вывод на сервер (DNS, TLS, reverse proxy) — часть 9, вне границ этого репозитория. Для прода собрать образ из `Dockerfile` и запустить с реальными переменными из `.env.example`.
+Стек на сервере: `docker-compose.prod.yml` — `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (автоматический HTTPS Let's Encrypt, редирект www → bare, gzip). Отдельная внутренняя сеть, `restart: unless-stopped`.
+
+1. **DNS.** A-записи `<DOMAIN>` и `www.<DOMAIN>` → IP сервера (у регистратора).
+2. **Подготовка сервера (один раз, от root):** `bash scripts/server-setup.sh` — обновления, пользователь `deploy` (без root-логина и паролей), UFW 22/80/443, fail2ban, Docker + compose plugin.
+3. **Код и секреты (от deploy):** `cd /opt/buty && git clone <repo> . && cp .env.example .env`. В `.env` заполнить: `DOMAIN`, `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET` (сгенерировать заново: `openssl rand -base64 32`), `NEXTAUTH_URL=https://<DOMAIN>`, `CRON_SECRET`, `ADMIN_EMAILS`. Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`, email — mock.
+4. **Запуск:** `docker compose -f docker-compose.prod.yml up -d --build`. Миграции и сид выполняются entrypoint'ом при каждом старте (идемпотентно).
+5. **CI/CD:** push в `main` → GitHub Action `.github/workflows/deploy.yml` (ssh → git pull → build → up -d). Секреты репозитория: `SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`. Запасной вариант: `./scripts/deploy.sh deploy@<SERVER_IP>`.
+6. **Cron-напоминания:** на хосте `crontab -e` (deploy): `*/15 * * * * DOMAIN=<DOMAIN> CRON_SECRET=<секрет> /opt/buty/scripts/cron-reminders.sh`.
+7. **Мониторинг:** Better Stack (бесплатный тариф) — HTTP-чек `https://<DOMAIN>/api/health` каждые 30 с, алерт в Telegram/email.
+
+**Проверки после деплоя:** `curl -I https://<DOMAIN>`, `curl https://<DOMAIN>/robots.txt`, `curl https://<DOMAIN>/sitemap.xml`, `curl https://<DOMAIN>/api/health` → `{"ok":true,"db":"up"}`; `docker compose -f docker-compose.prod.yml ps` — все контейнеры healthy.
+
+**Операции на сервере** (из `/opt/buty`):
+
+| Задача | Команда |
+| --- | --- |
+| Логи | `docker compose -f docker-compose.prod.yml logs -f app` |
+| Перезапуск | `docker compose -f docker-compose.prod.yml restart app` |
+| Откат на прошлый коммит | `git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build` |
+
+**Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней: `crontab -e` (deploy) → `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`.
+
+Восстановление из бэкапа (5 шагов):
+
+```bash
+docker compose -f docker-compose.prod.yml stop app
+gunzip -c /opt/buty-backups/buty-<дата>.sql.gz | docker compose -f docker-compose.prod.yml exec -T db psql -U buty -d buty
+docker compose -f docker-compose.prod.yml start app
+curl https://<DOMAIN>/api/health   # {"ok":true,"db":"up"}
+```

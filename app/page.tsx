@@ -204,6 +204,9 @@ export default function HomePage() {
             <Link href="/pricing" className="hover:text-lavender">
               Тарифы
             </Link>
+            <Link href="/for-brands" className="hover:text-lavender">
+              Брендам
+            </Link>
           </nav>
           <p className="text-xs text-muted-foreground">
             © 2026 Buty.ru. Информация не заменяет консультацию врача.

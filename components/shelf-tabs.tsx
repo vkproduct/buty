@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
@@ -74,9 +75,11 @@ interface Props {
   routine: Routine;
   reactions: ReactionView[];
   reminders: ReminderView[];
+  isPro: boolean;
+  reactionsLimited: boolean;
 }
 
-/** Вкладки «Моей полки»: средства + Pro-логика части 6. */
+/** Вкладки «Моей полки»: средства + Pro-логика части 6 (гейтится по тарифу). */
 export function ShelfTabs(props: Props) {
   const [tab, setTab] = useState<TabId>("items");
   return (
@@ -95,6 +98,9 @@ export function ShelfTabs(props: Props) {
             )}
           >
             <Icon className="h-4 w-4" /> {label}
+            {!props.isPro && (id === "compatibility" || id === "routine") ? (
+              <Sparkles className="h-3 w-3 text-amber" />
+            ) : null}
           </button>
         ))}
       </div>
@@ -102,17 +108,44 @@ export function ShelfTabs(props: Props) {
       <div className="mt-8">
         {tab === "items" ? <ShelfClient items={props.items} /> : null}
         {tab === "compatibility" ? (
-          <CompatibilityTab pairs={props.pairs} duplicates={props.duplicates} />
+          props.isPro ? (
+            <CompatibilityTab pairs={props.pairs} duplicates={props.duplicates} />
+          ) : (
+            <LockedTab text="Матрица совместимости активов и поиск дублей доступны в Pro." />
+          )
         ) : null}
-        {tab === "routine" ? <RoutineTab routine={props.routine} /> : null}
+        {tab === "routine" ? (
+          props.isPro ? (
+            <RoutineTab routine={props.routine} />
+          ) : (
+            <LockedTab text="Персональный режим утро/вечер с порядком нанесения доступен в Pro." />
+          )
+        ) : null}
         {tab === "reactions" ? (
-          <ReactionsTab items={props.items} reactions={props.reactions} />
+          <ReactionsTab
+            items={props.items}
+            reactions={props.reactions}
+            limited={props.reactionsLimited}
+          />
         ) : null}
         {tab === "reminders" ? (
           <RemindersTab items={props.items} reminders={props.reminders} />
         ) : null}
       </div>
     </div>
+  );
+}
+
+/** Заглушка Pro-вкладки для бесплатного тарифа. */
+function LockedTab({ text }: { text: string }) {
+  return (
+    <GlassCard className="flex flex-col items-center gap-4 p-10 text-center">
+      <Sparkles className="h-8 w-8 text-amber" />
+      <p className="max-w-md text-sm text-muted-foreground">{text}</p>
+      <Button asChild size="sm">
+        <Link href="/pricing">Перейти на Pro</Link>
+      </Button>
+    </GlassCard>
   );
 }
 
@@ -247,9 +280,11 @@ function RoutineTab({ routine }: { routine: Routine }) {
 function ReactionsTab({
   items,
   reactions,
+  limited,
 }: {
   items: ShelfItemView[];
   reactions: ReactionView[];
+  limited: boolean;
 }) {
   const router = useRouter();
   const [itemId, setItemId] = useState("");
@@ -361,6 +396,16 @@ function ReactionsTab({
               ) : null}
             </GlassCard>
           ))}
+          {limited ? (
+            <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-4">
+              <p className="text-xs text-muted-foreground">
+                Показаны последние реакции. Полная история без лимита — в Pro.
+              </p>
+              <Button asChild size="sm" variant="secondary">
+                <Link href="/pricing">Открыть историю</Link>
+              </Button>
+            </GlassCard>
+          ) : null}
         </div>
       )}
     </div>

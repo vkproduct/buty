@@ -9,7 +9,6 @@ import {
   EVIDENCE_LABEL,
   PRODUCT_CATEGORY_LABEL,
   SEVERITY_LABEL,
-  wbSearchUrl,
 } from "@/lib/seo/labels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,8 +75,6 @@ export default async function ProductPage({
 
   const ingredientIds = product.ingredients.map((pi) => pi.ingredientId);
   const conflicts = await getInternalConflicts(ingredientIds);
-  const partnerUrl =
-    product.partnerUrl ?? wbSearchUrl(product.brand, product.name);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -123,8 +120,8 @@ export default async function ProductPage({
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild>
-              <a href={partnerUrl} target="_blank" rel="noopener sponsored">
-                Найти на Wildberries
+              <a href={`/go/${product.id}?source=product_page`}>
+                Где купить
                 <ExternalLink className="ml-2 h-4 w-4" />
               </a>
             </Button>

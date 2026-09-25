@@ -51,6 +51,16 @@ interface ProductHit {
   category: string;
 }
 
+/** Прочитать текст ошибки API (в т.ч. paywall 402 с лимитом полки). */
+async function readError(res: Response): Promise<string> {
+  try {
+    const data = (await res.json()) as { error?: string };
+    return data.error ?? "Не удалось добавить средство.";
+  } catch {
+    return "Не удалось добавить средство.";
+  }
+}
+
 /** Клиент полки: список средств, добавление (поиск/своё), статусы, удаление. */
 export function ShelfClient({ items }: { items: ShelfItemView[] }) {
   const router = useRouter();
@@ -228,6 +238,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
 
   async function addProduct(productId: string) {
     setPending(true);
+    setError(null);
     const res = await fetch("/api/shelf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -235,7 +246,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
     });
     setPending(false);
     if (res.ok) onAdded();
-    else setError("Не удалось добавить средство.");
+    else setError(await readError(res));
   }
 
   async function analyze() {
@@ -264,7 +275,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
     });
     setPending(false);
     if (res.ok) onAdded();
-    else setError("Не удалось добавить средство.");
+    else setError(await readError(res));
   }
 
   const tab = (active: boolean) =>
@@ -317,6 +328,14 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
               </li>
             ) : null}
           </ul>
+          {error ? (
+            <p className="text-sm text-destructive">
+              {error}{" "}
+              <Link href="/pricing" className="font-medium text-lavender hover:underline">
+                Тарифы
+              </Link>
+            </p>
+          ) : null}
         </div>
       ) : (
         <div className="space-y-3">

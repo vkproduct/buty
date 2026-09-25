@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
+import { canAddShelfItem, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,21 @@ export async function POST(request: Request) {
     customName?: unknown;
     customInci?: unknown;
   };
+
+  // Лимит бесплатного тарифа: не больше FREE_SHELF_LIMIT средств на полке
+  const plan = await getUserPlan(session.user.id);
+  const count = await prisma.shelfItem.count({
+    where: { userId: session.user.id },
+  });
+  if (!canAddShelfItem(plan.isPro, count)) {
+    return NextResponse.json(
+      {
+        error: `Бесплатный тариф — до ${FREE_SHELF_LIMIT} средств на полке. Перейдите на Pro, чтобы добавлять без ограничений.`,
+        code: "PAYWALL",
+      },
+      { status: 402 },
+    );
+  }
 
   if (typeof productId === "string" && productId) {
     const product = await prisma.product.findUnique({ where: { id: productId } });

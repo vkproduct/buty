@@ -5,6 +5,7 @@ import { Lock, Sparkles } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
 import { analyzeText } from "@/lib/analysis/analyze";
+import { FREE_REACTIONS_LIMIT, getUserPlan } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import {
   buildCompatibilityMatrix,
@@ -100,25 +101,43 @@ export default async function ShelfPage() {
     }),
   );
 
-  const products = await loadShelfProducts(session.user.id, true);
-  const ingredientIds = [
-    ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
-  ];
-  const edges = await loadConflictEdges(ingredientIds);
-  const pairs = buildCompatibilityMatrix(products, edges);
-  const duplicates = findDuplicates(products);
-  const routine = buildRoutine(products, profile.skinType);
+  const plan = await getUserPlan(session.user.id);
 
+  // Pro-логика части 6 считается только для Pro — для free матрица скрыта
+  let pairs: ReturnType<typeof buildCompatibilityMatrix> = [];
+  let duplicates: ReturnType<typeof findDuplicates> = [];
+  let routine: ReturnType<typeof buildRoutine> = {
+    morning: [],
+    evening: [],
+    notes: [],
+  };
+  if (plan.isPro) {
+    const products = await loadShelfProducts(session.user.id, true);
+    const ingredientIds = [
+      ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
+    ];
+    const edges = await loadConflictEdges(ingredientIds);
+    pairs = buildCompatibilityMatrix(products, edges);
+    duplicates = findDuplicates(products);
+    routine = buildRoutine(products, profile.skinType);
+  }
+
+  // История реакций: free — последние FREE_REACTIONS_LIMIT, Pro — без лимита
   const reactionRows = await prisma.skinReaction.findMany({
     where: { userId: session.user.id },
     include: {
       shelfItem: { include: { product: { select: { name: true } } } },
     },
     orderBy: { occurredAt: "desc" },
+    ...(plan.isPro ? {} : { take: FREE_REACTIONS_LIMIT + 1 }),
   });
+  const reactionsLimited = reactionRows.length > FREE_REACTIONS_LIMIT;
+  const visibleReactions = plan.isPro
+    ? reactionRows
+    : reactionRows.slice(0, FREE_REACTIONS_LIMIT);
   const suspectIds = [
     ...new Set(
-      reactionRows.flatMap(
+      visibleReactions.flatMap(
         (r) => JSON.parse(r.suspectIngredientIds) as string[],
       ),
     ),
@@ -132,7 +151,7 @@ export default async function ShelfPage() {
   const suspectNameById = new Map(
     suspectIngredients.map((i) => [i.id, i.displayName]),
   );
-  const reactions: ReactionView[] = reactionRows.map((r) => ({
+  const reactions: ReactionView[] = visibleReactions.map((r) => ({
     id: r.id,
     type: r.type,
     note: r.note,
@@ -178,17 +197,44 @@ export default async function ShelfPage() {
           routine={routine}
           reactions={reactions}
           reminders={reminders}
+          isPro={plan.isPro}
+          reactionsLimited={!plan.isPro && reactionsLimited}
         />
-        <GlassCard className="mt-8 flex items-center gap-3 p-5">
-          <Sparkles className="h-5 w-5 shrink-0 text-amber" />
-          <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">
-              Pro-логика полки активна:
-            </span>{" "}
-            матрица совместимости, режим утро/вечер, дубли, реакции и
-            напоминания — во вкладках выше. Подписка подключится в части 7.
-          </p>
-        </GlassCard>
+        {plan.isPro ? (
+          <GlassCard className="mt-8 flex items-center gap-3 p-5">
+            <Sparkles className="h-5 w-5 shrink-0 text-amber" />
+            <p className="text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground">
+                Pro активен
+                {plan.currentPeriodEnd
+                  ? ` до ${plan.currentPeriodEnd.toLocaleDateString("ru-RU")}`
+                  : ""}
+                :
+              </span>{" "}
+              матрица совместимости, режим, полная история реакций и{" "}
+              <Link href="/shelf/export" className="font-medium text-lavender hover:underline">
+                экспорт полки в PDF
+              </Link>
+              .
+            </p>
+          </GlassCard>
+        ) : (
+          <GlassCard className="mt-8 flex flex-wrap items-center justify-between gap-3 p-5">
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-5 w-5 shrink-0 text-amber" />
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">
+                  Pro открывает:
+                </span>{" "}
+                матрицу совместимости, режим утро/вечер, полную историю реакций,
+                экспорт полки в PDF и полку без лимита.
+              </p>
+            </div>
+            <Button asChild size="sm">
+              <Link href="/pricing">Перейти на Pro</Link>
+            </Button>
+          </GlassCard>
+        )}
       </Container>
     </main>
   );

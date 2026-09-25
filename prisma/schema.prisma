@@ -67,8 +67,9 @@ model Product {
   category    String
   sourceUrl   String?
   partnerUrl  String? // партнёрская ссылка (заполняется в части 4, используется в части 7)
-  ingredients ProductIngredient[]
-  shelfItems  ShelfItem[]
+  ingredients  ProductIngredient[]
+  shelfItems   ShelfItem[]
+  partnerClicks PartnerClick[]
 
   @@index([brand])
 }
@@ -144,6 +145,8 @@ model User {
   skinProfile   SkinProfile?
   reactions     SkinReaction[]
   reminders     Reminder[]
+  subscription  Subscription?
+  partnerClicks PartnerClick[]
 }
 
 enum ShelfStatus {
@@ -238,4 +241,46 @@ model NotificationLog {
   reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
 
   @@index([reminderId])
+}
+
+// --- Часть 7: монетизация ---
+
+enum Plan {
+  free
+  pro
+}
+
+// Подписка пользователя (одна запись на пользователя)
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  plan             Plan      @default(free)
+  status           String    @default("active") // active | canceled | past_due
+  currentPeriodEnd DateTime? // null для free
+  updatedAt        DateTime  @updatedAt
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Клик по партнёрской ссылке «Где купить» (для будущей аналитики брендов)
+model PartnerClick {
+  id        String   @id @default(cuid())
+  userId    String? // null — незалогиненный пользователь
+  productId String
+  source    String // откуда клик: product_page, shelf и т.д.
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, createdAt])
+  @@index([userId])
+}
+
+// Заявка бренда со страницы /for-brands
+model BrandLead {
+  id        String   @id @default(cuid())
+  brandName String
+  contact   String // контактное лицо
+  email     String
+  message   String
+  createdAt DateTime @default(now())
 }

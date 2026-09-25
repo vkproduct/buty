@@ -27,8 +27,14 @@ export function Header() {
           <Button asChild variant="ghost" size="sm">
             <Link href="/products">Продукты</Link>
           </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/pricing">Тарифы</Link>
+          </Button>
           {status === "loading" ? null : session?.user ? (
             <>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/profile">Профиль</Link>
+              </Button>
               <Button asChild variant="secondary" size="sm">
                 <Link href="/shelf">Моя полка</Link>
               </Button>

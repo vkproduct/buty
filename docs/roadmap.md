@@ -16,7 +16,7 @@ HANDOFF-блоки вставляются сюда по мере заверше�
   HANDOFF: см. финальный ответ чата части 5 (NextAuth email magic-link + MockEmailProvider, модели User/ShelfItem/SkinProfile, /onboarding, /shelf с добавлением/удалением/статусами, Header со входом-выходом, 18 vitest-кейсов)
 - [x] **Часть 6/8 — Логика «Моей полки»: конфликты, порядок, дубли, реакции, напоминания**
   HANDOFF: см. финальный ответ чата части 6 (lib/shelf/compatibility + buildRoutine, модели SkinReaction/Reminder/NotificationLog, lib/reminders с MockNotifier и cron-роутом, вкладки /shelf, 29 vitest-кейсов)
-- [ ] **Часть 7/8 — Монетизация: подписка, paywall, партнёрские ссылки**
-  HANDOFF: —
+- [x] **Часть 7/8 — Монетизация: подписка, paywall, партнёрские ссылки**
+  HANDOFF: см. финальный ответ чата части 7 (Subscription/PartnerClick/BrandLead, lib/payments с MockPaymentProvider, /pricing с mock-оплатой, paywall free=2 средства + скрытая матрица, /go редиректы, /profile, /for-brands, 46 vitest-кейсов)
 - [ ] **Часть 8/8 — Финал: админка, аналитика, QA, деплой**
   HANDOFF: —

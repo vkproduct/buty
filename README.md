@@ -61,7 +61,21 @@ pnpm dev                    # http://localhost:3000
 
 Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: пользователи и подписки, заявки брендов, нераспознанные токены, добавление/правка продуктов и ингредиентов, базовая аналитика для брендов.
 
-## Деплой (продакшен, VPS)
+## Деплой (Vercel)
+
+1. **База.** Managed Postgres — Neon или Vercel Postgres; строку подключения положить в env `DATABASE_URL` (с `?connection_limit=1` не нужно — Prisma 6 сам управляет пулом; для Neon использовать pooled-строку).
+2. **Импорт.** vercel.com → New Project → импорт репозитория. `vercel.json` уже задаёт buildCommand: `prisma generate → migrate deploy → db seed → next build` (миграции и сид идемпотентны, выполняются при каждом деплое).
+3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `NEXTAUTH_URL=https://<домен>`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM`. Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`, email — mock.
+4. **Домен.** Project Settings → Domains → подключить `<домен>` и `www.<домен>` (Vercel сам выпускает TLS и даёт редирект www → bare).
+5. **Cron.** `vercel.json` дёргает `/api/cron/reminders` каждые 15 минут; Vercel автоматически шлёт `Authorization: Bearer $CRON_SECRET` — роут принимает и его, и `x-cron-secret`.
+6. **Проверки после деплоя:** `curl https://<домен>/api/health` → `{"ok":true,"db":"up"}`; `/robots.txt`, `/sitemap.xml` → 200. CI/CD: push в `main` → автоматический деплой ≤5 минут.
+7. **Бэкапы.** У Neon/Vercel Postgres включены автоматические снапшоты; дополнительно точечный дамп: `pg_dump "$DATABASE_URL" --clean --if-exists | gzip > buty-$(date +%Y%m%d).sql.gz`. Восстановление: `gunzip -c файл.sql.gz | psql "$DATABASE_URL"`.
+8. **Мониторинг.** Better Stack — HTTP-чек `https://<домен>/api/health` каждые 30 с, алерт в Telegram/email.
+
+## Деплой (альтернатива: свой VPS)
+
+<details>
+<summary>Docker-стек на арендованном сервере (если понадобятся российские платёжки/cron на хосте)</summary>
 
 Стек на сервере: `docker-compose.prod.yml` — `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (автоматический HTTPS Let's Encrypt, редирект www → bare, gzip). Отдельная внутренняя сеть, `restart: unless-stopped`.
 
@@ -93,3 +107,5 @@ gunzip -c /opt/buty-backups/buty-<дата>.sql.gz | docker compose -f docker-co
 docker compose -f docker-compose.prod.yml start app
 curl https://<DOMAIN>/api/health   # {"ok":true,"db":"up"}
 ```
+
+</details>

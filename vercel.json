@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm prisma generate && pnpm prisma migrate deploy && pnpm db:seed && pnpm build",
+  "crons": [
+    {
+      "path": "/api/cron/reminders",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}

@@ -5,10 +5,10 @@ import { processDueReminders } from "@/lib/reminders";
 export const dynamic = "force-dynamic";
 
 /**
- * POST /api/cron/reminders — демон-заглушка: отрабатывает due-напоминания.
- * Защищён заголовком x-cron-secret (сверка с env CRON_SECRET).
+ * POST/GET /api/cron/reminders — демон-заглушка: отрабатывает due-напоминания.
+ * Защищён x-cron-secret (self-hosted cron) или Authorization: Bearer (Vercel Cron).
  */
-export async function POST(request: Request) {
+async function handle(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (!secret) {
     return NextResponse.json(
@@ -16,9 +16,22 @@ export async function POST(request: Request) {
       { status: 503 },
     );
   }
-  if (request.headers.get("x-cron-secret") !== secret) {
+  const bearer = request.headers.get("authorization");
+  const ok =
+    request.headers.get("x-cron-secret") === secret ||
+    bearer === `Bearer ${secret}`;
+  if (!ok) {
     return NextResponse.json({ error: "Нет доступа" }, { status: 401 });
   }
   const processed = await processDueReminders();
   return NextResponse.json({ ok: true, processed });
+}
+
+export async function POST(request: Request) {
+  return handle(request);
+}
+
+/** GET — Vercel Cron дёргает роут именно GET-запросом. */
+export async function GET(request: Request) {
+  return handle(request);
 }

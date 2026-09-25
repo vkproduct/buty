@@ -68,6 +68,7 @@ model Product {
   sourceUrl   String?
   partnerUrl  String? // партнёрская ссылка (заполняется в части 4, используется в части 7)
   ingredients ProductIngredient[]
+  shelfItems  ShelfItem[]
 
   @@index([brand])
 }
@@ -91,4 +92,93 @@ model Feedback {
   email     String? // опционально, для ответа пользователю
   rawToken  String // нераспознанный токен как в исходном тексте
   createdAt DateTime @default(now())
+}
+
+// --- Часть 5: аутентификация и «Моя полка» ---
+
+// Модели NextAuth (PrismaAdapter)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  createdAt     DateTime     @default(now())
+  accounts      Account[]
+  sessions      Session[]
+  shelfItems    ShelfItem[]
+  skinProfile   SkinProfile?
+}
+
+enum ShelfStatus {
+  using // использую
+  finished // закончила
+  reacted // была реакция
+}
+
+enum SkinType {
+  dry
+  oily
+  combination
+  normal
+  sensitive
+}
+
+model ShelfItem {
+  id         String      @id @default(cuid())
+  userId     String
+  productId  String? // ссылка на Product из базы
+  customName String? // «своё средство» — название вручную
+  customInci String? // разобранные INCI-токены «своего средства» (JSON-массив)
+  status     ShelfStatus @default(using)
+  photoUrl   String?
+  addedAt    DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product    Product?    @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+}
+
+model SkinProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  skinType  SkinType
+  concerns  String[] // проблемы кожи: акне, пигментация и т.д.
+  allergies String[] // аллергии/непереносимости (ингредиенты)
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

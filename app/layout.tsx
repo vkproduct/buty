@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 
+import { Header } from "@/components/header";
+import { Providers } from "@/components/providers";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -47,7 +50,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

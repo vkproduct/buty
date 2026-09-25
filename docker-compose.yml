@@ -20,6 +20,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://buty:buty@db:5432/buty?schema=public
+      DIRECT_URL: postgresql://buty:buty@db:5432/buty?schema=public
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-dev-secret-change-me}
       EMAIL_FROM: Buty.ru <noreply@buty.ru>

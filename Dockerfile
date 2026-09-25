@@ -21,6 +21,7 @@ RUN mkdir -p /tmp/pgdata && chown postgres:postgres /tmp/pgdata \
   && su postgres -c "pg_ctl -D /tmp/pgdata -o '-k /tmp' -l /tmp/pg.log start" \
   && su postgres -c "createdb -h /tmp buty" \
   && export DATABASE_URL="postgresql://postgres@localhost:5432/buty?schema=public" \
+  && export DIRECT_URL="postgresql://postgres@localhost:5432/buty?schema=public" \
   && pnpm prisma migrate deploy \
   && pnpm db:seed \
   && pnpm build \

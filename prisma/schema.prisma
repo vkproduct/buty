@@ -85,6 +85,7 @@ model ProductIngredient {
 
   @@unique([productId, ingredientId])
   @@unique([productId, position])
+  @@index([ingredientId])
 }
 
 // Сообщение пользователя о нераспознанном токене состава (часть 3)
@@ -93,6 +94,8 @@ model Feedback {
   email     String? // опционально, для ответа пользователю
   rawToken  String // нераспознанный токен как в исходном тексте
   createdAt DateTime @default(now())
+
+  @@index([rawToken])
 }
 
 // --- Часть 5: аутентификация и «Моя полка» ---
@@ -114,6 +117,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -122,6 +126,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {

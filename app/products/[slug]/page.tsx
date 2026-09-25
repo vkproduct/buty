@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 
-export const dynamicParams = false;
+// ISR: страница кэшируется на 1 час; новые продукты рендерятся по запросу
+export const dynamicParams = true;
+export const revalidate = 3600;
 
 async function getProduct(slug: string) {
   return prisma.product.findUnique({

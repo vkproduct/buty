@@ -13,7 +13,9 @@ import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 
-export const dynamicParams = false;
+// ISR: страница кэшируется на 1 час; новые ингредиенты рендерятся по запросу
+export const dynamicParams = true;
+export const revalidate = 3600;
 
 async function getIngredient(slug: string) {
   return prisma.ingredient.findUnique({

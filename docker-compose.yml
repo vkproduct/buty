@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: buty
+      POSTGRES_PASSWORD: buty
+      POSTGRES_DB: buty
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U buty -d buty"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://buty:buty@db:5432/buty?schema=public
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-dev-secret-change-me}
+      EMAIL_FROM: Buty.ru <noreply@buty.ru>
+      MOCK_OCR: "true"
+      PAYMENTS_PROVIDER: mock
+      CRON_SECRET: ${CRON_SECRET:-dev-cron-secret}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:

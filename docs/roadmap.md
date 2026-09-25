@@ -18,5 +18,5 @@ HANDOFF-блоки вставляются сюда по мере заверше�
   HANDOFF: см. финальный ответ чата части 6 (lib/shelf/compatibility + buildRoutine, модели SkinReaction/Reminder/NotificationLog, lib/reminders с MockNotifier и cron-роутом, вкладки /shelf, 29 vitest-кейсов)
 - [x] **Часть 7/8 — Монетизация: подписка, paywall, партнёрские ссылки**
   HANDOFF: см. финальный ответ чата части 7 (Subscription/PartnerClick/BrandLead, lib/payments с MockPaymentProvider, /pricing с mock-оплатой, paywall free=2 средства + скрытая матрица, /go редиректы, /profile, /for-brands, 46 vitest-кейсов)
-- [ ] **Часть 8/8 — Финал: админка, аналитика, QA, деплой**
-  HANDOFF: —
+- [x] **Часть 8/8 — Финал: админка, аналитика, QA, деплой**
+  HANDOFF: см. финальный ответ чата части 8 (/admin по ADMIN_EMAILS, lib/analytics, ISR revalidate 3600, OG/manifest/favicon, индексы Prisma, Dockerfile + docker-compose, README, 51 vitest-кейс)

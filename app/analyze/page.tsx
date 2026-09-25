@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-import { ComingSoon } from "@/components/coming-soon";
+import { AnalyzeView } from "@/components/analyze-view";
 
 export const metadata: Metadata = { title: "Разбор состава" };
 
-export default function AnalyzePage() {
-  return (
-    <ComingSoon
-      title="Разбор состава"
-      description="Вставьте состав — получите разбор каждого ингредиента: функция, концентрация, доказательность и конфликты с другими активами."
-    />
-  );
+export default function AnalyzePage({
+  searchParams,
+}: {
+  searchParams: { text?: string };
+}) {
+  const initialText = typeof searchParams.text === "string" ? searchParams.text : "";
+  return <AnalyzeView initialText={initialText} />;
 }

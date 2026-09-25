@@ -84,3 +84,11 @@ model ProductIngredient {
   @@unique([productId, ingredientId])
   @@unique([productId, position])
 }
+
+// Сообщение пользователя о нераспознанном токене состава (часть 3)
+model Feedback {
+  id        String   @id @default(cuid())
+  email     String? // опционально, для ответа пользователю
+  rawToken  String // нераспознанный токен как в исходном тексте
+  createdAt DateTime @default(now())
+}

@@ -1,2 +1,8 @@
 allowBuilds:
-  unrs-resolver: set this to true or false
+  '@prisma/client': true
+  esbuild: true
+  msgpackr-extract: false
+  unrs-resolver: false
+  workerd: false
+  prisma: true
+  '@prisma/engines': true

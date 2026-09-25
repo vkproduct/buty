@@ -1,0 +1,86 @@
+// Buty.ru — база ингредиентов (часть 2/8)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EvidenceLevel {
+  STRONG // множество RCT / мета-анализы
+  MODERATE // клинические исследования, но ограниченные
+  LIMITED // in vitro / единичные исследования
+  ANECDOTAL // традиционное применение, без качественных данных
+}
+
+model Ingredient {
+  id           String            @id @default(cuid())
+  inciName     String            @unique // каноническое INCI-имя, UPPERCASE
+  slug         String            @unique
+  displayName  String // русское название для UI
+  category     String // категория: active, uv-filter, humectant и т.д.
+  function     String // функция в составе
+  evidenceLevel EvidenceLevel
+  typicalConc  String? // типичная рабочая концентрация, напр. "2–5%"
+  description  String
+  safetyNotes  String?
+
+  synonyms     Synonym[]
+  conflictsFrom IngredientConflict[] @relation("ConflictFrom")
+  conflictsTo   IngredientConflict[] @relation("ConflictTo")
+  products      ProductIngredient[]
+
+  @@index([category])
+}
+
+model Synonym {
+  id           String     @id @default(cuid())
+  ingredientId String
+  alias        String // альтернативное написание (лат./рус.)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([ingredientId, alias])
+  @@index([alias])
+}
+
+// Самоссылка many-to-many: конфликт двух активов в одном уходе
+model IngredientConflict {
+  id            String     @id @default(cuid())
+  ingredientAId String
+  ingredientBId String
+  severity      String // "high" | "medium" | "low"
+  reason        String // механизм конфликта
+  ingredientA   Ingredient @relation("ConflictFrom", fields: [ingredientAId], references: [id], onDelete: Cascade)
+  ingredientB   Ingredient @relation("ConflictTo", fields: [ingredientBId], references: [id], onDelete: Cascade)
+
+  @@unique([ingredientAId, ingredientBId])
+}
+
+model Product {
+  id          String              @id @default(cuid())
+  brand       String
+  name        String
+  slug        String              @unique
+  category    String
+  sourceUrl   String?
+  partnerUrl  String? // партнёрская ссылка (заполняется в части 4, используется в части 7)
+  ingredients ProductIngredient[]
+
+  @@index([brand])
+}
+
+// Join-таблица Product → Ingredient с позицией в INCI-списке (порядок = убывание концентрации)
+model ProductIngredient {
+  id           String     @id @default(cuid())
+  productId    String
+  ingredientId String
+  position     Int
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, ingredientId])
+  @@unique([productId, position])
+}

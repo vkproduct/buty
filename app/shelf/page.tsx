@@ -6,10 +6,17 @@ import { Lock, Sparkles } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { analyzeText } from "@/lib/analysis/analyze";
 import { prisma } from "@/lib/prisma";
+import {
+  buildCompatibilityMatrix,
+  buildRoutine,
+  findDuplicates,
+} from "@/lib/shelf/compatibility";
+import { loadConflictEdges, loadShelfProducts } from "@/lib/shelf/data";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
-import { ShelfClient, type ShelfItemView } from "@/components/shelf-client";
+import { ShelfTabs, type ReactionView, type ReminderView } from "@/components/shelf-tabs";
+import type { ShelfItemView } from "@/components/shelf-client";
 
 export const metadata: Metadata = { title: "Моя полка" };
 export const dynamic = "force-dynamic";
@@ -93,18 +100,93 @@ export default async function ShelfPage() {
     }),
   );
 
+  const products = await loadShelfProducts(session.user.id, true);
+  const ingredientIds = [
+    ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
+  ];
+  const edges = await loadConflictEdges(ingredientIds);
+  const pairs = buildCompatibilityMatrix(products, edges);
+  const duplicates = findDuplicates(products);
+  const routine = buildRoutine(products, profile.skinType);
+
+  const reactionRows = await prisma.skinReaction.findMany({
+    where: { userId: session.user.id },
+    include: {
+      shelfItem: { include: { product: { select: { name: true } } } },
+    },
+    orderBy: { occurredAt: "desc" },
+  });
+  const suspectIds = [
+    ...new Set(
+      reactionRows.flatMap(
+        (r) => JSON.parse(r.suspectIngredientIds) as string[],
+      ),
+    ),
+  ];
+  const suspectIngredients = suspectIds.length
+    ? await prisma.ingredient.findMany({
+        where: { id: { in: suspectIds } },
+        select: { id: true, displayName: true },
+      })
+    : [];
+  const suspectNameById = new Map(
+    suspectIngredients.map((i) => [i.id, i.displayName]),
+  );
+  const reactions: ReactionView[] = reactionRows.map((r) => ({
+    id: r.id,
+    type: r.type,
+    note: r.note,
+    photoUrl: r.photoUrl,
+    occurredAt: r.occurredAt.toISOString(),
+    itemTitle:
+      r.shelfItem.product?.name ?? r.shelfItem.customName ?? "Своё средство",
+    suspects: (JSON.parse(r.suspectIngredientIds) as string[])
+      .map((id) => suspectNameById.get(id))
+      .filter((n): n is string => Boolean(n)),
+  }));
+
+  const reminderRows = await prisma.reminder.findMany({
+    where: { userId: session.user.id },
+    include: {
+      shelfItem: { include: { product: { select: { name: true } } } },
+      logs: { orderBy: { createdAt: "desc" } },
+    },
+    orderBy: { nextRunAt: "asc" },
+  });
+  const reminders: ReminderView[] = reminderRows.map((r) => ({
+    id: r.id,
+    type: r.type,
+    nextRunAt: r.nextRunAt.toISOString(),
+    doneAt: r.doneAt ? r.doneAt.toISOString() : null,
+    itemTitle:
+      r.shelfItem.product?.name ?? r.shelfItem.customName ?? "Своё средство",
+    logs: r.logs.map((l) => ({
+      id: l.id,
+      channel: l.channel,
+      message: l.message,
+      createdAt: l.createdAt.toISOString(),
+    })),
+  }));
+
   return (
     <main className="bg-gradient-hero min-h-screen">
       <Container className="py-12">
-        <ShelfClient items={view} />
+        <ShelfTabs
+          items={view}
+          pairs={pairs}
+          duplicates={duplicates}
+          routine={routine}
+          reactions={reactions}
+          reminders={reminders}
+        />
         <GlassCard className="mt-8 flex items-center gap-3 p-5">
           <Sparkles className="h-5 w-5 shrink-0 text-amber" />
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-foreground">
-              Pro-функции скоро:
+              Pro-логика полки активна:
             </span>{" "}
-            проверка совместимости активов между средствами полки, порядок
-            нанесения, поиск дублей, история реакций кожи и напоминания.
+            матрица совместимости, режим утро/вечер, дубли, реакции и
+            напоминания — во вкладках выше. Подписка подключится в части 7.
           </p>
         </GlassCard>
       </Container>

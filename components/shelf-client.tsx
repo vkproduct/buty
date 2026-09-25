@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FlaskConical, Plus, Search, Trash2 } from "lucide-react";
+import { FlaskConical, Plus, Search, Trash2, CalendarClock, ShoppingCart } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -74,6 +74,16 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
 
   async function remove(id: string) {
     await mutate(fetch(`/api/shelf/${id}`, { method: "DELETE" }));
+  }
+
+  async function remind(id: string, type: "introduce" | "restock") {
+    await mutate(
+      fetch("/api/reminders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shelfItemId: id, type }),
+      }),
+    );
   }
 
   return (
@@ -167,6 +177,23 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
                 className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-coral/10 hover:text-coral-700"
               >
                 <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mt-2 flex gap-1">
+              <button
+                type="button"
+                onClick={() => remind(item.id, "introduce")}
+                className="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-amber/10 hover:text-amber-700"
+              >
+                <CalendarClock className="h-3.5 w-3.5" /> О введении
+              </button>
+              <button
+                type="button"
+                onClick={() => remind(item.id, "restock")}
+                className="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-amber/10 hover:text-amber-700"
+              >
+                <ShoppingCart className="h-3.5 w-3.5" /> О покупке
               </button>
             </div>
           </GlassCard>

@@ -23,7 +23,7 @@ services:
       DIRECT_URL: postgresql://buty:buty@db:5432/buty?schema=public
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-dev-secret-change-me}
-      EMAIL_FROM: Buty.ru <noreply@buty.ru>
+      EMAIL_FROM: Buty.app <noreply@buty.app>
       MOCK_OCR: "true"
       PAYMENTS_PROVIDER: mock
       CRON_SECRET: ${CRON_SECRET:-dev-cron-secret}

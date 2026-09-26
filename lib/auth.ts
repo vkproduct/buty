@@ -16,12 +16,12 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     EmailProvider({
-      from: process.env.EMAIL_FROM ?? "Buty.ru <noreply@buty.ru>",
+      from: process.env.EMAIL_FROM ?? "Buty.app <noreply@buty.app>",
       async sendVerificationRequest({ identifier, url }) {
         await getEmailProvider().send({
           to: identifier,
-          subject: "Вход в Buty.ru",
-          text: `Ссылка для входа в Buty.ru:\n${url}\n\nСсылка действует 24 часа.`,
+          subject: "Вход в Buty.app",
+          text: `Ссылка для входа в Buty.app:\n${url}\n\nСсылка действует 24 часа.`,
         });
       },
     }),

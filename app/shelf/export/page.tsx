@@ -91,7 +91,7 @@ export default async function ShelfExportPage() {
       </div>
 
       <h1 className="font-display text-2xl font-bold">
-        Моя полка — Buty.ru
+        Моя полка — Buty.app
       </h1>
       <p className="mt-1 text-sm text-gray-500">
         {session.user.email} · {new Date().toLocaleDateString("ru-RU")}

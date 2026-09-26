@@ -1,4 +1,4 @@
-# Buty.ru
+# Buty.app
 
 Сервис разбора составов косметики с научным дерматологическим подходом.
 
@@ -55,7 +55,7 @@ pnpm dev                    # http://localhost:3000
 
 **Платежи (`/lib/payments`).** По умолчанию `PAYMENTS_PROVIDER=mock` — MockPaymentProvider имитирует оплату Pro. Реальный провайдер — ЮKassa: создать платёж через API, вернуть `confirmation_url`, принимать webhook на `/api/payments/callback` с проверкой подписи; ключи `YUKASSA_SHOP_ID` и `YUKASSA_SECRET_KEY`, переключение — `PAYMENTS_PROVIDER=yukassa`.
 
-**Email (`/lib/email`).** В dev — MockEmailProvider (magic-link печатается в консоль). В проде — Resend: установить `RESEND_API_KEY`, провайдер `ResendEmailProvider` уже реализует интерфейс `EmailProvider`; отправитель задаётся `EMAIL_FROM`.
+**Email (`/lib/email`).** В dev — MockEmailProvider (magic-link печатается в консоль). В проде — Resend: провайдер `ResendEmailProvider` уже реализует интерфейс `EmailProvider`. Подключение: 1) в dashboard Resend (resend.com) добавить домен `buty.app` и прописать у регистратора выданные DNS-записи (SPF/DKIM: TXT + CNAME); 2) создать API-ключ → переменная `RESEND_API_KEY` в Vercel; 3) `EMAIL_FROM="Buty.app <noreply@buty.app>"`. До верификации домена Resend пускает отправку только с тестового адреса `onboarding@resend.dev` (для `EMAIL_FROM`).
 
 ## Админка
 
@@ -65,8 +65,8 @@ pnpm dev                    # http://localhost:3000
 
 1. **База.** Managed Postgres — Supabase (или Neon/Vercel Postgres). Для Supabase: pooled-строка (порт 6543) → `DATABASE_URL` с суффиксом `?pgbouncer=true&connection_limit=1`, direct-строка (порт 5432) → `DIRECT_URL` (миграции идут через неё, `directUrl` в `prisma/schema.prisma`).
 2. **Импорт.** vercel.com → New Project → импорт репозитория. `vercel.json` уже задаёт buildCommand: `prisma generate → migrate deploy → db seed → next build` (миграции и сид идемпотентны, выполняются при каждом деплое).
-3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://<домен>`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM`. Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`, email — mock.
-4. **Домен.** Project Settings → Domains → подключить `<домен>` и `www.<домен>` (Vercel сам выпускает TLS и даёт редирект www → bare).
+3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://buty.app`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM="Buty.app <noreply@buty.app>"`, `RESEND_API_KEY` (см. раздел «Реальные адаптеры»). Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`. Email — Resend, без ключа работает mock (magic-link в логах Vercel).
+4. **Домен.** Project Settings → Domains → подключить `buty.app` и `www.buty.app` (Vercel сам выпускает TLS и даёт редирект www → bare). У регистратора buty.app: A-запись `@` → IP из подсказки Vercel (Settings → Domains; обычно `76.76.21.21`), CNAME `www` → `cname.vercel-dns.com`. После подключения обновить `NEXTAUTH_URL` → Redeploy.
 5. **Cron.** `vercel.json` дёргает `/api/cron/reminders` ежедневно в 03:17 UTC (на Hobby-тарифе — не чаще раза в день); Vercel автоматически шлёт `Authorization: Bearer $CRON_SECRET` — роут принимает и его, и `x-cron-secret`.
 6. **Проверки после деплоя:** `curl https://<домен>/api/health` → `{"ok":true,"db":"up"}`; `/robots.txt`, `/sitemap.xml` → 200. CI/CD: push в `main` → автоматический деплой ≤5 минут.
 7. **Бэкапы.** У Neon/Vercel Postgres включены автоматические снапшоты; дополнительно точечный дамп: `pg_dump "$DATABASE_URL" --clean --if-exists | gzip > buty-$(date +%Y%m%d).sql.gz`. Восстановление: `gunzip -c файл.sql.gz | psql "$DATABASE_URL"`.

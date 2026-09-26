@@ -192,7 +192,7 @@ export default function HomePage() {
       <footer className="border-t border-lavender/10 bg-background py-10">
         <Container className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="font-display text-lg font-bold text-lavender">
-            Buty.ru
+            Buty.app
           </div>
           <nav className="flex gap-6 text-sm text-muted-foreground">
             <Link href="/analyze" className="hover:text-lavender">
@@ -209,7 +209,7 @@ export default function HomePage() {
             </Link>
           </nav>
           <p className="text-xs text-muted-foreground">
-            © 2026 Buty.ru. Информация не заменяет консультацию врача.
+            © 2026 Buty.app. Информация не заменяет консультацию врача.
           </p>
         </Container>
       </footer>

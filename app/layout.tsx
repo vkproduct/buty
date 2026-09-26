@@ -16,13 +16,13 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-const SITE_URL = "https://buty.ru";
+const SITE_URL = "https://buty.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Buty.ru — научный разбор составов косметики",
-    template: "%s | Buty.ru",
+    default: "Buty.app — научный разбор составов косметики",
+    template: "%s | Buty.app",
   },
   description:
     "Разбираем составы косметики с дерматологической точки зрения: функции ингредиентов, рабочие концентрации, конфликты активов и уровень доказательности — без маркетинговых мифов.",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
     url: SITE_URL,
-    siteName: "Buty.ru",
-    title: "Buty.ru — научный разбор составов косметики",
+    siteName: "Buty.app",
+    title: "Buty.app — научный разбор составов косметики",
     description:
       "Функции ингредиентов, рабочие концентрации, конфликты активов и уровень доказательности — без маркетинговых мифов.",
   },

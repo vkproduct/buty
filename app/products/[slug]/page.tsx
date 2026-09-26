@@ -84,7 +84,7 @@ export default async function ProductPage({
     name: product.name,
     brand: { "@type": "Brand", name: product.brand },
     category: PRODUCT_CATEGORY_LABEL[product.category] ?? product.category,
-    url: `https://buty.ru/products/${product.slug}`,
+    url: `https://buty.app/products/${product.slug}`,
     description: `Состав: ${product.ingredients
       .map((pi) => pi.ingredient.inciName)
       .join(", ")}`,

@@ -112,7 +112,7 @@ export default async function IngredientPage({
     "@type": "MedicalWebPage",
     name: `${ingredient.displayName} (${ingredient.inciName})`,
     description: ingredient.description,
-    url: `https://buty.ru/ingredients/${ingredient.slug}`,
+    url: `https://buty.app/ingredients/${ingredient.slug}`,
     about: {
       "@type": "Substance",
       name: ingredient.inciName,

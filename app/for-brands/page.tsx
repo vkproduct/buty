@@ -8,7 +8,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 export const metadata: Metadata = {
   title: "Брендам",
   description:
-    "Buty.ru для брендов: размещение в каталоге, научный разбор составов и аналитика интереса к продуктам.",
+    "Buty.app для брендов: размещение в каталоге, научный разбор составов и аналитика интереса к продуктам.",
 };
 
 const OFFERS = [
@@ -34,7 +34,7 @@ export default function ForBrandsPage() {
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container className="max-w-4xl">
         <div className="max-w-2xl">
-          <h1 className="font-display text-4xl font-bold">Buty.ru для брендов</h1>
+          <h1 className="font-display text-4xl font-bold">Buty.app для брендов</h1>
           <p className="mt-4 text-muted-foreground">
             Мы разбираем составы косметики с научным дерматологическим подходом
             для аудитории, которая читает INCI-списки перед покупкой. Покажите

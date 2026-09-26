@@ -15,7 +15,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-white/40 bg-white/60 backdrop-blur-lg">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="font-display text-lg font-bold text-lavender-700">
-          Buty.ru
+          Buty.app
         </Link>
         <nav className="flex items-center gap-2 sm:gap-4">
           <Button asChild variant="ghost" size="sm">

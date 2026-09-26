@@ -16,7 +16,7 @@ describe("getEmailProvider", () => {
 
   it("с ключом и EMAIL_FROM возвращает ResendEmailProvider", () => {
     process.env.RESEND_API_KEY = "test-key";
-    process.env.EMAIL_FROM = "Buty.ru <noreply@buty.ru>";
+    process.env.EMAIL_FROM = "Buty.app <noreply@buty.app>";
     expect(getEmailProvider()).toBeInstanceOf(ResendEmailProvider);
   });
 

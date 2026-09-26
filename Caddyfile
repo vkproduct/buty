@@ -1,4 +1,4 @@
-# Buty.ru — reverse proxy. DOMAIN подставляется из env контейнера caddy.
+# Buty.app — reverse proxy. DOMAIN подставляется из env контейнера caddy.
 # Автоматический HTTPS (Let's Encrypt), редирект www → bare, gzip.
 
 {$DOMAIN} {

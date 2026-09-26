@@ -1,4 +1,4 @@
-# Архитектура Buty.ru
+# Архитектура Buty.app
 
 **Стек:** Next.js 14 (App Router) + TypeScript + TailwindCSS + shadcn/ui + PostgreSQL + Prisma + NextAuth (email magic-link). Пакетный менеджер: pnpm. Тесты: vitest (dev-dependency).
 

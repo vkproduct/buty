@@ -1,4 +1,4 @@
-// Buty.ru — база ингредиентов (часть 2/8)
+// Buty.app — база ингредиентов (часть 2/8)
 
 generator client {
   provider = "prisma-client-js"

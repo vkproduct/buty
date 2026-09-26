@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 /** PWA-манифест. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Buty.ru — научный разбор составов косметики",
-    short_name: "Buty.ru",
+    name: "Buty.app — научный разбор составов косметики",
+    short_name: "Buty.app",
     description:
       "Функции ингредиентов, рабочие концентрации, конфликты активов и уровень доказательности — без маркетинговых мифов.",
     lang: "ru",

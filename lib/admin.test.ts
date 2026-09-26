@@ -18,8 +18,8 @@ describe("slugify", () => {
 
 describe("adminEmails", () => {
   it("парсит список email из env", () => {
-    process.env.ADMIN_EMAILS = "Admin@Buty.ru, second@buty.ru ";
-    expect(adminEmails()).toEqual(["admin@buty.ru", "second@buty.ru"]);
+    process.env.ADMIN_EMAILS = "Admin@Buty.app, second@buty.app ";
+    expect(adminEmails()).toEqual(["admin@buty.app", "second@buty.app"]);
     delete process.env.ADMIN_EMAILS;
   });
 

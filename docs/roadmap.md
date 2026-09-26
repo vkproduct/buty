@@ -20,5 +20,5 @@ HANDOFF-блоки вставляются сюда по мере заверше�
   HANDOFF: см. финальный ответ чата части 7 (Subscription/PartnerClick/BrandLead, lib/payments с MockPaymentProvider, /pricing с mock-оплатой, paywall free=2 средства + скрытая матрица, /go редиректы, /profile, /for-brands, 46 vitest-кейсов)
 - [x] **Часть 8/8 — Финал: админка, аналитика, QA, деплой**
   HANDOFF: см. финальный ответ чата части 8 (/admin по ADMIN_EMAILS, lib/analytics, ISR revalidate 3600, OG/manifest/favicon, индексы Prisma, Dockerfile + docker-compose, README, 51 vitest-кейс)
-- [x] **Часть 9/9 — Деплой на продакшен-сервер (инфраструктура в репо)**
-  HANDOFF: см. финальный ответ чата части 9 (/api/health, Caddyfile, docker-compose.prod.yml, GitHub Action deploy.yml, scripts/{server-setup,deploy,backup,cron-reminders}.sh, README: деплой/бэкапы/восстановление). Фактический вывод на VPS — за рамками репо: нужны IP сервера, домен и доступ по SSH.
+- [x] **Часть 9/9 — Деплой на продакшен (Vercel + Supabase, сайт в интернете)**
+  HANDOFF: см. финальный ответ чата части 9 (/api/health, vercel.json с buildCommand миграции+сид и cron ежедневно 03:17 UTC, cron-роут принимает GET + Bearer, directUrl в schema.prisma для Supabase, README: деплой на Vercel + VPS-вариант в details, Docker-инфраструктура сохранена как альтернатива). Прод: https://buty-ecru.vercel.app, БД Supabase (пулер 6543 для app, 5432 для миграций), репо github.com/vkproduct/buty, автодеплой из main.

@@ -21,6 +21,10 @@ export const CATEGORY_LABEL: Record<string, string> = {
   emollient: "Эмолент",
   botanical: "Растительный экстракт",
   soothing: "Успокаивающий",
+  peptide: "Пептид",
+  preservative: "Консервант",
+  surfactant: "ПАВ / очищение",
+  silicone: "Силикон",
   fragrance: "Отдушка",
   alcohol: "Спирт",
 };

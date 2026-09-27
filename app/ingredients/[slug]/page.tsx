@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FlaskConical, ShieldAlert, Sparkles } from "lucide-react";
+import { Atom, FlaskConical, ShieldAlert, Sparkles } from "lucide-react";
 
 import { prisma } from "@/lib/prisma";
 import {
@@ -166,6 +166,28 @@ export default async function IngredientPage({
           )}
         </GlassCard>
 
+        {ingredient.howItWorks && (
+          <GlassCard className="space-y-4 p-8">
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <Atom className="h-5 w-5 text-lavender" />
+              Как действует
+            </h2>
+            <p className="max-w-3xl text-muted-foreground">
+              {ingredient.howItWorks}
+            </p>
+          </GlassCard>
+        )}
+
+        {ingredient.risks && (
+          <GlassCard className="space-y-4 p-8">
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <ShieldAlert className="h-5 w-5 text-coral-700" />
+              Риски и ограничения
+            </h2>
+            <p className="max-w-3xl text-muted-foreground">{ingredient.risks}</p>
+          </GlassCard>
+        )}
+
         {conflicts.length > 0 && (
           <GlassCard className="space-y-4 p-8">
             <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
@@ -207,6 +229,11 @@ export default async function IngredientPage({
               Эти ингредиенты часто встречаются вместе с {ingredient.displayName}{" "}
               в одних формулах и не имеют зафиксированных конфликтов.
             </p>
+            {ingredient.combinations && (
+              <p className="max-w-3xl text-muted-foreground">
+                {ingredient.combinations}
+              </p>
+            )}
             <div className="flex flex-wrap gap-2">
               {synergies.map((s) => (
                 <Link key={s.slug} href={`/ingredients/${s.slug}`}>

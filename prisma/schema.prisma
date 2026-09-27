@@ -26,7 +26,10 @@ model Ingredient {
   function     String // функция в составе
   evidenceLevel EvidenceLevel
   typicalConc  String? // типичная рабочая концентрация, напр. "2–5%"
-  description  String
+  description  String // что это и для чего нужен в уходе
+  howItWorks   String? // механизм действия и влияние на кожу
+  combinations String? // с чем сочетается и как
+  risks        String? // риски, ограничения, кому не подходит
   safetyNotes  String?
 
   synonyms     Synonym[]

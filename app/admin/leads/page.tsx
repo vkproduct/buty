@@ -16,10 +16,10 @@ export default async function AdminLeads() {
       {leads.map((lead) => (
         <div
           key={lead.id}
-          className="space-y-1 rounded-2xl bg-white/50 p-4 text-sm"
+          className="space-y-1 rounded-2xl bg-white p-4 text-sm"
         >
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold text-lavender">{lead.brandName}</span>
+            <span className="font-semibold text-brand">{lead.brandName}</span>
             <span className="text-muted-foreground">
               {lead.contact} · {lead.email}
             </span>

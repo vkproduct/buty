@@ -2,17 +2,17 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-/** Полупрозрачная «стеклянная» карточка — основной контейнер контента. */
+/**
+ * Основной контейнер контента. Имя сохранено ради совместимости,
+ * визуально — белая карточка со скруглением 16px, тонкой границей и мягкой тенью.
+ */
 export function GlassCard({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        "glass rounded-3xl transition-shadow hover:shadow-glass-lg",
-        className
-      )}
+      className={cn("rounded-2xl border border-ink-hair bg-white shadow-glass", className)}
       {...props}
     />
   );

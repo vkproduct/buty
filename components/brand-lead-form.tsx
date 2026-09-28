@@ -39,7 +39,7 @@ export function BrandLeadForm() {
 
   if (done) {
     return (
-      <p className="rounded-2xl bg-lavender/10 px-5 py-4 text-sm font-semibold text-lavender-700">
+      <p className="rounded-2xl bg-brand/10 px-5 py-4 text-sm font-semibold text-brand-700">
         Заявка отправлена! Мы свяжемся с вами по email в течение пары дней.
       </p>
     );
@@ -72,7 +72,7 @@ export function BrandLeadForm() {
         required
       />
       <textarea
-        className="min-h-28 w-full rounded-2xl border border-white/60 bg-white/60 px-4 py-3 text-sm outline-none backdrop-blur focus:ring-2 focus:ring-lavender/40"
+        className="min-h-28 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-brand/40"
         placeholder="Что вам интересно: размещение, разбор составов, аналитика?"
         value={message}
         onChange={(e) => setMessage(e.target.value)}

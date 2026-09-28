@@ -33,7 +33,7 @@ export default async function ProfilePage() {
   return (
     <main className="bg-gradient-hero min-h-screen py-12">
       <Container className="max-w-3xl space-y-6">
-        <h1 className="font-display text-3xl font-bold">Профиль</h1>
+        <h1 className="font-display text-[28px] font-semibold leading-tight">Профиль</h1>
 
         <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-6">
           <div>
@@ -76,7 +76,7 @@ export default async function ProfilePage() {
 
         <GlassCard className="p-6">
           <h2 className="font-display flex items-center gap-2 text-lg font-semibold">
-            <MousePointerClick className="h-5 w-5 text-lavender" />
+            <MousePointerClick className="h-5 w-5 text-brand" />
             История переходов «Где купить»
           </h2>
           {clicks.length === 0 ? (
@@ -88,11 +88,11 @@ export default async function ProfilePage() {
               {clicks.map((c) => (
                 <li
                   key={c.id}
-                  className="flex items-center justify-between gap-3 rounded-2xl bg-white/50 px-4 py-2.5 text-sm"
+                  className="flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-2.5 text-sm"
                 >
                   <Link
                     href={`/products/${c.product.slug}`}
-                    className="font-medium text-lavender hover:underline"
+                    className="font-medium text-brand hover:underline"
                   >
                     {c.product.brand} {c.product.name}
                   </Link>

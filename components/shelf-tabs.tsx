@@ -93,8 +93,8 @@ export function ShelfTabs(props: Props) {
             className={cn(
               "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-all",
               tab === id
-                ? "bg-lavender/15 text-lavender-700"
-                : "text-muted-foreground hover:bg-lavender/5",
+                ? "bg-brand/15 text-brand-700"
+                : "text-muted-foreground hover:bg-brand/5",
             )}
           >
             <Icon className="h-4 w-4" /> {label}
@@ -152,7 +152,7 @@ function LockedTab({ text }: { text: string }) {
 const PAIR_STYLES: Record<PairResult["status"], { label: string; cls: string }> = {
   conflict: { label: "Конфликт", cls: "bg-coral/10 text-coral-700" },
   spread: { label: "Разнести", cls: "bg-amber/15 text-amber-700" },
-  ok: { label: "ОК", cls: "bg-lavender/10 text-lavender-700" },
+  ok: { label: "ОК", cls: "bg-success-50 text-success-700" },
 };
 
 function CompatibilityTab({
@@ -232,7 +232,7 @@ function RoutineTab({ routine }: { routine: Routine }) {
     return (
       <GlassCard className="p-5">
         <h2 className="font-display flex items-center gap-2 text-lg font-semibold">
-          <Icon className="h-5 w-5 text-lavender" /> {title}
+          <Icon className="h-5 w-5 text-brand" /> {title}
         </h2>
         {steps.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">Нет шагов.</p>
@@ -240,7 +240,7 @@ function RoutineTab({ routine }: { routine: Routine }) {
           <ol className="mt-4 space-y-3">
             {steps.map((s) => (
               <li key={s.productId} className="flex gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lavender/15 text-xs font-bold text-lavender-700">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/15 text-xs font-bold text-brand-700">
                   {s.order}
                 </span>
                 <div>
@@ -327,7 +327,7 @@ function ReactionsTab({
             value={itemId}
             onChange={(e) => setItemId(e.target.value)}
             aria-label="Средство"
-            className="rounded-2xl border border-white/60 bg-white/60 px-4 py-2.5 text-sm outline-none backdrop-blur focus:ring-2 focus:ring-lavender/40"
+            className="rounded-2xl border border-border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand/40"
           >
             <option value="">Выберите средство…</option>
             {items.map((i) => (
@@ -340,7 +340,7 @@ function ReactionsTab({
             value={type}
             onChange={(e) => setType(e.target.value)}
             aria-label="Тип реакции"
-            className="rounded-2xl border border-white/60 bg-white/60 px-4 py-2.5 text-sm outline-none backdrop-blur focus:ring-2 focus:ring-lavender/40"
+            className="rounded-2xl border border-border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand/40"
           >
             {Object.entries(REACTION_LABELS).map(([value, label]) => (
               <option key={value} value={value}>
@@ -448,7 +448,7 @@ function RemindersTab({
           {items.map((i) => (
             <div
               key={i.id}
-              className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white/50 px-4 py-3"
+              className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white px-4 py-3"
             >
               <p className="text-sm font-medium">{i.title}</p>
               <div className="flex gap-2">
@@ -509,7 +509,7 @@ function RemindersTab({
                 </div>
               </div>
               {r.logs.length > 0 ? (
-                <ul className="mt-3 space-y-1 border-t border-white/50 pt-2">
+                <ul className="mt-3 space-y-1 border-t border-border pt-2">
                   {r.logs.map((l) => (
                     <li key={l.id} className="text-xs text-muted-foreground">
                       [{l.channel}] {new Date(l.createdAt).toLocaleString("ru-RU")}

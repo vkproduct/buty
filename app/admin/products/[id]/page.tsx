@@ -28,7 +28,7 @@ export default async function AdminProductEdit({
         slug: {product.slug} ·{" "}
         <Link
           href={`/products/${product.slug}`}
-          className="text-lavender hover:underline"
+          className="text-brand hover:underline"
         >
           открыть страницу
         </Link>
@@ -39,7 +39,7 @@ export default async function AdminProductEdit({
         <Input name="name" defaultValue={product.name} required />
         <select
           name="category"
-          className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+          className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
           defaultValue={product.category}
         >
           {Object.entries(PRODUCT_CATEGORY_LABEL).map(([value, label]) => (

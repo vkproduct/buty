@@ -23,7 +23,7 @@ export default async function AdminUsers() {
         </thead>
         <tbody>
           {users.map((u) => (
-            <tr key={u.id} className="border-t border-white/40">
+            <tr key={u.id} className="border-t border-border">
               <td className="py-2 pr-4">{u.email}</td>
               <td className="py-2 pr-4 text-muted-foreground">
                 {u.createdAt.toLocaleDateString("ru-RU")}
@@ -31,7 +31,7 @@ export default async function AdminUsers() {
               <td className="py-2 pr-4">
                 <Badge
                   variant={
-                    u.subscription?.plan === "pro" ? "lavender" : "outline"
+                    u.subscription?.plan === "pro" ? "brand" : "outline"
                   }
                 >
                   {u.subscription?.plan ?? "free"}

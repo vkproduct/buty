@@ -50,8 +50,8 @@ function FilterLink({
       className={cn(
         "flex items-center justify-between gap-2 rounded-2xl px-3 py-2 text-sm transition-colors",
         active
-          ? "bg-lavender/15 font-semibold text-lavender"
-          : "text-muted-foreground hover:bg-white/60 hover:text-foreground"
+          ? "bg-brand/15 font-semibold text-brand"
+          : "text-muted-foreground hover:bg-white hover:text-foreground"
       )}
     >
       {children}
@@ -108,7 +108,8 @@ export default async function IngredientsCatalogPage({
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container className="space-y-8">
         <header className="max-w-3xl space-y-4">
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+          <span className="eyebrow">База знаний</span>
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
             Каталог ингредиентов
           </h1>
           <p className="text-muted-foreground">
@@ -195,7 +196,7 @@ export default async function IngredientsCatalogPage({
                         <span
                           className={cn(
                             "inline-block h-2 w-2 rounded-full",
-                            level === "STRONG" && "bg-lavender",
+                            level === "STRONG" && "bg-success",
                             level === "MODERATE" && "bg-amber-500",
                             level === "LIMITED" && "bg-coral-700",
                             level === "ANECDOTAL" && "bg-muted-foreground"
@@ -213,7 +214,7 @@ export default async function IngredientsCatalogPage({
                 {hasActiveFilters && (
                   <Link
                     href="/ingredients"
-                    className="inline-block rounded-2xl bg-lavender px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                    className="inline-block rounded-2xl bg-brand px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                   >
                     Сбросить фильтры
                   </Link>
@@ -252,7 +253,7 @@ export default async function IngredientsCatalogPage({
                           </Badge>
                           <Badge variant={ev.variant}>{ev.label}</Badge>
                         </div>
-                        <h2 className="font-display text-lg font-bold text-lavender">
+                        <h2 className="font-display text-lg font-bold text-brand">
                           {ingredient.displayName}
                         </h2>
                         <p className="text-xs uppercase tracking-wide text-muted-foreground">
@@ -279,7 +280,7 @@ export default async function IngredientsCatalogPage({
                 </p>
                 <Link
                   href="/ingredients"
-                  className="mt-3 inline-block font-semibold text-lavender hover:underline"
+                  className="mt-3 inline-block font-semibold text-brand hover:underline"
                 >
                   Сбросить фильтры
                 </Link>

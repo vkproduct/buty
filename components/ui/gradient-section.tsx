@@ -2,23 +2,36 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+type Tone = "white" | "gray" | "green" | "sky";
+
 interface GradientSectionProps extends React.HTMLAttributes<HTMLElement> {
-  gradient?: "hero" | "lavender" | "warm";
+  /** Плоский фон секции. Устаревшие значения hero/lavender/warm сопоставлены с новыми. */
+  gradient?: Tone | "hero" | "lavender" | "warm";
+  /** Верхняя разделительная линия, как у серых секций референса. */
+  line?: boolean;
 }
 
-/** Секция с плавным градиентным фоном. */
+const TONE: Record<Tone, string> = {
+  white: "bg-white",
+  gray: "bg-ink-wash",
+  green: "bg-brand-100",
+  sky: "bg-mist",
+};
+
+const LEGACY: Record<string, Tone> = { hero: "gray", lavender: "green", warm: "sky" };
+
+/** Секция с плоским фоном на всю ширину. */
 export function GradientSection({
-  gradient = "hero",
+  gradient = "white",
+  line = false,
   className,
   ...props
 }: GradientSectionProps) {
-  const bg =
-    gradient === "lavender"
-      ? "bg-gradient-lavender text-white"
-      : gradient === "warm"
-        ? "bg-gradient-warm text-white"
-        : "bg-gradient-hero";
+  const tone = (LEGACY[gradient] ?? gradient) as Tone;
   return (
-    <section className={cn(bg, "relative overflow-hidden", className)} {...props} />
+    <section
+      className={cn(TONE[tone], line && "border-t border-border", "relative", className)}
+      {...props}
+    />
   );
 }

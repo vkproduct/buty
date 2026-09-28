@@ -31,7 +31,7 @@ export default async function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-full bg-white/60 px-3 py-1 text-lavender backdrop-blur transition-shadow hover:shadow-glass"
+                className="rounded-full bg-white px-3 py-1 text-brand transition-shadow hover:shadow-glass"
               >
                 {item.label}
               </Link>

@@ -22,7 +22,7 @@ export default async function OnboardingPage() {
     <main className="bg-gradient-hero min-h-screen">
       <Container className="py-16">
         <GlassCard className="mx-auto max-w-2xl p-8 sm:p-10">
-          <h1 className="font-display text-3xl font-bold">Расскажите о коже</h1>
+          <h1 className="font-display text-[28px] font-semibold leading-tight">Расскажите о коже</h1>
           <p className="mt-2 text-muted-foreground">
             Это поможет точнее подбирать уход и учитывать аллергии при разборе
             составов.

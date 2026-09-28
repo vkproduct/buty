@@ -32,7 +32,7 @@ export default async function AdminHome() {
         <Link key={s.label} href={s.href}>
           <GlassCard className="p-6 transition-shadow hover:shadow-glass">
             <p className="text-sm text-muted-foreground">{s.label}</p>
-            <p className="font-display text-3xl font-bold text-lavender">
+            <p className="font-display text-[26px] font-bold text-brand">
               {s.value}
             </p>
           </GlassCard>

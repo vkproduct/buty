@@ -129,7 +129,7 @@ export default async function IngredientPage({
       />
       <Container className="space-y-8">
         <nav className="text-sm text-muted-foreground">
-          <Link href="/ingredients" className="hover:text-lavender">
+          <Link href="/ingredients" className="hover:text-brand">
             Каталог ингредиентов
           </Link>
           <span className="mx-2">/</span>
@@ -148,7 +148,7 @@ export default async function IngredientPage({
               </Badge>
             )}
           </div>
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
             {ingredient.displayName}
           </h1>
           <p className="text-sm uppercase tracking-wide text-muted-foreground">
@@ -169,7 +169,7 @@ export default async function IngredientPage({
         {ingredient.howItWorks && (
           <GlassCard className="space-y-4 p-8">
             <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-              <Atom className="h-5 w-5 text-lavender" />
+              <Atom className="h-5 w-5 text-brand" />
               Как действует
             </h2>
             <p className="max-w-3xl text-muted-foreground">
@@ -200,11 +200,11 @@ export default async function IngredientPage({
                 return (
                   <li
                     key={c.other.id}
-                    className="flex flex-wrap items-center gap-3 rounded-2xl bg-white/50 p-4"
+                    className="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-4"
                   >
                     <Link
                       href={`/ingredients/${c.other.slug}`}
-                      className="font-semibold text-lavender hover:underline"
+                      className="font-semibold text-brand hover:underline"
                     >
                       {c.other.displayName}
                     </Link>
@@ -222,7 +222,7 @@ export default async function IngredientPage({
         {synergies.length > 0 && (
           <GlassCard className="space-y-4 p-8">
             <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-              <Sparkles className="h-5 w-5 text-lavender" />
+              <Sparkles className="h-5 w-5 text-brand" />
               С чем сочетается
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -247,7 +247,7 @@ export default async function IngredientPage({
         {ingredient.products.length > 0 && (
           <GlassCard className="space-y-4 p-8">
             <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-              <FlaskConical className="h-5 w-5 text-lavender" />
+              <FlaskConical className="h-5 w-5 text-brand" />
               Часто встречается в
             </h2>
             <ul className="grid gap-3 sm:grid-cols-2">
@@ -255,12 +255,12 @@ export default async function IngredientPage({
                 <li key={pi.product.id}>
                   <Link
                     href={`/products/${pi.product.slug}`}
-                    className="block rounded-2xl bg-white/50 p-4 transition-shadow hover:shadow-glass"
+                    className="block rounded-2xl bg-white p-4 transition-shadow hover:shadow-glass"
                   >
                     <span className="text-sm text-muted-foreground">
                       {pi.product.brand}
                     </span>
-                    <span className="block font-semibold text-lavender">
+                    <span className="block font-semibold text-brand">
                       {pi.product.name}
                     </span>
                   </Link>

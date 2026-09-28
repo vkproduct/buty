@@ -26,11 +26,11 @@ export default async function AdminProducts() {
           {products.map((p) => (
             <li
               key={p.id}
-              className="flex flex-wrap items-center gap-2 rounded-2xl bg-white/50 px-4 py-2 text-sm"
+              className="flex flex-wrap items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm"
             >
               <Link
                 href={`/admin/products/${p.id}`}
-                className="font-semibold text-lavender hover:underline"
+                className="font-semibold text-brand hover:underline"
               >
                 {p.brand} {p.name}
               </Link>
@@ -53,7 +53,7 @@ export default async function AdminProducts() {
           <Input name="slug" placeholder="slug (пусто — автоматически)" />
           <select
             name="category"
-            className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+            className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
             defaultValue="cream"
           >
             {Object.entries(PRODUCT_CATEGORY_LABEL).map(([value, label]) => (

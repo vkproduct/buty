@@ -34,7 +34,8 @@ export default function ForBrandsPage() {
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container className="max-w-4xl">
         <div className="max-w-2xl">
-          <h1 className="font-display text-4xl font-bold">Buty.app для брендов</h1>
+          <span className="eyebrow">Партнёрам</span>
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">Buty.app для брендов</h1>
           <p className="mt-4 text-muted-foreground">
             Мы разбираем составы косметики с научным дерматологическим подходом
             для аудитории, которая читает INCI-списки перед покупкой. Покажите
@@ -45,7 +46,7 @@ export default function ForBrandsPage() {
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {OFFERS.map(({ icon: Icon, title, text }) => (
             <GlassCard key={title} className="p-6">
-              <Icon className="h-6 w-6 text-lavender" />
+              <Icon className="h-6 w-6 text-brand" />
               <h2 className="font-display mt-3 font-semibold">{title}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{text}</p>
             </GlassCard>

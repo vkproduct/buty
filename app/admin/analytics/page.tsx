@@ -25,11 +25,11 @@ export default async function AdminAnalytics() {
           {analyses.map((p) => (
             <li
               key={p.productId}
-              className="flex items-center justify-between gap-2 rounded-2xl bg-white/50 px-4 py-2 text-sm"
+              className="flex items-center justify-between gap-2 rounded-2xl bg-white px-4 py-2 text-sm"
             >
               <Link
                 href={`/products/${p.slug}`}
-                className="text-lavender hover:underline"
+                className="text-brand hover:underline"
               >
                 {p.brand} {p.name}
               </Link>
@@ -52,15 +52,15 @@ export default async function AdminAnalytics() {
           {clicks.map((c) => (
             <li
               key={c.productId}
-              className="flex items-center justify-between gap-2 rounded-2xl bg-white/50 px-4 py-2 text-sm"
+              className="flex items-center justify-between gap-2 rounded-2xl bg-white px-4 py-2 text-sm"
             >
               <Link
                 href={`/products/${c.slug}`}
-                className="text-lavender hover:underline"
+                className="text-brand hover:underline"
               >
                 {c.brand} {c.name}
               </Link>
-              <span className="font-semibold text-lavender">{c.clicks}</span>
+              <span className="font-semibold text-brand">{c.clicks}</span>
             </li>
           ))}
         </ul>
@@ -72,10 +72,10 @@ export default async function AdminAnalytics() {
           {tokens.map((t) => (
             <li
               key={t.token}
-              className="flex items-center justify-between rounded-2xl bg-white/50 px-4 py-2 text-sm"
+              className="flex items-center justify-between rounded-2xl bg-white px-4 py-2 text-sm"
             >
               <span className="font-mono">{t.token}</span>
-              <span className="font-semibold text-lavender">{t.count}</span>
+              <span className="font-semibold text-brand">{t.count}</span>
             </li>
           ))}
         </ul>

@@ -98,7 +98,7 @@ export default async function ProductPage({
       />
       <Container className="space-y-8">
         <nav className="text-sm text-muted-foreground">
-          <Link href="/products" className="hover:text-lavender">
+          <Link href="/products" className="hover:text-brand">
             Каталог продуктов
           </Link>
           <span className="mx-2">/</span>
@@ -112,7 +112,7 @@ export default async function ProductPage({
               {PRODUCT_CATEGORY_LABEL[product.category] ?? product.category}
             </Badge>
           </div>
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
             {product.name}
           </h1>
           <p className="max-w-3xl text-muted-foreground">
@@ -149,18 +149,18 @@ export default async function ProductPage({
                 return (
                   <li
                     key={c.id}
-                    className="flex flex-wrap items-center gap-2 rounded-2xl bg-white/50 p-4"
+                    className="flex flex-wrap items-center gap-2 rounded-2xl bg-white p-4"
                   >
                     <Link
                       href={`/ingredients/${c.ingredientA.slug}`}
-                      className="font-semibold text-lavender hover:underline"
+                      className="font-semibold text-brand hover:underline"
                     >
                       {c.ingredientA.displayName}
                     </Link>
                     <span className="text-muted-foreground">+</span>
                     <Link
                       href={`/ingredients/${c.ingredientB.slug}`}
-                      className="font-semibold text-lavender hover:underline"
+                      className="font-semibold text-brand hover:underline"
                     >
                       {c.ingredientB.displayName}
                     </Link>
@@ -177,7 +177,7 @@ export default async function ProductPage({
 
         <GlassCard className="space-y-4 p-8">
           <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-            <FlaskConical className="h-5 w-5 text-lavender" />
+            <FlaskConical className="h-5 w-5 text-brand" />
             Состав ({product.ingredients.length})
           </h2>
           <ul className="grid gap-3 sm:grid-cols-2">
@@ -187,9 +187,9 @@ export default async function ProductPage({
               return (
                 <li key={pi.id}>
                   <Link href={`/ingredients/${ingredient.slug}`}>
-                    <div className="h-full space-y-2 rounded-2xl bg-white/50 p-4 transition-shadow hover:shadow-glass">
+                    <div className="h-full space-y-2 rounded-2xl bg-white p-4 transition-shadow hover:shadow-glass">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="font-semibold text-lavender">
+                        <span className="font-semibold text-brand">
                           {ingredient.displayName}
                         </span>
                         <span className="text-xs text-muted-foreground">

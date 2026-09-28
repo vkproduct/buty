@@ -34,7 +34,8 @@ export default async function ProductsCatalogPage({
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container className="space-y-8">
         <header className="max-w-3xl space-y-4">
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+          <span className="eyebrow">Каталог</span>
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
             Каталог продуктов
           </h1>
           <p className="text-muted-foreground">
@@ -54,13 +55,13 @@ export default async function ProductsCatalogPage({
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm font-semibold">Бренд:</span>
           <Link href="/products">
-            <Badge variant={searchParams.brand ? "outline" : "lavender"}>
+            <Badge variant={searchParams.brand ? "outline" : "brand"}>
               Все
             </Badge>
           </Link>
           {brands.map(({ brand }) => (
             <Link key={brand} href={`/products?brand=${encodeURIComponent(brand)}`}>
-              <Badge variant={searchParams.brand === brand ? "lavender" : "outline"}>
+              <Badge variant={searchParams.brand === brand ? "brand" : "outline"}>
                 {brand}
               </Badge>
             </Link>
@@ -79,7 +80,7 @@ export default async function ProductsCatalogPage({
                         product.category}
                     </Badge>
                   </div>
-                  <h2 className="font-display text-lg font-bold text-lavender">
+                  <h2 className="font-display text-lg font-bold text-brand">
                     {product.name}
                   </h2>
                   <p className="text-sm text-muted-foreground">

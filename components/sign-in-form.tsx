@@ -6,8 +6,13 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-/** Форма входа по email magic-link. */
-export function SignInForm() {
+interface SignInFormProps {
+  /** Текст кнопки (на лендинге — «Собрать полку бесплатно») */
+  cta?: string;
+}
+
+/** Форма входа по email magic-link. После входа — на /shelf. */
+export function SignInForm({ cta = "Получить ссылку для входа" }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +46,7 @@ export function SignInForm() {
       />
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Отправляем…" : "Получить ссылку для входа"}
+        {pending ? "Отправляем…" : cta}
       </Button>
     </form>
   );

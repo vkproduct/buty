@@ -4,9 +4,9 @@ import type { EvidenceLevel } from "@prisma/client";
 
 export const EVIDENCE_LABEL: Record<
   EvidenceLevel,
-  { label: string; variant: "lavender" | "amber" | "coral" | "outline" }
+  { label: string; variant: "success" | "brand" | "amber" | "coral" | "outline" }
 > = {
-  STRONG: { label: "Сильная доказательность", variant: "lavender" },
+  STRONG: { label: "Сильная доказательность", variant: "success" },
   MODERATE: { label: "Умеренная доказательность", variant: "amber" },
   LIMITED: { label: "Ограниченная доказательность", variant: "coral" },
   ANECDOTAL: { label: "Без качественных данных", variant: "outline" },
@@ -31,11 +31,11 @@ export const CATEGORY_LABEL: Record<string, string> = {
 
 export const SEVERITY_LABEL: Record<
   string,
-  { label: string; variant: "coral" | "amber" | "default" }
+  { label: string; variant: "coral" | "amber" | "outline" }
 > = {
   high: { label: "Высокий риск", variant: "coral" },
   medium: { label: "Умеренный риск", variant: "amber" },
-  low: { label: "Низкий риск", variant: "default" },
+  low: { label: "Низкий риск", variant: "outline" },
 };
 
 export const PRODUCT_CATEGORY_LABEL: Record<string, string> = {

@@ -100,7 +100,7 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
     <div>
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold">Моя полка</h1>
+          <h1 className="font-display text-[28px] font-semibold leading-tight">Моя полка</h1>
           <p className="mt-1 text-muted-foreground">
             {items.length > 0
               ? `Средств на полке: ${items.length}`
@@ -137,7 +137,7 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
                   {item.slug ? (
                     <Link
                       href={`/products/${item.slug}`}
-                      className="hover:text-lavender-700"
+                      className="hover:text-brand-700"
                     >
                       {item.title}
                     </Link>
@@ -160,7 +160,7 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
               </p>
             ) : null}
 
-            <div className="mt-4 flex items-center justify-between gap-2 border-t border-white/50 pt-3">
+            <div className="mt-4 flex items-center justify-between gap-2 border-t border-border pt-3">
               <div className="flex gap-1">
                 {(Object.keys(STATUS_LABELS) as ShelfItemView["status"][]).map(
                   (s) => (
@@ -171,8 +171,8 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
                       className={cn(
                         "rounded-full px-2.5 py-1 text-[11px] transition-colors",
                         item.status === s
-                          ? "bg-lavender/15 font-semibold text-lavender-700"
-                          : "text-muted-foreground hover:bg-lavender/5",
+                          ? "bg-brand/15 font-semibold text-brand-700"
+                          : "text-muted-foreground hover:bg-brand/5",
                       )}
                     >
                       {STATUS_LABELS[s]}
@@ -282,8 +282,8 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
     cn(
       "flex-1 rounded-full px-4 py-2 text-sm font-semibold transition-all",
       active
-        ? "bg-lavender/15 text-lavender-700"
-        : "text-muted-foreground hover:bg-lavender/5",
+        ? "bg-brand/15 text-brand-700"
+        : "text-muted-foreground hover:bg-brand/5",
     );
 
   return (
@@ -312,7 +312,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
                   type="button"
                   disabled={pending}
                   onClick={() => addProduct(p.id)}
-                  className="w-full rounded-2xl px-3 py-2 text-left transition-colors hover:bg-lavender/10 disabled:opacity-50"
+                  className="w-full rounded-2xl px-3 py-2 text-left transition-colors hover:bg-brand/10 disabled:opacity-50"
                 >
                   <span className="text-xs text-muted-foreground">
                     {p.brand} · {p.category}
@@ -331,7 +331,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
           {error ? (
             <p className="text-sm text-destructive">
               {error}{" "}
-              <Link href="/pricing" className="font-medium text-lavender hover:underline">
+              <Link href="/pricing" className="font-medium text-brand hover:underline">
                 Тарифы
               </Link>
             </p>
@@ -346,7 +346,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
             aria-label="Название"
           />
           <textarea
-            className="min-h-28 w-full rounded-2xl border border-white/60 bg-white/60 px-4 py-3 text-sm outline-none backdrop-blur focus:ring-2 focus:ring-lavender/40"
+            className="min-h-28 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-brand/40"
             placeholder="Состав (INCI-список текстом) — необязательно"
             value={customInci}
             onChange={(e) => {
@@ -356,8 +356,8 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
             aria-label="Состав"
           />
           {analysis ? (
-            <div className="rounded-2xl bg-lavender/5 p-3 text-sm">
-              <p className="font-semibold text-lavender-700">
+            <div className="rounded-2xl bg-brand/5 p-3 text-sm">
+              <p className="font-semibold text-brand-700">
                 Распознано {analysis.summary.recognized} из{" "}
                 {analysis.summary.total}
               </p>

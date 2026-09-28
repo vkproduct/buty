@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import { Header } from "@/components/header";
+import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "@/components/providers";
 
 import "./globals.css";
 
-const inter = Inter({
+const sans = Inter({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
-});
-
-const manrope = Manrope({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-manrope",
+  variable: "--font-sans",
+  display: "swap",
 });
 
 const SITE_URL = "https://buty.app";
@@ -49,11 +46,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
+    <html lang="ru" className={sans.variable}>
       <body className="font-sans">
         <Providers>
           <Header />
           {children}
+          <SiteFooter />
         </Providers>
       </body>
     </html>

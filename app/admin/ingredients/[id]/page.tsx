@@ -9,7 +9,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Input } from "@/components/ui/input";
 
 const TEXTAREA_CLASS =
-  "w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur";
+  "w-full rounded-xl border border-border bg-white px-3 py-2 text-sm";
 
 /** Правка ингредиента. */
 export default async function AdminIngredientEdit({
@@ -31,7 +31,7 @@ export default async function AdminIngredientEdit({
         slug: {ingredient.slug} ·{" "}
         <Link
           href={`/ingredients/${ingredient.slug}`}
-          className="text-lavender hover:underline"
+          className="text-brand hover:underline"
         >
           открыть страницу
         </Link>
@@ -46,7 +46,7 @@ export default async function AdminIngredientEdit({
         />
         <select
           name="category"
-          className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+          className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
           defaultValue={ingredient.category}
         >
           {Object.entries(CATEGORY_LABEL).map(([value, label]) => (
@@ -57,7 +57,7 @@ export default async function AdminIngredientEdit({
         </select>
         <select
           name="evidenceLevel"
-          className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+          className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
           defaultValue={ingredient.evidenceLevel}
         >
           {Object.entries(EVIDENCE_LABEL).map(([value, { label }]) => (

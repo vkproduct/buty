@@ -32,3 +32,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 tmp-shot4.png
+
+# рабочие выгрузки ассистента
+/Claude outputs/

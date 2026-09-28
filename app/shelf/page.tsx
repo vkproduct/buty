@@ -5,7 +5,7 @@ import { Lock, Sparkles } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
 import { analyzeText } from "@/lib/analysis/analyze";
-import { FREE_REACTIONS_LIMIT, getUserPlan } from "@/lib/billing";
+import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import {
   buildCompatibilityMatrix,
@@ -16,6 +16,7 @@ import { loadConflictEdges, loadShelfProducts } from "@/lib/shelf/data";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
+import { SignInForm } from "@/components/sign-in-form";
 import { ShelfTabs, type ReactionView, type ReminderView } from "@/components/shelf-tabs";
 import type { ShelfItemView } from "@/components/shelf-client";
 
@@ -29,22 +30,33 @@ export default async function ShelfPage() {
     return (
       <main className="bg-gradient-hero min-h-screen">
         <Container className="flex min-h-[70vh] items-center justify-center py-20">
-          <GlassCard className="max-w-lg p-10 text-center">
-            <Lock className="mx-auto h-8 w-8 text-lavender" />
-            <h1 className="font-display mt-4 text-3xl font-bold">Моя полка</h1>
-            <p className="mt-4 text-muted-foreground">
-              Коллекция ваших средств с разбором составов. Войдите по ссылке из
-              письма, чтобы собрать свою полку.
+          <GlassCard className="w-full max-w-lg p-8 sm:p-10">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-50">
+              <Lock className="h-5 w-5 text-brand" />
+            </span>
+            <h1 className="font-display mt-4 text-[28px] font-semibold leading-tight">Моя полка</h1>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Все ваши средства в одном месте: проверка совместимости, режим
+              утро / вечер, поиск дублей, дневник реакций и напоминания.
+              Войдите по ссылке из письма — пароль не нужен.
             </p>
-            <Button asChild className="mt-6">
-              <Link href="/auth/signin">Войти</Link>
-            </Button>
-            <p className="mt-6 flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-lavender-400">
-              <Sparkles className="h-4 w-4" /> Pro-функции скоро
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Проверка совместимости активов, порядок нанесения, поиск дублей,
-              история реакций и напоминания — в Pro-подписке.
+            <ul className="mt-5 space-y-2 rounded-xl bg-ink-wash p-4 text-sm text-ink-soft">
+              <li>
+                <span className="font-semibold text-foreground">Бесплатно:</span> до{" "}
+                {FREE_SHELF_LIMIT} средств на полке, последние {FREE_REACTIONS_LIMIT} реакций, напоминания.
+              </li>
+              <li>
+                <span className="font-semibold text-foreground">Pro:</span> полка без лимита,
+                совместимость, режим, поиск дублей, вся история реакций, экспорт в PDF.
+              </li>
+            </ul>
+            <div className="mt-6">
+              <SignInForm cta="Собрать полку бесплатно" />
+            </div>
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              <Link href="/pricing" className="font-medium text-brand hover:underline">
+                Сравнить тарифы
+              </Link>
             </p>
           </GlassCard>
         </Container>
@@ -212,7 +224,7 @@ export default async function ShelfPage() {
                 :
               </span>{" "}
               матрица совместимости, режим, полная история реакций и{" "}
-              <Link href="/shelf/export" className="font-medium text-lavender hover:underline">
+              <Link href="/shelf/export" className="font-medium text-brand hover:underline">
                 экспорт полки в PDF
               </Link>
               .

@@ -9,7 +9,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Input } from "@/components/ui/input";
 
 const TEXTAREA_CLASS =
-  "w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur";
+  "w-full rounded-xl border border-border bg-white px-3 py-2 text-sm";
 
 /** Ингредиенты: список + форма добавления. */
 export default async function AdminIngredients() {
@@ -28,11 +28,11 @@ export default async function AdminIngredients() {
           {ingredients.map((i) => (
             <li
               key={i.id}
-              className="flex flex-wrap items-center gap-2 rounded-2xl bg-white/50 px-4 py-2 text-sm"
+              className="flex flex-wrap items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm"
             >
               <Link
                 href={`/admin/ingredients/${i.id}`}
-                className="font-semibold text-lavender hover:underline"
+                className="font-semibold text-brand hover:underline"
               >
                 {i.displayName}
               </Link>
@@ -55,7 +55,7 @@ export default async function AdminIngredients() {
           <Input name="slug" placeholder="slug (пусто — автоматически)" />
           <select
             name="category"
-            className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+            className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
             defaultValue="active"
           >
             {Object.entries(CATEGORY_LABEL).map(([value, label]) => (
@@ -66,7 +66,7 @@ export default async function AdminIngredients() {
           </select>
           <select
             name="evidenceLevel"
-            className="w-full rounded-xl border border-white/40 bg-white/60 px-3 py-2 text-sm backdrop-blur"
+            className="w-full rounded-xl border border-border bg-white px-3 py-2 text-sm"
             defaultValue="LIMITED"
           >
             {Object.entries(EVIDENCE_LABEL).map(([value, { label }]) => (

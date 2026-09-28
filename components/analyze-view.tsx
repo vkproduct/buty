@@ -31,8 +31,8 @@ import {
 } from "@/components/ui/dialog";
 import { GlassCard } from "@/components/ui/glass-card";
 
-const EVIDENCE_LABEL: Record<string, { label: string; variant: "lavender" | "amber" | "coral" | "outline" }> = {
-  STRONG: { label: "Сильная доказательность", variant: "lavender" },
+const EVIDENCE_LABEL: Record<string, { label: string; variant: "success" | "brand" | "amber" | "coral" | "outline" }> = {
+  STRONG: { label: "Сильная доказательность", variant: "success" },
   MODERATE: { label: "Умеренная доказательность", variant: "amber" },
   LIMITED: { label: "Ограниченная доказательность", variant: "coral" },
   ANECDOTAL: { label: "Без качественных данных", variant: "outline" },
@@ -57,10 +57,10 @@ const CATEGORY_LABEL: Record<string, string> = {
   preservative: "Консервант",
 };
 
-const SEVERITY_STYLE: Record<string, { label: string; variant: "coral" | "amber" | "default" }> = {
+const SEVERITY_STYLE: Record<string, { label: string; variant: "coral" | "amber" | "outline" }> = {
   high: { label: "Высокий риск", variant: "coral" },
   medium: { label: "Умеренный риск", variant: "amber" },
-  low: { label: "Низкий риск", variant: "default" },
+  low: { label: "Низкий риск", variant: "outline" },
 };
 
 /** Страница разбора состава: форма ввода, результат анализа, заглушка OCR. */
@@ -117,10 +117,10 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container className="space-y-10">
         <div className="space-y-3 text-center">
-          <Badge variant="lavender" className="mx-auto">
+          <Badge variant="teal" className="mx-auto">
             <FlaskConical className="mr-1 h-3 w-3" /> Доказательный разбор
           </Badge>
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
             Разбор состава
           </h1>
           <p className="mx-auto max-w-2xl text-muted-foreground">
@@ -142,7 +142,7 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
               onChange={(e) => setText(e.target.value)}
               rows={6}
               placeholder="Вставьте состав сюда. Например: Aqua, Niacinamide, Glycerin, Panthenol…"
-              className="w-full resize-none rounded-2xl border border-white/60 bg-white/70 px-4 py-3 text-sm backdrop-blur transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lavender"
+              className="w-full resize-none rounded-2xl border border-border bg-white px-4 py-3 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             />
             <div className="flex flex-wrap gap-3">
               <Button type="submit" size="lg" disabled={loading || !text.trim()}>
@@ -242,7 +242,7 @@ function SummaryBlock({ result }: { result: AnalysisResult }) {
     <GlassCard className="grid grid-cols-2 gap-4 p-6 sm:grid-cols-5">
       {items.map((item) => (
         <div key={item.label} className="text-center">
-          <div className="font-display text-2xl font-bold text-lavender-700">
+          <div className="font-display text-2xl font-bold text-brand-700">
             {item.value}
           </div>
           <div className="text-xs text-muted-foreground">{item.label}</div>
@@ -266,14 +266,14 @@ function ConflictsBlock({ conflicts }: { conflicts: ConflictInfo[] }) {
               <div className="flex flex-wrap items-center gap-2">
                 <Link
                   href={`/ingredients/${c.a.slug}`}
-                  className="font-semibold text-lavender-700 underline-offset-4 hover:underline"
+                  className="font-semibold text-brand-700 underline-offset-4 hover:underline"
                 >
                   {c.a.displayName}
                 </Link>
                 <span className="text-muted-foreground">+</span>
                 <Link
                   href={`/ingredients/${c.b.slug}`}
-                  className="font-semibold text-lavender-700 underline-offset-4 hover:underline"
+                  className="font-semibold text-brand-700 underline-offset-4 hover:underline"
                 >
                   {c.b.displayName}
                 </Link>
@@ -310,7 +310,7 @@ function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
       <div className="flex flex-wrap items-center gap-2">
         <Link
           href={`/ingredients/${ingredient.slug}`}
-          className="font-display text-lg font-bold text-lavender-700 underline-offset-4 hover:underline"
+          className="font-display text-lg font-bold text-brand-700 underline-offset-4 hover:underline"
         >
           {ingredient.displayName}
         </Link>
@@ -420,7 +420,7 @@ function FeedbackDialog({
           </DialogDescription>
         </DialogHeader>
         {sent ? (
-          <p className="text-sm text-lavender-700">
+          <p className="text-sm text-brand-700">
             Спасибо! Мы получили сообщение и разберёмся с этим ингредиентом.
           </p>
         ) : (
@@ -430,7 +430,7 @@ function FeedbackDialog({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email (необязательно — для ответа)"
-              className="w-full rounded-2xl border border-white/60 bg-white/70 px-4 py-3 text-sm backdrop-blur placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lavender"
+              className="w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             />
             {error && <p className="text-sm text-coral-700">{error}</p>}
           </>

@@ -17,8 +17,8 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: 80,
-          background: "linear-gradient(135deg, #5B4BC4 0%, #8B7BE0 55%, #F7A58C 100%)",
-          color: "white",
+          background: "#FFFFFF",
+          color: "#222222",
           fontFamily: "sans-serif",
         }}
       >
@@ -28,9 +28,9 @@ export default function OpengraphImage() {
             alignItems: "center",
             gap: 16,
             fontSize: 28,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            opacity: 0.85,
+            letterSpacing: -0.5,
+            fontWeight: 700,
+            color: "#FF385C",
           }}
         >
           <span
@@ -38,15 +38,15 @@ export default function OpengraphImage() {
               width: 18,
               height: 18,
               borderRadius: 9,
-              background: "#E8B84B",
+              background: "#FF385C",
             }}
           />
           Buty.app
         </div>
-        <div style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.15, marginTop: 24 }}>
+        <div style={{ fontSize: 72, fontWeight: 600, letterSpacing: -2, lineHeight: 1.15, marginTop: 24 }}>
           Научный разбор составов косметики
         </div>
-        <div style={{ fontSize: 32, marginTop: 24, opacity: 0.9 }}>
+        <div style={{ fontSize: 32, marginTop: 24, color: "#555555" }}>
           Функции ингредиентов · Концентрации · Конфликты активов · Доказательность
         </div>
       </div>

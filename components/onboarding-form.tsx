@@ -73,8 +73,8 @@ export function OnboardingForm({ initial }: OnboardingFormProps) {
     cn(
       "rounded-full border px-4 py-2 text-sm transition-all",
       active
-        ? "border-lavender bg-lavender/15 font-semibold text-lavender-700"
-        : "border-white/60 bg-white/50 text-muted-foreground hover:bg-white/80",
+        ? "border-brand bg-brand/15 font-semibold text-brand-700"
+        : "border-border bg-white text-muted-foreground hover:bg-white",
     );
 
   return (

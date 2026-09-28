@@ -19,7 +19,8 @@ export default async function PricingPage() {
     <main className="bg-gradient-hero min-h-screen py-16">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-4xl font-bold">Тарифы</h1>
+          <span className="eyebrow">Стоимость</span>
+          <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">Тарифы</h1>
           <p className="mt-4 text-muted-foreground">
             Разбор составов и подбор ухода — бесплатно всегда. Pro открывает
             «Мою полку» целиком: совместимость активов, режим, полную историю

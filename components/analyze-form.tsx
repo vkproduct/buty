@@ -6,8 +6,14 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-/** Форма вставки состава: мок-редакция, отправляет текст на /analyze. */
-export function AnalyzeForm() {
+interface AnalyzeFormProps {
+  /** id поля — чтобы на странице могли жить две формы */
+  id?: string;
+  rows?: number;
+}
+
+/** Форма вставки состава: отправляет текст на /analyze. */
+export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
   const router = useRouter();
   const [text, setText] = useState("");
 
@@ -19,14 +25,18 @@ export function AnalyzeForm() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-3">
+      <label htmlFor={id} className="sr-only">
+        Состав средства (INCI)
+      </label>
       <textarea
+        id={id}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        rows={5}
+        rows={rows}
         placeholder="Вставьте состав сюда. Например: Aqua, Niacinamide, Glycerin, Panthenol…"
-        className="w-full resize-none rounded-2xl border border-white/60 bg-white/70 px-4 py-3 text-sm backdrop-blur transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lavender"
+        className="w-full resize-none rounded-xl border border-input bg-white px-4 py-3.5 text-[15px] leading-relaxed text-foreground transition-shadow placeholder:text-ink-muted focus-visible:border-foreground focus-visible:shadow-[0_0_0_1px_#222] focus-visible:outline-none"
       />
-      <Button type="submit" size="lg" className="w-full sm:w-auto">
+      <Button type="submit" size="lg" className="w-full">
         Разобрать состав
         <ArrowRight className="h-4 w-4" />
       </Button>

@@ -135,6 +135,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
         display: ["var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
+        logo: ["var(--font-logo)", "var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
       },
       // Мягкая геометрия: кнопки и поля — 8px, карточки — 12px, крупные блоки — 16–24px.
       borderRadius: {

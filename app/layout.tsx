@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 
 import { Header } from "@/components/header";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,6 +10,14 @@ import "./globals.css";
 const sans = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+/** Шрифт логотипа: Outfit Regular (400). */
+const logo = Outfit({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-logo",
   display: "swap",
 });
 
@@ -46,7 +54,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={sans.variable}>
+    <html lang="ru" className={`${sans.variable} ${logo.variable}`}>
       <body className="font-sans">
         <Providers>
           <Header />

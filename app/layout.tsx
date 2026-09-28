@@ -13,10 +13,10 @@ const sans = Inter({
   display: "swap",
 });
 
-/** Шрифт логотипа: Outfit Regular (400). */
+/** Шрифт логотипа: Outfit SemiBold (600). */
 const logo = Outfit({
   subsets: ["latin"],
-  weight: "400",
+  weight: "600",
   variable: "--font-logo",
   display: "swap",
 });

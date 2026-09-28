@@ -15,7 +15,7 @@ export function Logo({ className }: { className?: string }) {
         <circle cx="30" cy="27" r="11" fill="none" stroke="#fff" strokeWidth="4" />
         <path d="M38 35 L48 47" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
       </svg>
-      <span className="font-logo text-[19px] font-normal tracking-[-0.03em]">
+      <span className="font-logo text-[19px] font-semibold tracking-[-0.03em]">
         Buty<span className="text-brand-500">.app</span>
       </span>
     </Link>

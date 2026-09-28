@@ -5,6 +5,8 @@
 **Бесплатно:** разбор состава (текст) + базовый подбор ухода.
 **Платно («Pro»):** «Моя полка» — коллекция средств с проверкой совместимости активов, порядком нанесения, поиском дублей, историей реакций кожи и напоминаниями.
 
+**Состояние базы (волна 3):** 194 ингредиента с дерматологическими карточками, 624 синонима, 49 конфликтов активов. Покрытие реальных INCI-составов — 81% (замер: `scripts/check-compositions.ts`, 7 эталонных составов).
+
 ## Быстрый старт (Docker)
 
 ```bash
@@ -34,13 +36,14 @@ pnpm dev                    # http://localhost:3000
 | `pnpm test` | тесты (vitest) |
 | `pnpm db:migrate` | prisma migrate dev |
 | `pnpm db:seed` | сид справочников |
+| `pnpm exec tsx scripts/check-compositions.ts` | замер покрытия базы на 7 реальных INCI-составах |
 | `docker compose up --build` | полный локальный запуск на чистой машине |
 
 ## Архитектура (в 10 строк)
 
 1. Next.js 14 App Router: `/app` — маршруты, серверные компоненты и API-роуты.
 2. PostgreSQL + Prisma: схема и миграции в `/prisma`, сид — `prisma/seed.ts`.
-3. Анализ состава: текст → `normalizeInci` (токены) → `matchIngredients` (Ingredient + Synonym) → сводка и конфликты (`/lib/analysis`, `/lib/ingredients`).
+3. Анализ состава: текст → `normalizeInci` (токены: регистр, скобки, запятая не режет «1,2-Hexanediol», слэш-токены вроде «Caprylic/Capric Triglyceride» сначала матчатся целиком, при промахе — по частям) → `matchIngredients` (Ingredient + Synonym) → сводка и конфликты (`/lib/analysis`, `/lib/ingredients`).
 4. «Моя полка»: ShelfItem → матрица совместимости, порядок нанесения, дубли, реакции, напоминания (`/lib/shelf`, `/lib/reminders`).
 5. Авторизация: NextAuth email magic-link, сессии в БД (`/lib/auth`).
 6. Монетизация: Subscription гейтит Pro; оплата через `PaymentProvider`; партнёрские клики — `/go/[productId]` → PartnerClick (`/lib/billing`, `/lib/payments`).

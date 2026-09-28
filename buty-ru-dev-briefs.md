@@ -248,6 +248,26 @@ HANDOFF:
 
 ---
 
+## ВОЛНА 3 БАЗЫ ИНГРЕДИЕНТОВ — бриф для нового чата (после деплоя 148 карточек)
+
+**Контекст:** база 148 ингредиентов, 508 синонимов, 49 конфликтов (seed: prisma/seed.ts). Каталог с поиском и сайдбаром на проде. Проверка покрытия: `pnpm exec tsx scripts/check-compositions.ts` — прогоняет 7 реальных составов (COSRX Snail 96, ROUND LAB Dokdo Lotion, CeraVe Foaming Cleanser, Anua Heartleaf Toner, LRP Effaclar Gel, Vichy Minéral 89, Skin1004 Centella Ampoule) через нормализатор+матчер. Текущее покрытие: 52/150 токенов (35%).
+
+**Приоритет 0 — фиксы нормализатора (lib/ingredients/normalize.ts), не карточки:**
+1. `1,2-Hexanediol` режется по запятой на `1` и `2-hexanediol`. Правило: не разрезать по запятой, если сразу после неё цифра (lookahead `(?!\s*\d)`).
+2. Слэш внутри INCI-имён: `Caprylic/Capric Triglyceride`, `Dimethicone/Vinyl Dimethicone Crosspolymer`, `Acrylates/C10-30 Alkyl Acrylate Crosspolymer`, `PEG/PPG/... Glycerin` разрезаются по `/` раньше, чем проверяется словарь. Правило: сначала проверять целый токен по aliasMap/словарю, при промахе — резать по `/`. Обновить тесты в lib/ingredients/normalize.test.ts. Ожидание: рост покрытия до ~50% без новых карточек.
+
+**Приоритет 1 — технологические «хиты» (~15):** WATER (Aqua/Purified Water/Eau), CARBOMER, XANTHAN GUM, 1,2-HEXANEDIOL, TROMETHAMINE, SODIUM HYDROXIDE, GLYCERYL STEARATE, CETYL ALCOHOL, STEARYL ALCOHOL, PHENYL TRIMETHICONE, SILICA, SODIUM CHLORIDE, POLYSORBATE 20, ARGININE, HEXYLENE GLYCOL.
+
+**Приоритет 2 — барьерные и эмульгаторы (~15):** синонимы церамидов старой нумерации (Ceramide 1→EOP, 3→NP, 6 II→AP), PHYTOSPHINGOSINE, PROPYLPARABEN, BEHENTRIMONIUM METHOSULFATE, SODIUM LAUROYL LACTYLATE, POLYGLYCERYL-3 METHYLGLUCOSE DISTEARATE, PENTAERYTHRITYL TETRAETHYLHEXANOATE, HYDROGENATED POLYDECENE, MACADAMIA INTEGRIFOLIA SEED OIL, POLYMETHYLSILSESQUIOXANE, METHYL GLUCETH-20, BIOSACCHARIDE GUM-1, COCO-BETAINE, BEHENYL ALCOHOL, PALMITIC/MYRISTIC/BEHENIC ACID.
+
+**Приоритет 3 — K-beauty экстракты и ферменты (~15):** SNAIL SECRETION FILTRATE, HOUTTUYNIA CORDATA, PORTULACA OLERACEA, CURCUMA LONGA, VITIS VINIFERA, PYRUS MALUS, SACCHARUM OFFICINARUM, MELIA AZADIRACHTA, BACILLUS FERMENT, MICROCOCCUS LYSATE, METHYLPROPANEDIOL, ISOPENTYLDIOL.
+
+**Критерий приёмки:** typecheck, 51 тест + новые, `pnpm db:seed`, покрытие check-compositions ≥ 70%, build, пуш в main, проверка прода.
+
+**Вне границ:** карточки для токенов встречающихся 1 раз (PEG-8, PEG-120 MGD, Polyoxyl 40 Stearate и т.п.) — волна 4 по данным Feedback.
+
+---
+
 ## Идеи на потом (не давать Kimi в рабочих чатах, хранить здесь)
 
 - OCR фото состава (реальный Yandex Vision / Google Vision) — интерфейс готов с части 3.

@@ -32,9 +32,9 @@ import {
 import { GlassCard } from "@/components/ui/glass-card";
 
 const EVIDENCE_LABEL: Record<string, { label: string; variant: "success" | "brand" | "amber" | "coral" | "outline" }> = {
-  STRONG: { label: "Сильная доказательность", variant: "success" },
-  MODERATE: { label: "Умеренная доказательность", variant: "amber" },
-  LIMITED: { label: "Ограниченная доказательность", variant: "coral" },
+  STRONG: { label: "Сильная доказательная база", variant: "success" },
+  MODERATE: { label: "Умеренная доказательная база", variant: "amber" },
+  LIMITED: { label: "Ограниченная доказательная база", variant: "coral" },
   ANECDOTAL: { label: "Без качественных данных", variant: "outline" },
 };
 

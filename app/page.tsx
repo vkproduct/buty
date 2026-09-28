@@ -33,13 +33,15 @@ const MONTH = PLAN_PRICES.month;
 const YEAR = PLAN_PRICES.year;
 const YEAR_PER_MONTH = Math.floor(YEAR / 12);
 const YEAR_PER_DAY = Math.round(YEAR / 365);
-function pluralItems(n: number): string {
+/** Русское склонение после числа: 1 средство, 2 средства, 5 средств. */
+function plural(n: number, one: string, few: string, many: string): string {
   const n10 = n % 10;
   const n100 = n % 100;
-  if (n10 === 1 && n100 !== 11) return `${n} средство`;
-  if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return `${n} средства`;
-  return `${n} средств`;
+  if (n10 === 1 && n100 !== 11) return one;
+  if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return few;
+  return many;
 }
+const pluralItems = (n: number) => `${n} ${plural(n, "средство", "средства", "средств")}`;
 const FREE_ITEMS = pluralItems(FREE_SHELF_LIMIT);
 const SIGNUP = "/auth/signin";
 
@@ -87,12 +89,12 @@ const SHELF_FEATURES = [
   {
     icon: LayoutGrid,
     title: "Все средства в одном месте",
-    text: "Из каталога или своё — по названию и составу. Каждое сразу разобрано по активам.",
+    text: "Из каталога или свои — по названию и составу. Каждое средство сразу разбирается по активам.",
   },
   {
     icon: FlaskConical,
     title: "Проверка совместимости",
-    text: "Каждая пара средств: конфликт, «разнести по времени» или можно вместе. Плюс поиск дублей.",
+    text: "Для каждой пары средств — вердикт: «конфликт», «разнести по времени» или «можно вместе». Плюс поиск дублей.",
     pro: true,
   },
   {
@@ -109,7 +111,7 @@ const SHELF_FEATURES = [
   {
     icon: Bell,
     title: "Напоминания",
-    text: "Оценить новое средство через 28 дней и докупить привычное через 90.",
+    text: "Напомним оценить новое средство через 28 дней и докупить привычное — через 90.",
   },
 ];
 
@@ -184,7 +186,7 @@ const PLANS: {
 ];
 
 const EVIDENCE_LADDER = [
-  { label: "Сильная", note: "множество RCT, мета-анализы", width: "100%", cls: "bg-success" },
+  { label: "Сильная", note: "много РКИ, метаанализы", width: "100%", cls: "bg-success" },
   { label: "Умеренная", note: "ограниченные клинические данные", width: "72%", cls: "bg-teal" },
   { label: "Ограниченная", note: "in vitro, единичные исследования", width: "44%", cls: "bg-amber" },
   { label: "Без данных", note: "традиция и маркетинг", width: "20%", cls: "bg-ink-line" },
@@ -247,14 +249,14 @@ export default async function HomePage() {
               Доказательный уход, а не маркетинг
             </Badge>
             <h1 className="text-[32px] font-semibold leading-[1.08] sm:text-[48px] lg:text-[56px]">
-              Узнайте, что в вашей косметике — и&nbsp;как она работает вместе
+              Узнайте, что в вашей косметике и&nbsp;как она работает
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
               Разбираем составы по научным данным, а «Моя полка» проверяет,
               сочетаются ли ваши средства, и собирает режим утро / вечер.
             </p>
             <ul className="check-list mt-6">
-              <li>Функция, концентрация и доказательность каждого ингредиента</li>
+              <li>Функция, рабочая концентрация и уровень доказательности каждого ингредиента</li>
               <li>Конфликты активов — в одном средстве и между средствами</li>
               <li>Готовый порядок нанесения для вашей полки</li>
             </ul>
@@ -294,10 +296,29 @@ export default async function HomePage() {
           <Container>
             <div className="grid grid-cols-2 rounded-2xl border border-ink-line lg:grid-cols-4">
               {[
-                { num: stats.ingredients, txt: "ингредиентов с дерматологическими карточками" },
-                { num: stats.synonyms, txt: "вариантов написания INCI распознаёт разбор" },
-                { num: stats.conflicts, txt: "пар активов с проверкой на конфликт" },
-                { num: 4, txt: "уровня доказательности для каждого ингредиента" },
+                {
+                  num: stats.ingredients,
+                  txt: plural(
+                    stats.ingredients,
+                    "ингредиент с дерматологической карточкой",
+                    "ингредиента с дерматологическими карточками",
+                    "ингредиентов с дерматологическими карточками",
+                  ),
+                },
+                {
+                  num: stats.synonyms,
+                  txt: `${plural(stats.synonyms, "вариант", "варианта", "вариантов")} написания INCI распознаёт разбор`,
+                },
+                {
+                  num: stats.conflicts,
+                  txt: plural(
+                    stats.conflicts,
+                    "известный конфликт между активами",
+                    "известных конфликта между активами",
+                    "известных конфликтов между активами",
+                  ),
+                },
+                { num: 4, txt: "уровня в шкале доказательности" },
               ].map((s, i) => (
                 <div
                   key={s.txt}
@@ -359,7 +380,7 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="Моя полка"
             title="Ваш уход в одном месте — с проверкой совместимости"
-            lead="«Моя полка» — личный кабинет с вашими средствами. Добавьте то, чем пользуетесь, и сервис покажет, что с чем нельзя, что дублируется и в каком порядке всё наносить."
+            lead="«Моя полка» — личный кабинет с вашими средствами. Добавьте то, чем пользуетесь, и сервис покажет, что с чем нельзя сочетать, что дублируется и в каком порядке всё наносить."
           />
           <div className="mt-10 grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="min-w-0 lg:col-span-5">
@@ -398,12 +419,12 @@ export default async function HomePage() {
       {/* ═══ 5. ПУТЬ: от разбора до Pro ═══ */}
       <section className="bg-ink-wash py-14 lg:py-20">
         <Container>
-          <SectionHeading eyebrow="Как начать" title="Три шага до ухода, который сочетается" />
+          <SectionHeading eyebrow="Как начать" title="Три шага к уходу, в котором всё сочетается" />
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
             {[
               {
                 title: "Разберите состав",
-                text: "Бесплатно и без регистрации: функции, концентрации, доказательность, конфликты.",
+                text: "Бесплатно и без регистрации: функции, концентрации, доказательная база, конфликты.",
                 tag: "Free",
               },
               {
@@ -412,8 +433,8 @@ export default async function HomePage() {
                 tag: "Free",
               },
               {
-                title: "Откройте Pro",
-                text: `Совместимость всей полки, режим утро / вечер, поиск дублей и экспорт — от ${rub(YEAR_PER_MONTH)} в месяц.`,
+                title: "Подключите Pro",
+                text: `Совместимость всей полки, режим утро / вечер, поиск дублей и экспорт в PDF — от ${rub(YEAR_PER_MONTH)} в месяц.`,
                 tag: "Pro",
               },
             ].map((s, i) => (
@@ -510,7 +531,7 @@ export default async function HomePage() {
                 Наука, а не маркетинг
               </h2>
               <ul className="check-list mt-5">
-                <li>«Натуральное» не значит «безопасное», а «химия» — не значит «вредное»</li>
+                <li>«Натуральное» не значит «безопасное», а «химия» не значит «вредное»</li>
                 <li>Ингредиенты оцениваются по качеству доказательств, а не по громкости обещаний</li>
                 <li>Конфликты активов важнее, чем «натуральность» состава</li>
               </ul>
@@ -596,7 +617,7 @@ export default async function HomePage() {
         title="«Моя полка»: совместимость и режим для ваших средств"
         subtitle={
           stats
-            ? `${stats.ingredients.toLocaleString("ru-RU")} ингредиентов · ${stats.conflicts.toLocaleString("ru-RU")} пар конфликтов · режим утро / вечер`
+            ? `${stats.ingredients.toLocaleString("ru-RU")} ${plural(stats.ingredients, "ингредиент", "ингредиента", "ингредиентов")} · ${stats.conflicts.toLocaleString("ru-RU")} ${plural(stats.conflicts, "конфликт", "конфликта", "конфликтов")} активов · режим утро / вечер`
             : "Проверка совместимости · поиск дублей · режим утро / вечер"
         }
         price="0 ₽"

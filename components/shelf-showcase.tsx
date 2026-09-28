@@ -24,7 +24,7 @@ const TABS: { id: TabId; label: string; icon: typeof LayoutGrid; pro?: boolean; 
     id: "items",
     label: "Средства",
     icon: LayoutGrid,
-    hint: "Добавляйте средства из каталога или своё — по названию и составу. Каждое сразу разобрано по активам.",
+    hint: "Добавляйте средства из каталога или свои — по названию и составу. Каждое средство сразу разбирается по активам.",
   },
   {
     id: "compatibility",

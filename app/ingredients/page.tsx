@@ -178,7 +178,7 @@ export default async function IngredientsCatalogPage({
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold">Доказательность</p>
+                  <p className="text-sm font-semibold">Доказательная база</p>
                   <FilterLink
                     href={filterHref(searchParams, { evidence: undefined })}
                     active={!evidence}

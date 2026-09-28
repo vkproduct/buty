@@ -72,9 +72,7 @@ export async function generateMetadata({
   const title = `${ingredient.displayName} (${ingredient.inciName}) в косметике`;
   const description = `${ingredient.function}. Рабочая концентрация: ${
     ingredient.typicalConc ?? "зависит от формулы"
-  }. Уровень доказательности: ${EVIDENCE_LABEL[
-    ingredient.evidenceLevel
-  ].label.toLowerCase()}. Конфликты и сочетания с другими активами.`;
+  }. ${EVIDENCE_LABEL[ingredient.evidenceLevel].label}. Конфликты и сочетания с другими активами.`;
   return {
     title,
     description,

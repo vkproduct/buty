@@ -45,22 +45,34 @@ function filterHref(base: SearchParams, patch: Partial<SearchParams>): string {
 }
 
 /**
- * Ключ алфавитной группы: первая буква русского названия.
- * Цифры — в одну группу «0–9» (в начале), латиница — в одну группу «A–Z» (в конце),
- * чтобы латинская P не стояла рядом с кириллической Р как «две одинаковые буквы».
+ * Ключ алфавитной группы: первая буква названия.
+ * Цифры — в одну группу «0–9» (в начале), латинские буквы идут отдельным блоком
+ * после кириллицы и в указателе выведены второй строкой — так латинская P
+ * не путается с кириллической Р.
  */
 function letterOf(name: string): string {
   const ch = name.trim().charAt(0).toUpperCase();
   if (/[0-9]/.test(ch)) return "0–9";
-  if (/[A-Z]/.test(ch)) return "A–Z";
   return ch === "Ё" ? "Е" : ch;
 }
 
+const isLatin = (key: string) => /^[A-Z]$/.test(key);
+
 function letterRank(key: string): number {
   if (key === "0–9") return 0;
-  if (key === "A–Z") return 2;
+  if (isLatin(key)) return 2;
   return 1;
 }
+
+/** id секции буквы: префикс алфавита, чтобы кириллическая и латинская «похожие» буквы не совпали. */
+function letterAnchor(key: string): string {
+  if (key === "0–9") return "letter-digits";
+  return `letter-${isLatin(key) ? "en" : "ru"}-${key}`;
+}
+
+/** Буквы, с которых может начинаться слово (без Ё, Ъ, Ы, Ь). */
+const RU_ALPHABET = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ".split("");
+const EN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function pluralRu(n: number, one: string, few: string, many: string): string {
   const mod10 = n % 10;
@@ -248,65 +260,6 @@ export default async function IngredientsCatalogPage({
         </div>
       </Container>
 
-      {/* ── Навигатор по категориям ───────────────────────────────────── */}
-      <Container className="pb-10">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {categoryGroups.map((group) => (
-            <section
-              key={group.id}
-              aria-labelledby={`group-${group.id}`}
-              className="min-w-0 rounded-3xl border border-ink-hair p-5"
-            >
-              <h2 id={`group-${group.id}`} className="text-base font-semibold">
-                {group.title}
-              </h2>
-              <p className="mt-0.5 text-sm text-ink-muted">{group.hint}</p>
-              <ul className="no-scrollbar -mx-5 mt-4 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
-                {group.categories.map((c) => {
-                  const active = category === c;
-                  const count = countByCategory.get(c) ?? 0;
-                  const chipClass =
-                    "inline-flex h-10 items-center gap-2 rounded-full border pl-1.5 pr-3.5 text-sm transition-colors";
-                  const content = (
-                    <>
-                      <CategoryIcon category={c} size="sm" />
-                      <span className="font-medium">{categoryLabel(c)}</span>
-                      <span className={active ? "text-white/70" : "text-ink-muted"}>{count}</span>
-                    </>
-                  );
-                  return (
-                    <li key={c} className="shrink-0">
-                      {count === 0 && !active ? (
-                        <span
-                          className={cn(chipClass, "cursor-default border-ink-hair opacity-40")}
-                          title="Нет ингредиентов при текущих фильтрах"
-                        >
-                          {content}
-                        </span>
-                      ) : (
-                        <Link
-                          href={filterHref(searchParams, { category: active ? undefined : c })}
-                          aria-current={active ? "true" : undefined}
-                          className={cn(
-                            chipClass,
-                            active
-                              ? "border-foreground bg-foreground text-white"
-                              : "border-ink-hair bg-white text-foreground hover:border-foreground"
-                          )}
-                        >
-                          {content}
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          ))}
-        </div>
-      </Container>
-
-      {/* ── Липкая панель: поиск + доказательность + категория ─────────── */}
       {/* Якорь — обычный блок перед липкой панелью: у «прилипшего» элемента
           браузер не может вычислить исходную позицию для прокрутки. */}
       <div id="catalog" aria-hidden className="scroll-mt-[72px] sm:scroll-mt-20" />
@@ -479,32 +432,55 @@ export default async function IngredientsCatalogPage({
           )}
         </div>
 
-        {/* Алфавитный указатель */}
+        {/* Алфавитный указатель: кириллица первой строкой, латиница — второй.
+            Буквы без ингредиентов в текущей выдаче показаны приглушёнными. */}
         {useGrouping && letters.length > 1 && (
-          <nav
-            aria-label="Алфавитный указатель"
-            className="no-scrollbar -mx-6 mb-8 flex gap-1 overflow-x-auto px-6 sm:mx-0 sm:flex-wrap sm:px-0"
-          >
-            {letters.map((letter, i) => (
-              <a
-                key={letter}
-                href={`#letter-${i}`}
-                className="grid h-9 min-w-9 shrink-0 place-items-center rounded-lg px-2 text-sm font-semibold text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
+          <nav aria-label="Алфавитный указатель" className="mb-8 space-y-1">
+            {[
+              { id: "ru", label: "Кириллица", keys: [...(letterGroups.has("0–9") ? ["0–9"] : []), ...RU_ALPHABET] },
+              { id: "en", label: "Латиница", keys: EN_ALPHABET },
+            ].map((row) => (
+              <ul
+                key={row.id}
+                aria-label={row.label}
+                className="no-scrollbar -mx-6 flex gap-0.5 overflow-x-auto px-6 sm:mx-0 sm:flex-wrap sm:px-0"
               >
-                {letter}
-              </a>
+                {row.keys.map((key) => {
+                  const cls =
+                    "grid h-9 min-w-8 shrink-0 place-items-center rounded-lg px-1.5 text-sm font-semibold";
+                  return (
+                    <li key={key} className="shrink-0">
+                      {letterGroups.has(key) ? (
+                        <a
+                          href={`#${letterAnchor(key)}`}
+                          className={cn(
+                            cls,
+                            "text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
+                          )}
+                        >
+                          {key}
+                        </a>
+                      ) : (
+                        <span className={cn(cls, "cursor-default text-ink-line")} aria-hidden>
+                          {key}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
             ))}
           </nav>
         )}
 
         {ingredients.length > 0 ? (
           <div className="space-y-10">
-            {letters.map((letter, i) => {
+            {letters.map((letter) => {
               const items = letterGroups.get(letter) ?? [];
               return (
                 <section
                   key={letter}
-                  id={useGrouping ? `letter-${i}` : undefined}
+                  id={useGrouping ? letterAnchor(letter) : undefined}
                   aria-label={useGrouping ? `Буква ${letter}` : undefined}
                   className="scroll-mt-52 lg:scroll-mt-44"
                 >

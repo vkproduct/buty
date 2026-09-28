@@ -24,6 +24,9 @@ function row(overrides: Partial<Record<string, unknown>> & { id: string; inciNam
     typicalConc: "1–2%",
     description: "Описание",
     safetyNotes: null,
+    comedogenic: false,
+    feedsMalassezia: false,
+    fragranceAllergen: false,
     synonyms: [],
     ...overrides,
   };
@@ -112,6 +115,46 @@ describe("POST /api/analyze", () => {
     expect(res.status).toBe(200);
     expect(data.ingredients).toHaveLength(2);
     expect(data.unmatched).toEqual(["somethingunknown"]);
+  });
+
+  it("возвращает флаги безопасности и считает их в сводке и советах", async () => {
+    findMany.mockResolvedValue([
+      ...DICTIONARY,
+      row({
+        id: "ipm",
+        inciName: "ISOPROPYL MYRISTATE",
+        slug: "isopropyl-myristate",
+        category: "emollient",
+        comedogenic: true,
+        feedsMalassezia: true,
+      }),
+      row({
+        id: "lin",
+        inciName: "LINALOOL",
+        slug: "linalool",
+        category: "fragrance",
+        fragranceAllergen: true,
+      }),
+    ] as never);
+    const res = await post({ text: "Aqua, Isopropyl Myristate, Linalool" });
+    expect(res.status).toBe(200);
+    const data = await res.json();
+
+    expect(data.summary).toMatchObject({
+      comedogenic: 1,
+      malassezia: 1,
+      fragranceAllergens: 1,
+    });
+    expect(data.advice.join(" ")).toMatch(/Malassezia/);
+
+    const ipm = data.ingredients.find(
+      (i: { slug: string }) => i.slug === "isopropyl-myristate",
+    );
+    expect(ipm).toMatchObject({
+      comedogenic: true,
+      feedsMalassezia: true,
+      fragranceAllergen: false,
+    });
   });
 
   it("отклоняет пустой или некорректный запрос", async () => {

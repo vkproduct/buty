@@ -19,3 +19,24 @@ export function summarizeCategories(categories: string[]): {
   }
   return summary;
 }
+
+/** Считает ингредиенты с безопасностными флагами. */
+export function summarizeFlags(
+  flags: Array<{
+    comedogenic: boolean;
+    feedsMalassezia: boolean;
+    fragranceAllergen: boolean;
+  }>,
+): {
+  comedogenic: number;
+  malassezia: number;
+  fragranceAllergens: number;
+} {
+  const summary = { comedogenic: 0, malassezia: 0, fragranceAllergens: 0 };
+  for (const f of flags) {
+    if (f.comedogenic) summary.comedogenic += 1;
+    if (f.feedsMalassezia) summary.malassezia += 1;
+    if (f.fragranceAllergen) summary.fragranceAllergens += 1;
+  }
+  return summary;
+}

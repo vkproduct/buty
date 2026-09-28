@@ -14,6 +14,9 @@ export interface AnalyzedIngredient {
   description: string;
   safetyNotes: string | null;
   matchedVia: string; // токен из исходного текста
+  comedogenic: boolean; // есть опубликованные данные о комедогенности
+  feedsMalassezia: boolean; // субстрат для Malassezia
+  fragranceAllergen: boolean; // отдушка из списка EU-аллергенов
 }
 
 export interface ConflictInfo {
@@ -30,6 +33,9 @@ export interface CompositionSummary {
   fragrances: number;
   alcohols: number;
   spfFilters: number;
+  comedogenic: number; // ингредиенты с опубликованными данными о комедогенности
+  malassezia: number; // субстраты Malassezia
+  fragranceAllergens: number; // декларируемые отдушечные аллергены ЕС
 }
 
 export interface AnalysisResult {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, LayoutGrid, Search, SearchX, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Flag, LayoutGrid, Search, SearchX, X } from "lucide-react";
 import type { EvidenceLevel, Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
@@ -11,9 +11,11 @@ import {
   EVIDENCE_ORDER,
 } from "@/lib/seo/labels";
 import { CATEGORY_GROUPS, categoryStyle } from "@/lib/seo/ingredient-categories";
+import { FLAG_META } from "@/lib/ingredients/flags";
 import { Container } from "@/components/ui/container";
 import { EvidenceMeter } from "@/components/ingredients/evidence-meter";
 import { FilterPopover } from "@/components/ingredients/filter-popover";
+import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -27,17 +29,41 @@ interface SearchParams {
   q?: string;
   category?: string;
   evidence?: string;
+  flags?: string; // ключи через запятую: comedogenic,feedsMalassezia,fragranceAllergen
+}
+
+/** Ключи безопасностных флагов — в том порядке, в котором они показываются в фильтре. */
+const FLAG_KEYS = [
+  "comedogenic",
+  "feedsMalassezia",
+  "fragranceAllergen",
+] as const;
+type FlagKey = (typeof FLAG_KEYS)[number];
+
+const FLAG_KEY_SET = new Set<string>(FLAG_KEYS);
+
+function parseFlags(raw: string | undefined): FlagKey[] {
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .filter((key): key is FlagKey => FLAG_KEY_SET.has(key));
 }
 
 /** С какого размера выдачи включаем алфавитные группы и указатель. */
 const GROUPING_THRESHOLD = 24;
 
-function filterHref(base: SearchParams, patch: Partial<SearchParams>): string {
+function filterHref(
+  base: SearchParams,
+  patch: Partial<Omit<SearchParams, "flags">> & { flags?: FlagKey[] }
+): string {
   const merged = { ...base, ...patch };
+  // флаги передаём массивом; отсутствие ключа в patch — «сохранить текущие»
+  const flags = "flags" in patch ? patch.flags : parseFlags(base.flags);
   const params = new URLSearchParams();
   if (merged.q?.trim()) params.set("q", merged.q.trim());
   if (merged.category) params.set("category", merged.category);
   if (merged.evidence) params.set("evidence", merged.evidence);
+  if (flags && flags.length > 0) params.set("flags", flags.join(","));
   const qs = params.toString();
   // Якорь #catalog: после смены фильтра пользователь сразу видит панель и выдачу,
   // а не прокручивается в начало страницы.
@@ -122,6 +148,10 @@ export default async function IngredientsCatalogPage({
   const evidence = (EVIDENCE_ORDER as string[]).includes(searchParams.evidence ?? "")
     ? (searchParams.evidence as EvidenceLevel)
     : undefined;
+  const selectedFlags = parseFlags(searchParams.flags);
+  const flagsWhere: Prisma.IngredientWhereInput = selectedFlags.length
+    ? { OR: selectedFlags.map((f) => ({ [f]: true })) }
+    : {};
 
   const searchWhere: Prisma.IngredientWhereInput = q
     ? {
@@ -132,16 +162,30 @@ export default async function IngredientsCatalogPage({
         ],
       }
     : {};
-  const where: Prisma.IngredientWhereInput = { category, evidenceLevel: evidence, ...searchWhere };
+  const where: Prisma.IngredientWhereInput = {
+    category,
+    evidenceLevel: evidence,
+    ...searchWhere,
+    ...flagsWhere,
+  };
 
   // Фасетные счётчики: сколько найдётся, если выбрать этот пункт при остальных
   // текущих фильтрах. Глобальные — для навигатора, статистики и списка пунктов.
+  // Счётчики флагов считаем без самого флагового фильтра — иначе при выбранном
+  // флаге все остальные пункты обнулятся.
+  const flagFacetWhere: Prisma.IngredientWhereInput = {
+    category,
+    evidenceLevel: evidence,
+    ...searchWhere,
+  };
   const [
     ingredients,
     categoryTotals,
     categoryFacets,
     evidenceTotals,
     evidenceFacets,
+    flagTotals,
+    flagFacets,
     totalCount,
     conflictCount,
   ] = await Promise.all([
@@ -153,19 +197,27 @@ export default async function IngredientsCatalogPage({
     }),
     prisma.ingredient.groupBy({
       by: ["category"],
-      where: { evidenceLevel: evidence, ...searchWhere },
+      where: { evidenceLevel: evidence, ...searchWhere, ...flagsWhere },
       _count: { category: true },
       orderBy: { category: "asc" },
     }),
     prisma.ingredient.groupBy({ by: ["evidenceLevel"], _count: { evidenceLevel: true } }),
     prisma.ingredient.groupBy({
       by: ["evidenceLevel"],
-      where: { category, ...searchWhere },
+      where: { category, ...searchWhere, ...flagsWhere },
       _count: { evidenceLevel: true },
     }),
+    prisma.ingredient.count({
+      where: { OR: FLAG_KEYS.map((f) => ({ [f]: true })) },
+    }),
+    Promise.all(
+      FLAG_KEYS.map((f) => prisma.ingredient.count({ where: { ...flagFacetWhere, [f]: true } }))
+    ),
     prisma.ingredient.count(),
     prisma.ingredientConflict.count(),
   ]);
+  const flagTotal = flagTotals;
+  const flagCountByKey = new Map(FLAG_KEYS.map((f, i) => [f, flagFacets[i]]));
 
   const countByCategory = new Map(categoryFacets.map((r) => [r.category, r._count.category]));
   const categoryFacetTotal = categoryFacets.reduce((sum, r) => sum + r._count.category, 0);
@@ -191,8 +243,13 @@ export default async function IngredientsCatalogPage({
     ),
   })).filter((g) => g.categories.length > 0);
 
-  const hasActiveFilters = Boolean(q || category || evidence);
+  const hasActiveFilters = Boolean(q || category || evidence || selectedFlags.length);
   const categoryLabel = (c: string) => CATEGORY_LABEL[c] ?? c;
+  // Тоггл одного флага с сохранением остальных выбранных
+  const toggleFlag = (key: FlagKey): FlagKey[] =>
+    selectedFlags.includes(key)
+      ? selectedFlags.filter((f) => f !== key)
+      : [...selectedFlags, key];
 
   // Алфавитные группы — для длинной выдачи без поиска.
   const sorted = [...ingredients].sort((a, b) =>
@@ -276,6 +333,9 @@ export default async function IngredientsCatalogPage({
           >
             {category && <input type="hidden" name="category" value={category} />}
             {evidence && <input type="hidden" name="evidence" value={evidence} />}
+            {selectedFlags.length > 0 && (
+              <input type="hidden" name="flags" value={selectedFlags.join(",")} />
+            )}
             <label htmlFor="ingredient-search" className="sr-only">
               Поиск по названию, INCI или синониму
             </label>
@@ -350,6 +410,58 @@ export default async function IngredientsCatalogPage({
             </div>
           </FilterPopover>
 
+          {/* Флаги безопасности — мультивыбор: показываем ингредиенты
+              с хотя бы одним из выбранных флагов */}
+          <FilterPopover
+            key={`flags-${selectedFlags.join(",") || "none"}`}
+            trigger={
+              <>
+                <Flag className="h-4 w-4 text-ink-muted" />
+                <span className="hidden sm:inline">
+                  {selectedFlags.length > 0
+                    ? `Флаги (${selectedFlags.length})`
+                    : "Флаги безопасности"}
+                </span>
+              </>
+            }
+          >
+            <Link
+              href={filterHref(searchParams, { flags: undefined })}
+              className={cn(
+                "mb-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-ink-wash",
+                selectedFlags.length === 0 && "bg-ink-wash"
+              )}
+            >
+              Без фильтра по флагам
+              <span className="text-ink-muted">{totalCount}</span>
+            </Link>
+            <ul>
+              {FLAG_KEYS.map((key) => {
+                const active = selectedFlags.includes(key);
+                return (
+                  <li key={key}>
+                    <Link
+                      href={filterHref(searchParams, { flags: toggleFlag(key) })}
+                      title={FLAG_META[key].note}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-ink-wash",
+                        active && "bg-ink-wash font-semibold",
+                        !active && flagCountByKey.get(key) === 0 && "opacity-40"
+                      )}
+                    >
+                      <span className="flex-1">{FLAG_META[key].label}</span>
+                      <span className="text-ink-muted">{flagCountByKey.get(key) ?? 0}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-1 border-t border-ink-hair px-3 pb-1 pt-3 text-xs leading-relaxed text-ink-muted">
+              Показываются ингредиенты с хотя бы одним из выбранных флагов.
+              Всего с флагами в базе: {flagTotal}.
+            </p>
+          </FilterPopover>
+
           {/* Доказательная база — сегментированный переключатель */}
           <nav
             aria-label="Доказательная база"
@@ -422,7 +534,15 @@ export default async function IngredientsCatalogPage({
               {EVIDENCE_META[evidence].short} доказательность
             </ActiveChip>
           )}
-          {[q, category, evidence].filter(Boolean).length > 1 && (
+          {selectedFlags.map((key) => (
+            <ActiveChip
+              key={key}
+              href={filterHref(searchParams, { flags: toggleFlag(key) })}
+            >
+              {FLAG_META[key].label}
+            </ActiveChip>
+          ))}
+          {[q, category, evidence, ...selectedFlags].filter(Boolean).length > 1 && (
             <Link
               href="/ingredients#catalog"
               className="ml-1 text-sm font-semibold text-foreground underline underline-offset-4 hover:text-brand-700"
@@ -520,6 +640,14 @@ export default async function IngredientsCatalogPage({
                           <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink-soft">
                             {ingredient.function}
                           </p>
+
+                          {(ingredient.comedogenic ||
+                            ingredient.feedsMalassezia ||
+                            ingredient.fragranceAllergen) && (
+                            <div className="mt-3 flex flex-wrap gap-1.5">
+                              <IngredientFlags flags={ingredient} />
+                            </div>
+                          )}
 
                           <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                             {ingredient.typicalConc ? (

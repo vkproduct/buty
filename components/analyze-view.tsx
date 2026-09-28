@@ -21,6 +21,7 @@ import { getOcrProvider, OcrNotReadyError } from "@/lib/ocr";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
 import {
   Dialog,
   DialogContent,
@@ -237,9 +238,18 @@ function SummaryBlock({ result }: { result: AnalysisResult }) {
     { label: "Отдушки", value: result.summary.fragrances },
     { label: "Спирты", value: result.summary.alcohols },
     { label: "SPF-фильтры", value: result.summary.spfFilters },
+    ...(result.summary.comedogenic > 0
+      ? [{ label: "Комедогенные", value: result.summary.comedogenic }]
+      : []),
+    ...(result.summary.malassezia > 0
+      ? [{ label: "Кормят малассезию", value: result.summary.malassezia }]
+      : []),
+    ...(result.summary.fragranceAllergens > 0
+      ? [{ label: "Аллергены-отдушки", value: result.summary.fragranceAllergens }]
+      : []),
   ];
   return (
-    <GlassCard className="grid grid-cols-2 gap-4 p-6 sm:grid-cols-5">
+    <GlassCard className="grid grid-cols-2 gap-4 p-6 sm:grid-cols-4">
       {items.map((item) => (
         <div key={item.label} className="text-center">
           <div className="font-display text-2xl font-bold text-brand-700">
@@ -317,6 +327,13 @@ function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
         <Badge variant="outline">
           {CATEGORY_LABEL[ingredient.category] ?? ingredient.category}
         </Badge>
+        <IngredientFlags
+          flags={{
+            comedogenic: ingredient.comedogenic,
+            feedsMalassezia: ingredient.feedsMalassezia,
+            fragranceAllergen: ingredient.fragranceAllergen,
+          }}
+        />
       </div>
       <p className="text-xs uppercase tracking-wide text-muted-foreground">
         {ingredient.inciName}

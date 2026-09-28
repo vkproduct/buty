@@ -12,6 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
+import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
+import { FLAG_META } from "@/lib/ingredients/flags";
 
 // ISR: страница кэшируется на 1 час; новые ингредиенты рендерятся по запросу
 export const dynamicParams = true;
@@ -140,6 +142,7 @@ export default async function IngredientPage({
               {CATEGORY_LABEL[ingredient.category] ?? ingredient.category}
             </Badge>
             <Badge variant={evidence.variant}>{evidence.label}</Badge>
+            <IngredientFlags flags={ingredient} />
             {ingredient.typicalConc && (
               <Badge variant="outline">
                 Рабочая концентрация: {ingredient.typicalConc}
@@ -163,6 +166,37 @@ export default async function IngredientPage({
             </p>
           )}
         </GlassCard>
+
+        {(ingredient.comedogenic ||
+          ingredient.feedsMalassezia ||
+          ingredient.fragranceAllergen) && (
+          <GlassCard className="space-y-4 p-8">
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <ShieldAlert className="h-5 w-5 text-coral-700" />
+              Флаги безопасности
+            </h2>
+            <ul className="max-w-3xl space-y-3">
+              {(
+                [
+                  "comedogenic",
+                  "feedsMalassezia",
+                  "fragranceAllergen",
+                ] as const
+              )
+                .filter((key) => ingredient[key])
+                .map((key) => (
+                  <li key={key} className="flex flex-wrap items-baseline gap-2">
+                    <Badge variant={FLAG_META[key].variant}>
+                      {FLAG_META[key].label}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">
+                      {FLAG_META[key].note}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </GlassCard>
+        )}
 
         {ingredient.howItWorks && (
           <GlassCard className="space-y-4 p-8">

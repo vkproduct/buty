@@ -1,5 +1,6 @@
 import { PrismaClient, EvidenceLevel } from "@prisma/client";
 import { INGREDIENTS } from "./ingredients.data";
+import { INGREDIENT_FLAGS } from "./flags.data";
 
 const prisma = new PrismaClient();
 const CONFLICTS: Array<{ a: string; b: string; severity: string; reason: string }> = [
@@ -206,12 +207,20 @@ const PRODUCTS: Array<{
 async function main() {
   const idBySlug = new Map<string, string>();
 
+  // все slug'и из словаря флагов должны существовать в базе карточек —
+  // иначе опечатка в flags.data.ts останется незамеченной
+  const knownSlugs = new Set(INGREDIENTS.map((i) => i.slug));
+  for (const slug of Object.keys(INGREDIENT_FLAGS)) {
+    if (!knownSlugs.has(slug)) throw new Error(`Unknown slug in flags: ${slug}`);
+  }
+
   for (const item of INGREDIENTS) {
     const { synonyms, ...data } = item;
+    const flags = INGREDIENT_FLAGS[item.slug] ?? {};
     const ingredient = await prisma.ingredient.upsert({
       where: { slug: item.slug },
-      update: { ...data },
-      create: { ...data },
+      update: { ...data, ...flags },
+      create: { ...data, ...flags },
     });
     idBySlug.set(item.slug, ingredient.id);
 

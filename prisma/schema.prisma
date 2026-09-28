@@ -32,6 +32,11 @@ model Ingredient {
   risks        String? // риски, ограничения, кому не подходит
   safetyNotes  String?
 
+  // Безопасностные флаги (заполняются из prisma/flags.data.ts при сиде)
+  comedogenic       Boolean @default(false) // есть опубликованные данные о комедогенности (классика — тесты на кроличьем ухе)
+  feedsMalassezia   Boolean @default(false) // субстрат для Malassezia (спорные случаи без флага)
+  fragranceAllergen Boolean @default(false) // отдушка из списка EU-аллергенов
+
   synonyms     Synonym[]
   conflictsFrom IngredientConflict[] @relation("ConflictFrom")
   conflictsTo   IngredientConflict[] @relation("ConflictTo")

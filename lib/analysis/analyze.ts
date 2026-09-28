@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { matchInciString } from "@/lib/ingredients/match";
 import { normalizeInci } from "@/lib/ingredients/normalize";
-import { summarizeCategories } from "./summary";
+import { summarizeCategories, summarizeFlags } from "./summary";
 import { buildAdvice } from "./advice";
 import type {
   AnalysisResult,
@@ -36,6 +36,9 @@ export async function analyzeText(raw: string): Promise<AnalysisResult> {
         description: d.description,
         safetyNotes: d.safetyNotes,
         matchedVia: m.matchedVia,
+        comedogenic: d.comedogenic,
+        feedsMalassezia: d.feedsMalassezia,
+        fragranceAllergen: d.fragranceAllergen,
       },
     ];
   });
@@ -61,6 +64,7 @@ export async function analyzeText(raw: string): Promise<AnalysisResult> {
     total: totalTokens,
     recognized: ingredients.length,
     ...summarizeCategories(ingredients.map((i) => i.category)),
+    ...summarizeFlags(ingredients),
   };
 
   const advice = buildAdvice({

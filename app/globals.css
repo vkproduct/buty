@@ -99,3 +99,13 @@
     animation: none !important;
   }
 }
+
+/* Горизонтальные ленты чипов без видимого скроллбара */
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

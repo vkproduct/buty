@@ -49,6 +49,12 @@ const CATEGORY_LABEL: Record<string, string> = {
   soothing: "Успокаивающий",
   fragrance: "Отдушка",
   alcohol: "Спирт",
+  texture: "Загуститель",
+  "ph-buffer": "Регулятор pH",
+  emulsifier: "Эмульгатор",
+  surfactant: "ПАВ",
+  peptide: "Пептид",
+  preservative: "Консервант",
 };
 
 const SEVERITY_STYLE: Record<string, { label: string; variant: "coral" | "amber" | "default" }> = {

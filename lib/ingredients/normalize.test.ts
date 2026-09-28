@@ -21,6 +21,9 @@ const DICTIONARY = [
   { id: "3", inciName: "SALICYLIC ACID", slug: "salicylic-acid", displayName: "Салициловая кислота", aliases: ["салициловая кислота", "bha"] },
   { id: "4", inciName: "RETINOL", slug: "retinol", displayName: "Ретинол", aliases: ["ретинол"] },
   { id: "5", inciName: "HYALURONIC ACID", slug: "hyaluronic-acid", displayName: "Гиалуроновая кислота", aliases: ["гиалуроновая кислота", "sodium hyaluronate"] },
+  { id: "6", inciName: "CAPRYLIC/CAPRIC TRIGLYCERIDE", slug: "caprylic-capric-triglyceride", displayName: "Триглицериды каприлик/каприковой кислоты", aliases: [] },
+  { id: "7", inciName: "WATER", slug: "water", displayName: "Вода", aliases: ["aqua", "purified water", "eau"] },
+  { id: "8", inciName: "GLYCERIN", slug: "glycerin", displayName: "Глицерин", aliases: [] },
 ];
 
 describe("normalizeInci", () => {
@@ -47,6 +50,26 @@ describe("normalizeInci", () => {
   it("6. схлопывает лишние пробелы и переносы строк", () => {
     expect(normalizeInci("sodium   hyaluronate,\nhyaluronic  acid", aliases)).toEqual(["hyaluronic acid"]);
   });
+
+  it("7. не режет по запятой перед цифрой (1,2-Hexanediol)", () => {
+    expect(normalizeInci("1,2-Hexanediol, Glycerin")).toEqual(["1,2-hexanediol", "glycerin"]);
+    expect(normalizeInci("Butylene Glycol, 1,2-Hexanediol, Panthenol")).toEqual([
+      "butylene glycol",
+      "1,2-hexanediol",
+      "panthenol",
+    ]);
+  });
+
+  it("8. запятая перед буквой по-прежнему разделяет", () => {
+    expect(normalizeInci("Aqua, Glycerin")).toEqual(["aqua", "glycerin"]);
+  });
+
+  it("9. слэш внутри INCI-имени не разрезает токен на этапе нормализации", () => {
+    expect(normalizeInci("Caprylic/Capric Triglyceride")).toEqual(["caprylic/capric triglyceride"]);
+    expect(normalizeInci("Dimethicone/Vinyl Dimethicone Crosspolymer")).toEqual([
+      "dimethicone/vinyl dimethicone crosspolymer",
+    ]);
+  });
 });
 
 describe("matchTokens", () => {
@@ -71,9 +94,9 @@ describe("matchTokens", () => {
   });
 
   it("10. нераспознанные токены возвращаются отдельно", () => {
-    const r = matchTokens(["niacinamide", "aqua", "parfum"], DICTIONARY);
+    const r = matchTokens(["niacinamide", "parfum", "unknownin"], DICTIONARY);
     expect(slugs(r)).toEqual(["niacinamide"]);
-    expect(r.unmatched).toEqual(["aqua", "parfum"]);
+    expect(r.unmatched).toEqual(["parfum", "unknownin"]);
   });
 
   it("11. смешанный ввод ru/latin с дублями — один hit на ингредиент", () => {
@@ -87,5 +110,31 @@ describe("matchTokens", () => {
     const r = matchTokens(tokens, DICTIONARY);
     expect(slugs(r)).toEqual(["niacinamide", "salicylic-acid"]);
     expect(r.unmatched).toEqual(["вода", "неизвестный-компонент"]);
+  });
+
+  it("13. матчит целый токен со слэшем по INCI-имени", () => {
+    const r = matchTokens(["caprylic/capric triglyceride"], DICTIONARY);
+    expect(slugs(r)).toEqual(["caprylic-capric-triglyceride"]);
+    expect(r.matched[0].matchedVia).toBe("caprylic/capric triglyceride");
+    expect(r.unmatched).toEqual([]);
+  });
+
+  it("14. при промахе режет по слэшу и матчит части по отдельности", () => {
+    const r = matchTokens(["aqua/eau", "glycerin/unknown-part"], DICTIONARY);
+    expect(slugs(r)).toEqual(["water", "glycerin"]);
+    expect(r.matched.map((m) => m.matchedVia)).toEqual(["aqua", "glycerin"]);
+    expect(r.unmatched).toEqual(["unknown-part"]);
+  });
+
+  it("15. слэш-фолбэк не дублирует ингредиент, уже найденный ранее", () => {
+    const r = matchTokens(["water", "aqua/purified water"], DICTIONARY);
+    expect(slugs(r)).toEqual(["water"]);
+    expect(r.unmatched).toEqual([]);
+  });
+
+  it("16. часть со слэшем без словарной записи уходит в unmatched по частям", () => {
+    const r = matchTokens(["dimethicone/vinyl dimethicone crosspolymer"], DICTIONARY);
+    expect(r.matched).toEqual([]);
+    expect(r.unmatched).toEqual(["dimethicone", "vinyl dimethicone crosspolymer"]);
   });
 });

@@ -46,9 +46,29 @@ export function matchTokens(tokens: string[], dictionary: DictEntry[]): MatchRes
         seen.add(hit.id);
         matched.push({ ingredient: hit, matchedVia: token });
       }
-    } else {
-      unmatched.push(token);
+      continue;
     }
+    // Промах по целому токену: режем по слэшу и матчим части по отдельности
+    // («Caprylic/Capric Triglyceride», «Aqua/Water» и т.п.).
+    if (token.includes("/")) {
+      const parts = token
+        .split("/")
+        .map((p) => p.replace(/\s+/g, " ").trim())
+        .filter((p) => p.length > 0);
+      for (const part of parts) {
+        const partHit = byToken.get(part);
+        if (partHit) {
+          if (!seen.has(partHit.id)) {
+            seen.add(partHit.id);
+            matched.push({ ingredient: partHit, matchedVia: part });
+          }
+        } else {
+          unmatched.push(part);
+        }
+      }
+      continue;
+    }
+    unmatched.push(token);
   }
   return { matched, unmatched };
 }

@@ -78,7 +78,7 @@ async function loadFilters(searchParams: SearchParams) {
 function landingTitle(filters: IngredientFilters): string | null {
   if (!isIndexableFilterPage(filters) || filters.categories.length !== 1) return null;
   const plural = CATEGORY_PLURAL[filters.categories[0]];
-  return plural ? `${plural} в косметике` : null;
+  return plural ? `${plural} в составе косметики` : null;
 }
 
 export async function generateMetadata({
@@ -92,7 +92,7 @@ export async function generateMetadata({
     // Поиск, мультивыбор, доказательность и флаги — служебные состояния:
     // не индексируем, но поисковик ходит по ссылкам на карточки.
     return {
-      title: "Каталог ингредиентов косметики",
+      title: "Ингредиенты косметики: расшифровка составов",
       alternates: { canonical: "/ingredients" },
       robots: { index: false, follow: true },
     };
@@ -100,15 +100,15 @@ export async function generateMetadata({
   const landing = landingTitle(filters);
   if (landing) {
     return {
-      title: `${landing} — каталог ингредиентов`,
-      description: `${landing}: функции в формуле, рабочие концентрации, уровень доказательной базы и конфликты — дерматологический разбор каждого ингредиента.`,
+      title: `${landing}: список и расшифровка`,
+      description: `${landing}: как обозначаются в составе, зачем нужны в формуле, рабочие концентрации, комедогенность, доказательная база и конфликты — дерматологический разбор каждого ингредиента.`,
       alternates: { canonical: ingredientFiltersHref(filters, {}, { anchor: false }) },
     };
   }
   return {
-    title: "Каталог ингредиентов косметики",
+    title: "Ингредиенты косметики: расшифровка составов на русском",
     description:
-      "Функции, рабочие концентрации, уровень доказательности и конфликты активов — каталог ингредиентов с дерматологической точки зрения.",
+      "Справочник компонентов косметики: как ингредиент обозначается в составе, что он делает, рабочая концентрация, комедогенность, доказательная база и конфликты активов.",
     alternates: { canonical: "/ingredients" },
   };
 }
@@ -258,7 +258,7 @@ export default async function IngredientsCatalogPage({
           <header className="space-y-4 lg:col-span-7">
             <span className="eyebrow">{landing ? "Каталог ингредиентов" : "База знаний"}</span>
             <h1 className="font-display text-[32px] font-semibold leading-[1.1] sm:text-[44px]">
-              {landing ?? "Каталог ингредиентов"}
+              {landing ?? "Ингредиенты косметики: расшифровка составов"}
             </h1>
             <p className="max-w-xl text-[17px] leading-relaxed text-ink-soft">
               Маркетинг оценивает ингредиенты по громкости обещаний, дерматология —

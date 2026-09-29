@@ -4,6 +4,8 @@ import { Inter, Outfit } from "next/font/google";
 import { Header } from "@/components/header";
 import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "@/components/providers";
+import { JsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
 import "./globals.css";
 
@@ -21,33 +23,52 @@ const logo = Outfit({
   display: "swap",
 });
 
-const SITE_URL = "https://buty.app";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: {
-    default: "Buty.app — научный разбор составов косметики",
-    template: "%s | Buty.app",
+    default: "Buty.app — проверка и разбор состава косметики онлайн",
+    template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Разбираем составы косметики с дерматологической точки зрения: функции ингредиентов, рабочие концентрации, конфликты активов и уровень доказательности — без маркетинговых мифов.",
+    "Проверка состава косметики онлайн: расшифровка ингредиентов на русском, рабочие концентрации, комедогенность, отдушки и конфликты активов — без маркетинговых мифов.",
   keywords: [
     "состав косметики",
-    "разбор состава",
+    "проверить состав косметики",
+    "проверка состава косметики онлайн",
+    "разбор состава косметики",
+    "расшифровка состава косметики",
+    "состав косметики на комедогенность",
     "ингредиенты косметики",
-    "уход за кожей",
-    "дерматология",
   ],
+  verification: {
+    yandex: process.env.YANDEX_VERIFICATION || undefined,
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  },
+  formatDetection: { telephone: false },
   openGraph: {
     type: "website",
     locale: "ru_RU",
     url: SITE_URL,
-    siteName: "Buty.app",
-    title: "Buty.app — научный разбор составов косметики",
+    siteName: SITE_NAME,
+    title: "Buty.app — проверка и разбор состава косметики онлайн",
     description:
       "Функции ингредиентов, рабочие концентрации, конфликты активов и уровень доказательности — без маркетинговых мифов.",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+  },
+};
+
+const ORGANIZATION = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: absoluteUrl("/"),
+  logo: absoluteUrl("/icon.svg"),
+  description: "Научный разбор составов косметики с дерматологической точки зрения.",
 };
 
 export default function RootLayout({
@@ -56,6 +77,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${sans.variable} ${logo.variable}`}>
       <body className="font-sans">
+        <JsonLd data={ORGANIZATION} />
         <Providers>
           <Header />
           {children}

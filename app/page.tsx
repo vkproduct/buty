@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -24,6 +25,20 @@ import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT } from "@/lib/billing";
 import { PLAN_PRICES } from "@/lib/payments/provider";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
+import { JsonLd } from "@/components/seo/json-ld";
+import { RelatedLandings } from "@/components/seo/landing-blocks";
+import { absoluteUrl, faqJsonLd, SITE_NAME } from "@/lib/seo/site";
+
+const HOME_TITLE = "Проверить состав косметики онлайн бесплатно — разбор и расшифровка на русском";
+const HOME_DESCRIPTION =
+  "Проверка состава косметики онлайн: вставьте INCI-список — расшифруем каждый ингредиент на русском, покажем комедогенные компоненты, отдушки-аллергены и конфликты активов. Бесплатно, без регистрации.";
+
+export const metadata: Metadata = {
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: { title: HOME_TITLE, description: HOME_DESCRIPTION, url: "/" },
+};
 
 // Цифры базы подтягиваются из БД на каждый запрос (без пререндера на сборке,
 // иначе сборка зависит от доступности БД и может не уложиться в лимит Vercel).
@@ -193,7 +208,19 @@ const EVIDENCE_LADDER = [
   { label: "Без данных", note: "традиция и маркетинг", width: "20%", cls: "bg-ink-line" },
 ];
 
-const FAQ: { q: string; a: React.ReactNode }[] = [
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: "Как проверить состав косметики онлайн бесплатно?",
+    a: "Скопируйте INCI-список с упаковки или из карточки товара на маркетплейсе и вставьте в форму разбора. Сервис распознает каждый ингредиент, переведёт название на русский, покажет функцию, рабочую концентрацию, уровень доказательной базы и конфликты активов. Бесплатно и без регистрации.",
+  },
+  {
+    q: "Можно ли проверить состав косметики на комедогенность?",
+    a: "Да. В разборе комедогенные ингредиенты отмечены отдельным флагом — если для них есть опубликованные данные. Отдельно отмечаем отдушки-аллергены и компоненты, которые питают малассезию.",
+  },
+  {
+    q: "Как перевести состав косметики на русский?",
+    a: "Состав на упаковке написан по международной номенклатуре INCI латиницей. Вставьте его в форму разбора — каждое название будет показано на русском с пояснением, зачем ингредиент в формуле.",
+  },
   {
     q: "Что такое «Моя полка»?",
     a: "Личный кабинет с вашими средствами ухода. Вы добавляете то, чем пользуетесь, а сервис проверяет, как средства сочетаются между собой, собирает порядок нанесения утром и вечером, находит дубли, ведёт дневник реакций кожи и напоминает оценить новое средство или докупить привычное.",
@@ -240,8 +267,24 @@ function Divider() {
 export default async function HomePage() {
   const stats = await getStats();
 
+  const webSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: absoluteUrl("/"),
+    inLanguage: "ru",
+    description: HOME_DESCRIPTION,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${absoluteUrl("/ingredients")}?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <main>
+      <JsonLd data={webSite} />
+      <JsonLd data={faqJsonLd(FAQ)} />
       {/* ═══ 1. HERO: бесплатный разбор как вход в воронку ═══ */}
       <section id="hero">
         <Container className="grid items-center gap-10 pb-14 pt-10 lg:grid-cols-12 lg:gap-14 lg:pb-20 lg:pt-16">
@@ -250,7 +293,7 @@ export default async function HomePage() {
               Доказательный уход, а не маркетинг
             </Badge>
             <h1 className="text-[32px] font-semibold leading-[1.08] sm:text-[48px] lg:text-[56px]">
-              Узнайте, что в вашей косметике и&nbsp;как она работает
+              Проверьте состав косметики онлайн — и&nbsp;узнайте, как она работает
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
               Разбираем составы по научным данным, а «Моя полка» проверяет,
@@ -557,6 +600,27 @@ export default async function HomePage() {
                 ))}
               </div>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <Divider />
+
+      {/* ═══ 7б. РАЗБОРЫ СОСТАВОВ: перелинковка на посадочные ═══ */}
+      <section className="py-14 lg:py-20">
+        <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <SectionHeading
+              eyebrow="Составы"
+              title="Как читать состав средства"
+              lead="Что должно быть в составе крема, шампуня или сыворотки и чего стоит избегать — по научным данным."
+            />
+          </div>
+          <div className="space-y-6 lg:col-span-8">
+            <RelatedLandings />
+            <Link href="/sostav" className="inline-flex items-center gap-1.5 text-[15px] font-medium underline">
+              Как читать состав косметики <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </Container>
       </section>

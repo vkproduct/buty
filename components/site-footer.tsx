@@ -10,18 +10,30 @@ const COLUMNS = [
       { href: "/analyze", label: "Разбор состава" },
       { href: "/shelf", label: "Моя полка" },
       { href: "/pricing", label: "Тарифы" },
+      { href: "/for-brands", label: "Брендам" },
     ],
   },
   {
     title: "База знаний",
     links: [
-      { href: "/ingredients", label: "Каталог ингредиентов" },
-      { href: "/products", label: "Каталог продуктов" },
+      { href: "/ingredients", label: "Ингредиенты косметики" },
+      { href: "/products", label: "Составы средств" },
+      { href: "/sostav", label: "Как читать состав" },
+      { href: "/sostav/na-komedogennost", label: "Проверка на комедогенность" },
     ],
   },
   {
-    title: "Партнёрам",
-    links: [{ href: "/for-brands", label: "Брендам" }],
+    title: "Составы",
+    links: [
+      { href: "/sostav/krem", label: "Состав крема" },
+      { href: "/sostav/shampun", label: "Состав шампуня" },
+      { href: "/sostav/syvorotka", label: "Состав сыворотки" },
+      { href: "/sostav/maska", label: "Состав маски" },
+      { href: "/sostav/gel-dlya-umyvaniya", label: "Состав геля" },
+      { href: "/sostav/penka", label: "Состав пенки" },
+      { href: "/sostav/tonik", label: "Состав тоника" },
+      { href: "/sostav/skrab", label: "Состав скраба" },
+    ],
   },
 ];
 

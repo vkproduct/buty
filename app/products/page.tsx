@@ -22,6 +22,7 @@ import {
   productCategoryStyle,
   sortProductCategories,
 } from "@/lib/seo/product-categories";
+import { brandWithRu } from "@/lib/seo/brands";
 import { Container } from "@/components/ui/container";
 import { ChipRail } from "@/components/products/chip-rail";
 import { ProductFilterSheet } from "@/components/products/product-filters";
@@ -63,9 +64,9 @@ function landingTitle(filters: ProductFilters): string | null {
   const brand = filters.brands.length === 1 ? filters.brands[0] : null;
   const category = filters.categories.length === 1 ? filters.categories[0] : null;
   if (filters.brands.length > 1 || filters.categories.length > 1) return null;
-  if (brand && category) return `${productCategoryPlural(category)} ${brand}`;
-  if (brand) return brand;
-  if (category) return productCategoryPlural(category);
+  if (brand && category) return `${productCategoryPlural(category)} ${brandWithRu(brand)}: составы`;
+  if (brand) return `Составы ${brandWithRu(brand)}`;
+  if (category) return `${productCategoryPlural(category)}: составы и разбор`;
   return null;
 }
 
@@ -80,22 +81,22 @@ export async function generateMetadata({
   if (!isIndexableFilterPage(filters)) {
     // Мультивыбор и поиск — служебные состояния: не индексируем, но ходим по ссылкам.
     return {
-      title: "Каталог продуктов с разбором состава",
+      title: "Составы косметики: разбор средств по брендам",
       alternates: { canonical: "/products" },
       robots: { index: false, follow: true },
     };
   }
   if (landing) {
     return {
-      title: `${landing} — разбор составов`,
-      description: `${landing}: научный разбор составов — функции ингредиентов, конфликты активов и уровень доказательности каждой формулы.`,
+      title: `${landing} — разбор ингредиентов`,
+      description: `${landing}: полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`,
       alternates: { canonical: productFiltersHref(filters, {}, { anchor: false }) },
     };
   }
   return {
-    title: "Каталог продуктов с разбором состава",
+    title: "Составы косметики: разбор средств по брендам",
     description:
-      "Разобранные составы популярных средств: сыворотки, кремы, SPF. Функции ингредиентов, конфликты активов и уровень доказательности каждой формулы.",
+      "Разобранные составы популярной косметики: кремы, сыворотки, тоники, средства для умывания и SPF. Расшифровка каждого ингредиента, комедогенность, конфликты активов и аналоги по составу.",
     alternates: { canonical: "/products" },
   };
 }
@@ -199,7 +200,7 @@ export default async function ProductsCatalogPage({
           <header className="space-y-4 lg:col-span-8">
             <span className="eyebrow">Каталог</span>
             <h1 className="font-display text-[32px] font-semibold leading-[1.1] sm:text-[44px]">
-              {landing ?? "Каталог продуктов"}
+              {landing ?? "Составы косметики: разбор средств"}
             </h1>
             <p className="max-w-2xl text-[17px] leading-relaxed text-ink-soft">
               Каждый продукт здесь разобран по составу: ингредиенты перечислены в

@@ -122,7 +122,7 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
             <FlaskConical className="mr-1 h-3 w-3" /> Доказательный разбор
           </Badge>
           <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
-            Разбор состава
+            Разбор состава косметики онлайн
           </h1>
           <p className="mx-auto max-w-2xl text-muted-foreground">
             Вставьте INCI-список — покажем функцию каждого ингредиента,

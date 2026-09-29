@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 
-// ISR: страница кэшируется на 1 час; новые продукты рендерятся по запросу
+// ISR: страница кэшируется на 1 час и рендерится по запросу (без пререндера
+// на сборке — иначе next build прогоняет сотни страниц через БД и упирается
+// в 45-минутный лимит Vercel)
 export const dynamicParams = true;
 export const revalidate = 3600;
 
@@ -41,11 +43,6 @@ async function getInternalConflicts(ingredientIds: string[]) {
     },
     include: { ingredientA: true, ingredientB: true },
   });
-}
-
-export async function generateStaticParams() {
-  const products = await prisma.product.findMany({ select: { slug: true } });
-  return products.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({

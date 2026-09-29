@@ -4,6 +4,9 @@ import { prisma } from "@/lib/prisma";
 
 const SITE_URL = "https://buty.app";
 
+// Динамический sitemap: без обращения к БД на этапе сборки.
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [ingredients, products] = await Promise.all([
     prisma.ingredient.findMany({ select: { slug: true } }),

@@ -15,7 +15,9 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
 import { FLAG_META } from "@/lib/ingredients/flags";
 
-// ISR: страница кэшируется на 1 час; новые ингредиенты рендерятся по запросу
+// ISR: страница кэшируется на 1 час и рендерится по запросу (без пререндера
+// на сборке — иначе next build прогоняет сотни страниц через БД и упирается
+// в 45-минутный лимит Vercel)
 export const dynamicParams = true;
 export const revalidate = 3600;
 
@@ -53,13 +55,6 @@ async function getSynergies(ingredientId: string, conflictIds: Set<string>) {
     counts.set(row.ingredientId, entry);
   }
   return [...counts.values()].sort((a, b) => b.n - a.n).slice(0, 6);
-}
-
-export async function generateStaticParams() {
-  const ingredients = await prisma.ingredient.findMany({
-    select: { slug: true },
-  });
-  return ingredients.map((i) => ({ slug: i.slug }));
 }
 
 export async function generateMetadata({

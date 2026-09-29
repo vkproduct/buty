@@ -25,8 +25,9 @@ import { PLAN_PRICES } from "@/lib/payments/provider";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 
-// Цифры базы подтягиваются из БД и обновляются раз в час (ISR).
-export const revalidate = 3600;
+// Цифры базы подтягиваются из БД на каждый запрос (без пререндера на сборке,
+// иначе сборка зависит от доступности БД и может не уложиться в лимит Vercel).
+export const dynamic = "force-dynamic";
 
 const rub = (n: number) => `${n.toLocaleString("ru-RU")} ₽`;
 const MONTH = PLAN_PRICES.month;

@@ -32,7 +32,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 tmp-shot4.png
+tmp-screenshot*.png
 
 # рабочие выгрузки ассистента
 /Claude outputs/
 .env*
+
+# скачанные артефакты INCIDB (регенерируются по scripts/import-incidb.py)
+/tmp-incidb/

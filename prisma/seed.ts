@@ -1,6 +1,8 @@
 import { PrismaClient, EvidenceLevel } from "@prisma/client";
 import { INGREDIENTS } from "./ingredients.data";
 import { INGREDIENT_FLAGS } from "./flags.data";
+import { INCIDB_INGREDIENTS } from "./incidb-ingredients.data";
+import { INCIDB_FLAGS } from "./incidb-flags.data";
 
 const prisma = new PrismaClient();
 const CONFLICTS: Array<{ a: string; b: string; severity: string; reason: string }> = [
@@ -208,17 +210,42 @@ async function main() {
   const idBySlug = new Map<string, string>();
 
   // все slug'и из словаря флагов должны существовать в базе карточек —
-  // иначе опечатка в flags.data.ts останется незамеченной
-  const knownSlugs = new Set(INGREDIENTS.map((i) => i.slug));
+  // иначе опечатка в flags-файлах останется незамеченной.
+  // Флаги INCIDB подтягиваются первыми, ручные INGREDIENT_FLAGS побеждают.
+  const knownSlugs = new Set([...INGREDIENTS, ...INCIDB_INGREDIENTS].map((i) => i.slug));
   for (const slug of Object.keys(INGREDIENT_FLAGS)) {
     if (!knownSlugs.has(slug)) throw new Error(`Unknown slug in flags: ${slug}`);
   }
+  for (const slug of Object.keys(INCIDB_FLAGS)) {
+    if (!knownSlugs.has(slug)) throw new Error(`Unknown slug in incidb flags: ${slug}`);
+  }
+
+  const flagsFor = (slug: string) => ({ ...INCIDB_FLAGS[slug], ...INGREDIENT_FLAGS[slug] });
 
   for (const item of INGREDIENTS) {
     const { synonyms, ...data } = item;
-    const flags = INGREDIENT_FLAGS[item.slug] ?? {};
+    const flags = flagsFor(item.slug);
     const ingredient = await prisma.ingredient.upsert({
       where: { slug: item.slug },
+      update: { ...data, ...flags },
+      create: { ...data, ...flags },
+    });
+    idBySlug.set(item.slug, ingredient.id);
+
+    await prisma.synonym.deleteMany({ where: { ingredientId: ingredient.id } });
+    await prisma.synonym.createMany({
+      data: synonyms.map((alias) => ({ ingredientId: ingredient.id, alias })),
+    });
+  }
+
+  // импортированные из INCIDB карточки — upsert по inciName (не по slug):
+  // если ингредиент с таким INCI-именем уже появился в базе (в т.ч. вручную),
+  // обновим его данные, а не создадим дубль
+  for (const item of INCIDB_INGREDIENTS) {
+    const { synonyms, ...data } = item;
+    const flags = flagsFor(item.slug);
+    const ingredient = await prisma.ingredient.upsert({
+      where: { inciName: item.inciName },
       update: { ...data, ...flags },
       create: { ...data, ...flags },
     });

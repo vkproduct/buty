@@ -104,7 +104,14 @@ export default async function ProductPage({
 
         <GlassCard className="space-y-4 p-8">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="default">{product.brand}</Badge>
+            <Link
+              href={`/products?${new URLSearchParams({ brand: product.brand })}`}
+              title={`Все средства ${product.brand}`}
+            >
+              <Badge variant="default" className="transition-colors hover:bg-ink-hair">
+                {product.brand}
+              </Badge>
+            </Link>
             <Badge variant="outline">
               {PRODUCT_CATEGORY_LABEL[product.category] ?? product.category}
             </Badge>

@@ -85,3 +85,27 @@ export const CATEGORY_GROUPS: { id: string; title: string; hint: string; categor
     categories: ["texture", "emulsifier", "surfactant", "preservative", "ph-buffer", "fragrance", "alcohol"],
   },
 ];
+
+/**
+ * Множественное число категорий — для H1/title посадочных «одна категория»
+ * («Увлажнители в косметике»). Нет в словаре — посадочная не получает свой заголовок.
+ */
+export const CATEGORY_PLURAL: Record<string, string> = {
+  active: "Активы",
+  peptide: "Пептиды",
+  antioxidant: "Антиоксиданты",
+  "uv-filter": "UV-фильтры",
+  soothing: "Успокаивающие компоненты",
+  humectant: "Увлажнители",
+  emollient: "Эмоленты",
+  barrier: "Барьерные компоненты",
+  botanical: "Растительные экстракты",
+  silicone: "Силиконы",
+  texture: "Загустители и текстурирующие компоненты",
+  emulsifier: "Эмульгаторы",
+  surfactant: "ПАВ и очищающие компоненты",
+  preservative: "Консерванты",
+  "ph-buffer": "Регуляторы pH",
+  fragrance: "Отдушки",
+  alcohol: "Спирты",
+};

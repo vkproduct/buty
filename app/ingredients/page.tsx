@@ -1,73 +1,116 @@
+import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Flag, LayoutGrid, Search, SearchX, X } from "lucide-react";
-import type { EvidenceLevel, Prisma } from "@prisma/client";
+import { ArrowRight, ArrowUpRight, Search, SearchX, X } from "lucide-react";
+import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
+import { CATEGORY_LABEL, EVIDENCE_LABEL, EVIDENCE_META, EVIDENCE_ORDER } from "@/lib/seo/labels";
 import {
-  CATEGORY_LABEL,
-  EVIDENCE_LABEL,
-  EVIDENCE_META,
-  EVIDENCE_ORDER,
-} from "@/lib/seo/labels";
-import { CATEGORY_GROUPS, categoryStyle } from "@/lib/seo/ingredient-categories";
+  CATEGORY_GROUPS,
+  CATEGORY_PLURAL,
+  categoryStyle,
+} from "@/lib/seo/ingredient-categories";
 import { FLAG_META } from "@/lib/ingredients/flags";
+import {
+  activeFilterCount,
+  ingredientFiltersHref,
+  isIndexableFilterPage,
+  parseIngredientFilters,
+  toggleValue,
+  type IngredientFacetRow,
+  type IngredientFilters,
+  type RawIngredientSearchParams,
+} from "@/lib/ingredients/catalog-filters";
 import { Container } from "@/components/ui/container";
 import { EvidenceMeter } from "@/components/ingredients/evidence-meter";
-import { FilterPopover } from "@/components/ingredients/filter-popover";
+import {
+  IngredientFilterPanel,
+  type CategoryGroupOption,
+} from "@/components/ingredients/ingredient-filters";
 import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
-import { cn } from "@/lib/utils";
+import { cn, pluralRu } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Каталог ингредиентов косметики",
-  description:
-    "Функции, рабочие концентрации, уровень доказательности и конфликты активов — каталог ингредиентов с дерматологической точки зрения.",
-  alternates: { canonical: "/ingredients" },
-};
-
-interface SearchParams {
-  q?: string;
-  category?: string;
-  evidence?: string;
-  flags?: string; // ключи через запятую: comedogenic,feedsMalassezia,fragranceAllergen
-}
-
-/** Ключи безопасностных флагов — в том порядке, в котором они показываются в фильтре. */
-const FLAG_KEYS = [
-  "comedogenic",
-  "feedsMalassezia",
-  "fragranceAllergen",
-] as const;
-type FlagKey = (typeof FLAG_KEYS)[number];
-
-const FLAG_KEY_SET = new Set<string>(FLAG_KEYS);
-
-function parseFlags(raw: string | undefined): FlagKey[] {
-  if (!raw) return [];
-  return raw
-    .split(",")
-    .filter((key): key is FlagKey => FLAG_KEY_SET.has(key));
-}
+type SearchParams = RawIngredientSearchParams;
 
 /** С какого размера выдачи включаем алфавитные группы и указатель. */
 const GROUPING_THRESHOLD = 24;
 
-function filterHref(
-  base: SearchParams,
-  patch: Partial<Omit<SearchParams, "flags">> & { flags?: FlagKey[] }
-): string {
-  const merged = { ...base, ...patch };
-  // флаги передаём массивом; отсутствие ключа в patch — «сохранить текущие»
-  const flags = "flags" in patch ? patch.flags : parseFlags(base.flags);
-  const params = new URLSearchParams();
-  if (merged.q?.trim()) params.set("q", merged.q.trim());
-  if (merged.category) params.set("category", merged.category);
-  if (merged.evidence) params.set("evidence", merged.evidence);
-  if (flags && flags.length > 0) params.set("flags", flags.join(","));
-  const qs = params.toString();
-  // Якорь #catalog: после смены фильтра пользователь сразу видит панель и выдачу,
-  // а не прокручивается в начало страницы.
-  return `/ingredients${qs ? `?${qs}` : ""}#catalog`;
+function searchWhere(q: string): Prisma.IngredientWhereInput {
+  return q
+    ? {
+        OR: [
+          { inciName: { contains: q, mode: "insensitive" } },
+          { displayName: { contains: q, mode: "insensitive" } },
+          { synonyms: { some: { alias: { contains: q, mode: "insensitive" } } } },
+        ],
+      }
+    : {};
+}
+
+/** Матрица признаков: категория × доказательность × флаги → число ингредиентов. */
+async function loadFacetRows(q: string): Promise<IngredientFacetRow[]> {
+  const rows = await prisma.ingredient.groupBy({
+    by: ["category", "evidenceLevel", "comedogenic", "feedsMalassezia", "fragranceAllergen"],
+    where: searchWhere(q),
+    _count: { _all: true },
+  });
+  return rows.map((r) => ({
+    category: r.category,
+    evidence: r.evidenceLevel,
+    comedogenic: r.comedogenic,
+    feedsMalassezia: r.feedsMalassezia,
+    fragranceAllergen: r.fragranceAllergen,
+    count: r._count._all,
+  }));
+}
+
+/** Полная матрица (без поиска) — справочник категорий и статистика; один запрос на рендер. */
+const loadCatalogMatrix = cache(() => loadFacetRows(""));
+
+async function loadFilters(searchParams: SearchParams) {
+  const matrix = await loadCatalogMatrix();
+  const categories = [...new Set(matrix.map((r) => r.category))];
+  return { matrix, categories, filters: parseIngredientFilters(searchParams, { categories }) };
+}
+
+/** Заголовок посадочной «одна категория»: «Увлажнители в косметике». */
+function landingTitle(filters: IngredientFilters): string | null {
+  if (!isIndexableFilterPage(filters) || filters.categories.length !== 1) return null;
+  const plural = CATEGORY_PLURAL[filters.categories[0]];
+  return plural ? `${plural} в косметике` : null;
+}
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}): Promise<Metadata> {
+  const { filters } = await loadFilters(searchParams);
+
+  if (!isIndexableFilterPage(filters)) {
+    // Поиск, мультивыбор, доказательность и флаги — служебные состояния:
+    // не индексируем, но поисковик ходит по ссылкам на карточки.
+    return {
+      title: "Каталог ингредиентов косметики",
+      alternates: { canonical: "/ingredients" },
+      robots: { index: false, follow: true },
+    };
+  }
+  const landing = landingTitle(filters);
+  if (landing) {
+    return {
+      title: `${landing} — каталог ингредиентов`,
+      description: `${landing}: функции в формуле, рабочие концентрации, уровень доказательной базы и конфликты — дерматологический разбор каждого ингредиента.`,
+      alternates: { canonical: ingredientFiltersHref(filters, {}, { anchor: false }) },
+    };
+  }
+  return {
+    title: "Каталог ингредиентов косметики",
+    description:
+      "Функции, рабочие концентрации, уровень доказательности и конфликты активов — каталог ингредиентов с дерматологической точки зрения.",
+    alternates: { canonical: "/ingredients" },
+  };
 }
 
 /**
@@ -100,14 +143,6 @@ function letterAnchor(key: string): string {
 const RU_ALPHABET = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ".split("");
 const EN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-function pluralRu(n: number, one: string, few: string, many: string): string {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return one;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
-  return many;
-}
-
 /** Плашка-иконка категории. */
 function CategoryIcon({ category, size = "md" }: { category: string; size?: "sm" | "md" }) {
   const { icon: Icon, tint } = categoryStyle(category);
@@ -115,7 +150,7 @@ function CategoryIcon({ category, size = "md" }: { category: string; size?: "sm"
     <span
       className={cn(
         "grid shrink-0 place-items-center",
-        size === "md" ? "h-9 w-9 rounded-xl" : "h-7 w-7 rounded-full",
+        size === "md" ? "h-9 w-9 rounded-xl" : "h-6 w-6 rounded-full",
         tint
       )}
       aria-hidden
@@ -143,113 +178,48 @@ export default async function IngredientsCatalogPage({
 }: {
   searchParams: SearchParams;
 }) {
-  const q = searchParams.q?.trim() ?? "";
-  const category = searchParams.category || undefined;
-  const evidence = (EVIDENCE_ORDER as string[]).includes(searchParams.evidence ?? "")
-    ? (searchParams.evidence as EvidenceLevel)
-    : undefined;
-  const selectedFlags = parseFlags(searchParams.flags);
-  const flagsWhere: Prisma.IngredientWhereInput = selectedFlags.length
-    ? { OR: selectedFlags.map((f) => ({ [f]: true })) }
-    : {};
+  const { matrix, categories: allCategories, filters } = await loadFilters(searchParams);
+  const { q, categories, evidence, flags } = filters;
 
-  const searchWhere: Prisma.IngredientWhereInput = q
-    ? {
-        OR: [
-          { inciName: { contains: q, mode: "insensitive" } },
-          { displayName: { contains: q, mode: "insensitive" } },
-          { synonyms: { some: { alias: { contains: q, mode: "insensitive" } } } },
-        ],
-      }
-    : {};
   const where: Prisma.IngredientWhereInput = {
-    category,
-    evidenceLevel: evidence,
-    ...searchWhere,
-    ...flagsWhere,
+    AND: [
+      searchWhere(q),
+      categories.length ? { category: { in: categories } } : {},
+      evidence.length ? { evidenceLevel: { in: evidence } } : {},
+      flags.length ? { OR: flags.map((f) => ({ [f]: true })) } : {},
+    ],
   };
 
-  // Фасетные счётчики: сколько найдётся, если выбрать этот пункт при остальных
-  // текущих фильтрах. Глобальные — для навигатора, статистики и списка пунктов.
-  // Счётчики флагов считаем без самого флагового фильтра — иначе при выбранном
-  // флаге все остальные пункты обнулятся.
-  const flagFacetWhere: Prisma.IngredientWhereInput = {
-    category,
-    evidenceLevel: evidence,
-    ...searchWhere,
-  };
-  const [
-    ingredients,
-    categoryTotals,
-    categoryFacets,
-    evidenceTotals,
-    evidenceFacets,
-    flagTotals,
-    flagFacets,
-    totalCount,
-    conflictCount,
-  ] = await Promise.all([
+  const [ingredients, searchFacets, conflictCount] = await Promise.all([
     prisma.ingredient.findMany({ where, orderBy: { displayName: "asc" } }),
-    prisma.ingredient.groupBy({
-      by: ["category"],
-      _count: { category: true },
-      orderBy: { category: "asc" },
-    }),
-    prisma.ingredient.groupBy({
-      by: ["category"],
-      where: { evidenceLevel: evidence, ...searchWhere, ...flagsWhere },
-      _count: { category: true },
-      orderBy: { category: "asc" },
-    }),
-    prisma.ingredient.groupBy({ by: ["evidenceLevel"], _count: { evidenceLevel: true } }),
-    prisma.ingredient.groupBy({
-      by: ["evidenceLevel"],
-      where: { category, ...searchWhere, ...flagsWhere },
-      _count: { evidenceLevel: true },
-    }),
-    prisma.ingredient.count({
-      where: { OR: FLAG_KEYS.map((f) => ({ [f]: true })) },
-    }),
-    Promise.all(
-      FLAG_KEYS.map((f) => prisma.ingredient.count({ where: { ...flagFacetWhere, [f]: true } }))
-    ),
-    prisma.ingredient.count(),
+    // Матрица с учётом поиска — для фасетных и живых счётчиков панели фильтров.
+    q ? loadFacetRows(q) : Promise.resolve(matrix),
     prisma.ingredientConflict.count(),
   ]);
-  const flagTotal = flagTotals;
-  const flagCountByKey = new Map(FLAG_KEYS.map((f, i) => [f, flagFacets[i]]));
 
-  const countByCategory = new Map(categoryFacets.map((r) => [r.category, r._count.category]));
-  const categoryFacetTotal = categoryFacets.reduce((sum, r) => sum + r._count.category, 0);
-  const evidenceTotalByLevel = new Map(
-    evidenceTotals.map((r) => [r.evidenceLevel, r._count.evidenceLevel])
-  );
-  const evidenceCountByLevel = new Map(
-    evidenceFacets.map((r) => [r.evidenceLevel, r._count.evidenceLevel])
-  );
-  // Уровни показываем, если они есть в базе вообще (пустые по фильтру — приглушены).
-  const evidenceLevels = EVIDENCE_ORDER.filter(
-    (level) => (evidenceTotalByLevel.get(level) ?? 0) > 0 || evidence === level
-  );
+  const totalCount = matrix.reduce((sum, r) => sum + r.count, 0);
+  const strongCount = matrix
+    .filter((r) => r.evidence === "STRONG")
+    .reduce((sum, r) => sum + r.count, 0);
 
   // Группы категорий: все категории базы; категории вне групп — в «Основу формулы».
-  const allCategories = categoryTotals.map((r) => r.category);
+  const categoryLabel = (c: string) => CATEGORY_LABEL[c] ?? c;
   const grouped = new Set(CATEGORY_GROUPS.flatMap((g) => g.categories));
-  const orphanCategories = allCategories.filter((c) => !grouped.has(c));
-  const categoryGroups = CATEGORY_GROUPS.map((g) => ({
-    ...g,
-    categories: [...g.categories, ...(g.id === "base" ? orphanCategories : [])].filter(
-      (c) => allCategories.includes(c) || c === category
-    ),
+  const orphanCategories = allCategories.filter((c) => !grouped.has(c)).sort();
+  const categoryGroups: CategoryGroupOption[] = CATEGORY_GROUPS.map((g) => ({
+    id: g.id,
+    title: g.title,
+    categories: [...g.categories, ...(g.id === "base" ? orphanCategories : [])]
+      .filter((c) => allCategories.includes(c))
+      .map((value) => ({ value, label: categoryLabel(value) })),
   })).filter((g) => g.categories.length > 0);
 
-  const hasActiveFilters = Boolean(q || category || evidence || selectedFlags.length);
-  const categoryLabel = (c: string) => CATEGORY_LABEL[c] ?? c;
-  // Тоггл одного флага с сохранением остальных выбранных
-  const toggleFlag = (key: FlagKey): FlagKey[] =>
-    selectedFlags.includes(key)
-      ? selectedFlags.filter((f) => f !== key)
-      : [...selectedFlags, key];
+  const activeCount = activeFilterCount(filters);
+  const hasActiveFilters = Boolean(q) || activeCount > 0;
+  const landing = landingTitle(filters);
+  // Ключ по применённым фильтрам: после навигации панели монтируются заново.
+  const panelKey = JSON.stringify(filters);
+  const panelProps = { applied: filters, facets: searchFacets, categoryGroups };
 
   // Алфавитные группы — для длинной выдачи без поиска.
   const sorted = [...ingredients].sort((a, b) =>
@@ -273,10 +243,7 @@ export default async function IngredientsCatalogPage({
       value: allCategories.length,
       label: pluralRu(allCategories.length, "категория", "категории", "категорий"),
     },
-    {
-      value: evidenceTotalByLevel.get("STRONG") ?? 0,
-      label: "с сильной доказательной базой",
-    },
+    { value: strongCount, label: "с сильной доказательной базой" },
     {
       value: conflictCount,
       label: pluralRu(conflictCount, "конфликт активов", "конфликта активов", "конфликтов активов"),
@@ -289,9 +256,9 @@ export default async function IngredientsCatalogPage({
       <Container className="pb-10 pt-10 sm:pt-12">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <header className="space-y-4 lg:col-span-7">
-            <span className="eyebrow">База знаний</span>
+            <span className="eyebrow">{landing ? "Каталог ингредиентов" : "База знаний"}</span>
             <h1 className="font-display text-[32px] font-semibold leading-[1.1] sm:text-[44px]">
-              Каталог ингредиентов
+              {landing ?? "Каталог ингредиентов"}
             </h1>
             <p className="max-w-xl text-[17px] leading-relaxed text-ink-soft">
               Маркетинг оценивает ингредиенты по громкости обещаний, дерматология —
@@ -320,22 +287,30 @@ export default async function IngredientsCatalogPage({
       {/* Якорь — обычный блок перед липкой панелью: у «прилипшего» элемента
           браузер не может вычислить исходную позицию для прокрутки. */}
       <div id="catalog" aria-hidden className="scroll-mt-[72px] sm:scroll-mt-20" />
+      {/* Липкая панель в одну строку на любой ширине.
+          На мобильных у неё нет backdrop-blur: иначе position: fixed нижнего листа
+          привязался бы к панели, а не к экрану. Пока панель фильтров открыта,
+          тулбар поднимается над шапкой — затемнение закрывает всю страницу. */}
       <div
         data-catalog-toolbar
-        className="sticky top-[72px] z-30 border-y border-ink-hair bg-white/90 backdrop-blur-md sm:top-20"
+        className="sticky top-[72px] z-30 border-y border-ink-hair bg-white has-[details[open]]:z-[60] sm:top-20 lg:bg-white/90 lg:backdrop-blur-md"
       >
-        <Container className="flex flex-wrap items-center gap-x-3 gap-y-2.5 py-3">
+        <Container className="flex items-center gap-2.5 py-3">
           <form
             action="/ingredients#catalog"
             method="get"
             role="search"
-            className="relative min-w-0 flex-1 lg:max-w-sm"
+            className="relative min-w-0 flex-1 lg:max-w-[420px]"
           >
-            {category && <input type="hidden" name="category" value={category} />}
-            {evidence && <input type="hidden" name="evidence" value={evidence} />}
-            {selectedFlags.length > 0 && (
-              <input type="hidden" name="flags" value={selectedFlags.join(",")} />
-            )}
+            {categories.map((c) => (
+              <input key={c} type="hidden" name="category" value={c} />
+            ))}
+            {evidence.map((v) => (
+              <input key={v} type="hidden" name="evidence" value={v} />
+            ))}
+            {flags.map((f) => (
+              <input key={f} type="hidden" name="flag" value={f} />
+            ))}
             <label htmlFor="ingredient-search" className="sr-only">
               Поиск по названию, INCI или синониму
             </label>
@@ -346,170 +321,43 @@ export default async function IngredientsCatalogPage({
               type="search"
               defaultValue={q}
               placeholder="Ниацинамид, retinol, SLS…"
-              className="h-11 w-full rounded-lg border border-transparent bg-ink-wash pl-10 pr-4 text-[15px] text-foreground transition-colors placeholder:text-ink-muted hover:border-ink-line focus-visible:border-foreground focus-visible:bg-white focus-visible:outline-none"
+              enterKeyHint="search"
+              className="h-11 w-full rounded-lg border border-transparent bg-ink-wash pl-10 pr-4 text-base text-foreground transition-colors placeholder:text-ink-muted hover:border-ink-line focus-visible:border-foreground focus-visible:bg-white focus-visible:outline-none sm:text-[15px]"
             />
           </form>
 
-          {/* Категория — доступна в любой точке прокрутки */}
-          <FilterPopover
-            key={`cat-${category ?? "all"}`}
-            className="lg:order-last lg:ml-auto"
-            panelClassName="w-[min(calc(100vw-3rem),640px)]"
-            trigger={
-              category ? (
-                <>
-                  <CategoryIcon category={category} size="sm" />
-                  <span className="hidden max-w-[180px] truncate sm:inline">
-                    {categoryLabel(category)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <LayoutGrid className="h-4 w-4 text-ink-muted" />
-                  <span className="hidden sm:inline">Все категории</span>
-                </>
-              )
-            }
-          >
-            <Link
-              href={filterHref(searchParams, { category: undefined })}
-              className={cn(
-                "mb-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-ink-wash",
-                !category && "bg-ink-wash"
-              )}
-            >
-              Все категории
-              <span className="text-ink-muted">{categoryFacetTotal}</span>
-            </Link>
-            <div className="grid gap-x-2 sm:grid-cols-2">
-              {categoryGroups.map((group) => (
-                <div key={group.id} className={cn(group.id === "base" && "sm:col-span-2")}>
-                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-ink-muted">
-                    {group.title}
-                  </p>
-                  <ul className={cn("grid", group.id === "base" && "sm:grid-cols-2 sm:gap-x-2")}>
-                    {group.categories.map((c) => (
-                      <li key={c}>
-                        <Link
-                          href={filterHref(searchParams, { category: c })}
-                          className={cn(
-                            "flex items-center gap-3 rounded-xl px-2 py-1.5 text-sm transition-colors hover:bg-ink-wash",
-                            category === c && "bg-ink-wash font-semibold",
-                            !countByCategory.get(c) && category !== c && "opacity-40"
-                          )}
-                        >
-                          <CategoryIcon category={c} size="sm" />
-                          <span className="flex-1 truncate">{categoryLabel(c)}</span>
-                          <span className="text-ink-muted">{countByCategory.get(c) ?? 0}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </FilterPopover>
+          {/* Мобильные и планшеты: одна кнопка «Фильтры» → нижний лист со всем сразу */}
+          <IngredientFilterPanel
+            key={`sheet-${panelKey}`}
+            variant="sheet"
+            className="shrink-0 lg:hidden"
+            {...panelProps}
+          />
 
-          {/* Флаги безопасности — мультивыбор: показываем ингредиенты
-              с хотя бы одним из выбранных флагов */}
-          <FilterPopover
-            key={`flags-${selectedFlags.join(",") || "none"}`}
-            trigger={
-              <>
-                <Flag className="h-4 w-4 text-ink-muted" />
-                <span className="hidden sm:inline">
-                  {selectedFlags.length > 0
-                    ? `Флаги (${selectedFlags.length})`
-                    : "Флаги безопасности"}
-                </span>
-              </>
-            }
-          >
-            <Link
-              href={filterHref(searchParams, { flags: undefined })}
-              className={cn(
-                "mb-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-ink-wash",
-                selectedFlags.length === 0 && "bg-ink-wash"
-              )}
-            >
-              Без фильтра по флагам
-              <span className="text-ink-muted">{totalCount}</span>
-            </Link>
-            <ul>
-              {FLAG_KEYS.map((key) => {
-                const active = selectedFlags.includes(key);
-                return (
-                  <li key={key}>
-                    <Link
-                      href={filterHref(searchParams, { flags: toggleFlag(key) })}
-                      title={FLAG_META[key].note}
-                      className={cn(
-                        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-ink-wash",
-                        active && "bg-ink-wash font-semibold",
-                        !active && flagCountByKey.get(key) === 0 && "opacity-40"
-                      )}
-                    >
-                      <span className="flex-1">{FLAG_META[key].label}</span>
-                      <span className="text-ink-muted">{flagCountByKey.get(key) ?? 0}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="mt-1 border-t border-ink-hair px-3 pb-1 pt-3 text-xs leading-relaxed text-ink-muted">
-              Показываются ингредиенты с хотя бы одним из выбранных флагов.
-              Всего с флагами в базе: {flagTotal}.
-            </p>
-          </FilterPopover>
-
-          {/* Доказательная база — сегментированный переключатель */}
-          <nav
-            aria-label="Доказательная база"
-            className="no-scrollbar -mx-6 flex w-[calc(100%+3rem)] items-center gap-1.5 overflow-x-auto px-6 sm:-mx-10 sm:w-[calc(100%+5rem)] sm:px-10 lg:mx-0 lg:w-auto lg:overflow-visible lg:px-0"
-          >
-            <span className="mr-1 hidden shrink-0 text-sm text-ink-muted xl:inline">
-              Доказательность:
-            </span>
-            <Link
-              href={filterHref(searchParams, { evidence: undefined })}
-              className={cn(
-                "inline-flex h-9 shrink-0 items-center rounded-full border px-3.5 text-sm font-medium transition-colors",
-                !evidence
-                  ? "border-foreground bg-foreground text-white"
-                  : "border-ink-hair text-foreground hover:border-foreground"
-              )}
-            >
-              Любая
-            </Link>
-            {evidenceLevels.map((level) => {
-              const active = evidence === level;
-              return (
-                <Link
-                  key={level}
-                  href={filterHref(searchParams, { evidence: active ? undefined : level })}
-                  title={EVIDENCE_META[level].note}
-                  className={cn(
-                    "inline-flex h-9 shrink-0 items-center gap-2 rounded-full border pl-3 pr-3.5 text-sm font-medium transition-colors",
-                    active
-                      ? "border-foreground bg-foreground text-white"
-                      : "border-ink-hair text-foreground hover:border-foreground",
-                    !active && !evidenceCountByLevel.get(level) && "opacity-40"
-                  )}
-                >
-                  <EvidenceMeter level={level} inverted={active} />
-                  {EVIDENCE_META[level].short}
-                  <span
-                    className={cn(
-                      "lg:hidden xl:inline",
-                      active ? "text-white/70" : "text-ink-muted"
-                    )}
-                  >
-                    {evidenceCountByLevel.get(level) ?? 0}
-                  </span>
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Десктоп: три выпадающие панели справа от поиска */}
+          <div className="ml-auto hidden shrink-0 items-center gap-2 lg:flex">
+            <IngredientFilterPanel
+              key={`evidence-${panelKey}`}
+              variant="popover"
+              section="evidence"
+              align="right"
+              {...panelProps}
+            />
+            <IngredientFilterPanel
+              key={`category-${panelKey}`}
+              variant="popover"
+              section="category"
+              align="right"
+              {...panelProps}
+            />
+            <IngredientFilterPanel
+              key={`flags-${panelKey}`}
+              variant="popover"
+              section="flags"
+              align="right"
+              {...panelProps}
+            />
+          </div>
         </Container>
       </div>
 
@@ -522,27 +370,34 @@ export default async function IngredientsCatalogPage({
             {hasActiveFilters && ` из ${totalCount}`}
           </p>
           {q && (
-            <ActiveChip href={filterHref(searchParams, { q: undefined })}>«{q}»</ActiveChip>
+            <ActiveChip href={ingredientFiltersHref(filters, { q: "" })}>«{q}»</ActiveChip>
           )}
-          {category && (
-            <ActiveChip href={filterHref(searchParams, { category: undefined })}>
-              {categoryLabel(category)}
+          {evidence.map((level) => (
+            <ActiveChip
+              key={level}
+              href={ingredientFiltersHref(filters, { evidence: toggleValue(evidence, level) })}
+            >
+              <EvidenceMeter level={level} />
+              {EVIDENCE_META[level].short}
             </ActiveChip>
-          )}
-          {evidence && (
-            <ActiveChip href={filterHref(searchParams, { evidence: undefined })}>
-              {EVIDENCE_META[evidence].short} доказательность
+          ))}
+          {categories.map((c) => (
+            <ActiveChip
+              key={c}
+              href={ingredientFiltersHref(filters, { categories: toggleValue(categories, c) })}
+            >
+              {categoryLabel(c)}
             </ActiveChip>
-          )}
-          {selectedFlags.map((key) => (
+          ))}
+          {flags.map((key) => (
             <ActiveChip
               key={key}
-              href={filterHref(searchParams, { flags: toggleFlag(key) })}
+              href={ingredientFiltersHref(filters, { flags: toggleValue(flags, key) })}
             >
               {FLAG_META[key].label}
             </ActiveChip>
           ))}
-          {[q, category, evidence, ...selectedFlags].filter(Boolean).length > 1 && (
+          {activeCount + (q ? 1 : 0) > 1 && (
             <Link
               href="/ingredients#catalog"
               className="ml-1 text-sm font-semibold text-foreground underline underline-offset-4 hover:text-brand-700"
@@ -602,7 +457,7 @@ export default async function IngredientsCatalogPage({
                   key={letter}
                   id={useGrouping ? letterAnchor(letter) : undefined}
                   aria-label={useGrouping ? `Буква ${letter}` : undefined}
-                  className="scroll-mt-52 lg:scroll-mt-44"
+                  className="scroll-mt-40 sm:scroll-mt-44"
                 >
                   {useGrouping && (
                     <div className="mb-4 flex items-baseline gap-3">

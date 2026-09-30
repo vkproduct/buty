@@ -2,7 +2,7 @@ import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Search, SearchX, X } from "lucide-react";
-import type { Prisma } from "@prisma/client";
+import type { Ingredient, Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { CATEGORY_LABEL, EVIDENCE_LABEL, EVIDENCE_META, EVIDENCE_ORDER } from "@/lib/seo/labels";
@@ -22,6 +22,16 @@ import {
   type IngredientFilters,
   type RawIngredientSearchParams,
 } from "@/lib/ingredients/catalog-filters";
+import {
+  catalogEntries,
+  DIGITS_KEY,
+  EN_ALPHABET,
+  groupByLetter,
+  letterAnchor,
+  RU_ALPHABET,
+  sortLetters,
+  type CatalogEntry,
+} from "@/lib/ingredients/catalog-alphabet";
 import { Container } from "@/components/ui/container";
 import { EvidenceMeter } from "@/components/ingredients/evidence-meter";
 import {
@@ -114,36 +124,6 @@ export async function generateMetadata({
   };
 }
 
-/**
- * Ключ алфавитной группы: первая буква названия.
- * Цифры — в одну группу «0–9» (в начале), латинские буквы идут отдельным блоком
- * после кириллицы и в указателе выведены второй строкой — так латинская P
- * не путается с кириллической Р.
- */
-function letterOf(name: string): string {
-  const ch = name.trim().charAt(0).toUpperCase();
-  if (/[0-9]/.test(ch)) return "0–9";
-  return ch === "Ё" ? "Е" : ch;
-}
-
-const isLatin = (key: string) => /^[A-Z]$/.test(key);
-
-function letterRank(key: string): number {
-  if (key === "0–9") return 0;
-  if (isLatin(key)) return 2;
-  return 1;
-}
-
-/** id секции буквы: префикс алфавита, чтобы кириллическая и латинская «похожие» буквы не совпали. */
-function letterAnchor(key: string): string {
-  if (key === "0–9") return "letter-digits";
-  return `letter-${isLatin(key) ? "en" : "ru"}-${key}`;
-}
-
-/** Буквы, с которых может начинаться слово (без Ё, Ъ, Ы, Ь). */
-const RU_ALPHABET = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ".split("");
-const EN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
 /** Плашка-иконка категории. */
 function CategoryIcon({ category, size = "md" }: { category: string; size?: "sm" | "md" }) {
   const { icon: Icon, tint } = categoryStyle(category);
@@ -223,20 +203,17 @@ export default async function IngredientsCatalogPage({
   const panelProps = { applied: filters, facets: searchFacets, categoryGroups };
 
   // Алфавитные группы — для длинной выдачи без поиска.
-  const sorted = [...ingredients].sort((a, b) =>
-    a.displayName.localeCompare(b.displayName, "ru")
-  );
-  const useGrouping = !q && sorted.length > GROUPING_THRESHOLD;
-  const letterGroups = new Map<string, typeof sorted>();
-  for (const ingredient of sorted) {
-    const key = useGrouping ? letterOf(ingredient.displayName) : "all";
-    const bucket = letterGroups.get(key);
-    if (bucket) bucket.push(ingredient);
-    else letterGroups.set(key, [ingredient]);
-  }
-  const letters = [...letterGroups.keys()].sort(
-    (a, b) => letterRank(a) - letterRank(b) || a.localeCompare(b, "ru")
-  );
+  const useGrouping = !q && ingredients.length > GROUPING_THRESHOLD;
+  const rows: CatalogEntry<Ingredient>[] = useGrouping
+    ? catalogEntries(ingredients)
+    : ingredients.map((ingredient) => ({
+        ingredient,
+        title: ingredient.displayName,
+        subtitle: ingredient.inciName,
+        letter: "all",
+      }));
+  const letterGroups = groupByLetter(rows);
+  const letters = sortLetters(letterGroups.keys());
 
   const stats = [
     { value: totalCount, label: pluralRu(totalCount, "ингредиент", "ингредиента", "ингредиентов") },
@@ -413,7 +390,7 @@ export default async function IngredientsCatalogPage({
         {useGrouping && letters.length > 1 && (
           <nav aria-label="Алфавитный указатель" className="mb-8 space-y-1">
             {[
-              { id: "ru", label: "Кириллица", keys: [...(letterGroups.has("0–9") ? ["0–9"] : []), ...RU_ALPHABET] },
+              { id: "ru", label: "Кириллица", keys: [...(letterGroups.has(DIGITS_KEY) ? [DIGITS_KEY] : []), ...RU_ALPHABET] },
               { id: "en", label: "Латиница", keys: EN_ALPHABET },
             ].map((row) => (
               <ul
@@ -468,8 +445,8 @@ export default async function IngredientsCatalogPage({
                     </div>
                   )}
                   <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {items.map((ingredient) => (
-                      <li key={ingredient.id} className="min-w-0">
+                    {items.map(({ ingredient, title, subtitle }) => (
+                      <li key={`${ingredient.id}-${title}`} className="min-w-0">
                         <Link
                           href={`/ingredients/${ingredient.slug}`}
                           className="group flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-line hover:shadow-glass-lg"
@@ -485,14 +462,20 @@ export default async function IngredientsCatalogPage({
                           </div>
 
                           <h3 className="mt-4 break-words text-[17px] font-semibold leading-snug text-foreground transition-colors group-hover:text-brand-700">
-                            {ingredient.displayName}
+                            {title}
                           </h3>
-                          <p
-                            className="mt-1 truncate text-xs font-medium uppercase tracking-wide text-ink-muted"
-                            title={ingredient.inciName}
-                          >
-                            {ingredient.inciName}
-                          </p>
+                          {subtitle && (
+                            <p
+                              className={cn(
+                                "mt-1 truncate text-xs font-medium text-ink-muted",
+                                // INCI-подпись — капсом, русское название — как есть.
+                                subtitle === ingredient.inciName && "uppercase tracking-wide"
+                              )}
+                              title={subtitle}
+                            >
+                              {subtitle}
+                            </p>
+                          )}
                           <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink-soft">
                             {ingredient.function}
                           </p>

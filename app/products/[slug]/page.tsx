@@ -279,7 +279,7 @@ export default async function ProductPage({
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild>
-              <a href={`/go/${product.id}?source=product_page`}>
+              <a href={`/go/${product.id}?source=product_page`} data-ym-goal="where_to_buy">
                 Где купить
                 <ExternalLink className="ml-2 h-4 w-4" />
               </a>

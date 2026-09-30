@@ -5,6 +5,7 @@ import { Header } from "@/components/header";
 import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
+import { YandexMetrika } from "@/components/analytics/yandex-metrika";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
 import "./globals.css";
@@ -78,6 +79,7 @@ export default function RootLayout({
     <html lang="ru" className={`${sans.variable} ${logo.variable}`}>
       <body className="font-sans">
         <JsonLd data={ORGANIZATION} />
+        <YandexMetrika />
         <Providers>
           <Header />
           {children}

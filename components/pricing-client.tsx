@@ -7,6 +7,7 @@ import { Check, Minus, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
+import { GOALS, reachGoal } from "@/lib/analytics/metrika";
 import { PLAN_PRICES } from "@/lib/payments/provider";
 
 const FREE_FEATURES = [
@@ -41,6 +42,7 @@ export function PricingClient({ isLoggedIn, isPro, currentPeriodEnd }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   async function pay(period: "month" | "year") {
+    reachGoal(GOALS.paymentStart, { period });
     setPending(period);
     setError(null);
     const res = await fetch("/api/payments", {

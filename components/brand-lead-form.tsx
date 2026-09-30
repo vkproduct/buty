@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { GOALS, reachGoal } from "@/lib/analytics/metrika";
 
 /** Форма заявки бренда → POST /api/brand-leads. */
 export function BrandLeadForm() {
@@ -34,6 +35,7 @@ export function BrandLeadForm() {
       }
       return;
     }
+    reachGoal(GOALS.brandLead);
     setDone(true);
   }
 

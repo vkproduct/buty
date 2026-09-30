@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { GOALS, reachGoal } from "@/lib/analytics/metrika";
 
 interface AnalyzeFormProps {
   /** id поля — чтобы на странице могли жить две формы */
@@ -19,6 +20,7 @@ export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (text.trim()) reachGoal(GOALS.analyzeSubmit);
     const query = text.trim() ? `?text=${encodeURIComponent(text.trim())}` : "";
     router.push(`/analyze${query}`);
   }

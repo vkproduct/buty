@@ -293,7 +293,7 @@ export default async function HomePage() {
               Доказательный уход, а не маркетинг
             </Badge>
             <h1 className="text-[32px] font-semibold leading-[1.08] sm:text-[48px] lg:text-[56px]">
-              Проверьте состав косметики онлайн — и&nbsp;узнайте, как она работает
+              Проверьте состав косметики онлайн и&nbsp;узнайте, как она работает
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
               Разбираем составы по научным данным, а «Моя полка» проверяет,

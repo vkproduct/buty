@@ -29,6 +29,7 @@ import {
   type CategoryGroupOption,
 } from "@/components/ingredients/ingredient-filters";
 import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
+import { BackToFilters } from "@/components/ingredients/back-to-filters";
 import { cn, pluralRu } from "@/lib/utils";
 
 type SearchParams = RawIngredientSearchParams;
@@ -596,6 +597,9 @@ export default async function IngredientsCatalogPage({
           </ul>
         </section>
       </Container>
+
+      {/* Плавающая кнопка «наверх»: из глубины каталога — обратно к фильтрам */}
+      <BackToFilters />
     </main>
   );
 }

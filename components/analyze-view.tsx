@@ -71,6 +71,7 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [ocrNotice, setOcrNotice] = useState(false);
+  const [ocrLoading, setOcrLoading] = useState(false);
   const [feedbackToken, setFeedbackToken] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const autoRan = useRef(false);
@@ -105,12 +106,16 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
   }, []);
 
   async function handlePhoto(file: File) {
+    setError(null);
+    setOcrLoading(true);
     try {
       const extracted = await getOcrProvider().extractText(file);
       setText(extracted);
     } catch (e) {
       if (e instanceof OcrNotReadyError) setOcrNotice(true);
-      else setError("Не удалось обработать фото");
+      else setError(e instanceof Error ? e.message : "Не удалось обработать фото");
+    } finally {
+      setOcrLoading(false);
     }
   }
 
@@ -158,10 +163,15 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
                 type="button"
                 variant="secondary"
                 size="lg"
+                disabled={ocrLoading}
                 onClick={() => fileInputRef.current?.click()}
               >
-                <Camera className="h-4 w-4" />
-                Загрузить фото
+                {ocrLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Camera className="h-4 w-4" />
+                )}
+                {ocrLoading ? "Распознаём фото…" : "Загрузить фото"}
               </Button>
               <input
                 ref={fileInputRef}

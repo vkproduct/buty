@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
 import { YandexMetrika } from "@/components/analytics/yandex-metrika";
+import { CookieBanner } from "@/components/analytics/cookie-banner";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
 import "./globals.css";
@@ -84,6 +85,7 @@ export default function RootLayout({
           <Header />
           {children}
           <SiteFooter />
+          <CookieBanner />
         </Providers>
       </body>
     </html>

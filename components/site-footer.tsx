@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/logo";
+import { CookieSettingsButton } from "@/components/analytics/cookie-banner";
 
 const COLUMNS = [
   {
@@ -66,7 +67,13 @@ export function SiteFooter() {
       </Container>
       <div className="border-t border-ink-line">
         <Container className="flex flex-col gap-2 py-6 text-sm text-ink-soft sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} Buty.app</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <p>© {new Date().getFullYear()} Buty.app</p>
+            <Link href="/cookies" className="hover:underline">
+              Cookie
+            </Link>
+            <CookieSettingsButton />
+          </div>
           <p className="max-w-2xl text-ink-muted sm:text-right">
             Информация на сайте носит справочный характер и не заменяет
             консультацию врача-дерматолога.

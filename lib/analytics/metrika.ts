@@ -1,9 +1,16 @@
 /**
  * Яндекс Метрика: номер счётчика и отправка целей.
- * Счётчик выключен, пока не задан NEXT_PUBLIC_YM_ID.
+ * Боевой счётчик включён в production-сборке (кроме превью Vercel);
+ * NEXT_PUBLIC_YM_ID переопределяет номер, пустое значение выключает счётчик.
  */
 
-export const YM_ID = Number(process.env.NEXT_PUBLIC_YM_ID) || 0;
+const DEFAULT_YM_ID = "113224497";
+
+const isProdBuild =
+  process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_VERCEL_ENV !== "preview";
+
+export const YM_ID =
+  Number(process.env.NEXT_PUBLIC_YM_ID ?? (isProdBuild ? DEFAULT_YM_ID : "")) || 0;
 
 /** Идентификаторы целей — те же строки нужно завести в Метрике (тип «JavaScript-событие»). */
 export const GOALS = {

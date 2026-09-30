@@ -44,7 +44,8 @@ export const metadata: Metadata = {
     "ингредиенты косметики",
   ],
   verification: {
-    yandex: process.env.YANDEX_VERIFICATION || undefined,
+    // Яндекс Вебмастер: метатег yandex-verification (переопределяется YANDEX_VERIFICATION)
+    yandex: process.env.YANDEX_VERIFICATION || "95c6e4ac045fc04e",
     google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
   },
   formatDetection: { telephone: false },

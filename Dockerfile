@@ -14,6 +14,9 @@ RUN apk add --no-cache postgresql16 postgresql16-client
 RUN corepack enable && corepack prepare pnpm@12.6.0 --activate
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Канонический домен вшивается в клиентский и серверный бандл на этапе сборки
+ARG NEXT_PUBLIC_SITE_URL=https://buty.app
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN pnpm prisma generate
 # generateStaticParams и SSG идут в БД — поднимаем одноразовый Postgres на время сборки
 RUN mkdir -p /tmp/pgdata && chown postgres:postgres /tmp/pgdata \

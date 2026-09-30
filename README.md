@@ -55,7 +55,7 @@ pnpm dev                    # http://localhost:3000
 
 ## Реальные адаптеры (что включать в проде)
 
-**OCR (`/lib/ocr`).** По умолчанию `MOCK_OCR=true` — провайдер-заглушка. Для прода реализовать интерфейс `OcrProvider` поверх Yandex Vision: ключи `YANDEX_VISION_API_KEY` и `YANDEX_VISION_FOLDER_ID` в `.env`, переключение — `MOCK_OCR=false`. Адаптер принимает изображение, возвращает распознанный текст состава; лимиты и ретраи — внутри адаптера.
+**OCR (`/lib/ocr`).** Google Cloud Vision (`DOCUMENT_TEXT_DETECTION`). Браузер отправляет фото на `/api/ocr`, сервер пересылает его в Google со своим ключом — ключ в браузер не попадает. Включение: `GOOGLE_VISION_API_KEY` в `.env`; без ключа роут отвечает 501, и на сайте показывается «OCR скоро». Из распознанного текста берётся часть после «Ingredients:»/«Состав:» (`extractInci`). Ограничения: фото до 7 МБ, 20 распознаваний в час с одного IP. Если Google не принимает запросы с сервера в РФ — поставить переходник в Европе и указать его адрес в `GOOGLE_VISION_ENDPOINT`.
 
 **Платежи (`/lib/payments`).** По умолчанию `PAYMENTS_PROVIDER=mock` — MockPaymentProvider имитирует оплату Pro. Реальный провайдер — ЮKassa: создать платёж через API, вернуть `confirmation_url`, принимать webhook на `/api/payments/callback` с проверкой подписи; ключи `YUKASSA_SHOP_ID` и `YUKASSA_SECRET_KEY`, переключение — `PAYMENTS_PROVIDER=yukassa`.
 
@@ -69,7 +69,7 @@ pnpm dev                    # http://localhost:3000
 
 1. **База.** Managed Postgres — Supabase (или Neon/Vercel Postgres). Для Supabase: pooled-строка (порт 6543) → `DATABASE_URL` с суффиксом `?pgbouncer=true&connection_limit=1`, direct-строка (порт 5432) → `DIRECT_URL` (миграции идут через неё, `directUrl` в `prisma/schema.prisma`).
 2. **Импорт.** vercel.com → New Project → импорт репозитория. `vercel.json` уже задаёт buildCommand: `prisma generate → migrate deploy → db seed → next build` (миграции и сид идемпотентны, выполняются при каждом деплое).
-3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://buty.app`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM="Buty.app <noreply@buty.app>"`, `RESEND_API_KEY` (см. раздел «Реальные адаптеры»). Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`. Email — Resend, без ключа работает mock (magic-link в логах Vercel).
+3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://buty.app`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM="Buty.app <noreply@buty.app>"`, `RESEND_API_KEY` (см. раздел «Реальные адаптеры»). Mock-режим оплаты оставить: `PAYMENTS_PROVIDER=mock`; OCR — `GOOGLE_VISION_API_KEY` (без ключа — mock). Email — Resend, без ключа работает mock (magic-link в логах Vercel).
 4. **Домен.** Project Settings → Domains → подключить `buty.app` и `www.buty.app` (Vercel сам выпускает TLS и даёт редирект www → bare). У регистратора buty.app: A-запись `@` → IP из подсказки Vercel (Settings → Domains; обычно `76.76.21.21`), CNAME `www` → `cname.vercel-dns.com`. После подключения обновить `NEXTAUTH_URL` → Redeploy.
 5. **Cron.** `vercel.json` дёргает `/api/cron/reminders` ежедневно в 03:17 UTC (на Hobby-тарифе — не чаще раза в день); Vercel автоматически шлёт `Authorization: Bearer $CRON_SECRET` — роут принимает и его, и `x-cron-secret`.
 6. **Проверки после деплоя:** `curl https://<домен>/api/health` → `{"ok":true,"db":"up"}`; `/robots.txt`, `/sitemap.xml` → 200. CI/CD: push в `main` → автоматический деплой ≤5 минут.
@@ -85,9 +85,9 @@ pnpm dev                    # http://localhost:3000
 
 1. **DNS.** A-записи `<DOMAIN>` и `www.<DOMAIN>` → IP сервера (у регистратора).
 2. **Подготовка сервера (один раз, от root):** `bash scripts/server-setup.sh` — обновления, пользователь `deploy` (без root-логина и паролей), UFW 22/80/443, fail2ban, Docker + compose plugin.
-3. **Код и секреты (от deploy):** `cd /opt/buty && git clone <repo> . && cp .env.example .env`. В `.env` заполнить: `DOMAIN`, `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET` (сгенерировать заново: `openssl rand -base64 32`), `NEXTAUTH_URL=https://<DOMAIN>`, `CRON_SECRET`, `ADMIN_EMAILS`. Mock-режимы оставить: `MOCK_OCR=true`, `PAYMENTS_PROVIDER=mock`, email — mock.
+3. **Код и секреты (от deploy):** `cd /opt/buty && git clone <repo> . && cp .env.example .env`. В `.env` заполнить: `DOMAIN`, `NEXT_PUBLIC_SITE_URL=https://<DOMAIN>`, `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET` (сгенерировать заново: `openssl rand -base64 32`), `NEXTAUTH_URL=https://<DOMAIN>`, `CRON_SECRET`, `ADMIN_EMAILS`. Mock-режим оплаты оставить: `PAYMENTS_PROVIDER=mock`; OCR — `GOOGLE_VISION_API_KEY` (без ключа — mock).
 4. **Запуск:** `docker compose -f docker-compose.prod.yml up -d --build`. Миграции и сид выполняются entrypoint'ом при каждом старте (идемпотентно).
-5. **CI/CD:** push в `main` → GitHub Action `.github/workflows/deploy.yml` (ssh → git pull → build → up -d). Секреты репозитория: `SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`. Запасной вариант: `./scripts/deploy.sh deploy@<SERVER_IP>`.
+5. **CI/CD:** push в `main` → GitHub Action `.github/workflows/deploy.yml` (ssh → git pull → build → up -d). Settings → Secrets and variables → Actions: переменные `SERVER_HOST` (IP сервера) и `SERVER_USER` (`deploy`), секрет `SERVER_SSH_KEY` (приватный ключ). Пока `SERVER_HOST` не задан, workflow пропускается. Запасной вариант: `./scripts/deploy.sh deploy@<SERVER_IP>`.
 6. **Cron-напоминания:** на хосте `crontab -e` (deploy): `*/15 * * * * DOMAIN=<DOMAIN> CRON_SECRET=<секрет> /opt/buty/scripts/cron-reminders.sh`.
 7. **Мониторинг:** Better Stack (бесплатный тариф) — HTTP-чек `https://<DOMAIN>/api/health` каждые 30 с, алерт в Telegram/email.
 

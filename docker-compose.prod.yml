@@ -1,6 +1,6 @@
 # Продовый стек: app + postgres + caddy. Запуск: docker compose -f docker-compose.prod.yml up -d --build
 # Секреты — в .env рядом с этим файлом на сервере (не в репозитории): DOMAIN, POSTGRES_PASSWORD,
-# DATABASE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS.
+# NEXT_PUBLIC_SITE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS.
 services:
   db:
     image: postgres:16-alpine
@@ -20,7 +20,11 @@ services:
       retries: 10
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        # NEXT_PUBLIC_* вшиваются в сборку — канонический домен (sitemap, canonical, OG)
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:?задайте в .env на сервере, например https://buty.ru}
     restart: unless-stopped
     depends_on:
       db:
@@ -28,7 +32,7 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgresql://buty:${POSTGRES_PASSWORD}@db:5432/buty?schema=public
-      MOCK_OCR: "true"
+      DIRECT_URL: postgresql://buty:${POSTGRES_PASSWORD}@db:5432/buty?schema=public
       PAYMENTS_PROVIDER: mock
     networks:
       - internal

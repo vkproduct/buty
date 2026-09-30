@@ -1,0 +1,32 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Пропускается, пока в Settings → Variables не задан SERVER_HOST
+    if: ${{ vars.SERVER_HOST != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          username: ${{ vars.SERVER_USER || 'deploy' }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          command_timeout: 25m
+          script: |
+            set -e
+            cd /opt/buty
+            git pull --ff-only
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker image prune -f
+            docker compose -f docker-compose.prod.yml ps

@@ -1,0 +1,59 @@
+# Buty — передача дел: переезд с Vercel на собственный сервер (Beget)
+
+## Что изменилось
+Сайт buty.app больше не живёт на Vercel: из России Vercel недоступен (блокируются *.vercel.app и IP Vercel, в том числе на своём домене). Прод переехал на VPS Beget в России.
+
+- Сервер: Beget VPS, Ubuntu 24.04, IP 62.217.180.33
+- Домен: buty.app (регистратор Porkbun). A-записи @ и www → 62.217.180.33. TXT/MX-записи не трогать.
+- Стек на сервере: docker-compose.prod.yml = app (Next.js) + db (Postgres 16, volume db-data, наружу не открыт) + caddy (автоматический HTTPS Let's Encrypt, редирект www → bare).
+- Код: /opt/buty (git clone репозитория github.com/vkproduct/buty, ветка main).
+- Секреты: /opt/buty/.env ТОЛЬКО на сервере, в git его нет и не будет. Там: DOMAIN, NEXT_PUBLIC_SITE_URL, NEXTAUTH_URL, NEXTAUTH_SECRET, POSTGRES_PASSWORD, CRON_SECRET, ADMIN_EMAILS, EMAIL_FROM, RESEND_API_KEY (пока пустой), PAYMENTS_PROVIDER=mock. Позже добавится GOOGLE_VISION_API_KEY.
+- Доступ: ssh deploy@62.217.180.33 только по ключу ~/.ssh/id_ed25519 с Mac владельца. Вход под root и по паролю отключён (scripts/server-setup.sh).
+- Docker Hub из РФ заблокирован, в /etc/docker/daemon.json прописаны зеркала dockerhub1.beget.com и mirror.gcr.io.
+- База теперь локальная на сервере. Supabase больше не используется (данные переносятся отдельно, если нужно).
+- При каждом старте контейнера app entrypoint сам выполняет prisma migrate deploy и db seed (идемпотентно). Отдельно запускать миграции на сервере не нужно.
+
+## Что сделано в коде (коммиты c94f3b3 и 6d2a28a в main)
+1. docker-compose.prod.yml: добавлен DIRECT_URL (без него падал prisma migrate deploy, потому что directUrl есть в schema.prisma); NEXT_PUBLIC_SITE_URL передаётся в сборку build-arg'ом.
+2. Dockerfile: ARG/ENV NEXT_PUBLIC_SITE_URL в стадии build.
+3. .github/workflows/deploy.yml: автодеплой по ssh при push в main. Сейчас ВЫКЛЮЧЕН: срабатывает, только если в репозитории задана переменная Actions SERVER_HOST.
+4. OCR через Google Cloud Vision: lib/ocr/{index,google,server,extract-inci,rate-limit}.ts, роут POST /api/ocr, тесты. Браузер шлёт фото на /api/ocr, сервер ходит в Google со своим ключом. Без GOOGLE_VISION_API_KEY отвечает 501, и UI показывает «OCR скоро». Лимиты: фото до 7 МБ, 20 запросов в час на IP. GOOGLE_VISION_ENDPOINT позволяет пустить запросы через переходник в Европе, если Google не принимает запросы из РФ.
+5. README и docs/decisions.md обновлены. В рабочей папке есть незакоммиченная правка docs/decisions.md (Timeweb → Beget): закоммить её со следующим изменением.
+
+## Как теперь выкатывать изменения
+1. Работаешь как обычно, проверяешь: pnpm typecheck && pnpm test.
+2. Коммитишь только нужные файлы (git add по именам) и пушишь в main: git push.
+3. Деплоишь на сервер одной командой с Mac:
+   ssh deploy@62.217.180.33 'cd /opt/buty && git pull --ff-only && docker compose -f docker-compose.prod.yml up -d --build && docker image prune -f && docker compose -f docker-compose.prod.yml ps'
+   Сборка идёт 5–15 минут, простой сайта — около минуты при перезапуске контейнера.
+   Запасной вариант той же операции: ./scripts/deploy.sh deploy@62.217.180.33 (он не чистит старые образы, раз в пару недель выполняй docker image prune -f).
+4. Проверка после деплоя:
+   curl -fsS https://buty.app/api/health   → {"ok":true,"db":"up"}
+   Плюс открыть buty.app в браузере.
+
+## Правила
+- Никогда не делать git push --force в main: сервер делает git pull --ff-only, переписанная история сломает деплой.
+- Никогда не коммитить .env и не перезаписывать /opt/buty/.env на сервере. Новую переменную добавлять так:
+  ssh deploy@62.217.180.33 'cd /opt/buty && echo "ИМЯ=значение" >> .env && docker compose -f docker-compose.prod.yml up -d --force-recreate app'
+- Новая переменная NEXT_PUBLIC_* вшивается при сборке: её нужно добавить и в .env, и в build.args в docker-compose.prod.yml, и деплоить с --build.
+- Без необходимости не трогать Caddyfile, docker-compose.prod.yml, Dockerfile, docker-entrypoint.sh, scripts/server-setup.sh.
+- Внешние сервисы выбирать с учётом того, что сервер в России. OpenAI, Anthropic и Gemini напрямую из РФ недоступны. Для LLM — YandexGPT/GigaChat или переходник за рубежом.
+- Правила проекта из «ПРОЕКТ Buty.ru.txt» в силе: стек фиксирован, адаптеры с mock по умолчанию, решения записывать в docs/decisions.md.
+
+## Полезные команды на сервере (ssh deploy@62.217.180.33, затем cd /opt/buty)
+- Статус: docker compose -f docker-compose.prod.yml ps
+- Логи приложения: docker compose -f docker-compose.prod.yml logs -f --tail=100 app
+- Перезапуск: docker compose -f docker-compose.prod.yml restart app
+- Откат на прошлый коммит: git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build   (после исправления вернуться: git checkout main && git pull)
+- Бэкап базы вручную: bash scripts/backup.sh   (файлы в /opt/buty-backups)
+- Ссылка для входа, пока почта в mock-режиме (нет RESEND_API_KEY):
+  docker compose -f docker-compose.prod.yml logs app | grep -o "https://buty.app/api/auth/callback[^ ]*" | tail -1
+
+## Что ещё не сделано
+1. Resend: зарегистрироваться, верифицировать домен buty.app (DNS в Porkbun), положить RESEND_API_KEY в .env на сервере. До этого посетители не могут войти по почте.
+2. Google Vision: создать ключ, положить GOOGLE_VISION_API_KEY в .env и проверить, что Google принимает запросы с сервера в РФ. Если нет — переходник + GOOGLE_VISION_ENDPOINT.
+3. Cron (напоминания каждые 15 мин + ежедневный бэкап) в crontab пользователя deploy, если ещё не добавлен:
+   (crontab -l 2>/dev/null; echo "*/15 * * * * cd /opt/buty && set -a && . ./.env && set +a && bash scripts/cron-reminders.sh >/dev/null 2>&1"; echo "17 3 * * * bash /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1") | crontab -
+4. Перенос данных из Supabase, если там есть пользователи или правки из админки.
+5. Отключить автодеплой в Vercel: Settings → Git → Disconnect. Пока не отключён, Vercel пересобирает старый сайт на каждый push, на прод это не влияет.
+6. Необязательно: включить GitHub Actions автодеплой (переменные SERVER_HOST=62.217.180.33, SERVER_USER=deploy и секрет SERVER_SSH_KEY с отдельным ключом, публичная часть которого добавлена в /home/deploy/.ssh/authorized_keys).

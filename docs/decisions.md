@@ -114,7 +114,7 @@
 - **Затронутые части:** layout, подвал, аналитика.
 
 ## 2026-09-30 — Переезд с Vercel на VPS в РФ
-- **Решение:** прод переносится с Vercel + Supabase на VPS Timeweb Cloud (docker-compose.prod.yml: app + Postgres + Caddy). Исправлен стек: `DIRECT_URL` в окружении app (без него `prisma migrate deploy` падает — `directUrl` в схеме), `NEXT_PUBLIC_SITE_URL` передаётся build-arg'ом (иначе в сборку вшивается `https://buty.app`). Добавлен `.github/workflows/deploy.yml` (push в main → ssh → pull → up --build), выключен, пока не задана переменная `SERVER_HOST`.
+- **Решение:** прод переносится с Vercel + Supabase на VPS Beget (Ubuntu 24.04, зеркало Docker Hub dockerhub1.beget.com; docker-compose.prod.yml: app + Postgres + Caddy). Исправлен стек: `DIRECT_URL` в окружении app (без него `prisma migrate deploy` падает — `directUrl` в схеме), `NEXT_PUBLIC_SITE_URL` передаётся build-arg'ом (иначе в сборку вшивается `https://buty.app`). Добавлен `.github/workflows/deploy.yml` (push в main → ssh → pull → up --build), выключен, пока не задана переменная `SERVER_HOST`.
 - **Причина:** `*.vercel.app` и IP Vercel недоступны из России, в том числе на своём домене; персональные данные пользователей из РФ по 152-ФЗ должны храниться в базе на территории РФ.
 - **Затронутые части:** Dockerfile, docker-compose.prod.yml, README (VPS-деплой), CI.
 

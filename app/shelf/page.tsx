@@ -90,7 +90,7 @@ export default async function ShelfPage() {
     orderBy: { addedAt: "desc" },
   });
 
-  const view: ShelfItemView[] = await Promise.all(
+  const baseView: Omit<ShelfItemView, "reactions">[] = await Promise.all(
     items.map(async (item) => {
       const reminders = item.reminders.map((r) => ({
         id: r.id,
@@ -185,6 +185,26 @@ export default async function ShelfPage() {
   const suspectNameById = new Map(
     suspectIngredients.map((i) => [i.id, i.displayName]),
   );
+  // Реакции по каждому средству — для окна средства на полке
+  const reactionsByItem = new Map<string, ShelfItemView["reactions"]>();
+  for (const r of visibleReactions) {
+    const list = reactionsByItem.get(r.shelfItemId) ?? [];
+    list.push({
+      id: r.id,
+      type: r.type,
+      note: r.note,
+      occurredAt: r.occurredAt.toISOString(),
+      suspects: (JSON.parse(r.suspectIngredientIds) as string[])
+        .map((id) => suspectNameById.get(id))
+        .filter((n): n is string => Boolean(n)),
+    });
+    reactionsByItem.set(r.shelfItemId, list);
+  }
+  const view: ShelfItemView[] = baseView.map((item) => ({
+    ...item,
+    reactions: reactionsByItem.get(item.id) ?? [],
+  }));
+
   const reactions: ReactionView[] = visibleReactions.map((r) => ({
     id: r.id,
     type: r.type,

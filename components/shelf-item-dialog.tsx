@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
+  AlertTriangle,
   ArrowUpRight,
   BellRing,
   CalendarClock,
@@ -27,6 +28,7 @@ import {
   REMINDER_DELAYS_DAYS,
   type ReminderKind,
 } from "@/lib/reminders/constants";
+import { REACTION_LABELS } from "@/lib/shelf/reaction-labels";
 import type { ShelfItemView } from "@/components/shelf-client";
 
 export const STATUS_LABELS: Record<ShelfItemView["status"], string> = {
@@ -38,13 +40,20 @@ export const STATUS_LABELS: Record<ShelfItemView["status"], string> = {
 const STATUS_HINTS: Record<ShelfItemView["status"], string> = {
   using: "Средство участвует в проверке совместимости и в режиме утро/вечер.",
   finished: "Средство остаётся в истории, но не участвует в проверке совместимости.",
-  reacted: "Средство исключено из проверки совместимости. Запишите реакцию во вкладке «Реакции» — сервис подсветит подозрительные ингредиенты.",
+  reacted: "Средство исключено из проверки совместимости. По каждой записанной реакции сервис подсвечивает подозреваемые ингредиенты состава.",
 };
 
 const REMINDER_ICONS: Record<ReminderKind, typeof CalendarClock> = {
   introduce: CalendarClock,
   restock: ShoppingCart,
 };
+
+/** Сегодняшняя дата в формате YYYY-MM-DD (локальное время). */
+function todayIso(): string {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
 
 /** «31 октября» */
 export function formatDayMonth(date: Date | string): string {
@@ -90,6 +99,7 @@ function ItemDetails({
   const [pending, setPending] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [reactionFormOpen, setReactionFormOpen] = useState(false);
 
   // Данные карточки обновляются после router.refresh() — синхронизируем форму
   useEffect(() => {
@@ -127,8 +137,41 @@ function ItemDetails({
     });
 
   async function setStatus(status: ShelfItemView["status"]) {
+    // «Была реакция» — сразу открываем форму записи реакции;
+    // статус сменится сам, когда реакция будет сохранена.
+    if (status === "reacted") {
+      setReactionFormOpen(true);
+      return;
+    }
+    setReactionFormOpen(false);
     if (status === item.status) return;
     await call(`status-${status}`, patch({ status }));
+  }
+
+  async function saveReaction(data: {
+    type: string;
+    occurredAt: string;
+    note: string;
+  }) {
+    const ok = await call(
+      "reaction",
+      fetch("/api/reactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          shelfItemId: item.id,
+          type: data.type,
+          occurredAt: data.occurredAt || undefined,
+          note: data.note || undefined,
+        }),
+      }),
+    );
+    if (ok) setReactionFormOpen(false);
+  }
+
+  async function markReactedOnly() {
+    const ok = await call("status-reacted", patch({ status: "reacted" }));
+    if (ok) setReactionFormOpen(false);
   }
 
   async function saveEdits() {
@@ -190,8 +233,10 @@ function ItemDetails({
               onClick={() => setStatus(s)}
               className={cn(
                 "rounded-full border px-3 py-1.5 text-xs transition-colors disabled:opacity-60",
-                item.status === s
-                  ? "border-transparent bg-brand/15 font-semibold text-brand-700"
+                item.status === s || (s === "reacted" && reactionFormOpen)
+                  ? s === "reacted"
+                    ? "border-transparent bg-coral/10 font-semibold text-coral-700"
+                    : "border-transparent bg-brand/15 font-semibold text-brand-700"
                   : "border-ink-hair text-muted-foreground hover:bg-brand/5",
               )}
             >
@@ -199,9 +244,65 @@ function ItemDetails({
             </button>
           ))}
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">
-          {STATUS_HINTS[item.status]}
-        </p>
+        {!reactionFormOpen ? (
+          <p className="mt-2 text-xs text-muted-foreground">
+            {STATUS_HINTS[item.status]}
+          </p>
+        ) : null}
+
+        {reactionFormOpen ? (
+          <ReactionForm
+            pending={pending}
+            alreadyReacted={item.status === "reacted"}
+            onSave={saveReaction}
+            onSkip={markReactedOnly}
+            onCancel={() => {
+              setReactionFormOpen(false);
+              setError(null);
+            }}
+          />
+        ) : null}
+
+        {item.reactions.length > 0 ? (
+          <div className="mt-4">
+            <h4 className="text-xs font-semibold text-muted-foreground">
+              Записанные реакции
+            </h4>
+            <ul className="mt-2 space-y-2">
+              {item.reactions.map((r) => (
+                <li key={r.id} className="rounded-xl bg-ink-wash p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold text-coral-700">
+                      {REACTION_LABELS[r.type] ?? r.type}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">
+                      {formatDayMonth(r.occurredAt)}
+                    </span>
+                  </div>
+                  {r.note ? (
+                    <p className="mt-1 text-xs text-ink-soft">{r.note}</p>
+                  ) : null}
+                  {r.suspects.length > 0 ? (
+                    <p className="mt-1 text-[11px] text-muted-foreground">
+                      Подозреваемые ингредиенты: {r.suspects.slice(0, 8).join(", ")}
+                      {r.suspects.length > 8 ? ` и ещё ${r.suspects.length - 8}` : ""}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {item.status === "reacted" && !reactionFormOpen ? (
+          <button
+            type="button"
+            onClick={() => setReactionFormOpen(true)}
+            className="mt-3 text-xs font-semibold text-coral-700 hover:underline"
+          >
+            + Записать {item.reactions.length > 0 ? "ещё одну " : ""}реакцию
+          </button>
+        ) : null}
       </section>
 
       {/* Состав */}
@@ -417,6 +518,111 @@ function ItemDetails({
             <Trash2 className="h-3.5 w-3.5" /> Убрать с полки
           </button>
         )}
+      </div>
+    </div>
+  );
+}
+
+/** Форма записи реакции — открывается сразу при выборе «Была реакция». */
+function ReactionForm({
+  pending,
+  alreadyReacted,
+  onSave,
+  onSkip,
+  onCancel,
+}: {
+  pending: string | null;
+  alreadyReacted: boolean;
+  onSave: (data: { type: string; occurredAt: string; note: string }) => void;
+  onSkip: () => void;
+  onCancel: () => void;
+}) {
+  const [type, setType] = useState<string | null>(null);
+  const [date, setDate] = useState(todayIso());
+  const [note, setNote] = useState("");
+  const today = todayIso();
+
+  return (
+    <div className="mt-3 rounded-2xl border border-coral/30 bg-coral/5 p-4">
+      <p className="flex items-center gap-1.5 text-sm font-semibold">
+        <AlertTriangle className="h-4 w-4 text-coral-700" /> Что произошло?
+      </p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Запишите реакцию — сервис свяжет её с составом и подсветит
+        подозреваемые ингредиенты.
+      </p>
+
+      <div className="mt-3 flex flex-wrap gap-1.5" role="radiogroup" aria-label="Тип реакции">
+        {Object.entries(REACTION_LABELS).map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            role="radio"
+            aria-checked={type === value}
+            onClick={() => setType(value)}
+            className={cn(
+              "rounded-full border px-3 py-1.5 text-xs transition-colors",
+              type === value
+                ? "border-coral-700 bg-white font-semibold text-coral-700"
+                : "border-ink-hair bg-white text-muted-foreground hover:border-coral/40",
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-3 grid gap-3 sm:grid-cols-[auto_1fr]">
+        <label className="block text-xs text-muted-foreground">
+          Когда
+          <Input
+            type="date"
+            className="mt-1"
+            value={date}
+            max={today}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
+        <label className="block text-xs text-muted-foreground">
+          Комментарий (необязательно)
+          <Input
+            className="mt-1"
+            value={note}
+            maxLength={500}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Например: щипало после нанесения на щёки"
+          />
+        </label>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <Button
+          type="button"
+          size="sm"
+          disabled={!type || pending !== null}
+          onClick={() => type && onSave({ type, occurredAt: date, note: note.trim() })}
+        >
+          {pending === "reaction" ? "Сохраняем…" : "Сохранить реакцию"}
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          disabled={pending !== null}
+          onClick={onCancel}
+        >
+          Отмена
+        </Button>
+        {!alreadyReacted ? (
+          <button
+            type="button"
+            disabled={pending !== null}
+            onClick={onSkip}
+            className="text-xs text-muted-foreground underline-offset-2 hover:underline"
+          >
+            Только сменить статус, без записи
+          </button>
+        ) : null}
       </div>
     </div>
   );

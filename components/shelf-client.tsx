@@ -31,6 +31,15 @@ export interface ShelfReminderView {
   nextRunAt: string;
 }
 
+export interface ShelfReactionView {
+  id: string;
+  type: string;
+  note: string | null;
+  occurredAt: string;
+  /** Названия подозреваемых ингредиентов */
+  suspects: string[];
+}
+
 export interface ShelfItemView {
   id: string;
   /** catalog — средство из базы Buty, custom — «своё средство» пользователя */
@@ -47,6 +56,8 @@ export interface ShelfItemView {
   unrecognizedCount: number;
   /** Активные (ещё не сработавшие) напоминания */
   reminders: ShelfReminderView[];
+  /** Реакции на средство (на free — в пределах видимой истории) */
+  reactions: ShelfReactionView[];
 }
 
 const STATUS_VARIANTS: Record<

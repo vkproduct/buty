@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ShelfClient, type ShelfItemView } from "@/components/shelf-client";
 import { REMINDER_COPY, REMINDER_DELAYS_DAYS } from "@/lib/reminders/constants";
+import { REACTION_LABELS } from "@/lib/shelf/reaction-labels";
 import type {
   DuplicateGroup,
   PairResult,
@@ -51,14 +52,6 @@ export interface ReminderView {
   logs: { id: string; channel: string; message: string; createdAt: string }[];
 }
 
-const REACTION_LABELS: Record<string, string> = {
-  redness: "Покраснение",
-  itching: "Зуд",
-  burning: "Жжение",
-  breakouts: "Высыпания",
-  dryness: "Сухость/шелушение",
-  other: "Другое",
-};
 
 const TABS = [
   { id: "items", label: "Средства", icon: LayoutGrid },

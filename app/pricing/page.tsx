@@ -23,7 +23,7 @@ export default async function PricingPage() {
           <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">Тарифы</h1>
           <p className="mt-4 text-muted-foreground">
             Разбор составов и подбор ухода — бесплатно всегда. Pro открывает
-            «Мою полку» целиком: совместимость активов, режим, полную историю
+            «Мою полку» целиком: совместимость всех средств, режим, поиск дублей, полную историю
             реакций и экспорт.
           </p>
         </div>

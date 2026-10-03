@@ -8,6 +8,7 @@ import {
   Bell,
   CalendarClock,
   CheckCircle2,
+  ChevronRight,
   Copy,
   FlaskConical,
   LayoutGrid,
@@ -24,6 +25,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ShelfClient, type ShelfItemView } from "@/components/shelf-client";
+import { REMINDER_COPY, REMINDER_DELAYS_DAYS } from "@/lib/reminders/constants";
 import type {
   DuplicateGroup,
   PairResult,
@@ -98,7 +100,7 @@ export function ShelfTabs(props: Props) {
             )}
           >
             <Icon className="h-4 w-4" /> {label}
-            {!props.isPro && (id === "compatibility" || id === "routine") ? (
+            {!props.isPro && id === "routine" ? (
               <Sparkles className="h-3 w-3 text-amber" />
             ) : null}
           </button>
@@ -106,13 +108,23 @@ export function ShelfTabs(props: Props) {
       </div>
 
       <div className="mt-8">
-        {tab === "items" ? <ShelfClient items={props.items} /> : null}
+        {tab === "items" ? (
+          <ShelfClient
+            items={props.items}
+            aside={
+              <CompatibilitySummary
+                pairs={props.pairs}
+                onOpen={() => setTab("compatibility")}
+              />
+            }
+          />
+        ) : null}
         {tab === "compatibility" ? (
-          props.isPro ? (
-            <CompatibilityTab pairs={props.pairs} duplicates={props.duplicates} />
-          ) : (
-            <LockedTab text="Матрица совместимости активов и поиск дублей доступны в Pro." />
-          )
+          <CompatibilityTab
+            pairs={props.pairs}
+            duplicates={props.duplicates}
+            isPro={props.isPro}
+          />
         ) : null}
         {tab === "routine" ? (
           props.isPro ? (
@@ -151,21 +163,68 @@ function LockedTab({ text }: { text: string }) {
 
 const PAIR_STYLES: Record<PairResult["status"], { label: string; cls: string }> = {
   conflict: { label: "Конфликт", cls: "bg-coral/10 text-coral-700" },
-  spread: { label: "Разнести", cls: "bg-amber/15 text-amber-700" },
-  ok: { label: "ОК", cls: "bg-success-50 text-success-700" },
+  spread: { label: "Нужен состав", cls: "bg-amber/15 text-amber-700" },
+  ok: { label: "Совместимы", cls: "bg-success-50 text-success-700" },
 };
+
+/** Короткая сводка совместимости над карточками полки. */
+function CompatibilitySummary({
+  pairs,
+  onOpen,
+}: {
+  pairs: PairResult[];
+  onOpen: () => void;
+}) {
+  if (pairs.length === 0) return null;
+  const conflicts = pairs.filter((p) => p.status === "conflict");
+  const unknown = pairs.filter((p) => p.status === "spread");
+
+  let tone = "border-success-700/20 bg-success-50 text-success-700";
+  let text = `Проверили совместимость (${pairs.length === 1 ? "1 пара" : `пар: ${pairs.length}`}) — конфликтов активов нет.`;
+  if (conflicts.length > 0) {
+    tone = "border-coral/30 bg-coral/10 text-coral-700";
+    const first = conflicts[0];
+    text =
+      conflicts.length === 1
+        ? `Найден конфликт: ${first.aTitle} × ${first.bTitle}.`
+        : `Найдено конфликтов: ${conflicts.length}.`;
+  } else if (unknown.length > 0) {
+    tone = "border-amber/30 bg-amber/10 text-amber-800";
+    text = "Проверка неполная: у одного из средств не указан состав.";
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        "flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-opacity hover:opacity-90",
+        tone,
+      )}
+    >
+      <span className="flex items-center gap-2">
+        <FlaskConical className="h-4 w-4 shrink-0" /> {text}
+      </span>
+      <span className="flex shrink-0 items-center gap-0.5 text-xs font-semibold">
+        Подробнее <ChevronRight className="h-3.5 w-3.5" />
+      </span>
+    </button>
+  );
+}
 
 function CompatibilityTab({
   pairs,
   duplicates,
+  isPro,
 }: {
   pairs: PairResult[];
   duplicates: DuplicateGroup[];
+  isPro: boolean;
 }) {
   return (
     <div className="space-y-6">
       {pairs.length === 0 ? (
-        <EmptyNote text="Добавьте минимум два средства со статусом «Использую», чтобы увидеть матрицу совместимости." />
+        <EmptyNote text="Добавьте минимум два средства со статусом «Использую» — и здесь появится проверка их совместимости." />
       ) : (
         <div className="grid gap-3">
           {pairs.map((p) => (
@@ -217,6 +276,19 @@ function CompatibilityTab({
             ))}
           </div>
         </div>
+      ) : null}
+
+      {!isPro ? (
+        <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-4">
+          <p className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Sparkles className="h-4 w-4 shrink-0 text-amber" />
+            На бесплатном тарифе проверяется совместимость средств на полке.
+            Pro снимает лимит полки и добавляет поиск дублей и режим утро/вечер.
+          </p>
+          <Button asChild size="sm" variant="secondary">
+            <Link href="/pricing">Подробнее о Pro</Link>
+          </Button>
+        </GlassCard>
       ) : null}
     </div>
   );
@@ -444,6 +516,20 @@ function RemindersTab({
         <h2 className="font-display text-lg font-semibold">
           Поставить напоминание
         </h2>
+        <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+          <li>
+            <span className="font-semibold text-foreground">
+              {REMINDER_COPY.introduce.title}
+            </span>{" "}
+            — {REMINDER_COPY.introduce.why}
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">
+              {REMINDER_COPY.restock.title}
+            </span>{" "}
+            — {REMINDER_COPY.restock.why}
+          </li>
+        </ul>
         <div className="mt-4 grid gap-3">
           {items.map((i) => (
             <div
@@ -458,7 +544,7 @@ function RemindersTab({
                   disabled={pendingId !== null}
                   onClick={() => create(i.id, "introduce")}
                 >
-                  <CalendarClock className="h-4 w-4" /> О введении (28 дн.)
+                  <CalendarClock className="h-4 w-4" /> {REMINDER_COPY.introduce.title} · через {REMINDER_DELAYS_DAYS.introduce} дн.
                 </Button>
                 <Button
                   size="sm"
@@ -466,7 +552,7 @@ function RemindersTab({
                   disabled={pendingId !== null}
                   onClick={() => create(i.id, "restock")}
                 >
-                  <ShoppingCart className="h-4 w-4" /> О покупке (90 дн.)
+                  <ShoppingCart className="h-4 w-4" /> {REMINDER_COPY.restock.title} · через {REMINDER_DELAYS_DAYS.restock} дн.
                 </Button>
               </div>
             </div>
@@ -484,9 +570,7 @@ function RemindersTab({
                 <div>
                   <p className="text-sm font-medium">{r.itemTitle}</p>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {r.type === "introduce"
-                      ? "Напомнить о введении"
-                      : "Напомнить о покупке"}{" "}
+                    {REMINDER_COPY[r.type].title}{" "}
                     · {new Date(r.nextRunAt).toLocaleDateString("ru-RU")}
                   </p>
                 </div>

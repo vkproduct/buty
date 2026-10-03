@@ -28,21 +28,15 @@ async function loadItems(userId: string, status?: "using") {
   });
 }
 
-async function itemActives(item: ItemWithProduct) {
-  if (item.product) {
-    return item.product.ingredients
-      .map((pi) => pi.ingredient)
-      .filter((ing) => ACTIVE_CATEGORIES.has(ing.category))
-      .map((ing) => ({
-        id: ing.id,
-        slug: ing.slug,
-        displayName: ing.displayName,
-        category: ing.category,
-      }));
-  }
-  if (!item.customInci) return [];
-  const analysis = await analyzeText(item.customInci);
-  return analysis.ingredients
+interface RawIngredient {
+  id: string;
+  slug: string;
+  displayName: string;
+  category: string;
+}
+
+function pickActives(ingredients: RawIngredient[]) {
+  return ingredients
     .filter((ing) => ACTIVE_CATEGORIES.has(ing.category))
     .map((ing) => ({
       id: ing.id,
@@ -50,6 +44,23 @@ async function itemActives(item: ItemWithProduct) {
       displayName: ing.displayName,
       category: ing.category,
     }));
+}
+
+/** Активы средства + известен ли его состав вообще. */
+async function itemComposition(item: ItemWithProduct) {
+  if (item.product) {
+    const ingredients = item.product.ingredients.map((pi) => pi.ingredient);
+    return {
+      actives: pickActives(ingredients),
+      hasComposition: ingredients.length > 0,
+    };
+  }
+  if (!item.customInci) return { actives: [], hasComposition: false };
+  const analysis = await analyzeText(item.customInci);
+  return {
+    actives: pickActives(analysis.ingredients),
+    hasComposition: analysis.ingredients.length > 0,
+  };
 }
 
 /** Средства полки пользователя в формате для compatibility/buildRoutine. */
@@ -63,7 +74,7 @@ export async function loadShelfProducts(
       id: item.id,
       title: item.product ? item.product.name : (item.customName ?? "Своё средство"),
       category: item.product ? item.product.category : "custom",
-      actives: await itemActives(item),
+      ...(await itemComposition(item)),
     })),
   );
 }

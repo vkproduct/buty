@@ -16,7 +16,14 @@ async function findOwnedItem(id: string, userId: string) {
   return item;
 }
 
-/** PATCH /api/shelf/[id] { status } — сменить статус средства. */
+const MAX_NAME = 200;
+const MAX_INCI = 10_000;
+
+/**
+ * PATCH /api/shelf/[id] { status?, customName?, customInci? } —
+ * сменить статус средства и/или отредактировать «своё средство»
+ * (название и состав). Состав средства из базы менять нельзя.
+ */
 export async function PATCH(request: Request, { params }: Params) {
   const session = await getSession();
   if (!session?.user) {
@@ -33,17 +40,65 @@ export async function PATCH(request: Request, { params }: Params) {
   } catch {
     return NextResponse.json({ error: "Некорректный JSON" }, { status: 400 });
   }
-  const status = (body as { status?: unknown })?.status;
-  if (
-    typeof status !== "string" ||
-    !Object.values(ShelfStatus).includes(status as ShelfStatus)
-  ) {
-    return NextResponse.json({ error: "Некорректный статус" }, { status: 400 });
+  const { status, customName, customInci } = (body ?? {}) as {
+    status?: unknown;
+    customName?: unknown;
+    customInci?: unknown;
+  };
+
+  const data: {
+    status?: ShelfStatus;
+    customName?: string;
+    customInci?: string | null;
+  } = {};
+
+  if (status !== undefined) {
+    if (
+      typeof status !== "string" ||
+      !Object.values(ShelfStatus).includes(status as ShelfStatus)
+    ) {
+      return NextResponse.json({ error: "Некорректный статус" }, { status: 400 });
+    }
+    data.status = status as ShelfStatus;
+  }
+
+  if (customName !== undefined || customInci !== undefined) {
+    if (item.productId) {
+      return NextResponse.json(
+        { error: "Название и состав средства из базы изменить нельзя" },
+        { status: 400 },
+      );
+    }
+    if (customName !== undefined) {
+      if (typeof customName !== "string" || !customName.trim()) {
+        return NextResponse.json({ error: "Укажите название" }, { status: 400 });
+      }
+      if (customName.trim().length > MAX_NAME) {
+        return NextResponse.json({ error: "Название слишком длинное" }, { status: 400 });
+      }
+      data.customName = customName.trim();
+    }
+    if (customInci !== undefined) {
+      if (customInci !== null && typeof customInci !== "string") {
+        return NextResponse.json({ error: "Некорректный состав" }, { status: 400 });
+      }
+      if (typeof customInci === "string" && customInci.length > MAX_INCI) {
+        return NextResponse.json({ error: "Состав слишком длинный" }, { status: 400 });
+      }
+      data.customInci =
+        typeof customInci === "string" && customInci.trim()
+          ? customInci.trim()
+          : null;
+    }
+  }
+
+  if (Object.keys(data).length === 0) {
+    return NextResponse.json({ error: "Нечего обновлять" }, { status: 400 });
   }
 
   const updated = await prisma.shelfItem.update({
     where: { id: item.id },
-    data: { status: status as ShelfStatus },
+    data,
   });
   return NextResponse.json({ item: updated });
 }

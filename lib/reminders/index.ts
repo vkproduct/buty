@@ -11,10 +11,8 @@ export function getNotifier(): Notifier {
   return new MockNotifier();
 }
 
-export const REMINDER_DELAYS_DAYS: Record<ReminderType, number> = {
-  introduce: 28,
-  restock: 90,
-};
+export { REMINDER_COPY, REMINDER_DELAYS_DAYS } from "./constants";
+export type { ReminderKind } from "./constants";
 
 /** Текст уведомления по типу напоминания. */
 export function reminderText(type: ReminderType, itemTitle: string): string {

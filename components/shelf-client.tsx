@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FlaskConical, Plus, Search, Trash2, CalendarClock, ShoppingCart } from "lucide-react";
+import { BellRing, ChevronRight, FlaskConical, Plus, Search } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,22 +18,36 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { AnalysisResult } from "@/lib/analysis/types";
+import { REMINDER_COPY } from "@/lib/reminders/constants";
+import {
+  formatDayMonth,
+  ShelfItemDialog,
+  STATUS_LABELS,
+} from "@/components/shelf-item-dialog";
+
+export interface ShelfReminderView {
+  id: string;
+  type: "introduce" | "restock";
+  nextRunAt: string;
+}
 
 export interface ShelfItemView {
   id: string;
+  /** catalog — средство из базы Buty, custom — «своё средство» пользователя */
+  kind: "catalog" | "custom";
   status: "using" | "finished" | "reacted";
   addedAt: string;
   title: string;
   subtitle: string;
   slug: string | null;
   ingredientNames: string[];
+  /** Исходный INCI-текст «своего средства» (для редактирования) */
+  customInci: string | null;
+  /** Сколько компонентов состава не удалось распознать */
+  unrecognizedCount: number;
+  /** Активные (ещё не сработавшие) напоминания */
+  reminders: ShelfReminderView[];
 }
-
-const STATUS_LABELS: Record<ShelfItemView["status"], string> = {
-  using: "Использую",
-  finished: "Закончила",
-  reacted: "Была реакция",
-};
 
 const STATUS_VARIANTS: Record<
   ShelfItemView["status"],
@@ -61,40 +75,19 @@ async function readError(res: Response): Promise<string> {
   }
 }
 
-/** Клиент полки: список средств, добавление (поиск/своё), статусы, удаление. */
-export function ShelfClient({ items }: { items: ShelfItemView[] }) {
+/** Клиент полки: список средств (карточки открываются в окно), добавление. */
+export function ShelfClient({
+  items,
+  aside,
+}: {
+  items: ShelfItemView[];
+  /** Блок между заголовком и карточками (например, сводка совместимости) */
+  aside?: ReactNode;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-
-  async function mutate(promise: Promise<Response>) {
-    const res = await promise;
-    if (res.ok) router.refresh();
-    return res;
-  }
-
-  async function setStatus(id: string, status: ShelfItemView["status"]) {
-    await mutate(
-      fetch(`/api/shelf/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      }),
-    );
-  }
-
-  async function remove(id: string) {
-    await mutate(fetch(`/api/shelf/${id}`, { method: "DELETE" }));
-  }
-
-  async function remind(id: string, type: "introduce" | "restock") {
-    await mutate(
-      fetch("/api/reminders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ shelfItemId: id, type }),
-      }),
-    );
-  }
+  const [openItemId, setOpenItemId] = useState<string | null>(null);
+  const openItem = items.find((i) => i.id === openItemId) ?? null;
 
   return (
     <div>
@@ -127,23 +120,29 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
         </Dialog>
       </div>
 
+      {aside ? <div className="mt-6">{aside}</div> : null}
+
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <GlassCard key={item.id} className="flex flex-col p-5">
+          <GlassCard
+            key={item.id}
+            role="button"
+            tabIndex={0}
+            aria-label={`Открыть «${item.title}»`}
+            onClick={() => setOpenItemId(item.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setOpenItemId(item.id);
+              }
+            }}
+            className="group flex cursor-pointer flex-col p-5 transition-all hover:-translate-y-0.5 hover:shadow-glass-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+          >
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-xs text-muted-foreground">{item.subtitle}</p>
-                <h2 className="font-display truncate text-base font-semibold">
-                  {item.slug ? (
-                    <Link
-                      href={`/products/${item.slug}`}
-                      className="hover:text-brand-700"
-                    >
-                      {item.title}
-                    </Link>
-                  ) : (
-                    item.title
-                  )}
+                <h2 className="font-display truncate text-base font-semibold group-hover:text-brand-700">
+                  {item.title}
                 </h2>
               </div>
               <Badge variant={STATUS_VARIANTS[item.status]}>
@@ -158,57 +157,46 @@ export function ShelfClient({ items }: { items: ShelfItemView[] }) {
                   ? ` · ещё ${item.ingredientNames.length - 8}`
                   : ""}
               </p>
-            ) : null}
+            ) : (
+              <p className="mt-3 text-xs text-amber-800">
+                Состав не указан — откройте карточку, чтобы добавить.
+              </p>
+            )}
 
-            <div className="mt-4 flex items-center justify-between gap-2 border-t border-border pt-3">
-              <div className="flex gap-1">
-                {(Object.keys(STATUS_LABELS) as ShelfItemView["status"][]).map(
-                  (s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => setStatus(item.id, s)}
-                      className={cn(
-                        "rounded-full px-2.5 py-1 text-[11px] transition-colors",
-                        item.status === s
-                          ? "bg-brand/15 font-semibold text-brand-700"
-                          : "text-muted-foreground hover:bg-brand/5",
-                      )}
+            <div className="min-h-[1rem] flex-1" />
+            <div className="flex items-end justify-between gap-2 border-t border-border pt-3">
+              <div className="flex min-w-0 flex-col gap-1">
+                {item.reminders.length > 0 ? (
+                  item.reminders.map((r) => (
+                    <span
+                      key={r.id}
+                      className="flex items-center gap-1 text-[11px] text-muted-foreground"
                     >
-                      {STATUS_LABELS[s]}
-                    </button>
-                  ),
+                      <BellRing className="h-3 w-3 shrink-0 text-amber" />
+                      {REMINDER_COPY[r.type].title} · {formatDayMonth(r.nextRunAt)}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-[11px] text-muted-foreground">
+                    Напоминаний нет
+                  </span>
                 )}
               </div>
-              <button
-                type="button"
-                onClick={() => remove(item.id)}
-                aria-label="Удалить"
-                className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-coral/10 hover:text-coral-700"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="mt-2 flex gap-1">
-              <button
-                type="button"
-                onClick={() => remind(item.id, "introduce")}
-                className="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-amber/10 hover:text-amber-700"
-              >
-                <CalendarClock className="h-3.5 w-3.5" /> О введении
-              </button>
-              <button
-                type="button"
-                onClick={() => remind(item.id, "restock")}
-                className="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-amber/10 hover:text-amber-700"
-              >
-                <ShoppingCart className="h-3.5 w-3.5" /> О покупке
-              </button>
+              <span className="flex shrink-0 items-center gap-0.5 text-xs font-semibold text-brand-700">
+                Подробнее
+                <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
             </div>
           </GlassCard>
         ))}
       </div>
+
+      <ShelfItemDialog
+        item={openItem}
+        onOpenChange={(v) => {
+          if (!v) setOpenItemId(null);
+        }}
+      />
     </div>
   );
 }

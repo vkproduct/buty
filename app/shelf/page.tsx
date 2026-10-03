@@ -43,11 +43,12 @@ export default async function ShelfPage() {
             <ul className="mt-5 space-y-2 rounded-xl bg-ink-wash p-4 text-sm text-ink-soft">
               <li>
                 <span className="font-semibold text-foreground">Бесплатно:</span> до{" "}
-                {FREE_SHELF_LIMIT} средств на полке, последние {FREE_REACTIONS_LIMIT} реакций, напоминания.
+                {FREE_SHELF_LIMIT} средств на полке и проверка их совместимости,
+                последние {FREE_REACTIONS_LIMIT} реакций, напоминания.
               </li>
               <li>
                 <span className="font-semibold text-foreground">Pro:</span> полка без лимита,
-                совместимость, режим, поиск дублей, вся история реакций, экспорт в PDF.
+                совместимость всей полки, режим, поиск дублей, вся история реакций, экспорт в PDF.
               </li>
             </ul>
             <div className="mt-6">
@@ -80,15 +81,26 @@ export default async function ShelfPage() {
           },
         },
       },
+      reminders: {
+        where: { doneAt: null },
+        orderBy: { nextRunAt: "asc" },
+        select: { id: true, type: true, nextRunAt: true },
+      },
     },
     orderBy: { addedAt: "desc" },
   });
 
   const view: ShelfItemView[] = await Promise.all(
     items.map(async (item) => {
+      const reminders = item.reminders.map((r) => ({
+        id: r.id,
+        type: r.type,
+        nextRunAt: r.nextRunAt.toISOString(),
+      }));
       if (item.product) {
         return {
           id: item.id,
+          kind: "catalog" as const,
           status: item.status,
           addedAt: item.addedAt.toISOString(),
           title: item.product.name,
@@ -97,11 +109,15 @@ export default async function ShelfPage() {
           ingredientNames: item.product.ingredients.map(
             (pi) => pi.ingredient.displayName,
           ),
+          customInci: null,
+          unrecognizedCount: 0,
+          reminders,
         };
       }
       const analysis = item.customInci ? await analyzeText(item.customInci) : null;
       return {
         id: item.id,
+        kind: "custom" as const,
         status: item.status,
         addedAt: item.addedAt.toISOString(),
         title: item.customName ?? "Своё средство",
@@ -109,14 +125,26 @@ export default async function ShelfPage() {
         slug: null,
         ingredientNames:
           analysis?.ingredients.map((i) => i.displayName) ?? [],
+        customInci: item.customInci,
+        unrecognizedCount: analysis
+          ? Math.max(0, analysis.summary.total - analysis.summary.recognized)
+          : 0,
+        reminders,
       };
     }),
   );
 
   const plan = await getUserPlan(session.user.id);
 
-  // Pro-логика части 6 считается только для Pro — для free матрица скрыта
-  let pairs: ReturnType<typeof buildCompatibilityMatrix> = [];
+  // Совместимость считается для всех: на free полка ограничена
+  // FREE_SHELF_LIMIT средствами, Pro — вся полка без лимита.
+  // Поиск дублей и режим утро/вечер — только Pro.
+  const products = await loadShelfProducts(session.user.id, true);
+  const ingredientIds = [
+    ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
+  ];
+  const edges = await loadConflictEdges(ingredientIds);
+  const pairs = buildCompatibilityMatrix(products, edges);
   let duplicates: ReturnType<typeof findDuplicates> = [];
   let routine: ReturnType<typeof buildRoutine> = {
     morning: [],
@@ -124,12 +152,6 @@ export default async function ShelfPage() {
     notes: [],
   };
   if (plan.isPro) {
-    const products = await loadShelfProducts(session.user.id, true);
-    const ingredientIds = [
-      ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
-    ];
-    const edges = await loadConflictEdges(ingredientIds);
-    pairs = buildCompatibilityMatrix(products, edges);
     duplicates = findDuplicates(products);
     routine = buildRoutine(products, profile);
   }
@@ -223,7 +245,7 @@ export default async function ShelfPage() {
                   : ""}
                 :
               </span>{" "}
-              матрица совместимости, режим, полная история реакций и{" "}
+              совместимость всей полки, поиск дублей, режим, полная история реакций и{" "}
               <Link href="/shelf/export" className="font-medium text-brand hover:underline">
                 экспорт полки в PDF
               </Link>
@@ -238,8 +260,8 @@ export default async function ShelfPage() {
                 <span className="font-semibold text-foreground">
                   Pro открывает:
                 </span>{" "}
-                матрицу совместимости, режим утро/вечер, полную историю реакций,
-                экспорт полки в PDF и полку без лимита.
+                полку без лимита и совместимость всех средств, поиск дублей,
+                режим утро/вечер, полную историю реакций и экспорт полки в PDF.
               </p>
             </div>
             <Button asChild size="sm">

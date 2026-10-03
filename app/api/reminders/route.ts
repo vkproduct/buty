@@ -59,6 +59,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Средство не найдено" }, { status: 404 });
   }
 
+  // Не плодим дубли: если такое напоминание уже ждёт — возвращаем его
+  const existing = await prisma.reminder.findFirst({
+    where: {
+      userId: session.user.id,
+      shelfItemId,
+      type: type as ReminderType,
+      doneAt: null,
+    },
+  });
+  if (existing) {
+    return NextResponse.json({ reminder: existing, existing: true });
+  }
+
   const days = REMINDER_DELAYS_DAYS[type as ReminderType];
   const nextRunAt = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
   const reminder = await prisma.reminder.create({

@@ -74,10 +74,24 @@ describe("buildCompatibilityMatrix", () => {
     expect(pairs[0].conflicts[0].severity).toBe("high");
   });
 
-  it("помечает пару без активов как «разнести по времени суток»", () => {
+  it("пара, где у средства нет сильных активов, — ok с пояснением", () => {
     const pairs = buildCompatibilityMatrix([niaSerum, creamNoActives], []);
+    expect(pairs[0].status).toBe("ok");
+    expect(pairs[0].note).toContain("можно сочетать");
+  });
+
+  it("неизвестный состав — «разнести по времени суток»", () => {
+    const unknown: ShelfProductInput = {
+      id: "p-unknown",
+      title: "Без состава",
+      category: "custom",
+      actives: [],
+      hasComposition: false,
+    };
+    const pairs = buildCompatibilityMatrix([niaSerum, unknown], []);
     expect(pairs[0].status).toBe("spread");
-    expect(pairs[0].note).toContain("разнесите по времени суток");
+    expect(pairs[0].note).toContain("«Без состава»");
+    expect(pairs[0].note).toContain("разнесите средства по времени суток");
   });
 
   it("пара с активами без конфликтов — ok", () => {

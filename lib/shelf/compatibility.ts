@@ -16,6 +16,11 @@ export interface ShelfProductInput {
   title: string;
   category: string; // категория продукта (serum, cream, spf, toner, ...) или "custom"
   actives: ShelfActive[];
+  /**
+   * Известен ли состав средства. false — состав не указан или не распознан
+   * ни один ингредиент: проверить пару нельзя. По умолчанию считается известным.
+   */
+  hasComposition?: boolean;
 }
 
 export interface ConflictEdge {
@@ -81,8 +86,9 @@ function activesKey(set: Set<string>): string {
 /**
  * Попарная проверка всех средств «использую».
  * Статус пары: conflict — есть записи IngredientConflict;
- * spread — в паре нет активов с обеих сторон (правило «разнести по времени суток»);
- * ok — активы есть, конфликтов не найдено.
+ * spread — состав одного из средств неизвестен (правило «разнести по времени суток»);
+ * ok — составы известны, конфликтов активов не найдено
+ * (в т.ч. когда у одного или обоих средств нет сильных активов — конфликтовать нечему).
  */
 export function buildCompatibilityMatrix(
   products: ShelfProductInput[],
@@ -120,10 +126,16 @@ export function buildCompatibilityMatrix(
         note = hits.some((h) => h.severity === "high")
           ? "Есть критичный конфликт активов — не наносите в один приём."
           : "Есть умеренный конфликт — разнесите по времени или дням.";
-      } else if (a.actives.length === 0 || b.actives.length === 0) {
+      } else if (a.hasComposition === false || b.hasComposition === false) {
         status = "spread";
+        const missing = [a, b]
+          .filter((p) => p.hasComposition === false)
+          .map((p) => `«${p.title}»`)
+          .join(" и ");
+        note = `Состав ${missing} не указан или не распознан — добавьте его в карточке средства. Пока на всякий случай разнесите средства по времени суток.`;
+      } else if (a.actives.length === 0 || b.actives.length === 0) {
         note =
-          "Активы не распознаны у одного из средств — на всякий случай разнесите по времени суток.";
+          "В паре нет сильных активов, которые конфликтуют между собой, — средства можно сочетать.";
       }
 
       results.push({

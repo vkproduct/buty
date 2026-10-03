@@ -228,10 +228,25 @@ function whyFor(product: ShelfProductInput, period: "morning" | "evening"): stri
  * SPF — утром последним; ретиноиды — вечером; кислоты — вечером,
  * но НЕ в один приём с ретиноидом (выносятся в notes с чередованием).
  */
+/** Что из профиля кожи влияет на режим. Строка — тип кожи (старый формат вызова). */
+export interface RoutineProfile {
+  skinType?: string | null;
+  sensitive?: boolean;
+  conditions?: string[];
+  allergies?: string[];
+}
+
+const SALICYLIC = new Set(["salicylic-acid"]);
+
 export function buildRoutine(
   products: ShelfProductInput[],
-  skinType?: string | null,
+  profileOrSkinType?: RoutineProfile | string | null,
 ): Routine {
+  const profile: RoutineProfile =
+    typeof profileOrSkinType === "string" || profileOrSkinType == null
+      ? { skinType: profileOrSkinType ?? null }
+      : profileOrSkinType;
+  const conditions = new Set(profile.conditions ?? []);
   const notes: string[] = [];
   const morningPool: ShelfProductInput[] = [];
   const eveningPool: ShelfProductInput[] = [];
@@ -263,9 +278,41 @@ export function buildRoutine(
       "В уходе есть ретиноид, но нет SPF — утренняя защита от солнца обязательна.",
     );
   }
-  if (skinType === "sensitive") {
+  if (profile.sensitive || profile.skinType === "sensitive") {
     notes.push(
       "Чувствительная кожа: вводите активы по одному, 2–3 раза в неделю.",
+    );
+  }
+
+  const retinoidTitles = products.filter(isRetinoid).map((p) => p.title);
+  const salicylicTitles = products
+    .filter((p) => hasAny(p, SALICYLIC))
+    .map((p) => p.title);
+
+  if (
+    retinoidTitles.length > 0 &&
+    (conditions.has("pregnancy") || conditions.has("breastfeeding"))
+  ) {
+    notes.push(
+      `${retinoidTitles.join(", ")}: во время беременности и грудного вскармливания ретиноиды обычно исключают — обсудите с врачом замену (например, азелаиновая кислота).`,
+    );
+  }
+  if (salicylicTitles.length > 0 && conditions.has("pregnancy")) {
+    notes.push(
+      `${salicylicTitles.join(", ")}: при беременности салициловую кислоту в пилингах и высоких концентрациях не рекомендуют — уточните у врача.`,
+    );
+  }
+  if (
+    conditions.has("isotretinoin") &&
+    products.some((p) => isRetinoid(p) || isAcid(p))
+  ) {
+    notes.push(
+      "Во время курса изотретиноина кожа особенно уязвима: кислоты и ретиноиды с полки обычно отменяют — согласуйте уход с дерматологом.",
+    );
+  }
+  if (salicylicTitles.length > 0 && profile.allergies?.includes("salicylates")) {
+    notes.push(
+      `${salicylicTitles.join(", ")}: содержит салициловую кислоту, а в профиле указана аллергия на аспирин/салицилаты.`,
     );
   }
 

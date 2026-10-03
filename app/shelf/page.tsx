@@ -131,7 +131,7 @@ export default async function ShelfPage() {
     const edges = await loadConflictEdges(ingredientIds);
     pairs = buildCompatibilityMatrix(products, edges);
     duplicates = findDuplicates(products);
-    routine = buildRoutine(products, profile.skinType);
+    routine = buildRoutine(products, profile);
   }
 
   // История реакций: free — последние FREE_REACTIONS_LIMIT, Pro — без лимита

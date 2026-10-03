@@ -175,7 +175,7 @@ enum SkinType {
   oily
   combination
   normal
-  sensitive
+  sensitive // устарело: чувствительность теперь флаг SkinProfile.sensitive
 }
 
 model ShelfItem {
@@ -199,8 +199,12 @@ model SkinProfile {
   id        String   @id @default(cuid())
   userId    String   @unique
   skinType  SkinType
-  concerns  String[] // проблемы кожи: акне, пигментация и т.д.
-  allergies String[] // аллергии/непереносимости (ингредиенты)
+  concerns  String[] // задачи и диагнозы: id из lib/skin-profile/options.ts
+  allergies String[] // аллергия (зуд, сыпь, отёк): id аллергенов или свой текст
+  intolerances String[] @default([]) // раздражение (жжение, покраснение): id или свой текст
+  sensitive Boolean  @default(false) // склонность к чувствительности — отдельно от типа кожи
+  conditions String[] @default([]) // особые состояния: pregnancy, breastfeeding, isotretinoin, rx-retinoids
+  healthConsentAt DateTime? // согласие на обработку данных о здоровье (152-ФЗ, ст. 10)
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

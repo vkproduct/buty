@@ -20,26 +20,23 @@ export default async function OnboardingPage() {
 
   return (
     <main className="bg-gradient-hero min-h-screen">
-      <Container className="py-16">
-        <GlassCard className="mx-auto max-w-2xl p-8 sm:p-10">
-          <h1 className="font-display text-[28px] font-semibold leading-tight">Расскажите о коже</h1>
-          <p className="mt-2 text-muted-foreground">
-            Это поможет точнее подбирать уход и учитывать аллергии при разборе
-            составов.
-          </p>
-          <div className="mt-8">
-            <OnboardingForm
-              initial={
-                profile
-                  ? {
-                      skinType: profile.skinType,
-                      concerns: profile.concerns,
-                      allergies: profile.allergies,
-                    }
-                  : null
-              }
-            />
-          </div>
+      <Container className="py-8 sm:py-16">
+        <GlassCard className="mx-auto max-w-2xl p-6 sm:p-10">
+          <OnboardingForm
+            initial={
+              profile
+                ? {
+                    skinType: profile.skinType,
+                    sensitive: profile.sensitive,
+                    concerns: profile.concerns,
+                    conditions: profile.conditions,
+                    allergies: profile.allergies,
+                    intolerances: profile.intolerances,
+                    complete: Boolean(profile.healthConsentAt),
+                  }
+                : null
+            }
+          />
         </GlassCard>
       </Container>
     </main>

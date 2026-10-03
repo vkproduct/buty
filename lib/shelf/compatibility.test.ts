@@ -145,4 +145,33 @@ describe("buildRoutine", () => {
       morningIds.indexOf("p-cream"),
     );
   });
+
+  it("чувствительность — флаг профиля, а не только тип кожи", () => {
+    const routine = buildRoutine([niaSerum], { skinType: "dry", sensitive: true });
+    expect(routine.notes.join(" ")).toContain("Чувствительная кожа");
+    expect(buildRoutine([niaSerum], "sensitive").notes.join(" ")).toContain(
+      "Чувствительная кожа",
+    );
+  });
+
+  it("беременность + ретиноид → предупреждение", () => {
+    const routine = buildRoutine([retinolSerum, spf], {
+      skinType: "normal",
+      conditions: ["pregnancy"],
+    });
+    expect(routine.notes.join(" ")).toContain("беременности");
+  });
+
+  it("изотретиноин + кислоты → предупреждение", () => {
+    const routine = buildRoutine([ahaToner], {
+      skinType: "oily",
+      conditions: ["isotretinoin"],
+    });
+    expect(routine.notes.join(" ")).toContain("изотретиноина");
+  });
+
+  it("без особых периодов лишних предупреждений нет", () => {
+    const routine = buildRoutine([retinolSerum, spf], { skinType: "normal" });
+    expect(routine.notes.join(" ")).not.toContain("беременности");
+  });
 });

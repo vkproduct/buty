@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
+import { DeleteSkinProfileButton } from "@/components/delete-skin-profile-button";
+import { labelFor, migrateLegacy } from "@/lib/skin-profile/options";
 
 export const metadata: Metadata = { title: "Профиль" };
 export const dynamic = "force-dynamic";
@@ -61,18 +63,72 @@ export default async function ProfilePage() {
 
         {profile ? (
           <GlassCard className="p-6">
-            <h2 className="font-display text-lg font-semibold">Профиль кожи</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Тип: {profile.skinType}
-              {profile.concerns.length > 0
-                ? ` · Задачи: ${profile.concerns.join(", ")}`
-                : ""}
-              {profile.allergies.length > 0
-                ? ` · Аллергии: ${profile.allergies.join(", ")}`
-                : ""}
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="font-display text-lg font-semibold">Профиль кожи</h2>
+              <Button asChild size="sm" variant="outline">
+                <Link href="/onboarding">Изменить</Link>
+              </Button>
+            </div>
+            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-[160px_1fr]">
+              <dt className="text-ink-muted">Тип кожи</dt>
+              <dd className="font-medium">
+                {profile.skinType === "sensitive"
+                  ? "Не указан — обновите профиль"
+                  : labelFor(profile.skinType)}
+                {profile.sensitive || profile.skinType === "sensitive"
+                  ? ", склонна к чувствительности"
+                  : ""}
+              </dd>
+              <dt className="text-ink-muted">Задачи</dt>
+              <dd className="font-medium">
+                {profile.concerns.length > 0
+                  ? migrateLegacy(profile.concerns).map(labelFor).join(", ")
+                  : "Не выбраны"}
+              </dd>
+              <dt className="text-ink-muted">Особые периоды</dt>
+              <dd className="font-medium">
+                {profile.conditions.length > 0
+                  ? profile.conditions.map(labelFor).join(", ")
+                  : "Нет"}
+              </dd>
+              <dt className="text-ink-muted">Аллергия</dt>
+              <dd className="font-medium">
+                {profile.allergies.length > 0
+                  ? migrateLegacy(profile.allergies).map(labelFor).join(", ")
+                  : "Нет"}
+              </dd>
+              <dt className="text-ink-muted">Раздражение</dt>
+              <dd className="font-medium">
+                {profile.intolerances.length > 0
+                  ? profile.intolerances.map(labelFor).join(", ")
+                  : "Нет"}
+              </dd>
+            </dl>
+            {!profile.healthConsentAt ? (
+              <p className="mt-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-900">
+                Мы обновили анкету: добавили вопросы об особых периодах и реакциях кожи.{" "}
+                <Link href="/onboarding" className="font-semibold underline underline-offset-4">
+                  Дополнить профиль
+                </Link>
+              </p>
+            ) : null}
+            <div className="mt-4 border-t border-ink-hair pt-3">
+              <DeleteSkinProfileButton />
+            </div>
           </GlassCard>
-        ) : null}
+        ) : (
+          <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-6">
+            <div>
+              <h2 className="font-display text-lg font-semibold">Профиль кожи</h2>
+              <p className="mt-1 text-sm text-ink-muted">
+                Не заполнен — без него полка не учтёт тип кожи и аллергии.
+              </p>
+            </div>
+            <Button asChild size="sm">
+              <Link href="/onboarding">Заполнить за минуту</Link>
+            </Button>
+          </GlassCard>
+        )}
 
         <GlassCard className="p-6">
           <h2 className="font-display flex items-center gap-2 text-lg font-semibold">

@@ -70,7 +70,7 @@ export default async function ShelfExportPage() {
   );
 
   const products = await loadShelfProducts(session.user.id, true);
-  const routine = buildRoutine(products, profile.skinType);
+  const routine = buildRoutine(products, profile);
 
   const step = (s: { order: number; title: string; why: string }) => (
     <li key={`${s.order}-${s.title}`} className="text-sm">

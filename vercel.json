@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm prisma generate && pnpm prisma migrate deploy && pnpm build",
+  "buildCommand": "pnpm prisma generate && pnpm prisma migrate deploy && pnpm db:seed && node scripts/import-incidb-if-needed.mjs && pnpm build",
   "crons": [
     {
       "path": "/api/cron/reminders",

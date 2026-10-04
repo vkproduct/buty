@@ -12,11 +12,13 @@
  */
 
 import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { PrismaClient } from "@prisma/client";
 import { INCIDB_PRODUCTS } from "../prisma/incidb-products.data";
 
 const prisma = new PrismaClient();
 const DEMO_PRODUCTS = 13; // курируемые демо-продукты из prisma/seed.ts
+const CSV = "incidb-complete/csv/product_ingredients.csv"; // есть локально; в docker-образ не входит
 
 function fail(msg: string): never {
   console.error(`FAIL ${msg}`);
@@ -62,29 +64,39 @@ async function main() {
   console.log(`OK   видимых == INCIDB_PRODUCTS + демо (${expected})`);
 
   // 5 случайных продуктов: позиции в БД == исходный position_index из CSV
+  // (CSV — купленный архив, есть только локально; в docker-образе сверяем
+  // позиции БД с data-файлом, который сгенерирован из того же CSV)
+  const hasCsv = existsSync(CSV);
   const sample = [...INCIDB_PRODUCTS].sort(() => 0.5 - Math.random()).slice(0, 5);
   for (const p of sample) {
     const productId = p.slug.match(/-(\d+)$/)?.[1];
     if (!productId) fail(`slug без суффикса product_id: ${p.slug}`);
-    const csvRows = execSync(
-      `awk -F'|' -v id='${productId}' '$1==id {print $3 "|" $2}' incidb-complete/csv/product_ingredients.csv`,
-      { encoding: "utf-8" }
-    ).trim();
+    const expectedPositions = hasCsv
+      ? new Set(
+          execSync(`awk -F'|' -v id='${productId}' '$1==id {print $3}' ${CSV}`, { encoding: "utf-8" })
+            .trim()
+            .split("\n")
+            .map(Number)
+        )
+      : new Map(p.ingredients.map((e) => [e.slug, e.position]));
     const db = await prisma.product.findUniqueOrThrow({
       where: { slug: p.slug },
-      include: { ingredients: { include: { ingredient: { select: { inciName: true } } } } },
+      include: { ingredients: { include: { ingredient: { select: { inciName: true, slug: true } } } } },
     });
-    // position_index в CSV уникален на продукт; сверяем позиции БД ⊂ позиций CSV
-    const csvPositions = new Set(csvRows.split("\n").map((l) => Number(l.split("|")[0])));
+    // position_index в CSV уникален на продукт; сверяем позиции БД с источником
     for (const pi of db.ingredients) {
-      if (!csvPositions.has(pi.position)) {
-        fail(`${p.slug}: позиция ${pi.position} (${pi.ingredient.inciName}) отсутствует в CSV продукта ${productId}`);
+      const ok =
+        expectedPositions instanceof Set
+          ? expectedPositions.has(pi.position)
+          : expectedPositions.get(pi.ingredient.slug) === pi.position;
+      if (!ok) {
+        fail(`${p.slug}: позиция ${pi.position} (${pi.ingredient.inciName}) не совпадает с источником (product_id ${productId})`);
       }
     }
     if (db.ingredientsRecognized !== p.ingredientsRecognized || db.ingredientsTotal !== p.ingredientsTotal) {
       fail(`${p.slug}: счётчики БД ${db.ingredientsRecognized}/${db.ingredientsTotal} != data ${p.ingredientsRecognized}/${p.ingredientsTotal}`);
     }
-    console.log(`OK   ${p.slug}: ${db.ingredients.length} позиций совпадают с CSV (product_id ${productId})`);
+    console.log(`OK   ${p.slug}: ${db.ingredients.length} позиций совпадают с ${hasCsv ? "CSV" : "data-файлом"} (product_id ${productId})`);
   }
 
   console.log("ИТОГ: БД сходится с каталогом INCIDB");

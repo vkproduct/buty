@@ -11,7 +11,11 @@ const prisma = new PrismaClient();
 
 try {
   const count = await prisma.product.count();
-  if (count >= 17000) {
+  // FORCE_INCIDB_IMPORT=1 — принудительный прогон (исправления импорта на проде)
+  if (process.env.FORCE_INCIDB_IMPORT === "1") {
+    console.log("INCIDB products: FORCE_INCIDB_IMPORT=1 — запускаю импорт каталога…");
+    execSync("pnpm db:import-incidb", { stdio: "inherit" });
+  } else if (count >= 17000) {
     console.log(`INCIDB products: уже импортировано (${count}), пропускаю.`);
   } else {
     console.log(`INCIDB products: в БД ${count} — запускаю импорт каталога…`);

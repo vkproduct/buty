@@ -11,7 +11,8 @@
     "test": "vitest run",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
-    "db:import-incidb": "tsx scripts/import-incidb-products.ts"
+    "db:import-incidb": "tsx scripts/import-incidb-products.ts",
+    "db:verify-incidb": "tsx scripts/verify-incidb-db.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

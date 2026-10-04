@@ -72,7 +72,7 @@ async function getSimilarProducts(productId: string, ingredientIds: string[]) {
   const candidates = shared.filter((r) => r._count._all >= 3);
   if (candidates.length === 0) return [];
   const products = await prisma.product.findMany({
-    where: { id: { in: candidates.map((c) => c.productId) } },
+    where: { id: { in: candidates.map((c) => c.productId) }, hidden: false },
     select: { id: true, slug: true, brand: true, name: true, _count: { select: { ingredients: true } } },
   });
   const sharedBy = new Map(candidates.map((c) => [c.productId, c._count._all]));

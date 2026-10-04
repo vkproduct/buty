@@ -75,7 +75,16 @@ export function SiteFooter() {
             <CookieSettingsButton />
           </div>
           <p className="max-w-2xl text-ink-muted sm:text-right">
-            Информация на сайте носит справочный характер и не заменяет
+            Данные о составах продуктов © Open Beauty Facts contributors,{" "}
+            <a
+              href="https://opendatacommons.org/licenses/odbl/1-0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              ODbL v1.0
+            </a>
+            . Информация на сайте носит справочный характер и не заменяет
             консультацию врача-дерматолога.
           </p>
         </Container>

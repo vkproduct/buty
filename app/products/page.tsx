@@ -34,6 +34,7 @@ type SearchParams = RawProductSearchParams;
 const loadCatalogMatrix = cache(async (): Promise<FacetRow[]> => {
   const rows = await prisma.product.groupBy({
     by: ["brand", "category"],
+    where: { hidden: false },
     _count: { _all: true },
   });
   return rows.map((r) => ({ brand: r.brand, category: r.category, count: r._count._all }));
@@ -140,6 +141,7 @@ export default async function ProductsCatalogPage({
 
   const where: Prisma.ProductWhereInput = {
     AND: [
+      { hidden: false },
       searchWhere(q),
       brands.length ? { brand: { in: brands } } : {},
       categories.length ? { category: { in: categories } } : {},
@@ -155,7 +157,7 @@ export default async function ProductsCatalogPage({
     // Матрица с учётом поиска — для фасетных счётчиков и живого счётчика панели.
     q
       ? prisma.product
-          .groupBy({ by: ["brand", "category"], where: searchWhere(q), _count: { _all: true } })
+          .groupBy({ by: ["brand", "category"], where: { AND: [{ hidden: false }, searchWhere(q)] }, _count: { _all: true } })
           .then((rows) =>
             rows.map((r) => ({ brand: r.brand, category: r.category, count: r._count._all }))
           )

@@ -48,7 +48,8 @@ async function main() {
       const { ingredients: entries, ...data } = p;
       const product = await prisma.product.upsert({
         where: { slug: p.slug },
-        update: data,
+        // продукт снова в каталоге — снимаем hidden, если он был скрыт ранее
+        update: { ...data, hidden: false },
         create: data,
       });
       await prisma.productIngredient.deleteMany({ where: { productId: product.id } });
@@ -67,6 +68,33 @@ async function main() {
   }
 
   console.log(`Готово: ${done} продуктов, ${linked} связей продукт–ингредиент.`);
+
+  // Выпавшие из каталога (фильтры prepare-скрипта): есть ссылки
+  // (ShelfItem/PartnerClick) — hidden=true; ссылок нет — удаляем.
+  // Только при полном прогоне (чанки IMPORT_OFFSET/LIMIT пропускают этот шаг).
+  if (offset === 0 && end === INCIDB_PRODUCTS.length) {
+    const keepSlugs = new Set(INCIDB_PRODUCTS.map((p) => p.slug));
+    // продукты INCIDB имеют slug с суффиксом -<product_id> (≥3 цифр, min 352);
+    // демо из seed могут кончаться на -1/-10 (concentration) — не трогаем их
+    const dbProducts = await prisma.product.findMany({ select: { id: true, slug: true } });
+    const orphans = dbProducts.filter((p) => /-\d{3,}$/.test(p.slug) && !keepSlugs.has(p.slug));
+    let hidden = 0;
+    let deleted = 0;
+    for (const o of orphans) {
+      const [shelf, clicks] = await Promise.all([
+        prisma.shelfItem.count({ where: { productId: o.id } }),
+        prisma.partnerClick.count({ where: { productId: o.id } }),
+      ]);
+      if (shelf > 0 || clicks > 0) {
+        await prisma.product.update({ where: { id: o.id }, data: { hidden: true } });
+        hidden++;
+      } else {
+        await prisma.product.delete({ where: { id: o.id } });
+        deleted++;
+      }
+    }
+    console.log(`Выпали из каталога INCIDB: ${orphans.length} (скрыто: ${hidden}, удалено без ссылок: ${deleted})`);
+  }
 }
 
 main()

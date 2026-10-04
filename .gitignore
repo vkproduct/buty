@@ -42,3 +42,4 @@ tmp-screenshot*.png
 /tmp-incidb/
 # сырые CSV купленного архива INCIDB Complete (не коммитим: 40 МБ, лицензия)
 /incidb-complete/csv/
+__pycache__/

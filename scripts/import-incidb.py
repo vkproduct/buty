@@ -183,6 +183,18 @@ FULTON_TRANSFER = [
 # Оценки Fulton без однозначного INCI — не переносим, только отчёт
 FULTON_UNMAPPED = ["IRON OXIDES", "CHAMOMILE EXTRACT"]
 
+# Ручное решение (аудит 2026-10-04): fragrance_allergens.csv держит эти две
+# строки как BOTANICAL_CAS_REVIEW (flagged=0), потому что CAS-сопоставление для
+# ботаники недоказательно. Но обе — те же экстракты Evernia prunastri /
+# Evernia furfuracea из Annex III (записи 91/92), а их CosIng-формы
+# (EVERNIA PRUNASTRI EXTRACT / EVERNIA FURFURACEA EXTRACT) в INCIDB уже помечены
+# is_common_allergen=1. Флагаем этикеточные имена с порогами декларирования
+# 0.001% (не смываемые) / 0.01% (смываемые). Остальные review-строки не флагаем.
+MANUAL_ALLERGENS = {
+    "OAK MOSS EXTRACT": ("0.001", "0.01"),
+    "TREEMOSS EXTRACT": ("0.001", "0.01"),
+}
+
 SILICONE_RE = re.compile(r"(SILOXANE|DIMETHICONE|SILICONE|POLYSILSESQUIOXANE|SILSESQUIOXANE|SILICONE)")
 
 
@@ -461,7 +473,11 @@ def main() -> int:
                 rating = fulton_transfer[inci_up][1]  # перенос Fulton на INCI-форму
             if rating and float(rating) >= 3 and "comedogenic" not in curated_flags.get(target_slug, set()):
                 enrich["comedogenic"] = True
-            is_allergen = r.get("is_common_allergen") == "1" or inci_up in eu_allergen_names
+            is_allergen = (
+                r.get("is_common_allergen") == "1"
+                or inci_up in eu_allergen_names
+                or inci_up in MANUAL_ALLERGENS
+            )
             if is_allergen and "fragranceAllergen" not in curated_flags.get(target_slug, set()):
                 enrich["fragranceAllergen"] = True
             if enrich:
@@ -515,10 +531,23 @@ def main() -> int:
             else:
                 print(f"  ! {inci_up}: ожидался Annex V/12 в cosing_restriction, не найдено",
                       file=sys.stderr)
-        is_allergen = r.get("is_common_allergen") == "1" or inci_up in eu_allergen_names
+        is_allergen = (
+                r.get("is_common_allergen") == "1"
+                or inci_up in eu_allergen_names
+                or inci_up in MANUAL_ALLERGENS
+            )
         if is_allergen:
             th = allergen_thresholds.get(r["ingredient_id"])
-            if th and (th[0] or th[1]):
+            if inci_up in MANUAL_ALLERGENS:
+                lo, ro = MANUAL_ALLERGENS[inci_up]
+                safety.append(
+                    "Отдушечный аллерген ЕС (Annex III, записи 91/92): декларируется "
+                    f"на этикетке при >{lo}% (не смываемые) / >{ro}% (смываемые). "
+                    "Флаг выставлен вручную: этикеточное имя экстракта Evernia "
+                    "(в архиве — строка BOTANICAL_CAS_REVIEW без флага), CosIng-форма "
+                    "того же экстракта помечена аллергеном."
+                )
+            elif th and (th[0] or th[1]):
                 safety.append(
                     "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется "
                     f"на этикетке при >{th[0] or '—'}% (не смываемые) / >{th[1] or '—'}% (смываемые)."

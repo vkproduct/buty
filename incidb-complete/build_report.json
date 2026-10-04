@@ -1,0 +1,2106 @@
+{
+  "generated_at": "2026-09-30T21:25:54.296609+00:00",
+  "tables": {
+    "brands": {
+      "brand_id": {
+        "rows": 6453,
+        "non_null": 6453,
+        "fill_rate": 1.0,
+        "distinct": 6453,
+        "top": [
+          [
+            "1",
+            1
+          ],
+          [
+            "3",
+            1
+          ],
+          [
+            "4",
+            1
+          ],
+          [
+            "7",
+            1
+          ],
+          [
+            "8",
+            1
+          ]
+        ]
+      },
+      "name": {
+        "rows": 6453,
+        "non_null": 6453,
+        "fill_rate": 1.0,
+        "distinct": 6453,
+        "top": [
+          [
+            "/kitsch/",
+            1
+          ],
+          [
+            "100% Pure",
+            1
+          ],
+          [
+            "100, Balea",
+            1
+          ],
+          [
+            "1000 Hour",
+            1
+          ],
+          [
+            "123g\u00e9lules",
+            1
+          ]
+        ]
+      }
+    },
+    "products": {
+      "product_id": {
+        "rows": 20029,
+        "non_null": 20029,
+        "fill_rate": 1.0,
+        "distinct": 20029,
+        "top": [
+          [
+            "352",
+            1
+          ],
+          [
+            "353",
+            1
+          ],
+          [
+            "354",
+            1
+          ],
+          [
+            "355",
+            1
+          ],
+          [
+            "356",
+            1
+          ]
+        ]
+      },
+      "brand_id": {
+        "rows": 20029,
+        "non_null": 17845,
+        "fill_rate": 0.8909581107394279,
+        "distinct": 6439,
+        "top": [
+          [
+            "185",
+            516
+          ],
+          [
+            "8248",
+            354
+          ],
+          [
+            "673",
+            341
+          ],
+          [
+            "64",
+            335
+          ],
+          [
+            "2376",
+            236
+          ]
+        ]
+      },
+      "barcode_ean": {
+        "rows": 20029,
+        "non_null": 20029,
+        "fill_rate": 1.0,
+        "distinct": 20029,
+        "top": [
+          [
+            "00000014",
+            1
+          ],
+          [
+            "00000311",
+            1
+          ],
+          [
+            "00000511",
+            1
+          ],
+          [
+            "00000587",
+            1
+          ],
+          [
+            "00000859",
+            1
+          ]
+        ]
+      },
+      "name": {
+        "rows": 20029,
+        "non_null": 20029,
+        "fill_rate": 1.0,
+        "distinct": 18881,
+        "top": [
+          [
+            "Shampoo",
+            22
+          ],
+          [
+            "shampoo",
+            16
+          ],
+          [
+            "Colgate",
+            15
+          ],
+          [
+            "Dove",
+            14
+          ],
+          [
+            "D\u00e9odorant",
+            12
+          ]
+        ]
+      },
+      "obf_categories_tags": {
+        "rows": 20029,
+        "non_null": 13489,
+        "fill_rate": 0.673473463477957,
+        "distinct": 3920,
+        "top": [
+          [
+            "en:non-food-products;en:open-beauty-facts",
+            1655
+          ],
+          [
+            "en:hair;en:shampoos",
+            428
+          ],
+          [
+            "en:cosmetic-products",
+            411
+          ],
+          [
+            "en:hygiene;en:showers-and-baths;en:shower-gels",
+            389
+          ],
+          [
+            "en:hygiene;en:deodorants",
+            351
+          ]
+        ]
+      },
+      "raw_ingredient_text": {
+        "rows": 20029,
+        "non_null": 20029,
+        "fill_rate": 1.0,
+        "distinct": 19064,
+        "top": [
+          [
+            "Kommer senere",
+            57
+          ],
+          [
+            "Butyl Acetate, Ethyl Acetate, Nitrocellulose, Acetyl Tributyl Citrate, Isopropyl Alcohol, Adipic Acid/Neopentyl Glycol/Trimellitic Anhydride Copolymer, Stearalkonium Bentonite, Acrylates Copolymer, Silica, Benzophenone-1, N-Butyl Alcohol, Trimethylpentanediyl Dibenzoate, Sucrose Acetate Isobutyrate, Phosphoric Acid, Alumina, Dimethicone, Trimethylsiloxysilicate, Polyvinyl Butyral, Diacetone Alcohol. May contain: CI 77891, CI 77491, CI 15850, CI 77499, CI 19140, CI 15880, CI 77510, CI 77163, CI 77000, CI 77742, CI 73360, CI 60725, CI 77266, CI 77007",
+            49
+          ],
+          [
+            "Water, Polyurethane-1, Polyurethane-2, Polyurethane-35, Lithium Magnesium Silicate, Silica Dimethyl Silylate, Phenoxyethanol, Parfum. May contain: CI 15880, CI 19140, CI 77510, CI 77891, CI 77266",
+            26
+          ],
+          [
+            "RH 180",
+            17
+          ],
+          [
+            "COLOUR-BLEND FORMULA: Aqua/Water/Eau, Ethoxydiglycol, Propylene Glycol, Isopropyl Alcohol, Soytrimonium Chloride, Oleth-5, Trisodium Ethylenediamine Disuccinate, Tall Oil Acid, Ammonia, Oleth-2, Parfum/Fragrance, C11-15 Pareth-9, Cocamidopropyl Betaine, p-Aminophenol, p-Phenylenediamine, C12-15 Pareth-3, Resorcinol, Citric Acid, Erythorbic Acid, 2-Methylresorcinol, N,N-Bis(2-Hydroxyethyll-p-Phenylenediamine Sulfate, 4-Amino-2-Hydroxytoluene, 1-Naphthol, Phenyl Methyl Pyrazolone, Sodium Sulfite, m-Aminophenol, Limonene, EDTA, Linalool, Citronellol, BHT, 1-Hydroxyethyl 4,5-Diamino Pyrazole Sulfate. COLOUR-BLEND ACTIVATOR: Aqua/Water/Eau, Hydrogen Peroxide, Acrylates Copolymer, Steareth-21, Oleth-2, PEG-50 Hydrogenated Palmamide, Acrylates/Steareth-20 Methacrylate Copolymer, Oleyl Alcohol, Etidronic Acid, Disodium EDTA, Simethicone, Sorbitan Stearate, PEG-40 Stearate, Magnesium Chloride, Magnesium Nitrate, Potassium Sorbate, Cellulose Gum, Methylchloroisothiazolinone, Methylisothiazolinone, Sorbic Acid. CC+ COLOURSEAL CONDITIONER: Aqua/Water/Eau, Bis-Hydroxy/Methoxy Amodimethicone, Stearyl Alcohol, Cetyl Alcohol, Stearamidopropyl Dimethylamine, Malic Acid, Glutamic Acid, Parfum/Fragrance, Benzyl Alcohol, Benzyl Benzoate, EDTA, Histidine, Cocos Nucifera (Coconut) Oil, Sodium Chloride, Hexyl Cinnamal, Linalool, Magnesium Nitrate, Trimethylsiloxysilicate, Aloe Barbadensis Leaf Juice, Methylchloroisothiazolinone, Magnesium Chloride, Methylisothiazolinone, BHT, Ascorbic Acid, Citric Acid, Potassium Sorbate, Sodium Benzoate, Sodium Sulfite. Contains: Contains not more than 2.65% v/v Ammonia and 9.7% v/v Hydrogen Peroxide. Contains Ammonia, Hydrogen Peroxide, Resorcinol and Phenylenediamines.",
+            13
+          ]
+        ]
+      },
+      "created_at": {
+        "rows": 20029,
+        "non_null": 20029,
+        "fill_rate": 1.0,
+        "distinct": 55,
+        "top": [
+          [
+            "2026-09-30 21:25:20",
+            458
+          ],
+          [
+            "2026-09-30 21:24:31",
+            447
+          ],
+          [
+            "2026-09-30 21:24:28",
+            444
+          ],
+          [
+            "2026-09-30 21:25:13",
+            439
+          ],
+          [
+            "2026-09-30 21:25:19",
+            436
+          ]
+        ]
+      }
+    },
+    "ingredients": {
+      "ingredient_id": {
+        "rows": 45584,
+        "non_null": 45584,
+        "fill_rate": 1.0,
+        "distinct": 45584,
+        "top": [
+          [
+            "1",
+            1
+          ],
+          [
+            "2",
+            1
+          ],
+          [
+            "3",
+            1
+          ],
+          [
+            "4",
+            1
+          ],
+          [
+            "5",
+            1
+          ]
+        ]
+      },
+      "inci_name": {
+        "rows": 45584,
+        "non_null": 45584,
+        "fill_rate": 1.0,
+        "distinct": 45584,
+        "top": [
+          [
+            "\u0013 \u0018! \u001b",
+            1
+          ],
+          [
+            "\u0017 \u0012\u0010 \u0018/. \u0012",
+            1
+          ],
+          [
+            "' ALLANTOIN",
+            1
+          ],
+          [
+            "' DES INGR DENFS SONT D'ERG",
+            1
+          ],
+          [
+            "' EST SOUS",
+            1
+          ]
+        ]
+      },
+      "cosing_matched": {
+        "rows": 45584,
+        "non_null": 45584,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            40029
+          ],
+          [
+            "1",
+            5555
+          ]
+        ]
+      },
+      "cosing_ref_no": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 5554,
+        "top": [
+          [
+            "57",
+            2
+          ],
+          [
+            "99606",
+            1
+          ],
+          [
+            "99586",
+            1
+          ],
+          [
+            "99567",
+            1
+          ],
+          [
+            "99564",
+            1
+          ]
+        ]
+      },
+      "cas_number": {
+        "rows": 45584,
+        "non_null": 4104,
+        "fill_rate": 0.09003159003159003,
+        "distinct": 3227,
+        "top": [
+          [
+            "25322-68-3",
+            34
+          ],
+          [
+            "68439-49-6",
+            15
+          ],
+          [
+            "85594-37-2 / 84929-27-1",
+            13
+          ],
+          [
+            "92346-89-9 / 84929-31-7",
+            12
+          ],
+          [
+            "84012-26-0",
+            12
+          ]
+        ]
+      },
+      "ec_number": {
+        "rows": 45584,
+        "non_null": 3072,
+        "fill_rate": 0.06739206739206739,
+        "distinct": 2310,
+        "top": [
+          [
+            "287-896-9 / 284-511-6",
+            14
+          ],
+          [
+            "281-672-4",
+            14
+          ],
+          [
+            "296-174-2 / 284-515-8",
+            12
+          ],
+          [
+            "232-433-8",
+            11
+          ],
+          [
+            "290-010-3",
+            10
+          ]
+        ]
+      },
+      "functions": {
+        "rows": 45584,
+        "non_null": 5487,
+        "fill_rate": 0.12037118287118287,
+        "distinct": 1140,
+        "top": [
+          [
+            "SKIN CONDITIONING",
+            1048
+          ],
+          [
+            "SKIN CONDITIONING - EMOLLIENT;SKIN CONDITIONING",
+            167
+          ],
+          [
+            "SURFACTANT - EMULSIFYING;SURFACTANT - CLEANSING",
+            163
+          ],
+          [
+            "HAIR CONDITIONING;SKIN CONDITIONING",
+            131
+          ],
+          [
+            "SURFACTANT - EMULSIFYING",
+            123
+          ]
+        ]
+      },
+      "chemical_description": {
+        "rows": 45584,
+        "non_null": 4313,
+        "fill_rate": 0.09461653211653212,
+        "distinct": 4281,
+        "top": [
+          [
+            "Poly(oxy-1,2-ethanediyl), .alpha.-octadecyl-.omega.-hydroxy",
+            9
+          ],
+          [
+            "Poly(oxy-1,2-ethanediyl), .alpha.-tridecyl-.omega.-hydroxy; Isotridecanol, ethoxylated",
+            5
+          ],
+          [
+            "Poly(oxy-1,2-ethanediyl), .alpha.-dodecyl-.omega.-hydroxy-",
+            5
+          ],
+          [
+            "Oxirane, methyl-, polymer with oxirane, monobutyl ether",
+            4
+          ],
+          [
+            "Sorbitan, monooctadecanoate, poly(oxy-1,2-ethanediyl) derivs.",
+            2
+          ]
+        ]
+      },
+      "cosing_restriction": {
+        "rows": 45584,
+        "non_null": 579,
+        "fill_rate": 0.012701825201825202,
+        "distinct": 358,
+        "top": [
+          [
+            "II/358",
+            45
+          ],
+          [
+            "Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively.",
+            17
+          ],
+          [
+            "III/62",
+            17
+          ],
+          [
+            "III/66",
+            13
+          ],
+          [
+            "III/61",
+            12
+          ]
+        ]
+      },
+      "cosing_update_date": {
+        "rows": 45584,
+        "non_null": 0,
+        "fill_rate": 0.0,
+        "distinct": 0,
+        "top": []
+      },
+      "annex_ii": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            5445
+          ],
+          [
+            "1",
+            110
+          ]
+        ]
+      },
+      "annex_iii": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            5249
+          ],
+          [
+            "1",
+            306
+          ]
+        ]
+      },
+      "annex_iv": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            5442
+          ],
+          [
+            "1",
+            113
+          ]
+        ]
+      },
+      "annex_v": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            5482
+          ],
+          [
+            "1",
+            73
+          ]
+        ]
+      },
+      "annex_vi": {
+        "rows": 45584,
+        "non_null": 5555,
+        "fill_rate": 0.12186293436293437,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            5524
+          ],
+          [
+            "1",
+            31
+          ]
+        ]
+      },
+      "is_common_allergen": {
+        "rows": 45584,
+        "non_null": 45584,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            45464
+          ],
+          [
+            "1",
+            120
+          ]
+        ]
+      },
+      "allergen_source": {
+        "rows": 45584,
+        "non_null": 120,
+        "fill_rate": 0.0026325026325026324,
+        "distinct": 1,
+        "top": [
+          [
+            "EU_ANNEX_III",
+            120
+          ]
+        ]
+      },
+      "comedogenic_rating": {
+        "rows": 45584,
+        "non_null": 142,
+        "fill_rate": 0.003115128115128115,
+        "distinct": 6,
+        "top": [
+          [
+            "0",
+            59
+          ],
+          [
+            "1",
+            24
+          ],
+          [
+            "2",
+            23
+          ],
+          [
+            "3",
+            18
+          ],
+          [
+            "4",
+            14
+          ]
+        ]
+      },
+      "is_fungal_acne_trigger": {
+        "rows": 45584,
+        "non_null": 357,
+        "fill_rate": 0.007831695331695332,
+        "distinct": 2,
+        "top": [
+          [
+            "1",
+            276
+          ],
+          [
+            "0",
+            81
+          ]
+        ]
+      },
+      "rating_source": {
+        "rows": 45584,
+        "non_null": 383,
+        "fill_rate": 0.008402070902070902,
+        "distinct": 7,
+        "top": [
+          [
+            "rule: C11-C24 fatty acid, one of its esters, or polysorbate 20/40/60/80 (src/enrichment/fungal_rule.py); basis: DOI:10.3389/fcimb.2020.00112; DOI:10.1093/femsyr/foaf043",
+            234
+          ],
+          [
+            "Fulton JE Jr. Comedogenicity and irritancy of commonly used ingredients in skin care products. J Soc Cosmet Chem 1989;40:321-333, Table I, p.325; ISSN:0037-9832 (no DOI/PMID assigned; PDF from library.scconline.org/v040n06/13)",
+            50
+          ],
+          [
+            "Fulton JE Jr. Comedogenicity and irritancy of commonly used ingredients in skin care products. J Soc Cosmet Chem 1989;40:321-333, Table I, p.324; ISSN:0037-9832 (no DOI/PMID assigned; PDF from library.scconline.org/v040n06/13) | rule: C11-C24 fatty acid, one of its esters, or polysorbate 20/40/60/80 (src/enrichment/fungal_rule.py); basis: DOI:10.3389/fcimb.2020.00112; DOI:10.1093/femsyr/foaf043",
+            39
+          ],
+          [
+            "Fulton JE Jr. Comedogenicity and irritancy of commonly used ingredients in skin care products. J Soc Cosmet Chem 1989;40:321-333, Table I, p.324; ISSN:0037-9832 (no DOI/PMID assigned; PDF from library.scconline.org/v040n06/13)",
+            36
+          ],
+          [
+            "Fulton JE Jr. Comedogenicity and irritancy of commonly used ingredients in skin care products. J Soc Cosmet Chem 1989;40:321-333, Table I, p.326; ISSN:0037-9832 (no DOI/PMID assigned; PDF from library.scconline.org/v040n06/13)",
+            21
+          ]
+        ]
+      }
+    },
+    "product_ingredients": {
+      "product_id": {
+        "rows": 373216,
+        "non_null": 373216,
+        "fill_rate": 1.0,
+        "distinct": 20028,
+        "top": [
+          [
+            "19801",
+            207
+          ],
+          [
+            "7071",
+            155
+          ],
+          [
+            "6534",
+            112
+          ],
+          [
+            "5685",
+            102
+          ],
+          [
+            "17780",
+            99
+          ]
+        ]
+      },
+      "ingredient_id": {
+        "rows": 373216,
+        "non_null": 373216,
+        "fill_rate": 1.0,
+        "distinct": 45584,
+        "top": [
+          [
+            "5167",
+            11873
+          ],
+          [
+            "31444",
+            10283
+          ],
+          [
+            "20396",
+            9754
+          ],
+          [
+            "11810",
+            6893
+          ],
+          [
+            "38730",
+            5454
+          ]
+        ]
+      },
+      "position_index": {
+        "rows": 373216,
+        "non_null": 373216,
+        "fill_rate": 1.0,
+        "distinct": 207,
+        "top": [
+          [
+            "1",
+            20028
+          ],
+          [
+            "2",
+            18804
+          ],
+          [
+            "3",
+            18471
+          ],
+          [
+            "4",
+            18203
+          ],
+          [
+            "5",
+            17919
+          ]
+        ]
+      },
+      "concentration_percentage": {
+        "rows": 373216,
+        "non_null": 0,
+        "fill_rate": 0.0,
+        "distinct": 0,
+        "top": []
+      }
+    },
+    "ingredient_name_map": {
+      "raw_name": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 53183,
+        "top": [
+          [
+            "1152439 - INGREDIENTS: AQUA / WATER - HYDROGEN PEROXIDE - CETEARYL ALCOHOL - SODIUM SALICYLATE - TRIDECETH-2 CARBOXAMIDE MEA - PHOSPHORIC ACID - CETEARETH-25 - TETRASODIUM ETIDRONATE - TETRASODIUM PYROPHOSPHATE - GLYCERIN (F.I.L. C202318/2). 1177657 E - INGREDIENTS: AQUA / WATER - AMODIMETHICONE - STEARYL ALCOHOL - HYDROXYPROPYL STARCH PHOSPHATE - ISOPROPYL MYRISTATE - BEHENTRIMONIUM CHLORIDE - CETYL ALCOHOL - SODIUM HYALURONATE - PHENOXYETHANOL - ACETIC ACID - PEG-150 DISTEARATE - TRIDECETH-5 - TRIDECETH-6 - TRIDECETH-10 - LINALOOL - BENZYL ALCOHOL - ISOPROPYL ALCOHOL - ISOEUGENOL - 2-OLEAMIDO-1,3-OCTADECANEDIOL - CAPRYLYL GLYCOL - CETRIMONIUM CHLORIDE - HEXYL CINNAMAL - GLYCERIN - PARFUM / FRAGRANCE (F.I.L. Z70029911/1). 1247249 A - INGREDIENTS: AQUA / WATER - SODIUM LAURETH SULFATE - GLYCOL DISTEARATE - SODIUM CHLORIDE - COCAMIDOPROPYL BETAINE - DIMETHICONE - GUAR HYDROXYPROPYLTRIMONIUM CHLORIDE - COCAMIDE MEA - COCO-BETAINE - SODIUM BENZOATE - SODIUM HYDROXIDE - SODIUM HYALURONATE - STEARETH-6 - PHENOXYETHANOL - ACETIC ACID - PEG-100 STEARATE - TRIDECETH-10 - TRIDECETH-3 - SALICYLIC ACID - FUMARIC ACID - LINALOOL - BENZYL ALCOHOL - AMODIMETHICONE - ISOEUGENOL - CARBOMER - CITRIC ACID - HEXYLENE GLYCOL - HEXYL CINNAMAL - PARFUM / FRAGRANCE (F.I.L. Z70029922/1). 1263102 - INGREDIENTS: AQUA / WATER - CETEARYL ALCOHOL - PROPYLENE GLYCOL - DECETH-3 - LAURETH-12 - ETHANOLAMINE - OLETH-30 - LAURIC ACID - POLYQUATERNIUM-6 - TOLUENE-2,5-DIAMINE - GLYCOL DISTEARATE - SODIUM METASILICATE - HEXADIMETHRINE CHLORIDE - SILICA DIMETHYL SILYLATE [NANO] / SILICA DIMETHYL SILYLATE - RESORCINOL - CI 77491 / IRON OXIDES - CI 77891 / TITANIUM DIOXIDE - M-AMINOPHENOL - ASCORBIC ACID - MICA - THIOLACTIC ACID - THIOGLYCERIN - 2-METHYLRESORCINOL - N",
+            74
+          ],
+          [
+            "ROSMARINUS OFFICINALIS (ROSEMARY EXTRACT, BIOTIN, CAFFEINE, MELISSA OFFICINALIS FLOWER/LEAF/STEM WATER HOUTTUYNIA CORDATA EXTRACT, PANAX GINSENG ROOT EXTRACT, PAEONIA SUFFRUTICO SA BRANCH/FLOWER/LEAF EXTRACT, PAEONIA SUFFRUTICOSA ROOT EXTRACT, ARTEMISIA ANNUA EXTRACT, AZADIRACHTA INDICA LEAF EXTRACT, CAMELLIASINENSIS LEAF EXTRACT, MENTHA ARVENSIS LEAF EXTRACT, CENTELLA ASIATICA LEAF EXTRACT, HYALURONIC ACID, POLYGONUM MULTIFLORUM ROOT EXTRACT, PANAX GINSENG LEAF/STEM EXTRACT, ARGININE, BENZYL ALCOHOL, ASPARTIC ACID, POLYLYSINE, ZINGIBER OFFICINALE (GINGER) ROOT EXTRACT, GANODERMA LUCIDUM (MUSHROOM) EXTRACT, PCA, SERINE, GLYCINE, ALANI NE, ALTHAEA OFFICINALIS ROOT EXTRACT, CALENDULA OFFICINALIS FLOWER EXTRACT, CHAMAECYPARIS OBTUSA LEAF EXTRACT, PHELLINUS LINTEUS EXTRACT, VALINE, DEHYDROACETIC ACID, ISOLEUCINE, PROLINE, THREONINE HISTIDINE, PHENYLALANINE, SODIUM PCA, ALCHEMILLA VULGARIS EXTRACT, VINEGARMINAIGRE, ZEA MAYS (CORN) STARCH, DEXTRIN, PEG-CROSSPOLYMER, CAP RYLYL GLYCOL, DI-C12-13 ALKYL MALATE, POLYQUATERNIUM-7, MICROCRY STALLINE CELLULOSE, COCAMIDE MEA, COCO-GLUCOSIDE, GLYCERYL OLEATE MENTHOL, PANTHENOL, SALICYLIC ACID, COCONUT ACID, NIACINAMIDE, PPG-3 CAPRYLYL ETHER, MANNITOL, CHROMIUM HYDROXIDE GREEN (CI 77289), SODIUM ISETHIONATE, TETRASODIUM EDTA, METHY - LPROPANEDIOL, ETHYLHEXYLGLYCERIN, CHLOROPH - YLLIN-COPPER COMPLEX, CITRIC ACID, POTASSIUM HYDROXIDE, PENTYLENE GLYCOL, ALCOHOL, BUTYLENE GLYCOL, 12-HEXANEDIOL, SODIUM LACTATE, POTASSIUM SORBATE, HEXYLENE GLYCOL, SODIUM CHLORIDE SODIUM BENZOATE USAF 6 954 30205",
+            73
+          ],
+          [
+            "CR\u00c8ME SOIN COLORANTE : AQUA \u2022 CETEARYL ALCOHOL \u2022 ETHANOLAMINE \u2022 COCONUT ALCOHOL \u2022 SODIUM LAURETH-6 CARBOXYLATE \u2022 SODIUM MYRETH SULFATE \u2022 GLYCINE \u2022 BIS-DIISOPROPANOLAMINO-PG-PROPYL DIMETHICONE/BIS-ISOBUTYL PEG-14 COPOLYMER \u2022 TOLUENE-2,5-DIAMINE SULFATE \u2022 ACRYLAMIDOPROPYLTRIMONIUM CHLORIDE/ACRYLATES COPOLYMER \u2022 COCO-GLUCOSIDE \u2022 PARAFFINUM LIQUIDUM \u2022 CETEARETH-20 \u2022 CETEARETH-12 \u2022 PARFUM \u2022 GLYCERYL OLEATE \u2022 POTASSIUM HYDROXIDE \u2022 SODIUM SULFITE \u2022 SODIUM SILICATE \u2022 RESORCINOL \u2022 ETIDRONIC ACID \u2022 CITRIC ACID \u2022 ASCORBIC ACID \u2022 2-METHYLRESORCINOL \u2022 2,7-NAPTHALENEDIOL \u2022 4-CHLORORESORCINOL \u2022 BUTYLOCTANOL \u2022 POLYSORBATE 20 \u2022 SODIUM CHLORIDE \u2022 M-AMINOPHENOL \u2022 2-AMINO-3-HYDROXYPYRIDINE \u2022 HEXYL SALICYLATE \u2022 CITRONELLOL. R\u00c9V\u00c9LATEUR CR\u00c8ME \u00c0 L'HUILE : AQUA \u2022 PARAFFINUM LIQUIDUM \u2022 HYDROGEN PEROXIDE \u2022 CETEARYL ALCOHOL \u2022 PEG-40 CASTOR OIL \u2022 SODIUM CETEARYL SULFATE \u2022 ETIDRONIC ACID \u2022 POTASSIUM HYDROXIDE \u2022 DISODIUM PYROPHOSPHATE \u2022 2,6-DICARBOXYPYRIDINE \u2022 SODIUM BENZOATE. SOIN FIXATEUR DE COULEUR : AQUA \u2022 CETEARYL ALCOHOL \u2022 QUATERNIUM-87 \u2022 HYDROLYZED KERATIN \u2022 PANTHENOL \u2022 PRUNUS ARMENIACA KERNEL OIL \u2022 NIACINAMIDE \u2022 STEARAMIDOPROPYL DIMETHYLAMINE \u2022 CETEARETH-20 \u2022 PROPYLENE GLYCOL \u2022 ISOPROPYL MYRISTATE \u2022 DISTEAROYLETHYL HYDROXYETHYLMONIUM METHOSULFATE \u2022 CITRIC ACID \u2022 PHENOXYETHANOL \u2022 PARFUM \u2022 GLYCERYL STEARATE \u2022 SODIUM METHYLPARABEN \u2022 HEXYL CINNAMAL \u2022 BUTYLPHENYL METHYLPROPIONAL \u2022 BENZYL SALICYLATE \u2022 LINALOOL \u2022 BENZYL ALCOHOL \u2022 LIMONENE",
+            60
+          ],
+          [
+            "CR\u00c8ME COLORANTE : AQUA - CETEARYL ALCOHOL - ETHANOLAMINE - COCONUT ALCOHOL - COCAMIDOPROPYL BETAINE - COCOS NUCIFERA OIL - GARDENIA TAHITENSIS FLOWER EXTRACT - TOLUENE-2,5-DIAMINE SULFATE - CETEARETH-20 - PEG-12 DIMETHICONE - CARBOMER - POTASSIUM HYDROXIDE - SODIUM CHLORIDE - ASCORBIC ACID - SODIUM SULFITE - SODIUM SILICATE - PARFUM - 4-CHLORORESORCINOL - 2-METHYLRESORCINOL - ETIDRONIC ACID - RESORCINOL - 2-AMINO-3-HYDROXYPYRIDINE - PEG-14M - SULFURIC ACID - HEXYL CINNAMAL - BENZYL SALICYLATE - BUTYLPHENYL METHYLPROPIONAL - 2-AMINO-6-CHLORO-4-NITROPHENOL. EMULSION R\u00c9V\u00c9LATRICE : AQUA - CETEARYL ALCOHOL - HYDROGEN PEROXIDE - PROPYLENE GLYCOL - CETEARETH-20 - STEARTRIMONIUM CHLORIDE - PARAFFINUM LIQUIDUM - ETIDRONIC ACID - 2,6-DICARBOXYPYRIDINE - DISODIUM PYROPHOSPHATE - POTASSIUM HYDROXIDE - ISOPROPYL ALCOHOL - SODIUM BENZOATE. MASQUE SOIN PROTECTION COULEUR : AQUA - CETEARYL ALCOHOL - QUATERNIUM-87 - STEARAMIDOPROPYL DIMETHYLAMINE - DIMETHICONE - DISTEAROYLETHYL HYDROXYETHYLMONIUM METHOSULFATE - ISOPROPYL MYRISTATE - AMODIMETHICONE/MORPHOLINOMETHYL SILSESQUIOXANE COPOLYMER - HYDROLYZED KERATIN - PRUNUS ARMENIACA KERNEL OIL - PANTHENOL - LACTIC ACID - GLYCERIN - PROPYLENE GLYCOL - PHENOXYETHANOL - SODIUM METHYLPARABEN - PARFUM - DIMETHICONOL - POLYQUATERNIUM-10 - LINALOOL - GERANIOL - BUTYLPHENYL METHYLPROPIONAL - TRIDECETH-5 - BENZYL ALCOHOL",
+            58
+          ],
+          [
+            "1087196 C \u2013 AQUA / WATER \u2022 CETEARYL ALCOHOL \u2022 GLYCERIN \u2022 TRIDECETH-2 CARBOXAMIDE MEA \u2022HYDROLYZED OATS \u2022 POLYQUATERNIUM-22 \u2022 CHLORHEXIDINE DIGLUCONATE \u2022PENTASODIUM PENTETATE \u2022 2-OLEAMIDO-1,3-OCTADECANEDIOL \u2022 CETEARETH-25 \u2022CITRIC ACID \u2022 HEXADIMETHRINE CHLORIDE \u2022 PARFUM / FRAGRANCE. FIL C51515/11130355 \u2013AQUA / WATER \u2022 CETEARYL ALCOHOL \u2022 PROPYLENE GLYCOL \u2022 DECETH-3 \u2022 LAURETH-12 \u2022AMMONIUM HYDROXIDE \u2022 OLETH-30 \u2022 HEXADIMETHRINE CHLORIDE \u2022 LAURIC ACID \u2022 GLYCOLDISTEARATE \u2022 POLYQUATERNIUM-22 \u2022 ETHANOLAMINE \u2022 SILICA DIMETHYL SILYLATE [NANO] /SILICA DIMETHYL SILYLATE \u2022 CI 77891 / TITANIUM DIOXIDE \u2022 2,4-DIAMINOPHENOXYETHANOL HCL\u2022 M-AMINOPHENOL \u2022 ASCORBIC ACID \u2022 SODIUM METABISULFITE \u2022 HYDROXYBENZOMORPHOLINE\u2022 THIOGLYCERIN \u2022 TOLUENE-2,5-DIAMINE \u2022 DIMETHICONE \u2022 PENTASODIUM PENTETATE \u2022PROLINE \u2022 CARBOMER \u2022 THREONINE \u2022 RESORCINOL \u2022 PARFUM / FRAGRANCE. FIL C168127/1178914 \u2013AQUA / WATER \u2022 HYDROGEN PEROXIDE \u2022 CETEARYL ALCOHOL \u2022 SODIUM STANNATE \u2022TRIDECETH-2 CARBOXAMIDE MEA \u2022 PENTASODIUM PENTETATE \u2022 PHOSPHORIC ACID \u2022CETEARETH-25 \u2022 TETRASODIUM PYROPHOSPHATE \u2022 GLYCERIN. FIL C13169/251087179 L \u2013 EFTERBEHANDLING / HOITOAINE:AQUA / WATER \u2022 CETEARYL ALCOHOL \u2022 GLYCERIN \u2022 BEHENTRIMONIUM CHLORIDE \u2022AMODIMETHICONE \u2022 CETYL ESTERS \u2022 ISOPROPYL ALCOHOL \u2022 HIBISCUS SABDARIFFA EXTRACT /HIBISCUS SABDARIFFA FLOWER EXTRACT \u2022 SODIUM PCA \u2022 HYDROXYPROPYLTRIMONIUMHYDROLYZED WHEAT PROTEIN \u2022 TRIDECETH-6 \u2022 CHLORHEXIDINE DIHYDROCHLORIDE \u2022 SOLUBLECOLLAGEN \u2022 PANTHENOL \u2022 CANDELILLA CERA / CANDELILLA WAX \u2022 2-OLEAMIDO-1,3-OCTADECANEDIOL\u2022 CETRIMONIUM CHLORIDE \u2022 PARFUM / FRAGRANCE. FIL C168557/1",
+            57
+          ]
+        ]
+      },
+      "canonical_name": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 45584,
+        "top": [
+          [
+            "AQUA",
+            1755
+          ],
+          [
+            "PARFUM",
+            1146
+          ],
+          [
+            "GLYCERIN",
+            671
+          ],
+          [
+            "CITRIC ACID",
+            554
+          ],
+          [
+            "LINALOOL",
+            500
+          ]
+        ]
+      },
+      "method": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 11,
+        "top": [
+          [
+            "unresolved",
+            34732
+          ],
+          [
+            "split",
+            12195
+          ],
+          [
+            "exact",
+            10240
+          ],
+          [
+            "cleaned",
+            7852
+          ],
+          [
+            "unresolved_residual",
+            7016
+          ]
+        ]
+      },
+      "confidence": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 9,
+        "top": [
+          [
+            "0.0",
+            41748
+          ],
+          [
+            "0.7",
+            8392
+          ],
+          [
+            "0.9",
+            8367
+          ],
+          [
+            "0.85",
+            6780
+          ],
+          [
+            "0.8",
+            6223
+          ]
+        ]
+      },
+      "ingredient_id": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 45584,
+        "top": [
+          [
+            "5167",
+            1755
+          ],
+          [
+            "31444",
+            1146
+          ],
+          [
+            "20396",
+            671
+          ],
+          [
+            "11810",
+            554
+          ],
+          [
+            "26021",
+            500
+          ]
+        ]
+      },
+      "part_index": {
+        "rows": 78151,
+        "non_null": 78151,
+        "fill_rate": 1.0,
+        "distinct": 74,
+        "top": [
+          [
+            "1",
+            53183
+          ],
+          [
+            "2",
+            8035
+          ],
+          [
+            "3",
+            1882
+          ],
+          [
+            "4",
+            1258
+          ],
+          [
+            "5",
+            1111
+          ]
+        ]
+      },
+      "split_rule": {
+        "rows": 78151,
+        "non_null": 29360,
+        "fill_rate": 0.3756829727066832,
+        "distinct": 216,
+        "top": [
+          [
+            "period",
+            3842
+          ],
+          [
+            "colon+period",
+            1691
+          ],
+          [
+            "colon",
+            1631
+          ],
+          [
+            "newline",
+            1288
+          ],
+          [
+            "bullet",
+            1197
+          ]
+        ]
+      }
+    },
+    "fragrance_allergens": {
+      "annex_iii_ref": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 81,
+        "top": [
+          [
+            "366",
+            31
+          ],
+          [
+            "351",
+            23
+          ],
+          [
+            "350",
+            18
+          ],
+          [
+            "353",
+            17
+          ],
+          [
+            "360",
+            16
+          ]
+        ]
+      },
+      "legal_name": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 142,
+        "top": [
+          [
+            "Citrus Limon Peel Oil",
+            17
+          ],
+          [
+            "Citrus Aurantium Dulcis Peel Oil",
+            14
+          ],
+          [
+            "Citrus Aurantium Dulcis Flower Oil",
+            12
+          ],
+          [
+            "Mentha Piperita Oil",
+            10
+          ],
+          [
+            "Rosa Canina Flower Oil",
+            8
+          ]
+        ]
+      },
+      "label_as": {
+        "rows": 274,
+        "non_null": 154,
+        "fill_rate": 0.5620437956204379,
+        "distinct": 17,
+        "top": [
+          [
+            "Rose Flower Oil/Extract",
+            31
+          ],
+          [
+            "Citrus Aurantium Peel Oil",
+            23
+          ],
+          [
+            "Citrus Aurantium Flower Oil",
+            18
+          ],
+          [
+            "Lavandula Oil/ Extract",
+            16
+          ],
+          [
+            "Rose Ketones",
+            10
+          ]
+        ]
+      },
+      "cas_listed": {
+        "rows": 274,
+        "non_null": 260,
+        "fill_rate": 0.948905109489051,
+        "distinct": 104,
+        "top": [
+          [
+            "84929-31-7/ 8008-56-8",
+            17
+          ],
+          [
+            "97766-30-8/ 8028-48-6/ 8008-57-9",
+            15
+          ],
+          [
+            "8028-48-6/ 8016-38-4",
+            12
+          ],
+          [
+            "8006-90-4/ 84082-70-2",
+            10
+          ],
+          [
+            "84776-65-8/ 8000-28-0/ 90063-37-9",
+            8
+          ]
+        ]
+      },
+      "ec_listed": {
+        "rows": 274,
+        "non_null": 260,
+        "fill_rate": 0.948905109489051,
+        "distinct": 103,
+        "top": [
+          [
+            "284-515-8/ -",
+            17
+          ],
+          [
+            "307-891-8/ 232-433-8/ -",
+            15
+          ],
+          [
+            "232-433-8/ -",
+            12
+          ],
+          [
+            "-/ 282-015-4",
+            10
+          ],
+          [
+            "283-994-0/ -/ 289-995-2",
+            8
+          ]
+        ]
+      },
+      "leave_on_threshold_pct": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 1,
+        "top": [
+          [
+            "0.001",
+            274
+          ]
+        ]
+      },
+      "rinse_off_threshold_pct": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 1,
+        "top": [
+          [
+            "0.01",
+            274
+          ]
+        ]
+      },
+      "placing_on_market_until": {
+        "rows": 274,
+        "non_null": 248,
+        "fill_rate": 0.9051094890510949,
+        "distinct": 1,
+        "top": [
+          [
+            "2026-07-31",
+            248
+          ]
+        ]
+      },
+      "making_available_until": {
+        "rows": 274,
+        "non_null": 248,
+        "fill_rate": 0.9051094890510949,
+        "distinct": 1,
+        "top": [
+          [
+            "2028-07-31",
+            248
+          ]
+        ]
+      },
+      "transition_condition": {
+        "rows": 274,
+        "non_null": 32,
+        "fill_rate": 0.11678832116788321,
+        "distinct": 1,
+        "top": [
+          [
+            "provided that they comply with the restrictions applicable on 15 August 2023",
+            32
+          ]
+        ]
+      },
+      "instrument": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "Commission Regulation (EU) 2023/1545 (OJ L 188, 27.7.2023, p. 1), corrected by OJ L 2025/90876",
+            253
+          ],
+          [
+            "Regulation (EC) No 1223/2009, Annex III (consolidated version 18.05.2026)",
+            21
+          ]
+        ]
+      },
+      "ingredient_id": {
+        "rows": 274,
+        "non_null": 253,
+        "fill_rate": 0.9233576642335767,
+        "distinct": 234,
+        "top": [
+          [
+            "22658",
+            2
+          ],
+          [
+            "12335",
+            2
+          ],
+          [
+            "12331",
+            2
+          ],
+          [
+            "12154",
+            2
+          ],
+          [
+            "12149",
+            2
+          ]
+        ]
+      },
+      "inci_name": {
+        "rows": 274,
+        "non_null": 253,
+        "fill_rate": 0.9233576642335767,
+        "distinct": 234,
+        "top": [
+          [
+            "HYDROLYZED CITRUS AURANTIUM DULCIS FRUIT EXTRACT",
+            2
+          ],
+          [
+            "CITRUS SINENSIS PEEL OIL EXPRESSED",
+            2
+          ],
+          [
+            "CITRUS SINENSIS FRUIT EXTRACT",
+            2
+          ],
+          [
+            "CITRUS AURANTIUM FLOWER OIL",
+            2
+          ],
+          [
+            "CITRUS AURANTIUM DULCIS SEED OIL",
+            2
+          ]
+        ]
+      },
+      "match_method": {
+        "rows": 274,
+        "non_null": 253,
+        "fill_rate": 0.9233576642335767,
+        "distinct": 4,
+        "top": [
+          [
+            "BOTANICAL_CAS_REVIEW",
+            133
+          ],
+          [
+            "NAME",
+            106
+          ],
+          [
+            "LABEL_NAME",
+            12
+          ],
+          [
+            "CAS",
+            2
+          ]
+        ]
+      },
+      "flagged": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "0",
+            154
+          ],
+          [
+            "1",
+            120
+          ]
+        ]
+      },
+      "source": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "EURLEX",
+            272
+          ],
+          [
+            "COSING_ANNEX_III",
+            2
+          ]
+        ]
+      },
+      "source_url": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02009R1223-20260518",
+            272
+          ],
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/III/export-csv",
+            2
+          ]
+        ]
+      },
+      "retrieved_at": {
+        "rows": 274,
+        "non_null": 274,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "2026-09-24",
+            272
+          ],
+          [
+            "2026-09-30",
+            2
+          ]
+        ]
+      }
+    },
+    "regulatory_status": {
+      "ingredient_id": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 573,
+        "top": [
+          [
+            "39662",
+            3
+          ],
+          [
+            "44896",
+            2
+          ],
+          [
+            "42553",
+            2
+          ],
+          [
+            "42119",
+            2
+          ],
+          [
+            "40523",
+            2
+          ]
+        ]
+      },
+      "inci_name": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 573,
+        "top": [
+          [
+            "SODIUM PERBORATE",
+            3
+          ],
+          [
+            "ZINC OXIDE",
+            2
+          ],
+          [
+            "TRICLOCARBAN",
+            2
+          ],
+          [
+            "TITANIUM DIOXIDE",
+            2
+          ],
+          [
+            "STEARALKONIUM CHLORIDE",
+            2
+          ]
+        ]
+      },
+      "cas": {
+        "rows": 637,
+        "non_null": 609,
+        "fill_rate": 0.9560439560439561,
+        "distinct": 494,
+        "top": [
+          [
+            "92346-89-9 / 84929-31-7",
+            9
+          ],
+          [
+            "90063-52-8",
+            8
+          ],
+          [
+            "90045-43-5 / 8016-20-4",
+            5
+          ],
+          [
+            "8016-20-4",
+            4
+          ],
+          [
+            "3567-66-6",
+            4
+          ]
+        ]
+      },
+      "jurisdiction": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 1,
+        "top": [
+          [
+            "EU",
+            637
+          ]
+        ]
+      },
+      "list_ref": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 406,
+        "top": [
+          [
+            "Annex II/358",
+            35
+          ],
+          [
+            "Annex III/62",
+            16
+          ],
+          [
+            "Annex III/66",
+            13
+          ],
+          [
+            "Annex III/24",
+            13
+          ],
+          [
+            "Annex III/61",
+            11
+          ]
+        ]
+      },
+      "status": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 3,
+        "top": [
+          [
+            "RESTRICTED",
+            318
+          ],
+          [
+            "ALLOWED_WITH_CONDITIONS",
+            217
+          ],
+          [
+            "PROHIBITED",
+            102
+          ]
+        ]
+      },
+      "instrument": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 38,
+        "top": [
+          [
+            "(EC) 2009/1223",
+            324
+          ],
+          [
+            "(EU) 2023/1545",
+            83
+          ],
+          [
+            "(EC) 2013/344",
+            77
+          ],
+          [
+            "(EC) 2013/1197",
+            19
+          ],
+          [
+            "(EU) 2026/909",
+            17
+          ]
+        ]
+      },
+      "product_type": {
+        "rows": 637,
+        "non_null": 198,
+        "fill_rate": 0.3108320251177394,
+        "distinct": 84,
+        "top": [
+          [
+            "(a) Leave-on products\n(b) Rinse-off products",
+            16
+          ],
+          [
+            "Hair dye substance in non-oxidative hair dye products",
+            15
+          ],
+          [
+            "(a) Toothpaste intended for users above 1 year of age\n(b) Toothpaste intended for children between 6 months and 1 year of age\n(c) Mouthwash intended for users above 6 years of age\n(d) Other products",
+            13
+          ],
+          [
+            "(a) Body leave-on products\n(b) Other products",
+            13
+          ],
+          [
+            "Hair dye substance in oxidative hair dye products",
+            8
+          ]
+        ]
+      },
+      "max_concentration": {
+        "rows": 637,
+        "non_null": 302,
+        "fill_rate": 0.4740973312401884,
+        "distinct": 126,
+        "top": [
+          [
+            "Maximum secondary amine content: 0.5%",
+            21
+          ],
+          [
+            "0.1%",
+            19
+          ],
+          [
+            "(a) 2.5%",
+            16
+          ],
+          [
+            "(a) 1 % (as zinc)\n(b) 0,72 % (as zinc)\n(c) 0,1 % (as zinc)\n(d) 1 % (as zinc)",
+            13
+          ],
+          [
+            "Rinse-off products",
+            12
+          ]
+        ]
+      },
+      "condition_text": {
+        "rows": 637,
+        "non_null": 466,
+        "fill_rate": 0.7315541601255887,
+        "distinct": 240,
+        "top": [
+          [
+            "Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. \nIn sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg",
+            35
+          ],
+          [
+            "The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: \u2014 0,001 % in leave-on products \u2014 0,01 % in rinse-off products.",
+            30
+          ],
+          [
+            "(a) (b)\n- Do not use with nitrosating systems \n- Minimum purity: 99%\n- Maximum secondary amine content: 0.5% (applies to raw materials) \n- Maximum nitrosamine content: 50 microgram/kg \n- Keep in nitrite-free containers",
+            16
+          ],
+          [
+            "The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: \n- 0.001% in leave-on products\n- 0.01% in rinse-off products",
+            14
+          ],
+          [
+            "(a) Maximum residual acrylamide content 0.1mg/kg\n(b) Maximum residual acrylamide content 0.5mg/kg",
+            13
+          ]
+        ]
+      },
+      "effective_date": {
+        "rows": 637,
+        "non_null": 0,
+        "fill_rate": 0.0,
+        "distinct": 0,
+        "top": []
+      },
+      "match_method": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 2,
+        "top": [
+          [
+            "IDENTIFIED_INGREDIENT",
+            363
+          ],
+          [
+            "NAME",
+            274
+          ]
+        ]
+      },
+      "source_url": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 5,
+        "top": [
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/III/export-csv",
+            318
+          ],
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/IV/export-csv",
+            112
+          ],
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/II/export-csv",
+            102
+          ],
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/V/export-csv",
+            73
+          ],
+          [
+            "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/VI/export-csv",
+            32
+          ]
+        ]
+      },
+      "retrieved_at": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 1,
+        "top": [
+          [
+            "2026-09-30",
+            637
+          ]
+        ]
+      },
+      "source_update_date": {
+        "rows": 637,
+        "non_null": 637,
+        "fill_rate": 1.0,
+        "distinct": 89,
+        "top": [
+          [
+            "14/08/2020",
+            94
+          ],
+          [
+            "17/10/2010",
+            67
+          ],
+          [
+            "03/10/2023",
+            63
+          ],
+          [
+            "02/12/2016",
+            35
+          ],
+          [
+            "16/10/2010",
+            30
+          ]
+        ]
+      }
+    }
+  },
+  "cosing": {
+    "matched": 5555,
+    "unmatched": 40029,
+    "match_rate_rows": 0.12186293436293437,
+    "match_rate_link_weighted": 0.8519302495069879
+  },
+  "allergens": {
+    "flagged": 120,
+    "eu": 120,
+    "fda": 0,
+    "both": 0
+  },
+  "regulatory": {
+    "allergens": {
+      "entries_total": 81,
+      "entries_matched": 76,
+      "legal_names": 138,
+      "flagged_names": 120,
+      "flagged_names_eurlex": 118,
+      "review_names": 114,
+      "review_rows": 133,
+      "unmatched_legal_names": 21,
+      "products_with_flagged": 9470,
+      "products_total": 20029,
+      "products_share": 0.47281441909231614,
+      "list_version": "18.05.2026",
+      "flagged_review_rows": 0,
+      "eurlex_rows_missing_threshold": 0,
+      "unsplit_products": 474,
+      "unsplit_products_share": 0.023665684757102203,
+      "unsplit_rule": "share of products linked to an ingredient row with cosing_matched = 0 whose name is longer than 60 characters or has >= 2 commas or >= 2 ' - ' separators, and contains a flagged allergen name or label name at word boundaries; an estimate used only for the coverage caveat, never a flag"
+    },
+    "status": {
+      "rows": 637,
+      "by_annex": {
+        "II": 102,
+        "III": 318,
+        "IV": 112,
+        "V": 73,
+        "VI": 32
+      },
+      "cas_candidates_not_emitted": 275,
+      "bad_status": 0
+    },
+    "rows_missing_provenance": 0,
+    "gate_dropped": 0,
+    "uncleared_rows_present": 0,
+    "source_mode": "fresh",
+    "sources": {
+      "II": {
+        "sha256": "2108e8cce38cceb0c82fec85642f63bf500678d2dcd275cae6d00d4aade04f6e",
+        "rows": 1758
+      },
+      "III": {
+        "sha256": "dab5e0b14e79fe703bf09b849eb88f286aa2a5de324fdcc18f1a9eb1b5d397c1",
+        "rows": 381
+      },
+      "IV": {
+        "sha256": "3a9c3245d9a3fc388673a19003a473a8a2a9e838d08f8c681523baf755a33e38",
+        "rows": 154
+      },
+      "V": {
+        "sha256": "4081d3161f72fda23cab680c5c19eb852012f058d70a780ccb0db9661ba9ec63",
+        "rows": 58
+      },
+      "VI": {
+        "sha256": "19a653c99f01655309b437a7ab621d83105dc0986b917b1ac73d12092de87a36",
+        "rows": 34
+      }
+    },
+    "drift": {
+      "changed": false,
+      "added_refs": [],
+      "removed_refs": [],
+      "renamed": {}
+    },
+    "eu_flagged_names": [
+      "3-PROPYLIDENEPHTHALIDE",
+      "ACETYL CEDRENE",
+      "ACETYLCEDRENE",
+      "ALPHA-ISOMETHYL IONONE",
+      "ALPHA-TERPINENE",
+      "AMYL CINNAMAL",
+      "AMYL SALICYLATE",
+      "AMYLCINNAMYL ALCOHOL",
+      "ANETHOLE",
+      "ANISE ALCOHOL",
+      "BENZALDEHYDE",
+      "BENZYL ALCOHOL",
+      "BENZYL BENZOATE",
+      "BENZYL CINNAMATE",
+      "BENZYL SALICYLATE",
+      "BETA-CARYOPHYLLENE",
+      "CAMPHOR",
+      "CANANGA ODORATA FLOWER EXTRACT",
+      "CANANGA ODORATA FLOWER OIL",
+      "CANANGA ODORATA OIL/EXTRACT",
+      "CARVONE",
+      "CEDRUS ATLANTICA BARK EXTRACT",
+      "CEDRUS ATLANTICA BARK OIL",
+      "CEDRUS ATLANTICA OIL/EXTRACT",
+      "CEDRUS ATLANTICA WOOD EXTRACT",
+      "CEDRUS ATLANTICA WOOD OIL",
+      "CINNAMAL",
+      "CINNAMOMUM CASSIA LEAF OIL",
+      "CINNAMOMUM ZEYLANICUM BARK OIL",
+      "CINNAMYL ALCOHOL",
+      "CITRAL",
+      "CITRONELLOL",
+      "CITRUS AURANTIUM AMARA FLOWER OIL",
+      "CITRUS AURANTIUM AMARA PEEL OIL",
+      "CITRUS AURANTIUM BERGAMIA PEEL OIL",
+      "CITRUS AURANTIUM DULCIS FLOWER OIL",
+      "CITRUS AURANTIUM DULCIS PEEL OIL",
+      "CITRUS AURANTIUM FLOWER OIL",
+      "CITRUS AURANTIUM PEEL OIL",
+      "CITRUS LIMON PEEL OIL",
+      "CITRUS SINENSIS PEEL OIL",
+      "COUMARIN",
+      "CYMBOPOGON CITRATUS LEAF OIL",
+      "CYMBOPOGON FLEXUOSUS OIL",
+      "CYMBOPOGON SCHOENANTHUS OIL",
+      "DELTA-DAMASCONE",
+      "DIMETHYL PHENETHYL ACETATE",
+      "EUCALYPTUS GLOBULUS LEAF OIL",
+      "EUCALYPTUS GLOBULUS OIL",
+      "EUGENIA CARYOPHYLLUS BUD OIL",
+      "EUGENIA CARYOPHYLLUS FLOWER OIL",
+      "EUGENIA CARYOPHYLLUS LEAF OIL",
+      "EUGENIA CARYOPHYLLUS OIL",
+      "EUGENOL",
+      "EUGENYL ACETATE",
+      "EVERNIA FURFURACEA EXTRACT",
+      "EVERNIA PRUNASTRI EXTRACT",
+      "FARNESOL",
+      "GERANIAL",
+      "GERANIOL",
+      "GERANYL ACETATE",
+      "HEXADECANOLACTONE",
+      "HEXAMETHYLINDANOPYRAN",
+      "HEXYL CINNAMAL",
+      "HYDROXYCITRONELLAL",
+      "ISOEUGENOL",
+      "ISOEUGENYL ACETATE",
+      "JASMINE OIL/EXTRACT",
+      "JASMINUM GRANDIFLORUM FLOWER EXTRACT",
+      "JASMINUM OFFICINALE FLOWER EXTRACT",
+      "JASMINUM OFFICINALE OIL",
+      "JUNIPERUS VIRGINIANA OIL",
+      "JUNIPERUS VIRGINIANA WOOD OIL",
+      "LAURUS NOBILIS LEAF OIL",
+      "LAVANDULA ANGUSTIFOLIA EXTRACT",
+      "LAVANDULA ANGUSTIFOLIA FLOWER/LEAF/STEM EXTRACT",
+      "LAVANDULA ANGUSTIFOLIA OIL",
+      "LAVANDULA HYBRIDA EXTRACT",
+      "LAVANDULA HYBRIDA FLOWER EXTRACT",
+      "LAVANDULA HYBRIDA OIL",
+      "LAVANDULA INTERMEDIA OIL",
+      "LAVANDULA OIL/EXTRACT",
+      "LEMONGRASS OIL",
+      "LIMONENE",
+      "LINALOOL",
+      "LINALYL ACETATE",
+      "MENTHA PIPERITA OIL",
+      "MENTHA VIRIDIS LEAF OIL",
+      "MENTHOL",
+      "METHYL 2-OCTYNOATE",
+      "METHYL SALICYLATE",
+      "MYROXYLON PEREIRAE OIL/EXTRACT",
+      "PELARGONIUM GRAVEOLENS FLOWER OIL",
+      "PELARGONIUM GRAVEOLENS LEAF OIL",
+      "PELARGONIUM GRAVEOLENS OIL",
+      "PINENE",
+      "PINUS MUGO LEAF OIL",
+      "PINUS PUMILA NEEDLE EXTRACT",
+      "POGOSTEMON CABLIN LEAF OIL",
+      "POGOSTEMON CABLIN OIL",
+      "ROSA ALBA FLOWER EXTRACT",
+      "ROSA CANINA FLOWER OIL",
+      "ROSA CENTIFOLIA FLOWER EXTRACT",
+      "ROSA CENTIFOLIA FLOWER OIL",
+      "ROSA DAMASCENA FLOWER EXTRACT",
+      "ROSA DAMASCENA FLOWER OIL",
+      "ROSA MOSCHATA OIL",
+      "ROSA RUGOSA FLOWER OIL",
+      "ROSE FLOWER OIL/EXTRACT",
+      "ROSE KETONE-3",
+      "ROSE KETONES",
+      "SANTALOL",
+      "SANTALUM ALBUM OIL",
+      "TERPINEOL",
+      "TERPINOLENE",
+      "TETRAMETHYL ACETYLOCTAHYDRONAPHTHALENES",
+      "TRIMETHYLBENZENEPROPANOL",
+      "TRIMETHYLCYCLOPENTENYL METHYLISOPENTENOL",
+      "TURPENTINE",
+      "VANILLIN"
+    ]
+  },
+  "authored": {
+    "fulton_rows": 152,
+    "rule_rows": 276,
+    "both": 42,
+    "total": 386,
+    "rated": 142,
+    "fungal_flagged": 276,
+    "unmatched_names": [
+      "CETEARYL ALCOHOL AND CETEARETH-20",
+      "HYDROLYZED ANIMAL PROTEIN",
+      "PRECIPITATED SULFUR"
+    ]
+  },
+  "name_map": {
+    "coverage": 1.0,
+    "names_total": 53183,
+    "names_resolved": 18451,
+    "name_rate": 0.3469341706936427,
+    "link_weighted_rate": 0.8626146345406103,
+    "by_method": {
+      "unresolved": 34732,
+      "exact": 6061,
+      "cleaned": 3348,
+      "paren_stripped": 3315,
+      "unresolved_residual": 2520,
+      "split": 2402,
+      "slash_variant": 432,
+      "percent_stripped": 152,
+      "synonym_map": 112,
+      "slash_same_cas": 64,
+      "typo_map": 45
+    }
+  },
+  "resplit": {
+    "tokens_resplit": 7189,
+    "names_recovered": 22344,
+    "residual_rows": 7016,
+    "empty_residuals": 0,
+    "slash_same_cas": 251,
+    "rows_missing_part_index": 0,
+    "by_rule": {
+      "retokenise": 804,
+      "slash_same_cas": 184,
+      "bracket": 464,
+      "square_bracket": 363,
+      "blend": 164,
+      "bullet": 351,
+      "colon": 2275,
+      "period": 3448,
+      "marker": 681,
+      "slash_space": 151,
+      "newline": 684,
+      "dash": 432,
+      "cover": 537,
+      "rejoin": 23
+    },
+    "name_map_seconds": 20.2,
+    "positions_bad_products": 0,
+    "unresolved_with_resolvable_span": 0,
+    "hidden_nonlatin_exempt": 0,
+    "hidden_examples": []
+  },
+  "retokenise": {
+    "products_retokenised": 20028,
+    "products_kept_legacy_links": 1,
+    "links_before": 346427,
+    "links_after": 346427,
+    "ingredients_before": 53183,
+    "ingredients_after": 53183
+  },
+  "rebuild": {
+    "ingredients_before": 53183,
+    "ingredients_after": 45584,
+    "links_before": 346427,
+    "links_after": 373216,
+    "merged_duplicates": 929
+  },
+  "products": {
+    "total": 20029,
+    "suspicious": 0,
+    "by_reason": {}
+  },
+  "sources": {
+    "files": {
+      "cosing_annex_II.csv": {
+        "sha256": "2108e8cce38cceb0c82fec85642f63bf500678d2dcd275cae6d00d4aade04f6e",
+        "bytes": 650518,
+        "fetched_at": "2026-09-30T21:24:15.908898+00:00",
+        "url_or_origin": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/II/export-csv"
+      },
+      "cosing_annex_III.csv": {
+        "sha256": "dab5e0b14e79fe703bf09b849eb88f286aa2a5de324fdcc18f1a9eb1b5d397c1",
+        "bytes": 296566,
+        "fetched_at": "2026-09-30T21:24:15.909204+00:00",
+        "url_or_origin": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/III/export-csv"
+      },
+      "cosing_annex_IV.csv": {
+        "sha256": "3a9c3245d9a3fc388673a19003a473a8a2a9e838d08f8c681523baf755a33e38",
+        "bytes": 47319,
+        "fetched_at": "2026-09-30T21:24:15.909329+00:00",
+        "url_or_origin": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/IV/export-csv"
+      },
+      "cosing_annex_V.csv": {
+        "sha256": "4081d3161f72fda23cab680c5c19eb852012f058d70a780ccb0db9661ba9ec63",
+        "bytes": 31439,
+        "fetched_at": "2026-09-30T21:24:15.909419+00:00",
+        "url_or_origin": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/V/export-csv"
+      },
+      "cosing_annex_VI.csv": {
+        "sha256": "19a653c99f01655309b437a7ab621d83105dc0986b917b1ac73d12092de87a36",
+        "bytes": 19161,
+        "fetched_at": "2026-09-30T21:24:15.909493+00:00",
+        "url_or_origin": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/VI/export-csv"
+      },
+      "cosing_inventory.csv": {
+        "sha256": "fd262fb50c01afdbb46f0d254a4853cb7f622ef94d80a001d031696e216cb9f7",
+        "bytes": 12457555,
+        "fetched_at": "2026-09-06T02:42:44.080828+00:00",
+        "url_or_origin": "https://webgate.ec.europa.eu/es/search-api/rest/search; query partitions on substanceId; app key from https://ec.europa.eu/growth/tools-databases/cosing/assets/env-json-config.json",
+        "total_reported": 36195,
+        "rows_written": 36195,
+        "requests": 194,
+        "partitions": 10,
+        "api_key_source": "https://ec.europa.eu/growth/tools-databases/cosing/assets/env-json-config.json"
+      },
+      "fda_mocra_allergens.csv": {
+        "sha256": "8041f95e4e134086a3278e1187425dfda24438759cc657307dfd692da94b3651",
+        "bytes": 21,
+        "fetched_at": "2026-09-06T12:11:28.432992+00:00",
+        "url_or_origin": "https://www.fda.gov/cosmetics/cosmetics-laws-regulations/modernization-cosmetics-regulation-act-2022-mocra",
+        "status": "EMPTY \u2014 FDA has not yet published the MoCRA fragrance-allergen list as of fetch date; see note"
+      },
+      "fda_mocra_allergens.html": {
+        "sha256": "16f10b943e327af75843b9235efc4284d9aaa55d8aa12b5bc6099dbb902a1730",
+        "bytes": 45218,
+        "fetched_at": "2026-09-06T12:11:28.481353+00:00",
+        "url_or_origin": "https://www.fda.gov/cosmetics/cosmetics-laws-regulations/modernization-cosmetics-regulation-act-2022-mocra",
+        "note": "FDA MoCRA overview page fetched 2026-09-06 as the closest official page for fragrance-allergen labeling; page states the labeling requirement exists but contains no INCI-level allergen list (NPRM expected per FDA Unified Agenda, not yet published). No page with an actual list exists yet to fetch."
+      },
+      "authored_ratings.csv": {
+        "sha256": "48196293fd9cc528677c010436044b5ec50ffd14c004a14cf696ce97b8a16374",
+        "bytes": 252744,
+        "fetched_at": "2026-09-06T12:38:20.918976+00:00",
+        "url_or_origin": "authored in Task 7; hand-transcribed from data/reference/sources/fulton1989_jscc40_321-333.pdf Table I (pp.324-326) plus the rule-derived fungal-acne flag from src/enrichment/fungal_rule.py",
+        "rows": 829,
+        "rows_with_comedogenic_rating": 145,
+        "rows_fungal_flagged": 720,
+        "rows_from_fulton_1989": 152,
+        "rows_rule_only": 677,
+        "method": "Fulton JE Jr., J Soc Cosmet Chem 1989;40:321-333 Table I read from the SCC Media Library PDF (text layer + rendered page crops for the columns whose text layer was empty); names mapped to ingredients.inci_name; printed ranges left NULL; fungal flag from src/enrichment/fungal_rule.py"
+      },
+      "fulton1989_jscc40_321-333.pdf": {
+        "sha256": "ed7fa1818e7f613bc3ac676fcc2f728d2eeaa31889df56729a480f378fc98664",
+        "bytes": 514184,
+        "fetched_at": "2026-09-06T12:38:20.919518+00:00",
+        "url_or_origin": "https://library.scconline.org/cdn-1708705747445/Comedogenicity-Irritancy-Commonly-Used-Skincare-Products.pdf (landing page https://library.scconline.org/v040n06/13)",
+        "citation": "Fulton JE Jr. Comedogenicity and irritancy of commonly used ingredients in skin care products. J Soc Cosmet Chem 1989;40:321-333",
+        "identifier": "ISSN:0037-9832 -- no DOI and no PMID exist (absent from Crossref, PubMed and Europe PMC, checked 2026-09-06)",
+        "used_for": "comedogenic_rating (Table I, pp.324-326)"
+      },
+      "saunte2020_fcimb_malassezia_review.xml": {
+        "sha256": "7ca180c510847830f0c4c9c554fbe9395f6b120a8350da2b9df1778dc300c533",
+        "bytes": 155949,
+        "fetched_at": "2026-09-06T12:38:20.919709+00:00",
+        "url_or_origin": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7098993/fullTextXML",
+        "citation": "Saunte DML, Gaitanis G, Hay RJ. Malassezia-Associated Skin Diseases, the Use of Diagnostics and Treatment. Front Cell Infect Microbiol 2020;10:112",
+        "doi": "10.3389/fcimb.2020.00112",
+        "pmid": "32266163",
+        "used_for": "basis citation for the rule-derived is_fungal_acne_trigger flag (Malassezia lack fatty acid synthase and depend on exogenous lipids)"
+      },
+      "liebregts2025_femsyr_lipid_dependent_growth.xml": {
+        "sha256": "569eea943c0790bb72d28ac6a356f84ab8db239e780cc90d05c92492dafa7aa6",
+        "bytes": 111010,
+        "fetched_at": "2026-09-06T12:38:20.919856+00:00",
+        "url_or_origin": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12416284/fullTextXML",
+        "citation": "Liebregts J, van der Velden L, Fonseca-Fernandez AL, Celis Ramirez AM, de Cock H. Lipid-dependent growth of Malassezia spp. in defined medium with single fatty acids. FEMS Yeast Res 2025;25:foaf043",
+        "doi": "10.1093/femsyr/foaf043",
+        "pmid": "40838980",
+        "used_for": "chain-length window for the fungal-acne rule (growth measured on C12-C24 saturated FFAs plus oleic acid)"
+      },
+      "gaitanis2012_cmr_malassezia_pubmed.xml": {
+        "sha256": "92e67bb849ff8ddfa3eb54d5a0b0773e001727e67568135036f685ab8f11354b",
+        "bytes": 108182,
+        "fetched_at": "2026-09-06T12:38:20.919988+00:00",
+        "url_or_origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=22232373&retmode=xml",
+        "citation": "Gaitanis G, Magiatis P, Hantschke M, Bassukas ID, Velegraki A. The Malassezia genus in skin and systemic diseases. Clin Microbiol Rev 2012;25:106-141",
+        "doi": "10.1128/CMR.00021-11",
+        "pmid": "22232373",
+        "used_for": "abstract only -- full text is not open access (publisher blocks PMC XML/HTML); not used for any value"
+      },
+      "regulatory/eu_annex_iii_allergens.json": {
+        "sha256": "4079ffab791fd5597c9892a9c624876ec49d6917cde34784cb98eb259d46693b",
+        "bytes": 53665,
+        "fetched_at": "2026-09-24",
+        "url_or_origin": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02009R1223-20260518",
+        "method": "browser extraction of consolidated Annex III rows whose column h carries '0,001 % in leave-on' (81 entries); corrigendum OJ L 2025/90876 incorporated (C13); see specs/2026-09-24-incidb-fragrance-allergens-phase1.md"
+      },
+      "regulatory/eu_allergen_drift_baseline.json": {
+        "sha256": "3af6552b6e0e7f56a1073643f9989dde5a940a7210481524f1ed3846661e32fb",
+        "bytes": 4535,
+        "fetched_at": "2026-09-24",
+        "url_or_origin": "derived from data/reference/cosing_annex_III.csv: the Annex III rows whose conditions carry '0,001 % in leave-on' (python -m src.enrichment.regulatory.drift --write-baseline)",
+        "note": "refresh only together with regulatory/eu_annex_iii_allergens.json (RELEASING.md, EU allergens)"
+      }
+    }
+  },
+  "counts": {
+    "brands": 6453,
+    "products": 20029,
+    "ingredients": 45584,
+    "product_ingredients": 373216,
+    "ingredient_name_map": 78151,
+    "fragrance_allergens": 274,
+    "regulatory_status": 637
+  }
+}

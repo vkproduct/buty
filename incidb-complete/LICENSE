@@ -1,0 +1,66 @@
+INCIDB — LICENSING TERMS
+
+Copyright (c) 2026 INCIDB
+
+================================================================
+1. DATABASE CONTENTS — Open Database License (ODbL) v1.0
+================================================================
+
+The INCIDB database (the `products`, `ingredients`, `brands`,
+`product_ingredients` and `ingredient_name_map` tables, in all CSV and Apache
+Parquet exports and in the preview samples) is a derivative of the Open Beauty
+Facts database and is therefore licensed under the Open Database License
+(ODbL) v1.0:
+
+    https://opendatacommons.org/licenses/odbl/1-0/
+
+You are free to share, create works from, and adapt the database — including
+for commercial purposes — provided that you:
+
+  (a) ATTRIBUTE Open Beauty Facts contributors and INCIDB;
+  (b) SHARE-ALIKE — if you publicly use or distribute an adapted version of
+      the database, you offer that adapted database under ODbL; and
+  (c) KEEP-OPEN — you do not use technological measures that restrict others
+      from obtaining the database in an ODbL-licensed form.
+
+Product data © Open Beauty Facts contributors (https://openbeautyfacts.org),
+licensed under ODbL. The regulatory and chemical fields (CosIng functional
+categories, CAS and EC numbers, chemical descriptions, restrictions, Annex
+II-VI membership, and the EU Annex III fragrance-allergen flags) are factual
+data compiled from the European Commission CosIng database and the EU
+Cosmetics Regulation, reused with attribution under the Commission's
+public-sector information reuse policy.
+
+EU regulatory overlay: Annex III to Regulation (EC) No 1223/2009 as amended
+by Regulation (EU) 2023/1545 (EUR-Lex, © European Union) and the CosIng
+Annex II–VI exports, reused under Commission Decision 2011/833/EU with
+attribution. Not legal advice.
+
+The US FDA has not yet published its
+MoCRA fragrance-allergen list, so no field in this database is derived from
+one. `comedogenic_rating` is transcribed from published literature (Fulton,
+1989) and `is_fungal_acne_trigger` is a cited rule-derived flag; both are
+informational only and are not medical, safety or regulatory-compliance
+advice.
+
+================================================================
+2. DOCUMENTATION & SCHEMA — CC BY 4.0
+================================================================
+
+The schema documentation (`DATA_DICTIONARY.md`, `SPEC.md`, `README.md`) and
+the website source are licensed under Creative Commons Attribution 4.0
+(https://creativecommons.org/licenses/by/4.0/).
+
+================================================================
+3. COMMERCIAL SERVICES
+================================================================
+
+Because the database is ODbL-licensed, the data itself may be redistributed by
+anyone under ODbL. INCIDB does NOT sell, and cannot grant, exclusive or
+proprietary rights to the data. Paid INCIDB plans provide optional CONVENIENCE
+AND SERVICES — hosted delivery, ready-to-query formats, incremental updates,
+and support — and do not restrict the ODbL rights described in Section 1.
+Contact: incidb@dataengineered.io
+
+THE DATABASE AND SAMPLES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED.

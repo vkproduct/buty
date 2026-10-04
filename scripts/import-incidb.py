@@ -2,9 +2,10 @@
 """Импорт INCI-ингредиентов из INCIDB (https://github.com/INCIDB/cosmetics-skincare-inci-database)
 в каталог Buty.
 
-Источник — бесплатная выборка INCIDB (samples/incidb_free_samples.zip, снимок 2026.09):
-канонические INCI-имена + обогащение CosIng (функции, CAS/EC, описания, статусы Annex II–VI),
-рейтинги комедогенности (Fulton 1989), эвристика грибкового акне, флаги EU-аллергенов.
+Источник — ПОЛНЫЙ архив INCIDB Complete (снимок 2026.09, купленная доставка,
+incidb-complete/csv): 45 584 канонических INCI-имени (5 555 с обогащением CosIng:
+функции, CAS/EC, описания, статусы Annex II–VI), рейтинги комедогенности
+(Fulton 1989), эвристика грибкового акне, флаги EU-аллергенов.
 Плюс публичный список аллергенов ЕС из eu-fragrance-allergens/data.json репозитория.
 
 Что генерирует:
@@ -15,8 +16,7 @@
       по списку ЕС; feedsMalassezia для курируемых НЕ трогаем — там решения принимаются вручную).
 
 Перегенерация:
-  git clone --depth 1 https://github.com/INCIDB/cosmetics-skincare-inci-database.git tmp-incidb
-  unzip tmp-incidb/samples/incidb_free_samples.zip -d tmp-incidb/samples/extracted
+  # положить архив INCIDB Complete в incidb-complete/ (csv/*.csv)
   python3 scripts/import-incidb.py
 """
 
@@ -29,7 +29,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-INCIDB = ROOT / "tmp-incidb" / "samples" / "extracted"
+INCIDB = ROOT / "incidb-complete" / "csv"
 CURATED = ROOT / "prisma" / "ingredients.data.ts"
 CURATED_FLAGS = ROOT / "prisma" / "flags.data.ts"
 OUT_INGREDIENTS = ROOT / "prisma" / "incidb-ingredients.data.ts"
@@ -95,6 +95,32 @@ FUNCTION_RU = {
     "REDUCING": "восстановитель",
     "OXIDISING": "окислитель",
     "HUMECTANT?": "увлажнитель",
+    # полный архив INCIDB Complete 2026.09 (77 значений, покрытие 100%)
+    "SURFACTANT - FOAM BOOSTING": "ПАВ: усиление пены",
+    "HAIR FIXING": "фиксация причёски",
+    "MOISTURISING": "увлажнение",
+    "FLAVOURING": "ароматизатор (для средств полости рта)",
+    "ANTI-SEBORRHEIC": "противосеборейное действие",
+    "SMOOTHING": "сглаживание",
+    "ANTI-SEBUM": "регулирование себума",
+    "REFRESHING": "освежающее действие",
+    "NOT REPORTED": "функция не указана (CosIng)",
+    "ANTIPLAQUE": "против зубного налёта",
+    "KERATOLYTIC": "кератолитик (отшелушивание)",
+    "GEL FORMING": "гелеобразование",
+    "DEPILATORY": "депилятор",
+    "ANTIPERSPIRANT": "антиперспирант",
+    "ANTICORROSIVE": "антикоррозийное",
+    "REFATTING": "восстановление липидного слоя",
+    "PROPELLANT": "пропеллент",
+    "EXFOLIATING": "эксфолиант",
+    "SLIP MODIFIER": "модификатор скольжения",
+    "SURFACTANT - DISPERSING": "ПАВ: диспергирование",
+    "PH ADJUSTERS": "регулирование pH",
+    "DISPERSING NON-SURFACTANT": "диспергатор (не-ПАВ)",
+    "DETANGLING": "облегчение расчёсывания",
+    "SURFACE MODIFIER": "модификатор поверхности",
+    "EPILATING": "эпилятор",
 }
 
 ACRONYMS = {

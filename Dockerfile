@@ -39,6 +39,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
 COPY --from=build /app/prisma ./prisma
+COPY --from=build /app/scripts ./scripts
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml next.config.mjs ./
 COPY docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh

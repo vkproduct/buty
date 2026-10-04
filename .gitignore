@@ -40,3 +40,5 @@ tmp-screenshot*.png
 
 # скачанные артефакты INCIDB (регенерируются по scripts/import-incidb.py)
 /tmp-incidb/
+# сырые CSV купленного архива INCIDB Complete (не коммитим: 40 МБ, лицензия)
+/incidb-complete/csv/

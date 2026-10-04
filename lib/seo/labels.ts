@@ -92,6 +92,11 @@ export const PRODUCT_CATEGORY_LABEL: Record<string, string> = {
   toner: "Тонер",
   mask: "Маска",
   peeling: "Пилинг",
+  hair: "Волосы",
+  hygiene: "Гигиена",
+  makeup: "Макияж",
+  perfume: "Парфюмерия",
+  other: "Другое",
 };
 
 /** Заглушка партнёрской ссылки: поиск на Wildberries по бренду и названию. */

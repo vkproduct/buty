@@ -1,10 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Bandage,
+  Brush,
+  Droplets,
   HandHeart,
   Package,
   Pipette,
   ScanFace,
+  Scissors,
   Sparkles,
   SprayCan,
   Sun,
@@ -19,7 +22,7 @@ import { PRODUCT_CATEGORY_LABEL } from "@/lib/seo/labels";
  * Классы записаны целиком — их должен видеть сканер Tailwind (lib/** в content).
  */
 
-/** Порядок — как шаги ухода: очищение → тонер → сыворотка → … → SPF. */
+/** Порядок — как шаги ухода: очищение → тонер → сыворотка → … → SPF, затем прочие группы. */
 export const PRODUCT_CATEGORY_ORDER = [
   "cleanser",
   "toner",
@@ -29,6 +32,11 @@ export const PRODUCT_CATEGORY_ORDER = [
   "mask",
   "cream",
   "spf",
+  "hair",
+  "hygiene",
+  "makeup",
+  "perfume",
+  "other",
 ] as const;
 
 /** Для заголовков: «Сыворотки CeraVe», «Солнцезащитные средства». */
@@ -41,6 +49,11 @@ export const PRODUCT_CATEGORY_PLURAL: Record<string, string> = {
   toner: "Тонеры",
   mask: "Маски",
   peeling: "Пилинги",
+  hair: "Средства для волос",
+  hygiene: "Средства гигиены",
+  makeup: "Макияж",
+  perfume: "Парфюмерия",
+  other: "Другие средства",
 };
 
 export interface ProductCategoryStyle {
@@ -57,6 +70,10 @@ export const PRODUCT_CATEGORY_STYLE: Record<string, ProductCategoryStyle> = {
   mask: { icon: ScanFace, tint: "bg-fuchsia-50 text-fuchsia-600" },
   cream: { icon: HandHeart, tint: "bg-orange-50 text-orange-600" },
   spf: { icon: Sun, tint: "bg-yellow-50 text-yellow-700" },
+  hair: { icon: Scissors, tint: "bg-amber-50 text-amber-700" },
+  hygiene: { icon: Droplets, tint: "bg-blue-50 text-blue-600" },
+  makeup: { icon: Brush, tint: "bg-pink-50 text-pink-600" },
+  perfume: { icon: SprayCan, tint: "bg-purple-50 text-purple-600" },
 };
 
 const FALLBACK_STYLE: ProductCategoryStyle = { icon: Package, tint: "bg-ink-wash text-ink-soft" };

@@ -136,12 +136,18 @@ FATTY_ALCOHOL_RE = re.compile(
     r"^(CETEARYL|CETYL|STEARYL|LAURYL|BEHENYL|ARACHIDYL|MYRISTYL|OLEYL|ISOSTEARYL|CETOSTEARYL)\s+ALCOHOL"
 )
 
-# Ссылки на записи Annex, исчезнувшие из актуального экспорта CosIng
-# (старые снимки INCIDB их ещё хранят) — вычищаются из safetyNotes.
-# Ключ — нормализованное INCI-имя. Проверено по экспортам CosIng 24.09.2026.
-STALE_REFS = {
-    "TURPENTINE": ("III/125", "III/126"),
+# Известная дыра снимка INCIDB 2026.09: этих консервантов нет в
+# regulatory_status.csv, хотя они числятся в Annex V/12 (CosIng Annex V export,
+# запись 12 — parabens). Для них берём ссылку из cosing_restriction и пишем
+# её вручную заданным текстом. Источник: CosIng Annex V, запись 12.
+MISSING_ANNEX_V12 = {
+    "METHYLPARABEN",
+    "ETHYLPARABEN",
+    "SODIUM METHYLPARABEN",
+    "SODIUM ETHYLPARABEN",
 }
+
+ANNEX_ROLE_RU = {"IV": "краситель", "V": "консервант", "VI": "УФ-фильтр"}
 
 SILICONE_RE = re.compile(r"(SILOXANE|DIMETHICONE|SILICONE|POLYSILSESQUIOXANE|SILSESQUIOXANE|SILICONE)")
 
@@ -251,6 +257,60 @@ def parse_curated_flags() -> dict[str, set[str]]:
     return flags
 
 
+def regulatory_notes(reg_rows: list[dict]) -> list[str]:
+    """Русские формулировки статуса ЕС из regulatory_status (точный источник).
+
+    Булевы annex_ii…annex_vi из ingredients.csv НЕ используются (известны
+    ложные срабатывания: ASCORBIC ACID, ZINC и др.). condition_text,
+    product_type, max_concentration выводятся verbatim на английском с пометкой
+    «текст регламента». Пустая таблица для ингредиента — не статус: ничего
+    не выводим и не пишем «разрешён».
+    """
+    notes = []
+    for rr in reg_rows:
+        ref = (rr.get("list_ref") or "").strip()  # "Annex III/98"
+        m = re.match(r"Annex\s+([IVX]+)/(.+)", ref)
+        annex = m.group(1) if m else ""
+        status = rr.get("status") or ""
+        cond = re.sub(r"\s+", " ", (rr.get("condition_text") or "").strip())
+        ptype = re.sub(r"\s+", " ", (rr.get("product_type") or "").strip())
+        maxc = re.sub(r"\s+", " ", (rr.get("max_concentration") or "").strip())
+        verbatim = bool(cond or ptype or maxc)
+        if status == "PROHIBITED":
+            s = f"Входит в перечень запрещённых веществ ЕС ({ref})"
+            if cond:
+                s += f" — в рамках условия: «{cond}»"
+        elif status == "RESTRICTED":
+            s = f"Ограничен в ЕС ({ref})"
+            parts = []
+            if ptype:
+                parts.append(ptype)
+            if maxc:
+                parts.append(f"макс. {maxc}")
+            if parts:
+                s += ": " + ", ".join(parts)
+            if cond:
+                s += f"; условия: «{cond}»"
+        elif status == "ALLOWED_WITH_CONDITIONS":
+            role = ANNEX_ROLE_RU.get(annex, "компонент с условиями")
+            s = f"Разрешён в ЕС как {role} с условиями ({ref})"
+            parts = []
+            if ptype:
+                parts.append(ptype)
+            if maxc:
+                parts.append(f"макс. {maxc}")
+            if parts:
+                s += ": " + ", ".join(parts)
+            if cond:
+                s += f"; «{cond}»"
+        else:
+            continue
+        if verbatim:
+            s += " (текст регламента — дословно, EN)"
+        notes.append(s + ".")
+    return notes
+
+
 def main() -> int:
     ingredients_path = INCIDB / "ingredients.csv"
     if not ingredients_path.exists():
@@ -264,6 +324,14 @@ def main() -> int:
 
     rows = list(csv.DictReader(open(ingredients_path, encoding="utf-8"), delimiter="|"))
     matched = [r for r in rows if r["cosing_matched"] == "1"]
+
+    # точный источник статусов ЕС: regulatory_status (CosIng Annex II–VI exports).
+    # Ключ — вся строка: (ingredient_id, list_ref) не уникален, храним список.
+    regulatory_by_ing: dict[str, list[dict]] = {}
+    rs_path = INCIDB / "regulatory_status.csv"
+    if rs_path.exists():
+        for rr in csv.DictReader(open(rs_path, encoding="utf-8"), delimiter="|"):
+            regulatory_by_ing.setdefault(rr["ingredient_id"], []).append(rr)
 
     # пороги декларирования аллергенов по ingredient_id
     allergen_thresholds: dict[str, tuple[str, str]] = {}
@@ -313,6 +381,7 @@ def main() -> int:
     new_items = []
     flags_new: dict[str, dict[str, bool]] = {}
     flags_enrich: dict[str, dict[str, bool]] = {}
+    curated_reg_review: list[tuple[str, str, list[str]]] = []
     skipped_dup = skipped_junk = 0
     used_slugs = set(curated_slugs)
 
@@ -325,6 +394,12 @@ def main() -> int:
         if inci_up in curated_aliases or slug in curated_slugs:
             skipped_dup += 1
             target_slug = slug_by_inci.get(inci_up, slug)
+            # курируемые карточки не перезаписываем — собираем для ручной сверки
+            reg_rows = regulatory_by_ing.get(r["ingredient_id"], [])
+            if reg_rows:
+                curated_reg_review.append(
+                    (target_slug, inci, sorted({rr["list_ref"].strip() for rr in reg_rows}))
+                )
             # обогащение флагов курируемой карточки
             enrich: dict[str, bool] = {}
             rating = r.get("comedogenic_rating") or ""
@@ -372,14 +447,18 @@ def main() -> int:
             desc_parts.append("Идентификаторы: " + ", ".join(ids) + ".")
 
         safety: list[str] = []
-        restr = re.sub(r"\s+", " ", (r.get("cosing_restriction") or "").strip())
-        # устаревшие ссылки из старых снимков CosIng: записи объединены в актуальную
-        # III/124 (проверено по официальному экспорту CosIng от 24.09.2026) — не тащим
-        for stale in STALE_REFS.get(inci_up, ()):
-            restr = re.sub(rf"\s*{re.escape(stale)}\b", "", restr).strip()
-        restr = re.sub(r"\s{2,}", " ", restr)
-        if restr:
-            safety.append(f"Статус в ЕС (CosIng Annex II–VI): {restr}.")
+        # статусы ЕС — только из regulatory_status (точный источник);
+        # cosing_restriction — лишь fallback для известной дыры Annex V/12
+        reg_rows = regulatory_by_ing.get(r["ingredient_id"], [])
+        safety.extend(regulatory_notes(reg_rows))
+        if not reg_rows and inci_up in MISSING_ANNEX_V12:
+            if "V/12" in (r.get("cosing_restriction") or ""):
+                safety.append(
+                    "Разрешён в ЕС как консервант с ограничением концентрации (Annex V/12)."
+                )
+            else:
+                print(f"  ! {inci_up}: ожидался Annex V/12 в cosing_restriction, не найдено",
+                      file=sys.stderr)
         is_allergen = r.get("is_common_allergen") == "1" or inci_up in eu_allergen_names
         if is_allergen:
             th = allergen_thresholds.get(r["ingredient_id"])
@@ -500,6 +579,24 @@ def main() -> int:
     print(f"Новых карточек:                {len(new_items)}")
     print(f"Флагов у новых:                {len(flags_new)}")
     print(f"Обогащено курируемых:          {len(flags_enrich)}")
+    print(f"Карточек со статусами ЕС (regulatory_status): "
+          f"{sum(1 for it in new_items if 'ЕС' in (it['safetyNotes'] or ''))}")
+    # отчёт для ручной сверки: курируемые карточки с записями в regulatory_status
+    report_path = ROOT / "incidb-complete" / "curated-regulatory-review.md"
+    rl = [
+        "# Курируемые карточки с записями в regulatory_status (для ручной сверки)",
+        "",
+        "Сгенерировано scripts/import-incidb.py. Карточки НЕ изменены — сверить вручную,",
+        "что safetyNotes в prisma/ingredients.data.ts не противоречат записям Annex.",
+        "",
+        "| slug | INCI | Записи Annex |",
+        "| --- | --- | --- |",
+    ]
+    for slug, inci, refs in sorted(curated_reg_review):
+        rl.append(f"| {slug} | {inci} | {', '.join(refs)} |")
+    rl.append("")
+    report_path.write_text("\n".join(rl), encoding="utf-8")
+    print(f"Курируемых с записями Annex:   {len(curated_reg_review)} → {report_path.name}")
     print("Категории:", dict(sorted(cats.items(), key=lambda x: -x[1])))
     return 0
 

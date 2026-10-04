@@ -28,6 +28,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 1,2,4-Trihydroxybenzene is the phenol that conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 533-73-3, EC 208-575-1.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1642) — в рамках условия: «1,2,4-Trihydroxybenzene when used as a substance in hair and eyelash dye products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48,7 +49,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 1,3-Bis-(2,4-Diaminophenoxy) Propane HCl is the hair colorant that conforms to the formula. Функции в составе: крашение волос. Идентификаторы: CAS 74918-21-1, EC 278-022-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/202.",
+    safetyNotes: "Ограничен в ЕС (Annex III/226): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 1,2 % as free base (1,8 % as tetrahydrochloride salt); условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,2 % calculated as free base (1,8 % as tetrahydrochloride salt). | (a) To be printed on the label: The mixing ratio. ‘imageHair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past.’ (b) Can cause allergic reaction» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -79,7 +80,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 90-15-3, EC 201-969-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/16.",
+    safetyNotes: "Ограничен в ЕС (Annex III/16): Hair dye substance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1 % calculated as free base | Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/16): Hair dye substance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 2,0% | To be printed on the label: Hair colorants can cause severe allergic reactions.» (текст регламента — дословно, EN).",
     synonyms: ["1-NAPHTOL"],
   },
   {
@@ -130,7 +131,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 66422-95-5, EC 266-357-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/242.",
+    safetyNotes: "Ограничен в ЕС (Annex III/242): (a) Hair dye substance in oxidative hair dye products (b) Products intended for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 2,0 % (as hydrochloride) (b) For professional use only. | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio.“For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -141,7 +142,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 70643-20-8, EC 274-713-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/242.",
     synonyms: [],
   },
   {
@@ -162,7 +162,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 149330-25-6, EC 443-210-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/9b): Hair dye substance in oxidative hair dye products; условия: «As from 3 September 2017, after mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,0 % —Do not use with nitrosating agents —Maximum nitrosamine content: 50 μg/kg —Keep in nitrite-free containers | As from 3 March 2018, to be printed on the label: The mixing ratio. Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: —you have a rash on your face or sensitive, irritated and damaged scalp, —you have ever experienced any reaction after colouring your hair, —you have experienced a reaction to a temporary ‘black henna’ tattoo in the past”.’» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/9): Hair dye substance in oxidative hair dye products, макс. (a) General use (b) Professional use For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 5 % calculated as free base; условия: «(a) To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past. Contains phenylenediamines (toluenediamines). Do not use to dye eyelashes or eyebrows.” (b) To be printed on the label: The mixing ratio. “For professional use only Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past. Contains phenylenediamines (toluenediamines). Wear suitable gloves.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -183,7 +183,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 582-17-2, EC 209-478-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/216.",
+    safetyNotes: "Ограничен в ЕС (Annex III/216): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non- oxidative hair dye products, макс. (b) 1,0 %; условия: «a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,0 % | (a) To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -204,7 +204,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 16867-03-1, EC 240-886-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex III/211 - Directive 2012/21/EU.",
+    safetyNotes: "Ограничен в ЕС (Annex III/211): (a) Hair dye sub­stance in oxidat­ive hair dye products (b) Products in­tended for col­ouring eyelashes; условия: «(a) After mixing under ox­idative conditions the maximum concentra­tion applied to hair must not exceed 1,0 % (b) After mixing under ox­idative conditions the maximum concentra­tion applied to eye­lashes must not exceed 0,5 % (b) Professional use | (a) To be printed on the la­bel: The mixing ratio. “Hair colourants can cause severe allergic reac­tions. Read and follow instruc­tions. This product is not in­tended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irri­tated and damaged scalp, — you have ever experi­enced any reaction after colouring your hair, — you have experienced a reaction to a tempor­ary b‘lack henna’ tattoo in the past.” (b) As from 3 March 2018, to be printed on the la­bel: The mixing ratio. “This product can cause severe allergic reactions. Read and follow instruc­tions. This product is not in­tended for use on persons under the age of 16. Tem­porary ‘black henna’ tattoos may increase the risk of al­lergy. Eyelashes shall not be co­loured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any re­action after colouring hair or eyelashes,— has experienced a reac­tion to a temporary ‘black henna’ tattoo in the past. For professional use only. Rinse eyes immediately if product comes into contact with them”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -215,7 +215,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 83763-48-8, EC 280-734-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/245.",
+    safetyNotes: "Ограничен в ЕС (Annex III/245): (a) Hair dye substance in oxidative hair dye products (b) Products intended for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 1,5 % (as sulphate) — Do not use with nitrosating agents — Maximum nitrosamine content: 50 μg /kg — Keep in nitrite-free containers (b) For professsional use only. | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.” ’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -226,7 +226,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 6358-09-4, EC 228-762-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/252.",
+    safetyNotes: "Ограничен в ЕС (Annex III/252): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non- oxidative hair dye products, макс. (b) 2.0%; условия: «(a) After mixing under oxidative conditions the maximum concentraion applied to hair must not exceed 2.0% | (a) To be printed on the label: The mixing ratio. ‘ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past. (b) ‘ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past.’» (текст регламента — дословно, EN).",
     synonyms: ["2-AMINO-6-CHLOR0-4-NITROPHENOL"],
   },
   {
@@ -237,7 +237,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 96-20-8, EC 202-488-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
     synonyms: [],
   },
   {
@@ -258,7 +257,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Bromo-2-Nitropropane-1,3-Diol is a substituted aliphatic diol that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 52-51-7, EC 200-143-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/21.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/21): макс. 0.1%; «Avoid formation of nitrosamines» (текст регламента — дословно, EN).",
     synonyms: ["2-BROMO-2-NITROPROPANE-1 3-DIOL", "2-BROMO-2-NITROPROPANE-1-3-DIOL"],
   },
   {
@@ -309,7 +308,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 55302-96-0, EC 259-583-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/229.",
+    safetyNotes: "Ограничен в ЕС (Annex III/229): (a) Hair dye substance in oxidatie hair dye products. (b) Products intended for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 1,5% - Do not use with nitrosating agents - Maximum nitrosamine content: 50 microgram/Kg - Keep in nitrite-free containers | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.” ’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -320,7 +319,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 608-25-3, EC 210-155-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/243.",
+    safetyNotes: "Ограничен в ЕС (Annex III/243): (a) Hair dye sub­stance in oxidat­ive hair dye products (b) Hair dye sub­stance in non-oxidative hair dye products (c) Products in­tended for col­ouring eyelashes, макс. (b) 1.8 %; условия: «(a) After mixing under ox­idative conditions the maximum concentra­tion applied to hair must not exceed 1,8 % (c) After mixing under ox­idative conditions the maximum concentra­tion applied to eye­lashes must not exceed 1,25 % (c) Professional use | (a) To be printed on the la­bel: The mixing ratio. “Hair colourants can cause severe allergic reac­tions. Read and follow instruc­tions. This product is not in­tended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irri­tated and damaged scalp, — you have ever experi­enced any reaction after colouring your hair, — you have experienced a reaction to a tempor­ary ‘black henna’ tattoo in the past.” (c) As from 3 March 2018, to be printed on the la­bel: The mixing ratio. “This product can cause severe allergic reactions. Read and follow instruc­tions. This product is not in­tended for use on persons under the age of 16. Tem­porary ‘black henna’ tattoos may increase the risk of al­lergy. Eyelashes shall not be co­loured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any re­action after colouring hair or eyelashes, — has experienced a reac­tion to a temporary ‘black henna’ tattoo in the past. For professional use only. Rinse eyes immediately if product comes into contact with them”» (текст регламента — дословно, EN).",
     synonyms: ["2-METHYL-RESORCINOL", "2-METHYLRESORINOL"],
   },
   {
@@ -381,7 +380,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 17369-59-4, EC 241-402-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/175. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/175): (a) Oral products (b) Other produts, макс. (b) 0.01%; условия: «(a) The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -392,7 +391,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 2835-95-2, EC 220-618-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/241.",
+    safetyNotes: "Ограничен в ЕС (Annex III/241): (a) Hair dye substance in oxidative hair dye products (b) Products intented for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 1,5 % (b) For professional use only. | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions.Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer:— has a rash on the face or sensitive, irritated and damaged scalp,— has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.”» (текст регламента — дословно, EN).",
     synonyms: ["4AMINO-2-HYDROXYTOLUENE"],
   },
   {
@@ -403,7 +402,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 610-81-1, EC 210-236-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/215.",
+    safetyNotes: "Ограничен в ЕС (Annex III/215): (a) Hair dye substance in oxidative hair dye products (b)Hair dye substance in non-oxidative hair dye products, макс. (b) 1.0%; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,5 % | (a) and (b) “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp,EN L 114/40 OJ EU25.4.2013 — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ...» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -414,7 +413,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 2835-99-6, EC 220-621-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/244.",
+    safetyNotes: "Ограничен в ЕС (Annex III/244): (a) Hair dye substance in oxidative hair dye products (b) Products intended for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 1,5 % b) For professional use only. | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp,— has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -435,7 +434,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 95-88-5, EC 202-462-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex III/199.",
     synonyms: ["4CHLORORESORCINOL"],
   },
   {
@@ -446,7 +444,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 92952-81-3, EC 406-305-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/205.",
+    safetyNotes: "Ограничен в ЕС (Annex III/205): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 2.6%; условия: «(a) After mixing under oxidative conditions the maximum use concentration applied to hair must not exceed 2.6% calculated as free base. For (a) and (b): - Do not use with nitrosating systems - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers | (a) To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary 'black henna’ tattoo in the past.» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/219): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 2,6 %; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 2,6 % calculated as free base. For (a) and (b): — Do not use with nitro sating agents — Maximum nitrosamine content: 50 μg /kg — Keep in nitrite-free containers | (a) To be printed on the label: The mixing ratio. ‘ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -457,7 +455,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 4-Methylbenzylidene Camphor is the aromatic organic compound that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 36861-47-9 / 38102-62-4, EC 253-242-6 /.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1730.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1730) — в рамках условия: «3-(4'-methylbenzylidene)-camphor; [INCI: 4-Methylbenzylidene Camphor]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -498,7 +496,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 18127-01-0, EC 242-016-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/155.",
+    safetyNotes: "Ограничен в ЕС (Annex III/155): макс. 0.6% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -519,6 +517,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 30007-47-7, EC 250-001-7.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/20): Rinse-off products, макс. 0.1%; «Avoid formation of nitrosamines» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -529,7 +528,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 6-Amino-m-Cresol is the substituted aromatic compound that conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 2835-98-5, EC 220-620-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1643: 4-Amino-3-hydroxytoluene when used as a substance in hair and eyelash dye products..",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1643) — в рамках условия: «4-Amino-3-hydroxytoluene when used as a substance in hair and eyelash dye products.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -540,7 +539,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 2380-86-1, EC 417-020-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex III/209.",
     synonyms: [],
   },
   {
@@ -551,7 +549,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 90817-34-8 / 83732-72-3 (2HCl), EC 280-622-9 (2HCl).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/203.",
+    safetyNotes: "Ограничен в ЕС (Annex III/203): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products (c) Products intended for colouring eyelashes, макс. (b) 0.68% as free base (1.0% as dihydrochloride); условия: «For (a) and (c): After mixing under oxidative conditions the maximum use concentration applied to hair or eyeslashes must not exceed 0.68% calculated as free base (1.0% as dihydrochloride). For (a) (b) and (c): - Do not use with nitrosating agents - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers (c) For professional use only | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past (b) Can cause allergic reaction (c) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16.Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.” ’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -582,7 +580,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Canadian Fir Needle Oil\". Abies Balsamea Needle Oil is the volatile oil obtained from the needles of the fir, Balsam Canada, Abies balsamea, Pinaceae. It contains mainly L-alpha-pinene. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 85085-34-3, EC 285-364-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/107.",
+    safetyNotes: "Ограничен в ЕС (Annex III/107); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -593,7 +591,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Abies Balsamea Resin is an oleoresin obtained from the balsam fir (Balsam Canada), Abies balsamea, Pinaceae Функции в составе: плёнкообразование; отдушка. Идентификаторы: CAS 8007-47-4, EC 232-362-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/107.",
+    safetyNotes: "Ограничен в ЕС (Annex III/107); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -604,7 +602,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Abies Sibirica Oil is the volatile oil distilled from the needles and branches of Abies sibirica, Pinaceae Функции в составе: отдушка; тонизирующее действие; придание аромата. Идентификаторы: CAS 91697-89-1, EC 294-351-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/106.",
+    safetyNotes: "Ограничен в ЕС (Annex III/106); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -866,7 +864,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acetyl Cedrene is the organic compound that conforms to the formula Функции в составе: отдушка.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/327); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -1200,7 +1198,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acid Blue 3 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 3536-49-0, EC 222-573-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1356 (Acid Blue 3; CI 42051: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1356) — в рамках условия: «Ethanaminium, N-(4-((4-diethylamino)phenyl)(5-hydroxy-2,4-disulfophenyl)methylene)-2,5-cyclohexadien-1-ylidene)-N-ethyl-, hydroxide, inner salt, calcium salt (2:1) (Acid Blue 3; CI 42051) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/60); «Purity criteria as set out in Commission Directive 95/45/EC (E 131)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1211,7 +1209,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acid Blue 9 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 3844-45-9, EC 223-339-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/190.",
+    safetyNotes: "Ограничен в ЕС (Annex III/190): Hair dye substance in non-oxidative hair dye products, макс. 0.5% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/63); «Purity criteria as sset out in Commission Directive 95/45/EC (E 133)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1222,7 +1220,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acid Red 33 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 3567-66-6, EC 222-656-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/254 (Acid Red 33) IV/37 (CI 17200).",
+    safetyNotes: "Ограничен в ЕС (Annex III/254): Hair dye substance in non-oxidative hair dye products, макс. 0.5 % (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/37).",
     synonyms: [],
   },
   {
@@ -1233,7 +1231,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acid Violet 43 is classed chemically as an anthraquinone colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 4430-18-6, EC 224-618-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/291.",
+    safetyNotes: "Ограничен в ЕС (Annex III/291): Hair dye substance in non-oxidative hair dye products, макс. 0,5 % (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/90): макс. Not to be used in products applied on the mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1244,7 +1242,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acid Yellow 23 is classed chemically as a pyrazole colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 1934-21-0, EC 217-699-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/189 IV/44.",
+    safetyNotes: "Ограничен в ЕС (Annex III/189): Hair dye substance in non-oxidative hair dye products, макс. 0.5% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/44); «Purity criteria as set out in Commission Directive 95/45/EC (E 102)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1285,7 +1283,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "связывающее; плёнкообразование; фиксация причёски",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Propenoic acid, ammomium salt, polymer with 2-propenamide Функции в составе: связывающее; плёнкообразование; фиксация причёски. Идентификаторы: CAS 26100-47-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1296,7 +1294,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Propenoic acid, sodium salt, polymer with 2-propenamide Функции в составе: антистатический эффект; плёнкообразование. Идентификаторы: CAS 25085-02-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1307,7 +1305,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "стабилизация эмульсии; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Methyl-2-[(1-oxo-2-propenyl)amino]-1-propanesulfonic acid monosodium salt polymer with 2-propenamide Функции в составе: стабилизация эмульсии; регулирование вязкости. Идентификаторы: CAS 38193-60-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1318,7 +1316,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование; фиксация причёски",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Propenamide, polymer with N,N,N-trimethyl-3-(2-propenamido)propanaminium chloride Функции в составе: антистатический эффект; плёнкообразование; фиксация причёски.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -1379,7 +1377,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фиксация причёски; увлажнение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acrylates/Acrylamide Copolymer is a copolymer of acrylamide and one or more monomers of acrylic acid, methacrylic acid or one of their simple esters. Функции в составе: фиксация причёски; увлажнение.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2450,7 +2448,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Alpha-Isomethyl Ionone is the organic compound that conforms to the formula Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 127-51-5, EC 204-846-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/90. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/90); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -2461,7 +2459,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Alpha-Terpinene is the organic compound that conforms to the formula: Функции в составе: придание аромата. Идентификаторы: CAS 99-86-5, EC 202-795-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/131. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/131); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product).» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -2612,7 +2610,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Aluminum is a metallic element. Функции в составе: краситель. Идентификаторы: CAS 7429-90-5, EC 231-072-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/117 (CI 77000).",
     synonyms: [],
   },
   {
@@ -2704,7 +2701,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антислеживающее; краситель; стабилизация эмульсии; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Aluminum Stearate is the aluminum salt of stearic acid that conforms to the formula: Функции в составе: антислеживающее; краситель; стабилизация эмульсии; регулирование вязкости. Идентификаторы: CAS 7047-84-9, EC 230-325-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/150. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/150). Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -2735,7 +2732,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиперспирант; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Complex reaction product obtained from the reaction of aluminium zirconium octachlorohydrate (Al8Zr(OH)20Cl8.xH2O) and glycine Функции в составе: антиперспирант; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 174514-58-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/50.",
+    safetyNotes: "Ограничен в ЕС (Annex III/50): Anti-perspirants, макс. 20% (as anhydrous aluminium zirconium chloride hydroxide) 5.4% (as zirconium); условия: «1. The ratio of the number of aluminium atoms to that of zirconium atoms must be between 2 and 10 2. The ratio of the number of (Al+Zr) atoms to that of chlorine atoms must be between 0.9 and 2.1 3. Not to be used in aerosols dispensers (sprays) | Do not apply to irritated or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2746,7 +2743,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиперспирант; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антиперспирант; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 98106-54-8, EC 308-575-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/50.",
+    safetyNotes: "Ограничен в ЕС (Annex III/50): Anti-perspirants, макс. 20% (as anhydrous aluminium zirconium chloride hydroxide) 5.4% (as zirconium); условия: «1. The ratio of the number of aluminium atoms to that of zirconium atoms must be between 2 and 10 2. The ratio of the number of (Al+Zr) atoms to that of chlorine atoms must be between 0.9 and 2.1 3. Not to be used in aerosols dispensers (sprays) | Do not apply to irritated or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2757,7 +2754,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиперспирант; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Complex reaction product obtained from the reaction of aluminium zirconium pentachlorohydrate (Al8Zr(OH)23Cl5.xH2O) and glycine Функции в составе: антиперспирант; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 125913-22-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/50.",
+    safetyNotes: "Ограничен в ЕС (Annex III/50): Anti-perspirants, макс. 20% (as anhydrous aluminium zirconium chloride hydroxide) 5.4% (as zirconium); условия: «1. The ratio of the number of aluminium atoms to that of zirconium atoms must be between 2 and 10 2. The ratio of the number of (Al+Zr) atoms to that of chlorine atoms must be between 0.9 and 2.1 3. Not to be used in aerosols dispensers (sprays) | Do not apply to irritated or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2768,7 +2765,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиперспирант; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Complex reaction products obtained from the reaction of aluminium zirconium tetrachlorohydrate (Al8Zr(OH)12Cl4.xH2O) and glycine Функции в составе: антиперспирант; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 134910-86-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/50.",
+    safetyNotes: "Ограничен в ЕС (Annex III/50): Anti-perspirants, макс. 20% (as anhydrous aluminium zirconium chloride hydroxide) 5.4% (as zirconium); условия: «1. The ratio of the number of aluminium atoms to that of zirconium atoms must be between 2 and 10 2. The ratio of the number of (Al+Zr) atoms to that of chlorine atoms must be between 0.9 and 2.1 3. Not to be used in aerosols dispensers (sprays) | Do not apply to irritated or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2779,7 +2776,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиперспирант; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Complex reaction product obtained from the reaction of aluminium zirconium trichlorohydrate (Al8Zr(OH)13Cl3.xH2O) with glycine Функции в составе: антиперспирант; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 134375-99-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/50.",
+    safetyNotes: "Ограничен в ЕС (Annex III/50): Anti-perspirants, макс. 20% (as anhydrous aluminium zirconium chloride hydroxide) 5.4% (as zirconium); условия: «1. The ratio of the number of aluminium atoms to that of zirconium atoms must be between 2 and 10 2. The ratio of the number of (Al+Zr) atoms to that of chlorine atoms must be between 0.9 and 2.1 3. Not to be used in aerosols dispensers (sprays) | Do not apply to irritated or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2911,7 +2908,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Aminomethyl Propanediol is a substituted aliphatic diol that conforms to the formula. Функции в составе: регулирование pH; отдушка. Идентификаторы: CAS 115-69-5, EC 204-100-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
     synonyms: [],
   },
   {
@@ -2922,7 +2918,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 124-68-5, EC 204-709-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -2973,6 +2969,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7664-41-7 / 1336-21-6, EC 231-635-3 / 215-647-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/4): макс. 6% (as NH3); условия: «Above 2%: Contains ammonia» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3043,7 +3040,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ammonium Benzoate is the ammonium salt of Benzoic Acid. It conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 1863-63-4, EC 217-468-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/1a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/1a): макс. 0.5% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3104,7 +3101,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH; денатурирующее",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH; денатурирующее. Идентификаторы: CAS 1336-21-6, EC 215-647-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/4.",
+    safetyNotes: "Ограничен в ЕС (Annex III/4): макс. 6% (as NH3); условия: «Above 2%: Contains ammonia» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3205,7 +3202,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "функция не указана (CosIng)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amniotic Fluid is the fluid surrounding the embryo of animals in utero. Функции в составе: функция не указана (CosIng).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -3246,7 +3242,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): AMP-Acrylates Copolymer is the aminomethyl propanol salt of Acrylates Copolymer (q.v.) Функции в составе: плёнкообразование.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3257,7 +3253,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование; фиксация причёски",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amp-Acrylates/Allyl Methacrylate Copolymer is the aminomethylpropanol salt of a copolymer of allyl methacrylate and one or more monomers consisting of acrylic acid, metacrylic acid or one of their simple esters Функции в составе: плёнкообразование; фиксация причёски.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3268,7 +3264,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; уход за волосами; уход за кожей; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Protein hydrolyzates, wheat, isostearoyl-, compounds with 2-amino-2-methyl-1-propanol Функции в составе: очищение; ПАВ: эмульгирование; уход за волосами; уход за кожей; ПАВ: очищение. Идентификаторы: CAS 222400-35-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3279,7 +3275,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): AMP-isostearoyl Wheat/corn/soy amino acids is the aminomethylpropanol salt of the condensation product of isostearic acid chloride with a mixture of amino acids derived from wheat, corn and soy proteins Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3290,7 +3286,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 122-40-7, EC 204-541-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/67. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/67); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -3301,7 +3297,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amyl Salicylate is the ester of amyl alcohol and salicylic acid that conforms to the formula Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 2050-08-0, EC 218-080-2.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/328); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -3322,7 +3318,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 101-85-9, EC 202-982-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/74. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/74); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -3463,7 +3459,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: денатурирующее; отдушка. Идентификаторы: CAS 104-46-1, EC 203-205-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/329. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/329); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -3614,7 +3610,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 105-13-5, EC 203-273-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/80. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/80); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -3665,7 +3661,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Anthocyanins is a substance obtained by the physical processing of edible fruits or vegetables. Enocyanin. Grape skin extract; Anthocyanins, grape Функции в составе: краситель. Идентификаторы: CAS 11029-12-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/149.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/149); «Purity criteria as set out in Commission Directive 95/45/EC (E163)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -3839,7 +3835,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "окклюзия (удержание влаги)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Arachis Hypogaea Oil is the refined fixed oil obtained from the seed kernels of one or more of the cultivated varieties of Arachis hypogaea. Функции в составе: окклюзия (удержание влаги). Идентификаторы: CAS 8002-03-7, EC 232-296-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/306.",
+    safetyNotes: "Ограничен в ЕС (Annex III/306); условия: «Maximum concentration of peanut proteins: 0,5 ppm (22 )» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -4320,7 +4316,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ascorbic Acid/Orange/Citrus Limon/Citrus Aurantifolia Polypeptides is the reaction product of Ascorbic Acid and the polypeptides derived from the dried, ground pulp of Citrus aurantium dulcis, Citrus limon, and Citrus aurantifolia, Rutaceae. Функции в составе: уход за кожей. Идентификаторы: CAS 167973-55-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -4962,6 +4958,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7727-43-7, EC 231-784-4.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/122).",
     synonyms: [],
   },
   {
@@ -4992,7 +4989,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 2390-60-5, EC 219-232-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1328.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1328) — в рамках условия: «Ethanaminium, N-[4-[[4-(diethylamino)phenyl][4-(ethylamino)-1-naphthalenyl]methylene]-2,5-cyclohexadien-1-ylidine]-N-ethyl-, and its salts, when used as a substance in hair dye products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5023,7 +5020,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 68391-32-2, EC 269-944-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/304.",
+    safetyNotes: "Ограничен в ЕС (Annex III/304): Hair dye substance in non-oxidative hair dye products, макс. As from 3 September 2017: 2,0 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5034,7 +5031,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Basic Orange 31 is the hair colorant that conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 97404-02-9, EC 306-764-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/276.",
+    safetyNotes: "Ограничен в ЕС (Annex III/276): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 1,0 %; условия: «(a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5045,6 +5042,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 77061-58-6, EC 278-601-4.",
+    safetyNotes: "Ограничен в ЕС (Annex III/269): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidatie hair dye products, макс. (b) 1,0 %; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 0,5 % | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5055,6 +5053,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 68391-30-0, EC 269-941-4.",
+    safetyNotes: "Ограничен в ЕС (Annex III/267): Hair dye substance non-oxidative hair dye products, макс. 2,0 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5075,7 +5074,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Basic Violet 2 is classed chemically as a triphenyl methane colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 3248-91-7, EC 221-831-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/278.",
+    safetyNotes: "Ограничен в ЕС (Annex III/278): a) Hair dye substance in oxidative hair dye products b) Hair dye substance in non-oxidative hair dye products, макс. 0.5 %; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,0 % | a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp,— you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.”» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/67): макс. Rinse-off products; «5 ppm» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5096,7 +5095,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 68391-31-1, EC 269-943-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex III/262.",
+    safetyNotes: "Ограничен в ЕС (Annex III/262): Hair dye substance in non-oxidative hair dye products, макс. 2,0% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5107,6 +5106,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 68259-00-7, EC 269-503-2.",
+    safetyNotes: "Ограничен в ЕС (Annex III/275): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 1,0 %; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,0 % | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5167,6 +5167,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7659-95-2; 89957-88-0; 89957-89-1, EC 231-628-5; 289-609-2; 289-610-8.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/148); «Purity criteria as set out in Commission Directive 95/45/EC (E162)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5237,7 +5238,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Behentrimonium Chloride is the quaternary ammonium salt that conforms to the formula: Функции в составе: антистатический эффект; уход за волосами; консервант. Идентификаторы: CAS 17301-53-0, EC 241-327-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5319,7 +5320,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абсорбент; наполнитель; стабилизация эмульсии; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Bentonite. A colloidal clay. Consists primarily of montmorillonite (CI 77004) Функции в составе: абсорбент; наполнитель; стабилизация эмульсии; регулирование вязкости. Идентификаторы: CAS 1302-78-9, EC 215-108-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/119. Комедогенность (шкала Fulton 1989, 0–5): 0.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/119). Комедогенность (шкала Fulton 1989, 0–5): 0.",
     synonyms: ["BENTONITE°"],
   },
   {
@@ -5330,7 +5331,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 100-52-7, EC 202-860-4.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/330); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -5341,7 +5342,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антистатический эффект; дезодорирующее действие; консервант; ПАВ: диспергирование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzalkonium Chloride is a mixture of alkylbenzyldimethylammonium chlorides that conforms generally to the formula: Функции в составе: антимикробное действие; антистатический эффект; дезодорирующее действие; консервант; ПАВ: диспергирование. Идентификаторы: CAS 63449-41-2 / 68391-01-5 / 68424-85-1 / 85409-22-9, EC 264-151-6 / 269-919-4 / 270-325-2 / 287-089-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/54 III/65.",
+    safetyNotes: "Ограничен в ЕС (Annex III/65): Rinse-off hair (head) products, макс. 3% (as benzalkonium chloride); условия: «In the final products the concentrations of benzalkonium chloride, bromide and saccharinate with an alkyl chain of C14, or less must not exceed 0.1% (as benzalkonium chloride) For purposes other than inhibiting the development of micro-organismes in the product. This purpose has to be apparent from the presentation of the product | Avoid contact with the eyes» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/54): макс. 0.1% (as benzalkonium chloride); «Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5352,7 +5353,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант; ПАВ: диспергирование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzethonium Chloride is the quaternary ammonium salt that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант; ПАВ: диспергирование. Идентификаторы: CAS 121-54-0, EC 204-479-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/53.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/53): a) Rinse-off products b) Leave-on products other than oral products, макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5373,6 +5374,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 119-61-9, EC 204-337-6.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1703) — в рамках условия: «Benzophenone» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5403,7 +5405,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzophenone-3 is a benzophenone derivative that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 131-57-7, EC 205-031-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/4.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/4): a) Face products, hand products, and lip products, excluding propellant and pump spray products b) Body products, including propellant and pump spray products c) Other products, макс. a) 6% b) 2,2% c) 0,5% Footnote 1: However, cosmetic products containing '2-Hydroxy-4-methoxy-benzophenone/Oxybenzone' and complying with the restrictions set out in Regulation (EC) No 1223/2009 as applicable on 27 July 2022 may be placed on the Union market until 28 January 2023 and be made available on the Union market until 28 July 2023.; «a) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 5,5 %. b) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 1,7 %. | For a) and b): Contains Benzophenone-3 (*) Footnote (*): Not required if concentration is 0,5 % or less and when it is used only for product protection purposes.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5414,7 +5416,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzophenone-4 is a benzophenone derivative that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 4065-45-6, EC 223-772-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/22.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/22): макс. 5%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5425,7 +5427,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzophenone-5 is the sodium salt of Benzophenone-4 and conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 6628-37-1, EC 613-918-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/22.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/22): макс. 5%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5456,7 +5458,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 120-51-4, EC 204-402-9.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/85); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -5467,7 +5469,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 103-41-3, EC 203-109-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/81. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/81); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -5588,7 +5590,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за кожей. Идентификаторы: CAS 7235-40-7, EC 230-636-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/111.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/55); «Purity criteria as set out in Commission Directive 95/45/EC (E 160a)» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/111); «Purity criteria as set out in Commission Directive 95/45/EC (E 160a)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5599,7 +5601,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 87-44-5, EC 201-746-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/332. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/332); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["BETA-CARYOPHYLLENE²"],
   },
   {
@@ -5690,7 +5692,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): BHT is a substituted toluene that conforms to the formula: Функции в составе: антиоксидант; отдушка. Идентификаторы: CAS 128-37-0, EC 204-881-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III / 325.",
+    safetyNotes: "Ограничен в ЕС (Annex III/325): a) Mouthwash b) Toothpaste c) Other leave-on and rinse-off products, макс. a) 0,001 % b) 0,1 % c) 0,8 %; условия: «From 1 July 2023 cosmetic products containing that substance and not complying with the restrictions shall not be placed on the Union market. From 1 January 2024 cosmetic products containing that substance and not complying with the restrictions shall not be made available on the Union market.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -5942,7 +5944,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Bis-Isobutyl PEG/PPG-20/35/Amodimethicone Copolymer is a random copolymer of polyethylene glycol, polypropylene glycol and Amodimethicone containing an average of 20 moles of ethylene oxide and 35 moles of propylene oxide Функции в составе: уход за волосами.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/186.",
+    safetyNotes: "Ограничен в ЕС (Annex III/186): As traces in ingredients, макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -6153,7 +6155,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; регулирование pH; денатурирующее",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антимикробное действие; регулирование pH; денатурирующее. Идентификаторы: CAS 10043-35-3 / 11113-50-1, EC 233-139-2 / 234-343-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Regulation (EU) 2019/831. Entry II/1395.",
     synonyms: [],
   },
   {
@@ -6404,7 +6405,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Bromochlorophene is the halogenated aromatic compound that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант. Идентификаторы: CAS 15435-29-7, EC 239-446-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/37.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/37): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -6415,7 +6416,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Bromocresol Green is a colour additive that conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 76-60-8, EC 200-972-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/152.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/152): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -6546,7 +6547,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; растворитель; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; растворитель; регулирование вязкости. Идентификаторы: CAS 112-34-5, EC 203-961-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/187.",
+    safetyNotes: "Ограничен в ЕС (Annex III/187): Solvent in hair dye products, макс. 9%; условия: «No use in aerosol dispensers (sprays)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -6698,7 +6699,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Butylparaben is the ester of butyl alcohol and p-hydroxybenzoic acid. It conforms to the formula: Функции в составе: отдушка; консервант. Идентификаторы: CAS 94-26-8, EC 202-318-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/12 a): макс. - 0,14% (as acid) for the sum of the individual concentrations - 0,8% (as acid) for mixtures of substances mentioned in entry 12 and 12a, here the sum of the individual concentrations of butyl and propylparaben and their salts does not exceed 0,14%; «Not to be used in leave-on products designed for application on the nappy area of children under three years of age. | For leave-on products designed for children under three years of age: \"Do not use on the nappy area\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -6709,7 +6710,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Butylphenyl Methylpropional is the aromatic aldehyde that conforms to the formula: Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 80-54-6, EC 201-289-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1666.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1666) — в рамках условия: «2-(4-tert-butylbenzyl) propionaldehyde» (текст регламента — дословно, EN).",
     synonyms: ["_BUTYLPHENYL METHYLPROPIONAL_"],
   },
   {
@@ -7200,7 +7201,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): C13-14 Alkane is a mixture of alkanes with 13 to 14 carbon atoms in the alkyl chain Функции в составе: растворитель. Идентификаторы: CAS 64742-47-8, EC 934-954-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 875 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 875, Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7231,7 +7231,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): C13-15 Alkane is a mixture of alkanes with 13 to 15 carbon atoms in the alkyl chain Функции в составе: растворитель. Идентификаторы: CAS 64742-46-7;, EC 934-954-2;.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/875 Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7302,7 +7301,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): C15-C19 Alkane is a mixture of alkanes with 15 to 19 carbon atoms in the alkyl chain. Функции в составе: растворитель. Идентификаторы: CAS 64742-46-7;, EC 934-956-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/875 Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7313,7 +7311,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Alkanes, C15-23 Функции в составе: растворитель.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 875 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 875, Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7324,7 +7321,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): C18-21 Alkane is a mixture of alkanes with 18 to 21 carbons in the alkyl chain. Функции в составе: растворитель. Идентификаторы: CAS 64742-46-7;, EC 932-078-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/875 Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7547,7 +7543,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель; уход за волосами; смягчение кожи (эмолент); уход за кожей; окклюзия (удержание влаги)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): C9-12 Alkane is a mixture of linear alkanes with 9 to 12 carbon atoms in the alkyl chain. Функции в составе: растворитель; уход за волосами; смягчение кожи (эмолент); уход за кожей; окклюзия (удержание влаги).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 875 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 875, Distillates (petroleum), hydrotreated middle, except if the full refining history is known and it can be shown that the substance from which it is produced is not a carcinogen..",
     synonyms: [],
   },
   {
@@ -7678,7 +7673,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абразив; регулирование pH; наполнитель; придание непрозрачности; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: абразив; регулирование pH; наполнитель; придание непрозрачности; уход за полостью рта. Идентификаторы: CAS 471-34-1, EC 207-439-9 -- 215-279-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/124.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/124); «Purity criteria as set out in Commission Directive 95/45/EC (E 170)» (текст регламента — дословно, EN).",
     synonyms: ["CALCIUM CARBONATE^"],
   },
   {
@@ -7719,7 +7714,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "против зубного налёта; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: против зубного налёта; уход за полостью рта. Идентификаторы: CAS 7789-75-5, EC 232-188-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/30.",
+    safetyNotes: "Ограничен в ЕС (Annex III/30): Oral products, макс. 0.15% calculated as F. When mixed with other fluorine compounds permitted under this Annex, total F concentration must not exceed 0.15%; условия: «Contains calcium fluoride For any toothpaste with compounds containing fluorine in a concentration of 0.1 to 0.15% calculated as F unless it is already labelled as contra-indicated for children (e.g. \"for adult use only\") the following labelling is obligatory: \"Children of 6 years and younger: use a pea-sized amount for supervised brushing to minimise swallowing. In case of intake of fluoride from other sources consult a dentist or doctor.\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -7760,6 +7755,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 1305-62-0, EC 215-137-3.",
+    safetyNotes: "Ограничен в ЕС (Annex III/15c): (a) Hair straighteners containing two components: calcium hydroxide and a guanidine salt (b) pH ajuster for depilatories (c) Other uses (e.g. pH adjuster, processing aid), макс. (a) 7% (as calcium hydroxide); условия: «(b) pH < 12.7 (c) pH < 11 | (a) Contains alkali Avoid contact with eyes Keep out of reach of children Can cause blindness (b) Contains alkali Keep out of reach of children Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -7830,7 +7826,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: окислитель. Идентификаторы: CAS 1305-79-9, EC 215-139-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/12.",
+    safetyNotes: "Ограничен в ЕС (Annex III/12): (a) Hair products (b) Skin products (c) Nail hardening products (d) Oral products, including mouth rinse, tooth paste and tooth whitening or bleaching products (e) Tooth whitening or bleaching products (f) Products intended for eyelashes, макс. (a) 12 % of H2O2 (40 volumes), present or released (b) 4 % of H2O2, present or released (c) 2 % of H2O2, present or released (d) ≤ 0,1 % of H2O2, present or released (e) > 0,1 % ≤ 6 % of H2O2, present or released (f) 2 % of H2O2, present or released; условия: «(e) To be only sold to dental practitioners. For each cycle of use, first use by dental practitioners as defined under Directive 2005/36/EC of the European Parliament and of the Council* or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. Not to be used on a person under 18 years of age. (f) For professional use only | (a) (f) Wear suitable gloves (a) (b) (c) (e) Contains hydrogen peroxide Avoid contact with eyes Rinse immediately if product comes into contact with them. (e) Concentration of H2O2 present or released indicated in percentage. Not to be used on a person under 18 years of age. To be only sold to dental practitioners. For each cycle of use, the first use to be only done by dental practitioners or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. f) To be printed on the label: ‘For professional use only. Avoid contact with eyes. Rinse eyes immediately if product comes into contact with them. Contains hydrogen peroxide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -7901,7 +7897,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антислеживающее; краситель; стабилизация эмульсии; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Calcium Stearate is the calcium salt of stearic acid. It conforms to the formula: Функции в составе: антислеживающее; краситель; стабилизация эмульсии; регулирование вязкости. Идентификаторы: CAS 1592-23-0, EC 216-472-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/150. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/150). Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -7912,7 +7908,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абразив; наполнитель; придание непрозрачности",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Calcium Sulfate is the inorganic salt that conforms to the formula: Функции в составе: абразив; наполнитель; придание непрозрачности. Идентификаторы: CAS 10101-41-4/ 10034-76-1, EC -/ -.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/125.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/125).",
     synonyms: [],
   },
   {
@@ -7923,7 +7919,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "депилятор; кератолитик (отшелушивание); восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: депилятор; кератолитик (отшелушивание); восстановитель. Идентификаторы: CAS 814-71-1, EC 212-402-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/2a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/2a): (a) Hair products (b) Depilatories (c) Hair rinse-off products (d) Products intended for eyelash waving, макс. (a) (i) 8% (ii) 11% (b) 5% (c) 2% (d) 11% The abovementioned percentages are calculated as thioglycollic acid; условия: «(a) (i) General use ready for use pH 7 to 9.5 (ii) Professional use ready for use pH 7 to 9.5 (b) ready for use pH 7 to 12.7 (c) ready for use pH 7 to 9.5 (d) ready for use pH 7 to 9,5 | Conditions of use: (a) (b) (c) (d) Avoid contact with eyes Rinse eyes immediately if product comes into contact with them. (a) (c) (d) Wear suitable gloves Warnings to be printed on the label: (a)(i) (b) (c) Contains thioglycolate Follow the instructions Keep out of reach of children (a)(ii) (d) For professional use only Contains thioglycolate Follow the instructions’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -7934,7 +7930,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "депилятор",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: депилятор. Идентификаторы: CAS 65208-41-5 / 29820-13-1, EC 249-881-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/2a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/2a): (a) Hair products (b) Depilatories (c) Hair rinse-off products (d) Products intended for eyelash waving, макс. (a) (i) 8% (ii) 11% (b) 5% (c) 2% (d) 11% The abovementioned percentages are calculated as thioglycollic acid; условия: «(a) (i) General use ready for use pH 7 to 9.5 (ii) Professional use ready for use pH 7 to 9.5 (b) ready for use pH 7 to 12.7 (c) ready for use pH 7 to 9.5 (d) ready for use pH 7 to 9,5 | Conditions of use: (a) (b) (c) (d) Avoid contact with eyes Rinse eyes immediately if product comes into contact with them. (a) (c) (d) Wear suitable gloves Warnings to be printed on the label: (a)(i) (b) (c) Contains thioglycolate Follow the instructions Keep out of reach of children (a)(ii) (d) For professional use only Contains thioglycolate Follow the instructions’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -8235,7 +8231,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; отдушка; пластификатор",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: денатурирующее; отдушка; пластификатор. Идентификаторы: CAS 464-49-3 / 76-22-2, EC 207-355-2 / 200-945-0.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/331); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["4-METHYLBENZYUDENE CAMPHOR", "CAMPHOR 1%"],
   },
   {
@@ -8246,7 +8242,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антистатический эффект; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Camphor Benzalkonium Methosulfate is the quaternary ammonium compound that conforms to the formula: Функции в составе: антимикробное действие; антистатический эффект; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 52793-97-2, EC 258-190-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/2.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/2): макс. 6% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -8267,7 +8263,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cananga Odorata Flower Extract is an extract of the flowers of the ylang-ylang, Cananga odorata, Anonaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 83863-30-3, EC 281-092-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/347. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/347); условия: «The presence of the substance or substances shall be indicated as ‘Cananga Odorata Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration exceeds of the substance or substances: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -8278,7 +8274,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cananga Odorata Flower Oil is the volatile oil obtained from the flowers Cananga odorata. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 83863-30-3 / 8006-81-3 / 68606-83-7, EC 281-092-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/347. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/347); условия: «The presence of the substance or substances shall be indicated as ‘Cananga Odorata Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration exceeds of the substance or substances: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -8350,7 +8346,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антиоксидант; регулирование себума; защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cannabis Sativa Extract is the extract of the whole plant, Cannabis sativa. Функции в составе: антимикробное действие; антиоксидант; регулирование себума; защита кожи.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/306 = Narcotics, natural and synthetic: All substances listed in Tables I and II of the single Convention on narcotic drugs signed in New York on 30 March 1961.",
     synonyms: [],
   },
   {
@@ -8361,7 +8356,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; регулирование себума; уход за кожей; защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cannabis Sativa Flower/Leaf/Stem Extract is the extract of the flowers, leaves and stems of Cannabis sativa, Cannabaceae. Функции в составе: антиоксидант; регулирование себума; уход за кожей; защита кожи.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/306 - Narcotics, natural and synthetic: All substances listed in Tables I and II of the single Convention on narcotic drugs signed in New York on 30 March 1961.",
     synonyms: [],
   },
   {
@@ -8734,6 +8728,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: EC 232-435-9.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/146); «Purity criteria as set out in Commission Directive 95/45/EC (E150a-d)» (текст регламента — дословно, EN).",
     synonyms: ["CARAMEL°"],
   },
   {
@@ -8774,7 +8769,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Carbon Black is a colorant composed of finely divided particles of elemental carbon obtained by the incomplete combustion of hydrocarbons. Функции в составе: краситель. Идентификаторы: CAS 1333-86-4/ 7440-44-0, EC 215-609-9/ 231-153-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/126 and 126a.",
     synonyms: [],
   },
   {
@@ -8955,7 +8949,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 6485-40-1 / 99-49-0 / 2244-16-8, EC 229-352-5 / 218-827-2 / 202-759-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/333. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/333); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["CARVONE?"],
   },
   {
@@ -9046,7 +9040,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Castor oil, polymer with 5-isocyanato-1-(isocyanatomethyl)-1,3,3-trimethylcyclohexane Функции в составе: плёнкообразование. Идентификаторы: CAS 68955-90-8; 2097847-57-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -9117,7 +9110,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cedrus Atlantica Bark Extract is an extract of the bark of Cedrus atlantica, Pinaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 92201-55-3, EC 295-985-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/122. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/122); условия: «The presence of the substance or substances shall be indicated as ‘Cedrus Atlantica Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product)» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -9128,7 +9121,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cedrus Atlantica Bark Oil is the volatile oil obtained from the bark of Cedrus atlantica. Cedrus Atlantica Bark Oil is the term identified in Annex III to EC Regulation No.1223/2009 for ingredient labeling in the EU Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 8000-27-9 / 92201-55-3 / 92201-55-3 / 92201-55-3, EC 295-985-9 / 295-985-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/122. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/122); условия: «The presence of the substance or substances shall be indicated as ‘Cedrus Atlantica Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product)» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -9150,7 +9143,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cedrus Atlantica Wood Extract is an extract obtained from the wood of the tree, Cedrus atlantica, Pinaceae Функции в составе: придание аромата. Идентификаторы: CAS 92201-55-3, EC 295-985-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/122. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/122); условия: «The presence of the substance or substances shall be indicated as ‘Cedrus Atlantica Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product)» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -9161,7 +9154,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Cedarwood Oil (Atlas or Moroccan)\". Cedrus Atlantica Wood Olis is an essential oil obtained from the wood of the tree, Cedrus atlantica, Pinaceae Функции в составе: придание аромата. Идентификаторы: CAS 92201-55-3, EC 295-985-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/122. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/122); условия: «The presence of the substance or substances shall be indicated as ‘Cedrus Atlantica Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product)» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -9885,7 +9878,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антистатический эффект; ПАВ: эмульгирование; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cetrimonium Chloride is a quaternary ammonium salt that conforms generally to the formula: Функции в составе: антимикробное действие; антистатический эффект; ПАВ: эмульгирование; консервант. Идентификаторы: CAS 112-02-7, EC 203-928-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10073,7 +10066,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за кожей. Идентификаторы: CAS 110483-07-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10364,7 +10357,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за полостью рта; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Chlorhexidine is an organic compound that conforms to the formula: Функции в составе: антимикробное действие; уход за полостью рта; консервант. Идентификаторы: CAS 55-56-1, EC 200-238-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/42.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/42): макс. 0.3% (as chlorhexidine) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10375,7 +10368,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за полостью рта; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Chlorhexidine Diacetate is a salt of Chlorhexidine and acetic acid. It conforms generally to the formula: Функции в составе: антимикробное действие; уход за полостью рта; консервант. Идентификаторы: CAS 56-95-1, EC 200-302-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/42.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/42): макс. 0.3% (as chlorhexidine) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10386,7 +10379,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за полостью рта; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Chlorhexidine Digluconate is a salt of Chlorhexidine and gluconic acid. It conforms generally to the formula: Функции в составе: антимикробное действие; уход за полостью рта; консервант. Идентификаторы: CAS 18472-51-0, EC 242-354-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/42.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/42): макс. 0.3% (as chlorhexidine) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10397,7 +10390,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за полостью рта; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Chlorhexidine Dihydrochloride is a salt of Chlorhexidine and hydrochloric acid. It conforms generally to the formula: Функции в составе: антимикробное действие; уход за полостью рта; консервант. Идентификаторы: CAS 3697-42-5, EC 223-026-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/42.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/42): макс. 0.3% (as chlorhexidine) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10408,7 +10401,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Chloroacetamide is the aliphatic amide that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 79-07-2, EC 201-174-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1387.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1387) — в рамках условия: «2-Chloracetamide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10439,6 +10432,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 88-04-0 / 1321-23-9, EC 201-793-8 / 215-316-6.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/26): макс. 0.5% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10449,7 +10443,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за полостью рта; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за полостью рта; уход за кожей. Идентификаторы: CAS 67-97-0, EC 200-673-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/335.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/335) — в рамках условия: «Ergocalciferol (INN) and Cholecalciferol (vitamins D2 and D3)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10530,7 +10524,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: краситель. Идентификаторы: CAS 7440-47-3, EC 231-157-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/97.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/97) — в рамках условия: «Chromium; chromic acid and its salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10611,7 +10605,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 10020 is classed chemically as a nitroso colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 19381-50-1, EC 243-010-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/2 (CI 10020) II/1342 (Acid Green 1; CI 10020: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1342) — в рамках условия: «Trisodium tris[5,6-dihydro-5-(hydroxyimino)-6-oxonaphthalene-2-sulphonate(2-)-N5,O6]ferrate(3-); (Acid Green 1; CI 10020) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/2): макс. Not to be used in products applied on mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10622,7 +10616,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 10316 is classed chemically as a nitro colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 846-70-8, EC 212-690-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/3 (CI 10316) III/214 (Acid Yellow 1).",
+    safetyNotes: "Ограничен в ЕС (Annex III/214): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 0,2%; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1,0% | To be printed on the label: Hair colorants can cause severe allergic reactions» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/3): макс. Not to be used in eye products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10633,7 +10627,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 11680 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2512-29-0, EC 219-730-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/4.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/4): макс. Not to be used in products applied on mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10644,7 +10638,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 11710 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 6486-23-3, EC 229-355-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/5.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/5): макс. Not to be used in products applied on mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10655,7 +10649,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 11920 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2051-85-6, EC 218-131-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/7 (CI 11920) II/1343 (Solvent Orange 1; CI 11920: and its salts when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1343) — в рамках условия: «4-(Phenylazo)resorcinol (Solvent Orange 1; CI 11920) and its salts, when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/7).",
     synonyms: [],
   },
   {
@@ -10666,7 +10660,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 12085 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2814-77-9, EC 220-562-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/9 (CI 12085) II/1345 (Pigment Red 4; CI 12085: and its salts when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1348) — в рамках условия: «Disodium 4-[(5-chloro-4-methyl-2-sulphonatophenyl)azo]-3-hydroxy-2-naphthoate (Pigment Red 48; CI 15865) when used as a substance in hair dye products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10677,7 +10671,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 12490 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 6410-41-9, EC 229-107-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/14 (CI 12490) II/1347 (Pigment Red 5; CI 12490: and its salts when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1347) — в рамках условия: «N-(5-Chloro-2,4-dimethoxyphenyl)-4-[[5-[(diethylamino)sulphonyl]-2-methoxyphenyl]azo]-3-hydroxynaphthalene-2-carboxamide (Pigment Red 5; CI 12490) and its salts when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/14).",
     synonyms: [],
   },
   {
@@ -10688,7 +10682,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 12700 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 4314-14-1, EC 224-330-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/15.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/15): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10699,7 +10693,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 13015 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2706-28-7, EC 220-293-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/16.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/16).",
     synonyms: [],
   },
   {
@@ -10710,7 +10704,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 14700 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 4548-53-2, EC 224-909-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/18 ( CI 14700) II/1341 (Ponceau SX; CI 14700: when used as a substance in hair dye products).",
     synonyms: [],
   },
   {
@@ -10721,7 +10714,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 14720 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3567-69-9, EC 222-657-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/19.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/19); «Purity criteria as set out in Commission Directive 95/45/EC (E 122)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10732,7 +10725,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 15510 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 633-96-5, EC 211-199-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/21.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/21): макс. Not to be used in eye products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10743,7 +10736,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 15850 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 5858-81-1, EC 227-497-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/27 (CI 15850) III/296 (Pigment Red 57).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/27); «Purity criteria as set out in Commission Directive 95/45/EC (E 180)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10754,7 +10747,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 15865 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3564-21-4 / 5280-66-0, EC 222-642-2 / 226-102-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/28 (CI 15865) II/1348 (Pigment Red 48; CI 15865: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1348) — в рамках условия: «Disodium 4-[(5-chloro-4-methyl-2-sulphonatophenyl)azo]-3-hydroxy-2-naphthoate (Pigment Red 48; CI 15865) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/28).",
     synonyms: [],
   },
   {
@@ -10765,7 +10758,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 15880 is classed chemically as a monoazo color. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 6417-83-0, EC 229-142-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/29 (CI 15880) II/1349 (Pigment Red 63:1; CI 15880: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1349) — в рамках условия: «Calcium 3-hydroxy-4-[(1-sulphonato-2-naphthyl)azo]-2-naphthoate (Pigment Red 63:1; CI 15880) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/29).",
     synonyms: [],
   },
   {
@@ -10776,7 +10769,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 15985 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2783-94-0, EC 220-491-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/31.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/31); «Purity criteria as set out in Commission Directive 95/45/EC (E 110)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10787,7 +10780,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 16035 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 25956-17-6, EC 247-368-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/32 (CI 16035) III/191 (Curry Red).",
+    safetyNotes: "Ограничен в ЕС (Annex III/191): Hair dye substance in non-oxidative hair dye products, макс. 0.4% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/32); «Purity criteria as set out in Commission Directive 95/45/EC (E 129)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10798,7 +10791,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 16185 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 915-67-3, EC 213-022-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/33 (CI 16185) II/1350 (Acid Red 27; CI 16185: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1350) — в рамках условия: «Trisodium 3-hydroxy-4-(4'-sulphonatonaphthylazo)naphthalene-2,7-disulphonate (Acid Red 27; CI 16185) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/33); «Purity criteria as set out in Commission Directive 95/45/EC (E 123)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10809,7 +10802,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 16255 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 2611-82-7, EC 220-036-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/35 (CI 16255) III/192 (Acid Red 18; Acid Red 18 Aluminum Lake).",
+    safetyNotes: "Ограничен в ЕС (Annex III/192): Hair dye substance in non-oxidative hair dye products, макс. 0.5% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/35); «Purity criteria as set out in Commission Directive 95/45/EC (E 124)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10820,7 +10813,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 17200 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 3567-66-6, EC 222-656-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/37 (CI 17200) III/254 (Acid Red 33).",
+    safetyNotes: "Ограничен в ЕС (Annex III/254): Hair dye substance in non-oxidative hair dye products, макс. 0.5 % (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/37).",
     synonyms: [],
   },
   {
@@ -10831,7 +10824,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 18050 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3734-67-6, EC 223-098-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/38.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/38): макс. Not to be used in products applied on mucous membranes; «Purity criteria as set out in Commission Directive 95/45/EC (E 128)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10842,7 +10835,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 18965 is classed chemically as a monoazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 6359-98-4, EC 228-819-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/43.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/43).",
     synonyms: [],
   },
   {
@@ -10853,7 +10846,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 19140 is classed chemically as a pyrazole colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 1934-21-0, EC 217-699-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/44 (CI 19140) III/189 (Acid Yellow 23; Acid Yellow 23 Aluminum lake).",
+    safetyNotes: "Ограничен в ЕС (Annex III/189): Hair dye substance in non-oxidative hair dye products, макс. 0.5% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/44); «Purity criteria as set out in Commission Directive 95/45/EC (E 102)» (текст регламента — дословно, EN).",
     synonyms: ["CI 19140]"],
   },
   {
@@ -10864,7 +10857,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 20470 is classed chemically as a disazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1064-48-8, EC 213-903-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/46.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/46): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10875,7 +10868,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 21108 is classed chemically as a disazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 5567-15-7, EC 226-939-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/48.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/48): макс. Rinse-off products; «Maximum 3,3'-dimethylbenzidine concentration in the colouring agent: 5 ppm» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10886,7 +10879,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 26100 is classed chemically as a disazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 85-86-9, EC 201-638-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/51 (CI 26100) II/1353 (Solvent Red 23; CI 26100: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1353) — в рамках условия: «1-((4-Phenylazo)phenylazo)-2-naphthol (Solvent Red 23; CI 26100) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/51): макс. Not to be used in products applied on mucous membranes; «Purity criteria: anilin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10897,7 +10890,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 27755 is classed chemically as a disazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2118-39-0, EC 218-326-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/52 II/1354 (Food Black 2; CI 27755: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1354) — в рамках условия: «Tetrasodium 6-amino-4-hydroxy-3-[[7-sulphonato-4-[(4-sulphonatophenyl)azo]-1-naphthyl]azo]naphthalene-2,7-disulphonate (Food Black 2; CI 27755) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/52).",
     synonyms: [],
   },
   {
@@ -10908,7 +10901,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 28440 is classed chemically as a disazo colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2519-30-4, EC 219-746-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/53.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/53); «Purity criteria as set out in Commission Directive 95/45/EC (E 151)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10919,7 +10912,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 40800 is classed chemically as a carotenoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 116-32-5 / 7235-40-7 / 31797-85-0, EC - 230-636-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/55.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/55); «Purity criteria as set out in Commission Directive 95/45/EC (E 160a)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10930,7 +10923,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 42045 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 129-17-9, EC 204-934-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/59 (CI 42045) II/1355 (Acid Blue 1; CI 42045: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1355) — в рамках условия: «Ethanaminium, N-(4-((4-diethylamino)phenyl)(2,4-disulfophenyl)methylene)-2,5-cyclohexadien-1-ylidene)-N-ethyl-, hydroxide, inner salt, sodium salt (Acid Blue 1; CI 42045) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/59): макс. Not to be used in products applied on mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10941,7 +10934,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 42051 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3536-49-0, EC 222-573-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/60 (CI 42051) II/1356 (Acid Blue 3; CI 42051: when used as a substance in hair dye products).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/60); «Purity criteria as set out in Commission Directive 95/45/EC (E 131)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10952,7 +10945,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 42053 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2353-45-9, EC 219-091-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/61 (CI 42053) II/1357 (Fast Green FCF: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1357) — в рамках условия: «Benzenemethanaminium, N-ethyl-N-(4-((4-(ethyl((3-sulfophenyl)methyl)amino)phenyl)(4-hydroxy-2-sulfophenyl)methylene)-2,5-cyclohexadien-1-ylidene)-3-sulfo-, hydroxide, inner salt, disodium salt (Fast Green FCF; CI 42053) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/61).",
     synonyms: [],
   },
   {
@@ -10963,7 +10956,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 42080 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3486-30-4, EC 222-476-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/62.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/62): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10974,7 +10967,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 42090 is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 2650-18-2/ 37307-56-5/ 3844-45-9, EC -/ -/ 223-339-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/63 (CI 42090) III/190 (Acid Blue 9; Acid Blue 9 Ammonium Salt; Acid Blue 9 Aluminum Lake).",
+    safetyNotes: "Ограничен в ЕС (Annex III/190): Hair dye substance in non-oxidative hair dye products, макс. 0.5% (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/63); «Purity criteria as sset out in Commission Directive 95/45/EC (E 133)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10985,7 +10978,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 45100 is classed chemically as a xanthene colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 3520-42-1, EC 222-529-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/71 III/193 (Acid Red 52).",
+    safetyNotes: "Ограничен в ЕС (Annex III/193): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 0.6%; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1.5%. | a) To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp,— you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/71): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -10996,7 +10989,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 45350 is classed chemically as a xanthene colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 518-47-8 / 2321-07-5 / 6417-85-2, EC 208-253-0 / 219-031-8 / 229-143-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/74 (CI 45350) II/1332 (Acid Yellow 73 sodium salt; CI 45350) when used as a substance in hair dye products.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1332) — в рамках условия: «2-(6-Hydroxy-3-oxo-(3H)xanthen-9-yl)benzoic acid; Fluorescein and its disodium salt (Acid Yellow 73 sodium salt; CI 45350), when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/74); «6%» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11007,7 +11000,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 45380 is classed chemically as a xanthene colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 17372-87-1 / 548-26-5 / 15876-39-8 / 15086-94-9 / 94021-89-3, EC 241-409-6 / 240-005-7 / 239-138-3 / 301-481-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/76 (CI 45380) II/1334 (Solvent Red 43), its disodium salt (Acid Red 87; CI 45380) and its aluminium salt (Pigment Red 90:1 Aluminium lake) when used as a substance in hair dye products.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/76); «Not more than 1% 2-(6-hydroxy-3-oxo-3H-xanthen-9-yl)benzoic acid and 2% 2-(bromo-6-hydroxy-3-oxo-3H-xanthen-9-yl)benzoic acid» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11018,7 +11011,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 45410 is classed chemically as a xanthene colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 18472-87-2 / 13473-26-2, EC 242-355-6 / 236-747-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/79 III/270 (Acid Red 9).",
+    safetyNotes: "Ограничен в ЕС (Annex III/270): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 0,4 %; условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 2,0 % | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.”» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/79); «Not more than 1% 2-(6-hydroxy-3-oxo-3H-xanthen-9-yl)benzoic acid and 2% 2-(bromo-6-hydroxy-3-oxo-3H-xanthen-9-yl)benzoic acid» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11029,7 +11022,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 45430 is classed chemically as a xanthene colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 16423-68-0 / 12227-78-0, EC 240-474-8 / 235-440-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/80 (CI 45430) II/1337 (Acid Red 51; CI 45430) and its aluminium salt (Pigment Red 172 Aluminium lake) when used as a substance in hair dye products.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1337) — в рамках условия: «2',4',5',7'-Tetraiodofluorescein, its disodium salt (Acid Red 51; CI 45430) and its aluminium salt (Pigment Red 172 Aluminium lake) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/80); «Purity criteria as set out in Commission Directive 95/45/EC (E 127)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11040,7 +11033,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 47000 is classed chemically as a quinoline colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 8003-22-3, EC 232-318-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/81 (CI 47000) (colorant) II/1358 (Solvent Yellow 33; CI 47000: when used as a substance in hair dye products).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/81): макс. Not to be used in products applied on mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11051,7 +11044,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 47005 is a mixture of the sodium salts of the mono- and disulfonic acids of 2-(2-quinolyl)-1H-indene-1,3(2H)-dione. It is principally disulfonated, similar to Ki203 and Acid Yellow 3, whereas Yellow 10 is principally monosulfonated. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 8004-92-0 / 94891-32-4 / 95193-83-2 / 68814-04-0, EC 305-632-3 / 305-897-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/82.",
+    safetyNotes: "Ограничен в ЕС (Annex III/326): Non-oxidative hair dye products, макс. 0,5 %; условия: «From 1 July 2023 non-oxidative hair dye products containing that substance and not complying with the restrictions shall not be placed on the Union market. From 1 January 2024 non-oxidative hair dye products containing that substance and not complying with the restrictions shall not be made available on the Union market. For use as a colorant, see Annex IV, entry No 82.» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/82); «Purity criteria as set out in Commission Directive 95/45/EC (E 104)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11062,7 +11055,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 51319 is classed chemically as an oxazine colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 6358-30-1, EC 228-767-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/85 (CI 51319) II/1360 (Pigment Violet 23; CI 51319: when used as a substance in hair dye products).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/85): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11073,7 +11066,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 60725 is classed chemically as an anthraquinone colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 81-48-1, EC 201-353-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/89 (CI 60725) II/1363 (Solvent Violet 13; CI 60725: when used as a substance in hair dye products).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/89).",
     synonyms: [],
   },
   {
@@ -11084,7 +11077,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 60730 is classed chemically as an anthraquinone colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 4430-18-6, EC 224-618-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/90.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/90): макс. Not to be used in products applied on the mucous membranes (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11095,7 +11088,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 61565 is classed chemically as an anthraquinone colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 128-80-3, EC 204-909-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/91 (CI 61565) II/1364 (Solvent Green 3; CI 61565: when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1364) — в рамках условия: «1,4-bis(p-Tolylamino)anthraquinone (Solvent Green 3; CI 61565) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/91).",
     synonyms: [],
   },
   {
@@ -11106,7 +11099,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 61570 is classed chemically as an anthraquinone colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 4403-90-1, EC 224-546-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/92.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/92).",
     synonyms: [],
   },
   {
@@ -11117,7 +11110,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 73015 is classed chemically as an indigoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 860-22-0, EC 212-728-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/99.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/99); «Purity criteria as set out in Commission Directive 95/45/EC (E 132)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11128,7 +11121,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 73360 is classed chemically as a thioindigoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 2379-74-0, EC 219-163-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/100.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1365) — в рамках условия: «6-Chloro-2-(6-chloro-4-methyl-3-oxobenzo[b]thien-2(3H)-ylidene)-4-methylbenzo[b]thiophene-3(2H)-one (VAT Red 1; CI 73360) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/100).",
     synonyms: [],
   },
   {
@@ -11139,7 +11132,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 73900 is classed chemically as a quinacridone colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1047-16-1, EC 213-879-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/102.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1366) — в рамках условия: «5,12-Dihydroquino[2,3-b]acridine-7,14-dione (Pigment Violet 19; CI 73900) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/102): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11150,7 +11143,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 73915 is classified chemically as an indigoid colour. It conforms generally to the formula: Функции в составе: краситель. Идентификаторы: CAS 980-26-7, EC 213-561-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/103.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/103): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11161,7 +11154,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 74160 is classed chemically as a phthalocyanine colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 147-14-8, EC 205-685-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/105.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1367) — в рамках условия: «(29H,31H-Phthalocyaninato(2-)-N29,N30,N31,N32)copper (Pigment Blue 15; CI 74160) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/105).",
     synonyms: [],
   },
   {
@@ -11172,7 +11165,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 74180 is classed chemically as a phthalocyanine colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1330-38-7 / 1328-51-4, EC 215-537-8 / 215-523-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/106.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1368) — в рамках условия: «Disodium [29H,31H-phthalocyaninedisulphonato(4-)-N29,N30,N31,N32]cuprate(2-) (Direct Blue 86; CI 74180) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/106): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11183,7 +11176,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 74260 is classed chemically as a phthalocyanine colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1328-53-6, EC 215-524-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/107.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1369) — в рамках условия: «Polychloro copper phthalocyanine (Pigment Green 7; CI 74260) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/107): макс. Not to be used in eye products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11194,7 +11187,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75120 is the coloring matter from the seeds of Bixa orellana. Функции в составе: краситель. Идентификаторы: CAS 1393-63-1 / 542-40-5, EC 215-735-4 / 208-810-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/109.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/109); «Purity criteria as set out in Commission Directive 95/45/EC (E 160b)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11205,7 +11198,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75125 is classed chemically as a carotenoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 502-65-8, EC 207-949-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/110.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/110); «Purity criteria as set out in Commission Directive 95/45/EC (E 160d)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11216,7 +11209,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75130 is classed chemically as a carotenoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 7235-40-7, EC 230-636-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/111.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/111); «Purity criteria as set out in Commission Directive 95/45/EC (E 160a)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11227,7 +11220,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75135 is classed chemically as a carotenoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 3763-55-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/112.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/112).",
     synonyms: [],
   },
   {
@@ -11238,7 +11231,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75170 is a natural purine that conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 73-40-5, EC 200-799-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/113.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/113).",
     synonyms: [],
   },
   {
@@ -11249,7 +11242,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75300 is classed chemically as a curcuminoid colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 458-37-7 / 94875-80-6, EC 207-280-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/114.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/114); «Purity criteria as set out in Commission Directive 95/45/EC (E 100)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11260,7 +11253,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75470 is classed chemically as an anthraquinone derived colour. It conforms to the formula: Функции в составе: краситель; отдушка. Идентификаторы: CAS 1390-65-4, EC 215-724-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/115.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/115); «Purity criteria as set out in Commission Directive 95/45/EC (E 120)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11271,7 +11264,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75810 is a copper derivative of a botanically derived color obtained from green plants. Функции в составе: краситель. Идентификаторы: CAS 11006-34-1 / 8049-84-1, EC 234-242-5 / 232-471-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/116.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/116); «Purity criteria as set out in Commission Directive 95/45/EC (E 140, E 141)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11282,7 +11275,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77000 is classed chemically as an inorganic colour. It consists of finely powdered aluminium. Функции в составе: краситель. Идентификаторы: CAS 7429-90-5, EC 231-072-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/117.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/117); «Purity criteria as set out in Commission Directive 95/45/EC (E 173)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11293,7 +11286,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77002 is classed chemically as an inorganic colour. It consists predominantly of aluminium hydroxide, with varying amounts of basic aluminium sulfate. It conforms generally to the formula: Функции в составе: краситель. Идентификаторы: CAS 1332-73-6 / 21645-51-2 / 8011-94-7, EC 215-573-4 / 244-492-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/118.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/118).",
     synonyms: [],
   },
   {
@@ -11304,7 +11297,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77007 is classed chemically as an inorganic colour. It is a synthetic pigment composed of complex sodium aluminum sulfosilicates. Функции в составе: краситель. Идентификаторы: CAS 12769-96-9 / 1302-83-6 / 57455-37-5, EC 235-811-0 / 215-111-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/120.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/120).",
     synonyms: [],
   },
   {
@@ -11315,7 +11308,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77120 is classed chemically as an inorganic colour. It conforms generally to the formula: Функции в составе: краситель. Идентификаторы: CAS 7727-43-7, EC 231-784-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/122.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/122).",
     synonyms: [],
   },
   {
@@ -11326,7 +11319,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77163 is classed chemically as an inorganic colour. It conforms generally to the formula: Функции в составе: краситель. Идентификаторы: CAS 7787-59-9, EC 232-122-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/123.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/123).",
     synonyms: [],
   },
   {
@@ -11337,7 +11330,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77266 is a colorant composed of finely divided particles of elemental carbon obtained by the incomplete combustion of hydrocarbons. Функции в составе: краситель. Идентификаторы: CAS 1333-86-4; 7440-44-0, EC 215-609-9; 231-153-3; 931-328-0; 931-334-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/126 IV/126a.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/126a); «10% | Not to be used in applications that may lead to exposure of the end user's lungs by inhalation. O nly nanomaterials having the following characteristics are allowed: — Purity > 97 %, with the following impurity profile: Ash content ≤ 0,15 %, total sulphur ≤ 0,65 %, total PAH ≤ 500 ppb and benzo(a)pyrene ≤ 5 ppb, dibenz(a,h)anthracene ≤ 5 ppb, total As ≤ 3 ppm, total Pb ≤ 10 ppm, and total Hg ≤ 1 ppm; — Primary particle size ≥ 20 nm.’» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/126); «Purity > 97 %, with the following impurity profile: Ash content ≤ 0,15 %, total sulphur ≤ 0,65 %, total PAH ≤ 500 ppb and benzo(a)pyrene ≤ 5 ppb, dibenz(a,h)anthracene ≤ 5 ppb, total As ≤ 3 ppm, total Pb ≤ 10 ppm, total Hg ≤ 1 ppm.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11348,7 +11341,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77267 is classed chemically as an inorganic color. It consists primarily of a mixture of carbon, calcium phosphate and calcium carbonate. Функции в составе: краситель. Идентификаторы: CAS 8021-99-6, EC 232-421-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/127.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/127).",
     synonyms: [],
   },
   {
@@ -11359,7 +11352,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77288 is classed chemically as an inorganic colour. It conforms generally to the formula: Функции в составе: краситель. Идентификаторы: CAS 1308-38-9, EC 215-160-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/129.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/129); «free from chromate ion» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11370,7 +11363,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77289 is classed chemically as an inorganic colour. It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1308-14-1 / 12001-99-9, EC 215-158-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/130.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/130); «free from chromate ion» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11381,7 +11374,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77400 is classed chemically as an inorganic color. It is a finely powdered metal consisting chiefly of copper or an alloy of copper and zinc with small amounts of aluminum or tin (See also INCI: Copper Powder) Функции в составе: краситель. Идентификаторы: CAS 7440-50-8, EC 231-159-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/132.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/132).",
     synonyms: [],
   },
   {
@@ -11392,7 +11385,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77480 is classed chemically as an inorganic colour. It consists of metallic gold. Функции в составе: краситель. Идентификаторы: CAS 7440-57-5, EC 231-165-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/133.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/133); «Purity criteria as set out in Commission Directive 95/45/EC (E175)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11403,7 +11396,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77489 is classed chemically as an inorganic colour. It consists chiefly of ferrous oxide that conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1345-25-1, EC 215-721-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/134.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/134).",
     synonyms: [],
   },
   {
@@ -11414,7 +11407,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77491 is classed chemically as an inorganic colour. It consists chiefly of ferric oxide that conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1309-37-1 / 1317-61-9 / 1345-27-3 / 52357-70-7 / 1345-25-1, EC 215-168-2 / 215-277-5 / 215-722-3 / 257-870-1 / 215-721-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/135.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/135); «Purity criteria as set out in Commission Directive 95/45/EC (E172)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11425,7 +11418,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77492 is classed chemically as an inorganic colour. It consists chiefly of hydrated ferrous oxide that conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 51274-00-1 / 1345-27-3 / 20344-49-4 / 52357-70-7, EC 257-098-5 / 215-722-3 / 215-570-8 / 257-670-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/136.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/136); «Purity criteria as set out in Commission Directive 95/45/EC (E172)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11436,7 +11429,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77499 is classed chemically as an inorganic colour. It consists chiefly of ferrous-ferric oxide (see also INCI:Iron Oxides) Функции в составе: краситель. Идентификаторы: CAS 12227-89-3 / 1309-37-1 / 1317-61-9 / 1345-25-1 / 1345-27-3 / 52357-70-7, EC 235-442-5 / 215-168-2 / 215-277-5 / 215-721-8 / 215-722-3 / 257-870-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/137.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/137); «Purity criteria as set out in Commission Directive 95/45/EC (E172)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11447,7 +11440,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77510 is classed chemically as an inorganic colour (see also INCI: Ferric Ammonium Ferrocyanide). Функции в составе: краситель. Идентификаторы: CAS 12240-15-2 / 25869-00-5, EC 237-875-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/138.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/138); «free from cyanide ions» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11458,7 +11451,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77713 is classed chemically as an inorganic colour (see also INCI: Magnesium Carbonate). It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 546-93-0 / 7757-69-9, EC 208-915-9 / 231-817-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/139.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/139).",
     synonyms: [],
   },
   {
@@ -11469,7 +11462,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77742 is classed chemically as an inorganic colour (see also INCI name: Manganese Violet). It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 10101-66-3, EC 233-257-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/140.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/140).",
     synonyms: [],
   },
   {
@@ -11480,7 +11473,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77820 is classed chemically as an inorganic colour. It consists of metallic silver (see also INCI: Silver) Функции в составе: краситель. Идентификаторы: CAS 7440-22-4, EC 231-131-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/142.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/142): (a) Lip products (b) Eye shadow, макс. For (a) and (b): 0,2 %’; «Purity criteria as set out in Commission Directive 95/45/EC (E174)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11491,7 +11484,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 77947 is classed chemically as an inorganic colour (see also INCI: Zinc Oxide). It conforms to the formula: Функции в составе: краситель. Идентификаторы: CAS 1314-13-2, EC 215-222-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/144.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/144); «Not to be used in applications that may lead to exposure of the end-user's lungs by inhalation.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11592,7 +11585,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: денатурирующее; придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 104-55-2, EC 203-213-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/76. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/76); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 6(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -11653,7 +11646,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cinnamomum Camphora Linalooliferum Leaf Oil is an essential oil obtained from the leaves of the Camphor Tree, Cinnamomum camphora (L.) var. linalooliferum, Lauraceae. Syn. Ho leaf oil Функции в составе: придание аромата. Идентификаторы: CAS 91745-89-0, EC 294-760-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/84.",
     synonyms: [],
   },
   {
@@ -11724,7 +11716,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 8007-80-5/ 84961-46-6, EC -/ 284-635-0.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/348); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -11755,7 +11747,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 8015-91-6/ 84649-98-9, EC -/ 283-479-0.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/349); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -11786,7 +11778,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 104-54-1, EC 203-212-3.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/69); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -11947,7 +11939,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Flower Extract is the extract of the flowers of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: вяжущее действие; уход за кожей. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11958,7 +11950,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Fruit Extract is an extract of the fruit of the Lime, Citrus Aurantifolia, Rutaceae Функции в составе: уход за кожей. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11969,7 +11961,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; уход за волосами; уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Juice is the liquid expressed from the fresh pulp of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: очищение; уход за волосами; уход за кожей; тонизирующее действие. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11980,7 +11972,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Leaf Oil is the volatile oil obtained from the leaves of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: отдушка. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -11991,7 +11983,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; уход за волосами; отдушка; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Oil is the volatile oil obtained from the fruits of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: очищение; уход за волосами; отдушка; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 8008-26-2 / 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12002,7 +11994,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; уход за волосами; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Peel Extract is an extract of the peel of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: очищение; уход за волосами; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12013,7 +12005,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Peel Oil is the volatile oil obtained from the peel of Citrus aurantifolia, Rutaceae. Функции в составе: отдушка.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12024,7 +12015,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Lime Oil\". Citrus Aurantifolia Peel Oil Distilled is an essential oil distilled from the acidic epicarps after the pressing the juice from the fruit of the Lime, Citrus aurantifolia, Rutaceae. It contains mainly D-limonene and 7% alpha-terpineol Функции в составе: придание аромата. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12035,7 +12026,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Lime Oil\". Essential oil expressed from the epicarps of the Lime, Citrus aurantifolia, Rutaceae. It contains chiefly mainly D-limonene and 5% citral (low terpineol) Функции в составе: придание аромата. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12046,7 +12037,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Peel Powder is the powder obtained from the dried, ground peel of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: уход за кожей. Идентификаторы: CAS 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12057,7 +12048,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantifolia Seed Oil is the oil expressed from the seeds of the Lime, Citrus aurantifolia, Rutaceae Функции в составе: отдушка; уход за кожей; ароматизатор (для средств полости рта). Идентификаторы: CAS 8008-26-2 / 90063-52-8, EC 290-010-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12078,7 +12068,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantium Amara Flower Oil is the volatile oil obtained from the flowers of the Bitter Orange, Citrus aurantium L. var. amara L., Rutaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 68916-04-1 / 72968-50-4, EC 277-143-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/350. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/350); условия: «The presence of the substance or substances shall be indicated as ‘Citrus Aurantium Flower Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12119,7 +12109,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantium Amara (Bitter Orange) Peel Oil is the volatile oil obtained from the peel of Citrus aurantium amara. Функции в составе: уход за кожей. Идентификаторы: CAS 68916-04-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/351. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/351); условия: «The presence of the substance or substances shall be indicated as ‘Citrus Aurantium Peel Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12150,7 +12140,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantium Bergamia Peel Oil is the volatile oil obtained from the peel of Citrus aurantium bergamia, Rutaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 89957-91-5, EC 289-612-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/352. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/352); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12191,7 +12181,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; отдушка; уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantium Dulcis Flower Oil is the volatile oil obtained from the flowers of the Sweet Orange, Citrus aurantium L. var. dulcis L., Rutaceae Функции в составе: вяжущее действие; отдушка; уход за кожей; тонизирующее действие. Идентификаторы: CAS 8028-48-6, EC 232-433-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/350. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/350); условия: «The presence of the substance or substances shall be indicated as ‘Citrus Aurantium Flower Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12282,7 +12272,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Aurantium Dulcis (Orange) Peel Oil is the volatile oil obtained by expression from the peel of Citrus sinensis, Rutaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 8008-57-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/351. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/351); условия: «The presence of the substance or substances shall be indicated as ‘Citrus Aurantium Peel Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12395,7 +12385,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "функция не указана (CosIng)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis is a plant material derived from the whole plant, Citrus grandis, Rutaceae. Функции в составе: функция не указана (CosIng).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12406,7 +12395,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Fruit Extract is the extract of the fruit of Citrus grandis, Rutaceae. Функции в составе: антимикробное действие; уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12417,7 +12405,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Fruit Extract is an extract of the fruit of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: вяжущее действие; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12428,7 +12416,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Fruit Water is an aqueous solution of the steam distillate obtained from the fruit of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12439,7 +12427,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Juice is the liquid expressed from the fresh pulp of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: вяжущее действие; уход за кожей; тонизирующее действие. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12450,7 +12438,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Peel Extract is an extract of the peel of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: вяжущее действие; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12461,7 +12449,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Peel Oil is the volatile oil obtained from the peel of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12472,7 +12460,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Seed Extract is an extract of the seeds of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: вяжущее действие; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12483,7 +12470,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Grandis Seed Oil is the oil expressed from the seeds of the Grapefruit, Citrus grandis, Rutaceae Функции в составе: смягчение кожи (эмолент); уход за кожей; придание аромата. Идентификаторы: CAS 90045-43-5 / 8016-20-4, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12564,7 +12550,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon (Lemon) Flower Extract is the extract of the flowers of Citrus limon, Rutaceae. Функции в составе: смягчение кожи (эмолент); уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12575,7 +12560,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Flower/Leaf/Stem Extract is an extract of the flowers, leaves and stems of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка; уход за кожей; тонизирующее действие. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12586,7 +12571,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Flower/Leaf/Stem Oil is the volatile oil obtained from the flowers, leaves and stems of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12597,7 +12582,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; окклюзия (удержание влаги)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Fruit Extract is an extract of the fruit of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка; уход за кожей; окклюзия (удержание влаги). Идентификаторы: CAS 92346-89-9 / 84929-31-7 / 85085-28-5, EC 296-174-2 / 284-515-8 / 285-359-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12608,7 +12593,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Fruit Oil is the volatile oil obtained from the fruit of Lemon, Citrus limon (L.), Rutaceae Функции в составе: вяжущее действие; тонизирующее действие. Идентификаторы: CAS 8008-56-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12619,7 +12604,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Fruit Water is an aqueous solution of the steam distillate obtained from the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12630,7 +12615,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Juice is the liquid expressed from the fresh pulp of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: уход за кожей; тонизирующее действие. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12641,7 +12626,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Juice Extract is an extract of the juice of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: тонизирующее действие. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12652,7 +12637,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Leaf Cell Extract is the extract of a culture of the leaf cells of Lemon, Citrus limon (L.), Rutaceae Функции в составе: уход за кожей. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12663,7 +12648,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Leaf Extract is an extract obtained from the leaves of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: придание аромата. Идентификаторы: CAS 84929-31-7, EC 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12684,7 +12669,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Peel is the peel of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12695,7 +12680,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за кожей; защита кожи; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Peel Extract is an extract of the peel of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: смягчение кожи (эмолент); уход за кожей; защита кожи; тонизирующее действие. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12706,7 +12691,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Peel Oil is the volatile oil obtained from the fresh peel of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 8008-56-8 / 84929-31-7, EC 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/353. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/353); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -12717,7 +12702,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абсорбент; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Limon Peel Powder is the powder obtained from the crushed peel of the Lemon, Citrus limon (L.), Rutaceae Функции в составе: абсорбент; регулирование вязкости. Идентификаторы: CAS 92346-89-9 / 84929-31-7, EC 296-174-2 / 284-515-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12808,7 +12793,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Nobilis Peel Extract is the extract of the peel of Citrus nobilis (the accepted scientific name for Citrus nobilis is Citrus reticulata). Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 84929-38-4 (generic), 90063-83-5, EC 284-521-0, -.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12829,7 +12813,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Fruit Extract is an extract of the fruit of the Grapefruit, Citrus paradisi, Rutaceae Функции в составе: уход за кожей. Идентификаторы: CAS 8016-20-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12840,7 +12824,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Juice is the liquid expressed from the fresh pulp of of the Grapefruit, Citrus paradisi, Rutaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 8016-20-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12851,7 +12835,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Peel Extract is the extract obtained from the peel of the Grapefruit, Citrus paradisi, Rutaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 8016-20-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12862,7 +12846,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Peel Oil is the volatile oil expressed from the peel of the Grapefruit, Citrus paradisi, Rutaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 8016-20-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12873,7 +12857,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Seed Extract is an extract of the seeds obtained from the Grapefruit, Citrus paradisi M., Rutaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 90045-43-5, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12884,7 +12867,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Paradisi Seed Oil is the oil expressed from the seeds of the Grapefruit, Citrus paradisi, Rutaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 90045-43-5, EC 289-904-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12895,7 +12877,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Reticulata Fruit Extract is the extract of the fruit of the Mandarin-orange, Citrus reticulata, Rutaceae Функции в составе: защита кожи. Идентификаторы: CAS 8008-31-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12906,7 +12888,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Reticulata Fruit Juice is the juice expressed from the fruit of the tangerine Citrus reticulata, Rutaceae. Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
     synonyms: [],
   },
   {
@@ -12917,7 +12898,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Reticulata Peel Extract is an extract of the peel of the Mandarin-orange, Citrus reticulata, Rutaceae Функции в составе: уход за кожей. Идентификаторы: CAS 8008-31-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12928,7 +12909,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "дезодорирующее действие; отдушка; придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Reticulata Peel Oil is the volatile oil obtained from the peel of tangerine, Citrus reticulata, Rutaceae Функции в составе: дезодорирующее действие; отдушка; придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 8008-31-9 / 84929-38-4, EC 284-521-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/358.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/358) — в рамках условия: «Furocoumarines (e.g. trioxysalen (INN), 8-methoxypsoralen, 5-methoxypsoralen) except for normal content in natural essences used. In sun protection and in bronzing products, furocoumarines shall be below 1 mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -12949,7 +12930,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за волосами; защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Citrus Sinensis Peel Oil is the volatile oil obtained from the peel of Citrus sinensis. The accepted scientific name for Citrus sinensis is Citrus x aurantium. Функции в составе: смягчение кожи (эмолент); уход за волосами; защита кожи.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/351. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/351); условия: «The presence of the substance or substances shall be indicated as ‘Citrus Aurantium Peel Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -13040,7 +13021,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; антимикробное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Climbazole is the heterocyclic organic compound that conforms to the formula: Функции в составе: противосеборейное действие; антимикробное действие; консервант. Идентификаторы: CAS 38083-17-9, EC 253-775-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/32 and III/310.",
+    safetyNotes: "Ограничен в ЕС (Annex III/310): Rinse-off anti-dandruff shampoo, макс. 2,0 %; условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product.» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/32): (a) Hair lotions (b) Face creams (c) Foot care products (d) Rinse-off shampoo, макс. (a) 0,2 % (b) 0,2 % (c) 0,2 % (d) 0,5 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13091,7 +13072,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amides, coco, N,N-bis(hydroxyethyl) Функции в составе: ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости. Идентификаторы: CAS 68603-42-9, EC 271-657-0/931-329-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13102,7 +13083,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; ПАВ: очищение; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: ПАВ: эмульгирование; ПАВ: очищение; регулирование вязкости.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13233,7 +13214,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Quaternary ammonium compounds, benzylcoco alkyldimethyl, chlorides Функции в составе: антистатический эффект; уход за волосами; консервант. Идентификаторы: CAS 61789-71-7, EC 263-080-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/54.",
+    safetyNotes: "Ограничен в ЕС (Annex III/65): Rinse-off hair (head) products, макс. 3% (as benzalkonium chloride); условия: «In the final products the concentrations of benzalkonium chloride, bromide and saccharinate with an alkyl chain of C14, or less must not exceed 0.1% (as benzalkonium chloride) For purposes other than inhibiting the development of micro-organismes in the product. This purpose has to be apparent from the presentation of the product | Avoid contact with the eyes» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/54): макс. 0.1% (as benzalkonium chloride); «Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13604,6 +13585,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Colloidal Gold is the product obtained by the suspension of gold in water or other liquids. Функции в составе: антимикробное действие; уход за кожей. Идентификаторы: CAS 7440-57-5, EC 231-165-9.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1728) — в рамках условия: «Gold (nano) [INCI], Colloidal Gold (nano) [INCI] [1] Gold Thioethylamino Hyaluronic Acid (nano) [INCI] [2] Acetyl heptapeptide-9 Colloidal gold (nano) [INCI] [3]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13634,6 +13616,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антиоксидант; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Colloidal Platinum is the product obtained by the suspension of platinum in water. Функции в составе: антимикробное действие; антиоксидант; дезодорирующее действие. Идентификаторы: CAS 7440-06-4, EC 231-116-1.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1729) — в рамках условия: «Platinum (nano) [INCI], Colloidal Platinum (nano) [INCI] [1] Acetyl tetrapeptide-17 Colloidal Platinum (nano) [INCI] [2]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13644,7 +13627,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; модификатор скольжения",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Colloidal Silver is a suspension of silver particles in water prepared by electrolysis or by reduction of soluble silver salts. Функции в составе: антимикробное действие; модификатор скольжения. Идентификаторы: CAS 7440-22-4, EC 231-131-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): For the nano form please see II/1727.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1727) — в рамках условия: «Silver (nano) [1 nm < particle diameter ≤ 100 nm] Silver (massive) [particle diameter ≥ 1 mm]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -13675,7 +13658,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Naturally occuring substances. Colostrum is the fluid secreted by the mammary glands after the birth of an animal Функции в составе: уход за кожей; защита кожи. Идентификаторы: CAS 9013-90-5, EC 232-750-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -14316,7 +14298,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cupressus Sempervirens Cone Extract is an extract of the cones of the Cypress, Cupressus sempervirens L., Pinaceae Функции в составе: уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 84696-07-1, EC 283-626-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/123.",
+    safetyNotes: "Ограничен в ЕС (Annex III/123); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14327,7 +14309,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cupressus Sempervirens Leaf Extract is the extract obtained from the leaves of the Cypress, Cupressus sempervirens L., Pinaceae Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 84696-07-1, EC 283-626-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/123.",
+    safetyNotes: "Ограничен в ЕС (Annex III/123); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14338,7 +14320,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cupressus Sempervirens Leaf/Nut/Stem Oil is a natural oil obtained from the leaves, nuts and stems the Cypress, Cupressus sempervirens L., Pinaceae Функции в составе: смягчение кожи (эмолент); отдушка; уход за кожей. Идентификаторы: CAS 84696-07-1 / 8013-86-3, EC 283-626-9 /-.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/123.",
+    safetyNotes: "Ограничен в ЕС (Annex III/123); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14349,7 +14331,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cupressus Sempervirens Oil is the volatile oil obtained from the whole plant, the Cypress, Cupressus sempervirens L., Pinaceae Функции в составе: отдушка. Идентификаторы: CAS 84696-07-1 / 8013-86-3, EC 283-626-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/123.",
+    safetyNotes: "Ограничен в ЕС (Annex III/123); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14450,7 +14432,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 1,7-bis(4-Hydroxy-3-methoxyphenyl)hepta-1,6-dien-3,5-dione, (E,E)- / (CI 75300) Функции в составе: антиоксидант; краситель. Идентификаторы: CAS 458-37-7, EC 207-280-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/114.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/114); «Purity criteria as set out in Commission Directive 95/45/EC (E 100)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14531,7 +14513,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за волосами; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cyclohexasiloxane is the cyclic dimethyl polysiloxane that conforms to the formula, where n equals 6, and the other components of cyclomethicone (where n equals 4, 5, or 7) are present at levels of less than 1%. Функции в составе: смягчение кожи (эмолент); уход за волосами; растворитель. Идентификаторы: CAS 540-97-6, EC 208-762-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Restricted under COMMISSION REGULATION (EU) 2024/1328. 1. Shall not be placed on the market (a) as a substance on its own; (b) as a constituent of other substances; or (c) in mixtures; in a concentration equal to or greater than 0,1 % by weight of the respective substance after 6 June 2026. [...] 3. By way of derogation: (a) for D4 and D5 in wash-off cosmetic products, paragraph 1, point (c), shall apply after 31 January 2020. For the purposes of this point, “wash-off cosmetic products” means cosmetic products as defined in Article 2(1), point (a), of Regulation (EC) No 1223/2009 of the European Parliament and of the Council (*1) that, under normal conditions of use, are washed off with water after application; (b) for all cosmetic products other than the ones mentioned in paragraph 3(a), paragraph 1 shall apply after 6 June 2027..",
     synonyms: ["CYCLOHEXA SILOXANE"],
   },
   {
@@ -14542,7 +14523,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антикоррозийное; регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cyclohexylamine is the organic compound that conforms to the formula: Функции в составе: антикоррозийное; регулирование pH. Идентификаторы: CAS 108-91-8, EC 203-629-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1503.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1503) — в рамках условия: «Cyclohexylamine» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -14563,7 +14544,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за волосами; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cyclomethicone is a generic name for a mixture of cyclic dimethyl polysiloxane compounds that conform to the formula, where n has a value between 4 and 6. Функции в составе: смягчение кожи (эмолент); уход за волосами; растворитель. Идентификаторы: CAS 69430-24-6 / 556-67-2 / 541-02-6 / 540-97-6, EC 209-136-7 / 208-764-9 / 208-762-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Entry 1388 of Annex II corresponds to D4 (Cyclotetrasiloxane). If Cyclomethicone contains D4 then entry II/1388 applies. Restricted under COMMISSION REGULATION (EU) 2024/1328. 1. Shall not be placed on the market (a) as a substance on its own; (b) as a constituent of other substances; or (c) in mixtures; in a concentration equal to or greater than 0,1 % by weight of the respective substance after 6 June 2026. [...] 3. By way of derogation: (a) for D4 and D5 in wash-off cosmetic products, paragraph 1, point (c), shall apply after 31 January 2020. For the purposes of this point, “wash-off cosmetic products” means cosmetic products as defined in Article 2(1), point (a), of Regulation (EC) No 1223/2009 of the European Parliament and of the Council (*1) that, under normal conditions of use, are washed off with water after application; (b) for all cosmetic products other than the ones mentioned in paragraph 3(a), paragraph 1 shall apply after 6 June 2027.. Комедогенность (шкала Fulton 1989, 0–5): 0.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1388) — в рамках условия: «Octamethylcyclotetrasiloxane; D4» (текст регламента — дословно, EN). Комедогенность (шкала Fulton 1989, 0–5): 0.",
     synonyms: ["M CYCLOMETHICONE"],
   },
   {
@@ -14574,7 +14555,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за волосами; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cyclotetrasiloxane is the cyclic dimethyl polysiloxane that conforms to the formula: Функции в составе: смягчение кожи (эмолент); уход за волосами; растворитель. Идентификаторы: CAS 556-67-2 / 293-51-6, EC 209-136-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1388.",
     synonyms: [],
   },
   {
@@ -14635,7 +14615,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Lemon Grass Oil; Indian Verbena Oil; Indian Melissa Oil\". Cymbopogon Citratus Leaf Oil is an essential oil obtained from the leaves of the Lemon Grass, Cymbopogon citratus, Poaceae. It contains citral (75-85%), methylheptenone, citronellal, geraniol, limonene Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 89998-14-1, EC 289-752-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/354. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/354); условия: «The presence of the substance or substances shall be indicated as ‘Lemongrass Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -14686,7 +14666,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cymbopogon Flexuosus Oil is the volatile oil obtained form the dried Lemon Grass, Cymbopogon flexuosus, Poaceae Функции в составе: отдушка. Идентификаторы: CAS 91844-92-7, EC 295-161-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/354. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/354); условия: «The presence of the substance or substances shall be indicated as ‘Lemongrass Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -14747,7 +14727,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cymbopogon Schoenanthus Oil is the volatile oil obtained by the steam distillation of fresh Lemon Grass, Cymbopogon schoenanthus (L.), Poaceae Функции в составе: отдушка; тонизирующее действие. Идентификаторы: CAS 8007-02-1 / 89998-16-3 / 89998-14-1, EC 289-754-1 / 289-752-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/354. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/354); условия: «The presence of the substance or substances shall be indicated as ‘Lemongrass Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -15018,7 +14998,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: ПАВ: эмульгирование; ПАВ: очищение. Идентификаторы: CAS 69331-39-1, EC 273-968-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/411.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/411) — в рамках условия: «Secondary alkyl- and alkanolamines and their salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15173,7 +15153,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "окклюзия (удержание влаги)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Deer Fat is the fatty tissue obtained from deer. Функции в составе: окклюзия (удержание влаги).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -15194,7 +15173,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Delta-Damascone Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 57378-68-4, EC 260-709-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/161. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/157): (a) Oral products (b) Other products, макс. (b) 0.02%; условия: «(a) (b) The presence of the substance or substances shall be indicated as ‘Rose Ketones’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -15378,7 +15357,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за волосами; уход за кожей. Идентификаторы: CAS 74638-76-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/93.",
+    safetyNotes: "Ограничен в ЕС (Annex III/93): Hair products, макс. 1.5% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15439,7 +15418,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Diazolidinyl Urea is the heterocyclic substituted urea that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 78491-02-8, EC 278-928-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/46.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/46): макс. 0.5% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15530,7 +15509,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dichlorobenzyl Alcohol is the substituted aromatic compound that conforms to the formula: Функции в составе: антимикробное действие; консервант. Идентификаторы: CAS 1777-82-8, EC 217-210-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/22.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/22): макс. 0.15% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15591,7 +15570,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 111-42-2, EC 203-868-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/411.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/411) — в рамках условия: «Secondary alkyl- and alkanolamines and their salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15794,7 +15773,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос; загар; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dihydroxyacetone is the aliphatic ketone that conforms to the formula: Функции в составе: крашение волос; загар; уход за кожей. Идентификаторы: CAS 96-26-4, EC 202-494-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/322.",
+    safetyNotes: "Ограничен в ЕС (Annex III/322): (a) Hair dye substance in non-oxidative hair dye products (*) (b) Self-tanning products (*) (*) From 26 January 2022 hair dye and self-tanning products containing that substance and not complying with the restrictions shall not be placed on the Union market. From 22 April 2022 hair dye and self-tanning products containing that substance and not complying with the restrictions shall not be made available on the Union market, макс. (a) 6,25 % (b) 10 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15816,7 +15795,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 138937-28-7, EC 421-170-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/204.",
+    safetyNotes: "Ограничен в ЕС (Annex III/204): Hair dye substance in non-oxidative hair dye products, макс. 2.0%; условия: «- Can cause allergic reaction - You have ever experienced any reaction afther colouring your hair - You have experienced a reaction to a temporary 'black henna' tattoo in the past» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -15847,7 +15826,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 110-97-4, EC 203-820-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/411.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/411) — в рамках условия: «Secondary alkyl- and alkanolamines and their salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16135,7 +16114,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "стабилизация эмульсии; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: стабилизация эмульсии; растворитель. Идентификаторы: CAS 14433-76-2, EC 238-405-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16186,7 +16165,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; уход за волосами. Идентификаторы: CAS 112-18-5, EC 203-943-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16197,7 +16176,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; уход за кожей; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; уход за волосами; уход за кожей; регулирование вязкости.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN). Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -16208,7 +16187,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 108-01-0, EC 203-542-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
     synonyms: [],
   },
   {
@@ -16219,7 +16197,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; уход за волосами. Идентификаторы: CAS 112-75-4, EC 204-002-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16230,7 +16208,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dimethyl Oxazolidine is the heterocyclic compound that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 51200-87-4, EC 257-048-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/45.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/45): макс. 0.1%; «pH > 6» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16241,7 +16219,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dimethyl Phenethyl Acetate is the organic compound that conforms to the formula: Функции в составе: отдушка. Идентификаторы: CAS 151-05-3, EC 205-781-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/334. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/334); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -16272,7 +16250,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; ПАВ: эмульгирование; уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; ПАВ: эмульгирование; уход за волосами. Идентификаторы: CAS 124-28-7, EC 204-694-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16783,7 +16761,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "хелатор (связывание ионов металлов)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: хелатор (связывание ионов металлов). Идентификаторы: CAS 7414-83-7, EC 231-025-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/53.",
+    safetyNotes: "Ограничен в ЕС (Annex III/53): (a) Hair product (b) Soap, макс. (a) 1.5% (as etidronic acid) (b) 0.2% (as etidronic acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -16894,7 +16872,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Disodium Phenyl Dibenzimidazole Tetrasulfonate is the heterocyclic compound that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 180898-37-7, EC 429-750-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/24.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/24): макс. 10%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -17125,7 +17103,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Donkey Milk is the milk obtained from the donkey, Equus asinus Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17156,7 +17133,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dromiceius oil is the fixed oil obtained from the fat of the bird emu (Dromiceius) Функции в составе: смягчение кожи (эмолент).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17307,7 +17283,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Egg is the entire content of chicken eggs Функции в составе: уход за волосами; уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17318,7 +17293,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Egg Oil is the oil obtained by extraction of the yolks of fresh chicken eggs. Функции в составе: уход за волосами; уход за кожей. Идентификаторы: CAS 8001-17-0, EC 232-271-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17329,7 +17303,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Egg Powder is a powder obtained from the dried, ground whole chicken egg. Функции в составе: уход за волосами.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17340,7 +17313,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Egg Yolk Extract is the extract of chicken egg yolk. Функции в составе: ПАВ: эмульгирование; ПАВ: очищение. Идентификаторы: CAS 91080-17-0, EC 293-508-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17481,7 +17453,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Emu Oil is an oil obtained from the fat of the bird Domaius novaehollandiae. Функции в составе: уход за кожей. Идентификаторы: CAS 158570-96-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -17602,7 +17573,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за кожей. Идентификаторы: CAS 50-14-6 / 1406-16-2, EC 200-014-9 / 215-797-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/335.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/335) — в рамках условия: «Ergocalciferol (INN) and Cholecalciferol (vitamins D2 and D3)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -17733,7 +17704,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 141-43-5, EC 205-483-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -17765,7 +17736,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ethyl Benzoate is the ester of ethyl alcohol and Benzoic Acid. It conforms to the formula: Функции в составе: отдушка; консервант. Идентификаторы: CAS 93-89-0, EC 202-284-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/1a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/1a): макс. 0.5% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -17847,7 +17818,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; уход за волосами; консервант; уход за кожей; антимикробное действие; дезодорирующее действие; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ethyl Lauroyl Arginate HCl is the salt that conforms to the formula: Функции в составе: противосеборейное действие; уход за волосами; консервант; уход за кожей; антимикробное действие; дезодорирующее действие; уход за полостью рта. Идентификаторы: CAS 60372-77-2, EC 434-630-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/197 V/58.",
+    safetyNotes: "Ограничен в ЕС (Annex III/197): (a) soap (b) anti- dandruff shampoos (c) deodorants, not in form of spray, макс. 0,8 %; условия: «For purposes other than inhibiting the development of micro- organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -18113,7 +18084,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ethylhexyl Dimethyl PABA is the ester of 2-ethylhexyl alcohol and dimethyl p-aminobenzoic acid. It conforms generally to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 21245-02-3, EC 244-289-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/21. Комедогенность (шкала Fulton 1989, 0–5): 0.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/21): макс. 8% (текст регламента — дословно, EN). Комедогенность (шкала Fulton 1989, 0–5): 0.",
     synonyms: [],
   },
   {
@@ -18186,7 +18157,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ethylparaben is the ester of ethyl alcohol and p-hydroxybenzoic acid. It conforms to the formula: Функции в составе: отдушка; консервант. Идентификаторы: CAS 120-47-8, EC 204-399-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12.",
+    safetyNotes: "Разрешён в ЕС как консервант с ограничением концентрации (Annex V/12).",
     synonyms: [],
   },
   {
@@ -18207,7 +18178,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "хелатор (связывание ионов металлов)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Etidronic Acid is the organic diphosphonic acid that conforms to the formula Функции в составе: хелатор (связывание ионов металлов). Идентификаторы: CAS 2809-21-4, EC 220-552-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/53.",
+    safetyNotes: "Ограничен в ЕС (Annex III/53): (a) Hair product (b) Soap, макс. (a) 1.5% (as etidronic acid) (b) 0.2% (as etidronic acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -18268,7 +18239,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Eucalyptus Globulus Leaf Oil is the volatile oil obtained from the fresh leaves of the Eucaluptus, Eucalyptus globulus and other species of Eucalyptus, Myrtaceae. Syn. Yuukari Yu (Japanese) Функции в составе: уход за кожей; придание аромата. Идентификаторы: CAS 8000-48-4 / 84625-32-1, EC 283-406-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/355. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/355); условия: «The presence of the substance or substances shall be indicated as ‘Eucalyptus Globulus Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18370,7 +18341,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Clove Oil\". Eugenia Caryophyllus Bud Oil is an essential oil steam-distilled from the dried flower buds of the Clove, Syzygium aromaticum, syn. Eugenia caryophyllus, Myrtaceae. It contains eugenol (82-87% including about 10% acetyleugenol), caryophyllene Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 84961-50-2, EC 284-638-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/356. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/356); условия: «The presence of the substance or substances shall be indicated as ‘Eugenia Caryophyllus Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18401,7 +18372,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Eugenia Caryophyllus Flower Oil is the volatile oil steam distilled from the dried flower buds of the Clove, Eugenia caryophyllus, Myrtaceae. It consists chiefly of eugenol Функции в составе: отдушка. Идентификаторы: CAS 8000-34-8 / 84961-50-2, EC 284-638-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/356. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/356); условия: «The presence of the substance or substances shall be indicated as ‘Eugenia Caryophyllus Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18412,7 +18383,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Eugenia Caroyphyllus Leaf Oil is an essential oil steam-distilled from the leaves of the Clove, Eugenia caryophyllus, Myrtaceae Функции в составе: отдушка; уход за кожей; тонизирующее действие; придание аромата. Идентификаторы: CAS 8015-97-2 / 8000-34-8 / 84961-50-2, EC 284-638-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/356. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/356); условия: «The presence of the substance or substances shall be indicated as ‘Eugenia Caryophyllus Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18555,7 +18526,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Evernia Furfuracea Extract is an extract of the Treemoss, Evernia furfuracea (L.), Usneaceae Функции в составе: придание аромата. Идентификаторы: CAS 90028-67-4 / 68648-41-9 / 68917-40-8, EC 289-860-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/92. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/92); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18566,7 +18537,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Evernia Prunastri Extract is an extract of the aerial parts of the Oakmoss, Evernia prunastri, Usneaceae Функции в составе: придание аромата. Идентификаторы: CAS 90028-68-5 / 9000-50-4 / 68917-10-2, EC 289-861-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/91. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/91); условия: «The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)g when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -18607,7 +18578,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Fast Green FCF is classed chemically as a triphenylmethane colour. It conforms to the formula: Функции в составе: крашение волос. Идентификаторы: CAS 2353-45-9, EC 219-091-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1357 (When used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1357) — в рамках условия: «Benzenemethanaminium, N-ethyl-N-(4-((4-(ethyl((3-sulfophenyl)methyl)amino)phenyl)(4-hydroxy-2-sulfophenyl)methylene)-2,5-cyclohexadien-1-ylidene)-3-sulfo-, hydroxide, inner salt, disodium salt (Fast Green FCF; CI 42053) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/61).",
     synonyms: [],
   },
   {
@@ -18668,7 +18639,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ficus Carica Extract is an extract of the fruit and leaves of the Fig, Ficus carica L., Moraceae Функции в составе: уход за кожей. Идентификаторы: CAS 90028-74-3, EC 289-868-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/436.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/436) — в рамках условия: «Fig leaf absolute (Ficus carica L.), when used as a fragrance ingredient» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -18699,7 +18670,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Fish Oil is the oil obtained from the head, tail and stomach of various species of fish Функции в составе: уход за кожей. Идентификаторы: CAS 8016-13-5, EC 232-402-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -18780,7 +18750,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; денатурирующее; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Formaldehyde is the aldehyde that conforms to the formula: Функции в составе: антимикробное действие; денатурирующее; консервант. Идентификаторы: CAS 50-00-0, EC 200-001-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1577.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1577) — в рамках условия: «Formaldehyde» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -18801,7 +18771,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант; регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Formic Acid is an organic acid that conforms to the formula: Функции в составе: отдушка; консервант; регулирование pH. Идентификаторы: CAS 64-18-6, EC 200-579-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/14.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/14): макс. 0.5% (as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -19253,7 +19223,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Genistein is the organic compound that conforms to the formula: Функции в составе: уход за кожей. Идентификаторы: CAS 446-72-0, EC 207-174-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/373.",
+    safetyNotes: "Ограничен в ЕС (Annex III/373): макс. 0,007 %; условия: «From 1 February 2025 cosmetic products containing that substance and not complying with the conditions shall not be placed on the Union market. From 1 November 2025 cosmetic products containing that substance and not complying with the conditions shall not be made available on the Union market.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -19294,7 +19264,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата; отдушка. Идентификаторы: CAS 141-27-5, EC 205-476-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/70. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/70): (a) Lip make-up products, lipstick, lip salves (b) Deodorants and antiperspirants (c) Eye products, face make-up and make-up remover (d) Fragrance products (hydroalcoholic and non-hydroalcoholic, spray and non-spray) (e) Leave-on skin products (except lip products, deodorants and antiperspirants, fragrance products, eye products, face make-up and make-up remover) and nail products (f) Oral products (g) Hair leave-on products (h) Skin and hair rinse-off products (i) Leave-on products for the anogenital area (baby wipes and intimate wipes), макс. (a) 0,11 % (b) 0,032 % (c) 0,65 % (d) 0,6 % (e) 0,15 % (f) 0,35 % (g) 1,2 % (h) 1,2 % (i) 0,063 %; условия: «The presence of the substance or substances shall be indicated as ‘Citral’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -19345,7 +19315,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: тонизирующее действие; придание аромата. Идентификаторы: CAS 105-87-3, EC 203-341-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/369. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/369); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -19607,7 +19577,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Glutaral is the dialdehyde that conforms to the formula: Функции в составе: отдушка; консервант. Идентификаторы: CAS 111-30-8, EC 203-856-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/48.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/48): макс. 0.1%; «Not to be used in aerosols (sprays) | Contains glutaral (9)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -20389,7 +20359,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антимикробное действие; придание аромата. Идентификаторы: CAS 107-22-2, EC 203-474-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/194.",
+    safetyNotes: "Ограничен в ЕС (Annex III/194): макс. 100 mg/kg (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -20440,7 +20410,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Goat Milk is whole milk obtained from goats. Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -20451,7 +20420,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "функция не указана (CosIng)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Goat Milk Extract is the extract of Goat Milk Функции в составе: функция не указана (CosIng).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -20462,6 +20430,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7440-57-5, EC 231-165-9.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/133); «Purity criteria as set out in Commission Directive 95/45/EC (E175)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -20722,7 +20691,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 132885-85-9 / 104516-93-0, EC 407-020-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/225.",
+    safetyNotes: "Ограничен в ЕС (Annex III/225): (a) Hair dye substance in oxidative hair dye products (b) Hair dye substance in non-oxidative hair dye products, макс. (b) 1.5% (as hydrocloride); условия: «(a) After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 0.75% (as hydrochloride) For (a) and (b): - Do not use with nitrosating agents -Maximum nitrosamine content: 50 microgram/Kg - Keep in nitrite-free containers | (a) To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -20753,7 +20722,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 33229-34-4, EC 251-410-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/247.",
+    safetyNotes: "Ограничен в ЕС (Annex III/247): Hair dye substance in non-oxidative hair dye products, макс. 2.8%; условия: «- Do not use nitrosating agents - Maximum nitrosamine content: 50 microgram/Kg - Keep in nitrite-free containers | Can cause allergic reaction» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -20764,7 +20733,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): HC Yellow No. 2 is the hair color that conforms to the formula Функции в составе: крашение волос. Идентификаторы: CAS 4926-55-0, EC 225-555-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex III/255.",
     synonyms: [],
   },
   {
@@ -21106,7 +21074,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 109-29-5, EC 203-662-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/335. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/335); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -21137,7 +21105,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hexamethylindanopyran is the organic compound that conforms to the formula Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 1222-05-5, EC 214-946-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/336. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/336); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -21148,7 +21116,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; антимикробное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hexamidine Diisethionate is the organic salt that conforms to the formula: Функции в составе: противосеборейное действие; антимикробное действие; консервант. Идентификаторы: CAS 659-40-5, EC 211-533-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/47.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/47): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -21290,6 +21258,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hexyl Salicylate is the organic compound that conforms to the formula: Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 6259-76-3, EC 228-408-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/380): (a) Hydroalcoholic-based fragrances (except hydroalcoholic-based fragrances intended for children below 3 years of age) (b) All rinse-off products (except shower gel/bath products, hand wash, hair conditioner and shampoo intended for children below 3 years of age) (c) All leave-on products (except hair conditioner, body lotion, face cream, hand cream, lipstick/lip balm and fragrance products intended for children below 3 years of age) (d) Toothpaste (e) Mouthwash (f) Shower gel/bath products, hand wash, shampoo, hair conditioner, body, face and hand (skin) care products, lipstick/lip balm and fragrance products intended for children below 3 years of age, макс. (a) 2 % (b) 0,5 % (c) 0,3 % (d) 0,001 % (e) 0,001 % (f) 0,1 %; условия: «Not to be used in preparations for children under 3 years of age, with the exception of (d) “Toothpaste” and (f).» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -21712,7 +21681,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; уход за полостью рта; окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hydrogen Peroxide is the inorganic oxide that conforms to the formula Функции в составе: антимикробное действие; уход за полостью рта; окислитель. Идентификаторы: CAS 7722-84-1, EC 231-765-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/12.",
+    safetyNotes: "Ограничен в ЕС (Annex III/12): (a) Hair products (b) Skin products (c) Nail hardening products (d) Oral products, including mouth rinse, tooth paste and tooth whitening or bleaching products (e) Tooth whitening or bleaching products (f) Products intended for eyelashes, макс. (a) 12 % of H2O2 (40 volumes), present or released (b) 4 % of H2O2, present or released (c) 2 % of H2O2, present or released (d) ≤ 0,1 % of H2O2, present or released (e) > 0,1 % ≤ 6 % of H2O2, present or released (f) 2 % of H2O2, present or released; условия: «(e) To be only sold to dental practitioners. For each cycle of use, first use by dental practitioners as defined under Directive 2005/36/EC of the European Parliament and of the Council* or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. Not to be used on a person under 18 years of age. (f) For professional use only | (a) (f) Wear suitable gloves (a) (b) (c) (e) Contains hydrogen peroxide Avoid contact with eyes Rinse immediately if product comes into contact with them. (e) Concentration of H2O2 present or released indicated in percentage. Not to be used on a person under 18 years of age. To be only sold to dental practitioners. For each cycle of use, the first use to be only done by dental practitioners or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. f) To be printed on the label: ‘For professional use only. Avoid contact with eyes. Rinse eyes immediately if product comes into contact with them. Contains hydrogen peroxide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -21946,7 +21915,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hydrogenated Mineral Oil is the end product of the controlled hydrogenation of Mineral Oil. Функции в составе: защита кожи. Идентификаторы: CAS 64742-54-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/778. Distillates (petroleum), hydrotreated heavy paraffinic, if they contain > 3 % w/w DMSO extract..",
     synonyms: [],
   },
   {
@@ -23018,7 +22986,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Protein hydrolyzates, wheat germ. Substance obtained by acidic, alkaline, or enzymatic hydrolysis of wheat germ composed primarily of amino acids, peptides, and proteins. It may contain impurities consisting chiefly of carbohydrates and lipids along with smaller quantities of miscellaneous… Функции в составе: антистатический эффект; уход за волосами; уход за кожей. Идентификаторы: CAS 94350-06-8 / 222400-28-4 / 70084-87-6 / 100209- 50-5, EC 305-225-0 / 309-358-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/307.",
+    safetyNotes: "Ограничен в ЕС (Annex III/307); условия: «Maximum molecular weight average of the peptides in hydrolysates: 3,5 kDa (23 )» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23099,7 +23067,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; осветление; крашение волос; отдушка; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hydroquinone is the aromatic organic compound that conforms to the formula: Функции в составе: антиоксидант; осветление; крашение волос; отдушка; восстановитель. Идентификаторы: CAS 123-31-9, EC 204-617-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1339 III/14.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1339) — в рамках условия: «1,4-Dihydroxybenzene (Hydroquinone), with the exception of entry 14 in Annex III» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/14): Artificial nail systems, макс. 0.02% (after mixing for use); условия: «Professional use | - For professional use only - Avoid skin contact - Read directions for use carefully» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23120,6 +23088,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hydroxyanthraquinoneaminopropyl Methyl Morpholinium Methosulfate is the quaternary ammonium salt that conforms to the formula Функции в составе: крашение волос. Идентификаторы: CAS 38866-20-5, EC 254-161-9.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/344) — в рамках условия: «Morpholine and its salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23130,6 +23099,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 1306-06-5, EC 215-145-7.",
+    safetyNotes: "Ограничен в ЕС (Annex III/372): (a) Toothpaste (b) Mouthwash, макс. (a) 10 % (b) 0,465 %; условия: «For (a) and (b): Not to be used in applications that may lead to exposure of the end-user’s lungs by inhalation. Only nanomaterials having the following characteristics are allowed: — [composed of] rod-shaped particles of which at least 95,8 % (in particle number) have an aspect ratio less than 3, and the remaining 4,2 % have an aspect ratio not exceeding 4,9; — the particles are not coated or surface modified» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23140,7 +23110,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 26021-57-8, EC 247-415-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/230.",
+    safetyNotes: "Ограничен в ЕС (Annex III/230): Hair dye substance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1.0% - Do not use with nitrosating agents - Maximum nitrosamine content: 50 micrograme/Kg -Keep in nitrite-free containers | To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair,— you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23181,7 +23151,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 107-75-5, EC 203-518-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/72. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/72): (a) Oral products (b) Other products, макс. (b) 1,0 %; условия: «(a) (b) The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)(g) when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["HYDROXY CITRONELLAL"],
   },
   {
@@ -23212,7 +23182,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Hydroxyethoxy Aminopyrazolopyridine HCl is the organic compound Функции в составе: крашение волос. Идентификаторы: CAS 1079221-49-0, EC 695-745-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/302.",
+    safetyNotes: "Ограничен в ЕС (Annex III/302): Hair dye substance in oxidative hair dye products; условия: «As from 3 September 2017, after mixing under oxidative conditions the maximum concentration applied to hair must not exceed 2,0 % | As from 3 March 2018, to be printed on the label: The mixing ratio. ‘Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23263,7 +23233,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 94158-14-2, EC 303-085-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/246.",
+    safetyNotes: "Ограничен в ЕС (Annex III/246): Hair dye substance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 1.5% - Do not use with nitrosating agents - Maximum nitrosamine content: 50 microgram/Kg - Keep in nitrite-free containers | Hair colourants can use severe allergic reactions Read and folow instructions» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23294,7 +23264,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 31906-04-4 / 51414-25-6, EC 250-863-4 / 257-187-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1380 From 23 August 2019 cosmetic products containing that substance shall not be placed on the Union market. From 23 August 2021 cosmetic products containing that substance shall not be made available on the Union market.’;.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1380) — в рамках условия: «3 and 4-(4-Hydroxy-4-methylpentyl)cyclohex-3-ene-1-carbaldehyde A» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23375,7 +23345,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 128729-28-2, EC 416-320-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/239.",
+    safetyNotes: "Ограничен в ЕС (Annex III/239): Hair dye substance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximumconcentration applied to hair must not exceed 0.4% (as tetrahydro-chloride) | Hair colourants can cause severe allergic reactions Read and follow instructions» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23787,7 +23757,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Imidazolidinyl Urea is the heterocyclic substituted urea that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 39236-46-9, EC 254-372-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/27.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/27): макс. 0.6% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23818,6 +23788,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Indigofera Tinctoria Extract is the extract of the whole plant without the roots of Indigofera tinctoria. Функции в составе: уход за кожей. Идентификаторы: CAS 84775-63-3, EC 283-892-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/320): Hair dye substance in non-oxidative hair dye products., макс. As from 3 June 2021: 25 %. (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23828,6 +23799,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Indigofera Tinctoria Leaf Extract is the extract of the leaves of Indigofera tinctoria. Функции в составе: уход за кожей. Идентификаторы: CAS 84775-63-3, EC 283-892-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/320): Hair dye substance in non-oxidative hair dye products., макс. As from 3 June 2021: 25 %. (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23838,6 +23810,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Indigofera Tinctoria Leaf Powder is the powder obtained from the dried, ground leaves of Indigofera tinctoria. Функции в составе: уход за кожей; уход за кожей. Идентификаторы: CAS 84775-63-3, EC 283-892-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/320): Hair dye substance in non-oxidative hair dye products., макс. As from 3 June 2021: 25 %. (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -23908,7 +23881,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Iodopropynyl Butylcarbamate is the organic compound that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 55406-53-6, EC 259-627-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/56.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/56): a) Rinse-off products b) Leave-on products c) Deodorants/antiperspirants, макс. a) 0.02% b) 0.01% c) 0.0075%; «Not to be used in oral and lip products a) Not to be used in products for children under 3 years of age, except in bath products / shower gels and shampoos b) Not to be used in body lotion and body cream (13) b) and c) Not to be used in products for children under 3 years of age | a) Not to be used for children under three years of age (11) b) and c) Not to be used for children under three years of age (12)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -24090,7 +24063,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Isoamyl p-Methoxycinnamate is the ester of isoamyl alcohol and p-methoxycinnamic acid. It conforms generally to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 71617-10-2, EC 275-702-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/14.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/14): макс. 10% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -24151,7 +24124,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антимикробное действие. Идентификаторы: CAS 4247-02-3, EC 224-208-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1375.",
     synonyms: [],
   },
   {
@@ -24297,7 +24269,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 97-54-1, EC 202-590-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/73. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/73): (a) Oral products (b) Other products, макс. b) 0,02 %; условия: «(a) (b) The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -24308,7 +24280,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 93-29-8, EC 202-236-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/370. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/370); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -24419,7 +24391,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 78-96-6, EC 201-162-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -24526,7 +24498,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: консервант. Идентификаторы: CAS 4191-73-5, EC 224-069-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1374 Commission Regulation (EU) No 358/2014 of 9 April 2014.",
     synonyms: [],
   },
   {
@@ -24802,7 +24773,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; отдушка; увлажнение; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Jasminum Grandiflorum Flower Extract is the extract of the flowers of Jasminum grandiflorum. Функции в составе: уход за волосами; отдушка; увлажнение; придание аромата. Идентификаторы: CAS 84776-64-7, EC 283-993-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/357. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/357); условия: «The presence of the substance or substances shall be indicated as ‘Jasmine Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -24833,7 +24804,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Jasminum Officinale Flower Extract is an extract of the flowers of the Jasmine, Jasminum officinale L., Oleaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 90045-94-6, EC 289-960-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/357. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/357); условия: «The presence of the substance or substances shall be indicated as ‘Jasmine Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -24874,7 +24845,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; увлажнение; уход за кожей; успокаивающее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Jasminum Officinale Oil is the volatile oil obtained from the flowers of the Jasmine, Jasminium officinale L., Oleaceae Функции в составе: отдушка; увлажнение; уход за кожей; успокаивающее действие; придание аромата. Идентификаторы: CAS 8022-96-6 / 90045-94-6, EC 289-960-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/357. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/357); условия: «The presence of the substance or substances shall be indicated as ‘Jasmine Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -25095,7 +25066,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 8000-27-9 / 85085-41-2, EC -/ 285-370-3.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/358); условия: «The presence of the substance or substances shall be indicated as ‘Juniperus Virginiana Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -25106,7 +25077,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): \"Cedar Wood Oil Virginian\". Juniperus Virginiana Wood Oil is an essential oil obtained from the wood and twigs of the Red Cedar, Juniperus virginiana L., Cupressaceae. It contains chiefly cedrene and cedral (cedar camphor) Функции в составе: придание аромата. Идентификаторы: CAS 85085-41-2, EC 285-370-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/358. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/358); условия: «The presence of the substance or substances shall be indicated as ‘Juniperus Virginiana Oil’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -25137,7 +25108,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абразив; абсорбент; антислеживающее; наполнитель; краситель; придание непрозрачности",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Naturally occurring substances, kaolin (CI 77004) Функции в составе: абразив; абсорбент; антислеживающее; наполнитель; краситель; придание непрозрачности. Идентификаторы: CAS 1332-58-7, EC 310-194-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/119. Комедогенность (шкала Fulton 1989, 0–5): 0.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/119). Комедогенность (шкала Fulton 1989, 0–5): 0.",
     synonyms: ["KAOLIN^"],
   },
   {
@@ -25790,7 +25761,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "стабилизация эмульсии; уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: стабилизация эмульсии; уход за волосами. Идентификаторы: CAS 54914-38-4, EC 259-395-5 (I).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -26073,6 +26044,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Dodecan-1-ol, ethoxylated; Alcohols, C12-14, ethoxylated Функции в составе: ПАВ: эмульгирование. Идентификаторы: CAS 3055-99-0 / 9002-92-0 / 68439-50-9, EC 221-284-4 / 500-002-6 / 500-213-3.",
+    safetyNotes: "Ограничен в ЕС (Annex III/257): (a) Leave-on products (b) Rinse-off products, макс. (a) 3,0 % (b) 4,0 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -26124,7 +26096,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; ПАВ: эмульгирование; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Laurtrimonium Chloride is the quaternary ammonium salt that conforms generally to the formula: Функции в составе: антистатический эффект; ПАВ: эмульгирование; консервант. Идентификаторы: CAS 112-00-5, EC 203-927-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -26155,7 +26127,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Laurus Nobilis Leaf Oil is the volatile oil obtained from the leaves of the Laurel, Laurus nobilis L., Lauraceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 8002-41-3 / 8007-48-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/359. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/359); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26176,6 +26148,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 8002-41-3/ 8007-48-5/ 84603-73-6, EC -/-/ 283-272-5.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/359) — в рамках условия: «Oil from the seeds of Laurus nobilis L.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -26378,7 +26351,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Angustifolia Extract is the extract of the whole plant of the Lavender, Lavandula angustifolia, Labiatae Функции в составе: уход за кожей. Идентификаторы: CAS 90063-37-9, EC 289-995-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/360. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26419,7 +26392,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за полостью рта; уход за кожей; придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Angustifolia Flower/Leaf/Stem Extract is the extract of the flowers, leaves and stems of the Lavender, Lavandula angustifolia, Labiatae Функции в составе: отдушка; уход за полостью рта; уход за кожей; придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 90063-37-9 / 84776-65-8, EC 289-995-2 / 283-994-0.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26440,7 +26413,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Angustifolia Oil is the volatile oil obtained from the flowers of the Lavender, Lavandula angustifolia, Labiatae. ISO 8902:2009 Функции в составе: отдушка; тонизирующее действие. Идентификаторы: CAS 8000-28-0 / 90063-37-9, EC 289-995-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/360. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26461,7 +26434,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Hybrida Extract is an extract of the flowers of Lavandin, Lavandula hybrida, Labiatae Функции в составе: смягчение кожи (эмолент). Идентификаторы: CAS 91722-69-9, EC 294-470-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/360. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26472,7 +26445,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Hybrida Flower Extract is the extract of the flowers of lavender, Lavandula hybrida, Labiatae Функции в составе: отдушка. Идентификаторы: CAS 91722-69-9, EC 294-470-6.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26513,7 +26486,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Hybrida Oil is the essential oil obtained from the flowers of the Lavandin, Lavandula hybrida, Labiatae Функции в составе: смягчение кожи (эмолент). Идентификаторы: CAS 8022-15-9 / 91722-69-9, EC 294-470-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/360. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26524,7 +26497,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lavandula Intermedia Oil is the volatile oil obtained from the whole plant of the Lavender, Lavandula intermedia, Labiatae Функции в составе: отдушка. Идентификаторы: CAS 92623-76-2, EC 296-408-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/360. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/360); условия: «The presence of the substance or substances shall be indicated ‘Lavandula Oil/ Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26867,7 +26840,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка. Идентификаторы: CAS 115-95-7, EC 204-116-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/337. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/337); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -26970,7 +26943,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lippia Citriodora Flower/Leaf/Stem Water is the aqueous solution of the steam distillate obtained from the flowers, leaves and stems of the Lemon Verbena, Lippia citriodora, Verbenaceae Функции в составе: отдушка.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 450 of Annex II to the Cosmetics Regulation 1223/2009 is applicable..",
     synonyms: [],
   },
   {
@@ -26981,7 +26953,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lippia Citriodora Leaf Oil is the volatile oil derived from the leaves of Lippia citriodora. Функции в составе: отдушка.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 450 of Annex II to the Cosmetics Regulation 1223/2009 is applicable..",
     synonyms: [],
   },
   {
@@ -26992,7 +26963,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lippia Citriodora Leaf Water is the steam distillate obtained from the leaves of lemon Verbena, Lippia citriodora, Verbenaceae Функции в составе: отдушка.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 450 of Annex II to the Cosmetics Regulation 1223/2009 is applicable..",
     synonyms: [],
   },
   {
@@ -27003,7 +26973,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Lippia Citriodora Water is an aqueous solution of the steam distillate obtained from the Lemon Verbena, Lippia citriodora, Verbenaceae Функции в составе: отдушка.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 450 of Annex II to the Cosmetics Regulation 1223/2009 is applicable..",
     synonyms: [],
   },
   {
@@ -27044,6 +27013,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 1310-65-2, EC 215-183-4.",
+    safetyNotes: "Ограничен в ЕС (Annex III/15b): (a) Hair straightener (b) pH ajuster for depilatories (c) Other uses as pH ajuster (for rinse-off products only), макс. (a) 1. 2% (6) 2. 4.5% (6); условия: «(a) 1. General use 2. Professional use (b) pH < 12.7 (c) pH < 11 | (a) 1. Contains alkali Avoid contact with eyes Can cause blindness Keep out of reach of children 2. Avoid contact with eyes Can cause blindness (b) Contains alkali Keep out of reach of children Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -27304,7 +27274,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 591-27-5, EC 209-711-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/217.",
+    safetyNotes: "Ограничен в ЕС (Annex III/217): (a) Hair dye substance in oxidative hair dye products (b) Products intended for colouring eyelashes; условия: «For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 1,2 % (b) For professional use only | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy.Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.” (b) To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes,— has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -27406,6 +27376,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 546-93-0; 7757-69-9, EC 208-915-9; 231-817-2.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/139).",
     synonyms: [],
   },
   {
@@ -27628,7 +27599,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антислеживающее; наполнитель; краситель; увлажнение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Magnesium Stearate is the magnesium salt of stearic acid. It conforms generally to the formula: Функции в составе: антислеживающее; наполнитель; краситель; увлажнение. Идентификаторы: CAS 557-04-0, EC 209-150-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/150. Комедогенность (шкала Fulton 1989, 0–5): 1. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/150). Комедогенность (шкала Fulton 1989, 0–5): 1. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -28829,7 +28800,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Mentha Viridis Leaf Oil is the volatile oil obtained from the dried tops and leaves of the Garden Mint (spearmint), Mentha viridis L., Labiatae Функции в составе: вяжущее действие; отдушка; уход за кожей. Идентификаторы: CAS 84696-51-5 / 8008-79-5, EC 283-656-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/362. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/362); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -28860,7 +28831,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; отдушка; освежающее действие; успокаивающее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Menthol / DL-menthol / L-menthol Функции в составе: денатурирующее; отдушка; освежающее действие; успокаивающее действие. Идентификаторы: CAS 1490-04-6 / 2216-51-5 / 89-78-1 / 15356-70-4, EC 216-074-4 / 218-690-9 / 201-939-0 / 239-388-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/338. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/338); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["ENTHÄLT MENTHOL"],
   },
   {
@@ -29021,7 +28992,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH; плёнкообразование; уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methylpoly(oxyethylene)poly(oxy-1-oxohexylene)ol (114 mol EO average) Функции в составе: регулирование pH; плёнкообразование; уход за волосами.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/186.",
+    safetyNotes: "Ограничен в ЕС (Annex III/186): As traces in ingredients, макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29102,6 +29073,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methoxypropylamino Cyclohexenylidene Ethoxyethylcyanoacetate is the organic compound Функции в составе: фотостабилизатор; УФ-фильтр. Идентификаторы: CAS 1419401-88-9.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/32): макс. 3%; «- Not to be used in applications that may lead to exposure of the end-user’s lungs by inhalation - Do not use with nitrosating agents - Maximum nitrosamine content: 50 μg/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29122,7 +29094,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 111-12-6, EC 203-836-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/89. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/89): (a) Oral products (b) Other products, макс. (b) 0.01% when used alone When present in combination with methyl octine carbonate, the combined level in the finished product shall not exceed 0,01 % (of which methyl octine carbonate shall not be more than 0,002 %); условия: «(a)(b) The presence of the substance must be indicated in the list of ingredients referred to in Article 19(1)(g) when its concentration exceeds: - 0.001% in leave-on products - 0.01% in rinse-off products» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -29143,7 +29115,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; отдушка; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methyl Alcohol is the aliphatic alcohol that conforms to the formula: Функции в составе: денатурирующее; отдушка; растворитель. Идентификаторы: CAS 67-56-1, EC 200-659-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/52.",
+    safetyNotes: "Ограничен в ЕС (Annex III/52): Denaturant for ethanol and isopropyl alcohol, макс. 5% (as a % of ethanol and isopropyl alcohol) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29164,7 +29136,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); отдушка; консервант; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methyl Benzoate is the ester of methyl alcohol and benzoic acid that conforms to the formula: Функции в составе: смягчение кожи (эмолент); отдушка; консервант; растворитель. Идентификаторы: CAS 93-58-3, EC 202-259-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/1a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/1a): макс. 0.5% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29358,7 +29330,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; уход за полостью рта; успокаивающее действие; придание аромата; ароматизатор (для средств полости рта)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methyl Salicylate is the ester of methyl alcohol and salicylic acid. It conforms to the formula: Функции в составе: денатурирующее; уход за полостью рта; успокаивающее действие; придание аромата; ароматизатор (для средств полости рта). Идентификаторы: CAS 119-36-8, EC 204-317-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/324. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/324): (a) Leave-on skin products (except face makeup, spray/aerosol body lotion, spray/aerosol deodorant and hydroalcoholic-based fragrances) and leave on hair products (except spray/aerosol products) (b) Face makeup (except lip products, eye makeup and makeup remover) (c) Eye makeup and makeup remover (d) Leave-on hair products (spray/aerosol) (e) Deodorant spray/aerosol (f) Body lotion spray/aerosol (g) Rinse-off skin products (except hand wash) and rinse-off hair products (h) Hand wash (i) Hydroalcoholic-based fragrances (j) Lip products (k) Toothpaste (l) Mouthwash intended for children aged 6–10 years (m) Mouthwash intended for children above 10 years of age and adults (n) Mouth spray, макс. (a) 0,06 % (b) 0,05 % (c) 0,002 % (d) 0,009 % (e) 0,003 % (f) 0,04 % (g) 0,06 % (h) 0,6 % (i) 0,6 % (j) 0,03 % (k) 2,52 % (l) 0,1 % (m) 0,6 % (n) 0,65 %; условия: «Not to be used in preparations for children under 6 years of age, with the exception of (k) “Toothpaste”. The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -29439,7 +29411,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Methylchloroisothiazolinone is the heterocyclic organic compound that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 26172-55-4, EC 247-500-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/39.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/39): Rinse-off, макс. 0.0015% (of a mixture in the ratio 3:1 of 5-Chloro-2-methyl-isothiazol-3(2H)-one and 2-Methylisothiazol-3(2H)-one (текст регламента — дословно, EN).",
     synonyms: ["METHYLCHLOROISOTHIAZO- LINONE"],
   },
   {
@@ -29460,6 +29432,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: УФ-фильтр. Идентификаторы: CAS 103597-45-1, EC 403-800-1.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/23a): макс. 10 %(*) (*) In case of combined use of Methylene Bis-Benzotriazolyl Tetramethylbutylphenol and Methylene Bis-Benzotriazolyl Tetramethylbutylphenol (nano), the sum shall not exceed the limit given in column g.’.; «Not to be used in applications that may lead to exposure of the end user's lungs by inhalation. Only nanomaterials having the following characteristics are allowed: — Purity ≥ 98,5 %, with 2,2′-methylene-bis- (6(2H-benzotriazol-2-yl)-4-(isooctyl)phenol) isomer fraction not exceeding 1,5 %; — Solubility < 5 ng/L in water at 25 °C; — Partition coefficient (Log Pow): 12,7 at 25 °C; — Uncoated; — Median particle size D50 (50 % of the number below this diameter): ≥ 120 nm of mass distribution and/or ≥ 60 nm of number size distribution.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29621,7 +29594,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Milk is whole milk from cows. Функции в составе: уход за кожей. Идентификаторы: CAS 8049-98-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -29702,7 +29674,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; фиксация причёски",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Minoxidil is the heterocyclic compound that conforms to the formula Функции в составе: уход за волосами; фиксация причёски. Идентификаторы: CAS 38304-91-5, EC 253-874-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/372.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/372) — в рамках условия: «6-(Piperidinyl)-2,4-pyrimidinediamine-3-oxide (Minoxidil (INN)) and its salts» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29713,7 +29685,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): MIPA-Laureth Sulfate is the monoisopropanolamine salt of sulfated ethoxylated lauryl alcohol that conforms generally to the formula, where n has a value between 1 and 4 Функции в составе: ПАВ: очищение. Идентификаторы: CAS 83016-76-6/ 1187742-72-8 (generic).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -29724,7 +29696,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: очищение; ПАВ: очищение. Идентификаторы: CAS 21142-28-9, EC 244-238-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -30146,6 +30118,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: усиление пены; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: очищение; ПАВ: усиление пены; ПАВ: очищение. Идентификаторы: CAS 83270-36-4, EC 280-357-9 (I).",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -30361,7 +30334,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: консервант. Идентификаторы: CAS 1119-97-7, EC 214-291-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -30983,7 +30956,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 95-55-6, EC 202-431-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1372.",
     synonyms: [],
   },
   {
@@ -30994,7 +30966,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): o-Cymen-5-ol is the substituted phenol that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант. Идентификаторы: CAS 3228-02-2 / 39660-61-2, EC 221-761-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/38.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/38): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -31429,7 +31401,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; ПАВ: усиление пены; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; ПАВ: усиление пены; регулирование вязкости. Идентификаторы: CAS 93-83-4, EC 202-281-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -32458,7 +32430,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; хелатор (связывание ионов металлов)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Oxyquinoline Sulfate is the salt of oxyquinoline and sulfuric acid. It conforms to the formula: Функции в составе: антимикробное действие; хелатор (связывание ионов металлов). Идентификаторы: CAS 134-31-6, EC 205-137-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/395 III/51.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/395) — в рамках условия: «Hydroxy-8-quinoline and its sulphate bis(8-hydroxyquinolinium) sulphate, except for the uses of the sulphate provided for in entry 51 of Annex III» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/51): (a) Stabilizer for hydrogen peroxide in rinse-off hair products (b) Stabilizer for hydrogen peroxide in leave-on hair products, макс. (a) (0,3 % as base) (b) (0,03 % as base) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -32489,7 +32461,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 123-30-8, EC 204-616-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/272 - (EC) No 1197/2013.",
+    safetyNotes: "Ограничен в ЕС (Annex III/272): (a) Hair dye sub­stance in oxidat­ive hair dye products (b) Products in­tended for col­ouring eyelashes; условия: «(a) (b) After mixing under oxidative condit­ions the maximum concentration ap­plied to hair or eyelashes must not exceed 0,9 % (b) Professional use | (a) To be printed on the la­bel: The mixing ratio. “Hair colourants can cause severe allergic reac­tions. Read and follow instruc­tions.This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irri­tated and damaged scalp, — you have ever experi­enced any reaction after colouring your hair, — you have experienced a reaction to a tempor­ary ‘black henna’ tattoo in the past.” (b) As from 3 March 2018, to be printed on the la­bel: The mixing ratio. “This product can cause severe allergic reactions. Read and follow instruc­tions. This product is not in­tended for use on persons under the age of 16. Tem­porary ‘black henna’ tattoos may increase the risk of al­lergy. Eyelashes shall not be co­loured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any re­action after colouring hair or eyelashes, — has experienced a reac­tion to a temporary ‘black henna’ tattoo in the past. For professional use only. Rinse eyes immediately if product comes into contact with them”» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -32510,7 +32482,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 150-75-4, EC 205-768-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/223.",
     synonyms: [],
   },
   {
@@ -32521,7 +32492,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): (CI 76060) Функции в составе: крашение волос. Идентификаторы: CAS 106-50-3, EC 203-404-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/8a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/8b): Products intended for colouring eyelashes; условия: «After mixing under oxidative conditions the maximum concentration applied to eyelashes must not exceed 2 % calculated as free base. For professional use only. | To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them. Contains phenylenediamines. Wear suitable gloves.” ’» (текст регламента — дословно, EN).",
     synonyms: ["[+/-] P-PHENYLENEDIAMINE"],
   },
   {
@@ -32532,7 +32503,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 624-18-0, EC 210-834-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/8a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/8b): Products intended for colouring eyelashes; условия: «After mixing under oxidative conditions the maximum concentration applied to eyelashes must not exceed 2 % calculated as free base. For professional use only. | To be printed on the label: The mixing ratio. “For professional use only. This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them. Contains phenylenediamines. Wear suitable gloves.” ’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -32683,7 +32654,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amides, palm kernel-oil, N,N-bis(hydroxyethyl) Функции в составе: ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости. Идентификаторы: CAS 73807-15-5, EC 277-612-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -33986,7 +33957,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): PEG-25 PABA is the polyethylene glycol derivative of PABA. It conforms generally to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 116242-27-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/13.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/13): макс. 10% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35210,7 +35181,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pelargonium Graveolens Flower Oil is the volatile oil obtained from the flowers of the Bourbon Geranium, Pelargonium graveolens (L.), Geraniaceae Функции в составе: отдушка. Идентификаторы: CAS 90082-51-2 / 8000-46-2, EC 290-140-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/364. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/364); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -35221,7 +35192,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pelargonium Graveolens Leaf Oil is the volatile oil obtained from the leaves of Pelargonium graveolens. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 90082-51-2, EC 290-140-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/364. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/364); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -35232,7 +35203,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 90082-51-2/ 8000-46-2, EC 290-140-0/ -.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/364); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -35439,7 +35410,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "хелатор (связывание ионов металлов)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pentasodium Pentetate is the pentasodium salt of diethylenetriaminepentaacetic acid. It conforms to the formula: Функции в составе: хелатор (связывание ионов металлов). Идентификаторы: CAS 140-01-2, EC 205-391-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II / 1721.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1721) — в рамках условия: «Pentasodium (carboxylatomethyl)iminobis(ethylenenitrilo)tetraacetate; Pentasodium Pentetate (INCI)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35760,6 +35731,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 108-95-2, EC 203-632-7.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1175) — в рамках условия: «Phenol» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35790,7 +35762,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Phenoxyisopropanol is the aromatic ether alcohol that conforms to the formula: Функции в составе: консервант; растворитель. Идентификаторы: CAS 770-35-4, EC 212-222-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/54 V/43.",
+    safetyNotes: "Ограничен в ЕС (Annex III/54): Rinse-off products Not to be used in oral products, макс. 2%; условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/43): Only for rinse-off products, макс. 1.0% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35821,7 +35793,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 89-25-8, EC 201-891-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/228.",
+    safetyNotes: "Ограничен в ЕС (Annex III/228): Hair dye subtance in oxidative hair dye products; условия: «After mixing under oxidative conditions the maximum concentration applied to hair must not exceed 0.25%. | To be printed on the label: The mixing ratio. “ Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35852,7 +35824,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Phenylbenzimidazole Sulfonic Acid is the aromatic organic compound that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 27503-81-7, EC 248-502-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/6.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/6): макс. 8%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35863,7 +35835,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Phenylene Bis-Diphenyltriazine is the organic compound that conforms to the formula Функции в составе: фотостабилизатор; УФ-фильтр. Идентификаторы: CAS 55514-22-2, EC 700-823-1 (L).",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/31 Not to be used in applications that may lead to exposure of the end user's lungs by inhalation..",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/31): макс. 5%; «Not to be used in applications that may lead to exposure of the end user's lungs by inhalation.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -35924,7 +35896,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 108-73-6, EC 203-611-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1253.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1253) — в рамках условия: «1,3,5-Trihydroxybenzene (Phloroglucinol) and its salts, when used as a substance in hair dye products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36146,7 +36118,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Phytonadione is the organic compound that conforms to the formula Функции в составе: уход за кожей. Идентификаторы: CAS 81818-54-4/ 84-80-0/ 11104-38-4, EC 279-833-9/ 201-564-2/ 234-330-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1371.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1371) — в рамках условия: «Phytonadione [INCI], phytomenadione [INN]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36291,7 +36263,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Picea Mariana Leaf Oil is an essential oil obtained from the leaves of the spruce, Picea mariana, Pinaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 91722-19-9, EC 294-420-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/118.",
+    safetyNotes: "Ограничен в ЕС (Annex III/118); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36322,7 +36294,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 147-14-8, EC 205-685-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1367.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1367) — в рамках условия: «(29H,31H-Phthalocyaninato(2-)-N29,N30,N31,N32)copper (Pigment Blue 15; CI 74160) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/105).",
     synonyms: [],
   },
   {
@@ -36333,7 +36305,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 1328-53-6, EC 215-524-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1369.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1369) — в рамках условия: «Polychloro copper phthalocyanine (Pigment Green 7; CI 74260) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/107): макс. Not to be used in eye products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36344,7 +36316,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pigment Violet 23 is classed chemically as an dioxazine colour. It conforms to the formula: Функции в составе: краситель; крашение волос. Идентификаторы: CAS 6358-30-1, EC 228-767-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1360 (when used as a substance in hair dye products).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1360) — в рамках условия: «8,18-Dichloro-5,15-diethyl-5,15-dihydrodiindolo[3,2-b:3',2'-m]triphenodioxazine (Pigment Violet 23; CI 51319) when used as a substance in hair dye products» (текст регламента — дословно, EN). Разрешён в ЕС как краситель с условиями (Annex IV/85): макс. Rinse-off products (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36405,7 +36377,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "пеногашение; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinene is the organic compound Функции в составе: пеногашение; отдушка. Идентификаторы: CAS 80-56-8, EC 201-291-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/371. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/371); условия: «The presence of the substance or the substances shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or the substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product).» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: ["PINENE¹"],
   },
   {
@@ -36416,7 +36388,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Cembra Leaf/Twig Oil is the volatile oil obtained from the leaves and twigs of Pinus cembra. Функции в составе: антимикробное действие; отдушка; придание аромата. Идентификаторы: CAS 92202-04-5, EC 296-036-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/116.",
     synonyms: [],
   },
   {
@@ -36447,7 +36418,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Mugo Leaf Oil is an essential oil obtained from the leaves of the Pine, Pinus mugo, Pinaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 90082-72-7 / 8000-26-8, EC 290-163-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/109. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/109); условия: «The presence of the substance or substances shall be indicated as ‘Pinus Mugo’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product).» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -36458,7 +36429,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Palustris Leaf Extract is an extract of the needles of the Swamp Pine, Pinus palustris, Pinaceae Функции в составе: тонизирующее действие. Идентификаторы: CAS 97435-14-8, EC 306-895-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/112.",
+    safetyNotes: "Ограничен в ЕС (Annex III/112); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36469,7 +36440,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Palustris Oil is the volatile oil obtained from distillation of the needles of Swamp Pine, Pinus palustris, Pinaceae. Pine oil. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 8002-09-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/112.",
+    safetyNotes: "Ограничен в ЕС (Annex III/112); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36520,7 +36491,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; увлажнитель (гумектант); уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Pumila Needle Extract is the extract of the needles of Pinus pumila, Pinaceae. Функции в составе: уход за волосами; увлажнитель (гумектант); уход за кожей. Идентификаторы: CAS 97676-05-6, EC 307-681-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/114. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/114); условия: «The presence of the substance or substances shall be indicated as ‘Pinus Pumila’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value shall be less than 10 mmoles/L. (This limit applies to the substance and not to the finished cosmetic product)» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -36561,7 +36532,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Sylvestris Bud Extract is an extract of the buds of the Scotch Pine, Pinus sylvestris L., Pinaceae Функции в составе: тонизирующее действие; придание аромата. Идентификаторы: CAS 84012-35-1, EC 281-679-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/110.",
+    safetyNotes: "Ограничен в ЕС (Annex III/110); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36572,7 +36543,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Sylvestris Cone Extract is an extract of the cones of the Scotch Pine, Pinus sylvestris L., Pinaceae Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 84012-35-1 / 94266-48-5, EC 281-679-2 / 304-455-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/110.",
+    safetyNotes: "Ограничен в ЕС (Annex III/110); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36583,7 +36554,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Sylvestric Leaf Extract is an extract of the needles of the Scotch Pine, Pinus sylvestris L., Pinaceae Функции в составе: тонизирующее действие. Идентификаторы: CAS 84012-35-1, EC 281-679-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/110.",
+    safetyNotes: "Ограничен в ЕС (Annex III/110); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36594,7 +36565,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pinus Sylvestris Leaf Oil is the volatile oil obtained from the needles of the Scotch Pine, Pinus sylvestris L., Pinaceae Функции в составе: отдушка. Идентификаторы: CAS 8023-99-2 / 84012-35-1, EC 281-679-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/110.",
+    safetyNotes: "Ограничен в ЕС (Annex III/110); условия: «Peroxide value less than 10 mmoles/L (15 ) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36655,7 +36626,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Piroctone is the organic compound that conforms to the formula Функции в составе: антимикробное действие; консервант. Идентификаторы: CAS 50650-76-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/35.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/35): a) Rinse-off products b) Other products, макс. a) 1.0% b) 0.5% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36666,7 +36637,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Piroctone Olamine is the amine salt that conforms to the formula: Функции в составе: противосеборейное действие; консервант. Идентификаторы: CAS 68890-66-4, EC 272-574-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/61 V/35.",
+    safetyNotes: "Ограничен в ЕС (Annex III/61): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/35): a) Rinse-off products b) Other products, макс. a) 1.0% b) 0.5% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36817,6 +36788,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; антиоксидант; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Platinum is a metallic element Функции в составе: антимикробное действие; антиоксидант; уход за кожей. Идентификаторы: CAS 7440-06-4, EC 231-116-1 (I).",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1729) — в рамках условия: «Platinum (nano) [INCI], Colloidal Platinum (nano) [INCI] [1] Acetyl tetrapeptide-17 Colloidal Platinum (nano) [INCI] [2]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -36918,7 +36890,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Pogostemon Cablin Oil is the volatile oil obtained from the whole plant, Pogostemon cablin. Функции в составе: отдушка. Идентификаторы: CAS 8014-09-3.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/365); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -37059,7 +37031,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; связывающее; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; связывающее; плёнкообразование. Идентификаторы: CAS 9003-05-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -37100,7 +37072,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Copolymer of acrylic acid, acrylamide, sodium acrylate, sodium acryloyldimethyltaurate monomers Функции в составе: плёнкообразование.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -37211,6 +37183,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Polyaminopropyl Biguanide is the organic compound that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 32289-58-0 [1]/27083-27-8 [2]/28757-47-3 [3]/ 133029-32-0 [4], EC 608-723-9 [1]/608-042-7 [2]/923-111-4 [3]/- [4].",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/28): макс. 0.1%; «Not to be used in applications that may lead to exposure of the end-user's lungs by inhalation» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38542,7 +38515,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ethanaminium, N, N, N-trimethyl-2-((2-methyl-1-oxo-2-propenyl)oxy)-, chloride, polymer with 2-propenamide Функции в составе: антистатический эффект; плёнкообразование. Идентификаторы: CAS 35429-19-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38563,7 +38536,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Propenamide, polymer with N, N-dimethyl-N-2-propenyl-2-propen-1-aminium chloride and 2-propenoic acid Функции в составе: антистатический эффект; плёнкообразование. Идентификаторы: CAS 25136-75-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38584,7 +38557,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Polyquaternium-43 is the polymeric quaternary ammonium salt formed from acrylamide, acrylamidopropyltrimonium chloride, 2-amidopropylacrylamide sulfonate, and DMAPA monomers Функции в составе: антистатический эффект; плёнкообразование.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38635,7 +38608,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Acrylic acid/acrylamide/methacrylamidopropyltrimonium chloride copolymer Функции в составе: уход за волосами. Идентификаторы: CAS 84647-38-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38706,7 +38679,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; плёнкообразование",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Polyquaternium-7 is the polymeric quaternary ammonium salt of acrylamide and dimethyl diallyl ammonium chloride Функции в составе: антистатический эффект; плёнкообразование. Идентификаторы: CAS 26590-05-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -38827,7 +38800,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Polysilicone-15 is the siloxane polymer that conforms generally to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 207574-74-1, EC 426-000-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/26.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/26): макс. 10% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -39383,7 +39356,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Potassium Benzoate is the potassium salt of Benzoic Acid. It conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 582-25-2, EC 209-481-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/1a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/1a): макс. 0.5% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -39464,7 +39437,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: окислитель. Идентификаторы: CAS 3811-04-9, EC 223-289-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/6): (a) Toothpaste (b) Other products, макс. (a) 5% (b) 3% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -39565,7 +39538,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Potassium Hydroxide is the inorganic base Функции в составе: регулирование pH. Идентификаторы: CAS 1310-58-3, EC 215-181-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/15a, 15d.",
+    safetyNotes: "Ограничен в ЕС (Annex III/15a): (a) Nail cuticle solvent (b) Hair straightener (c) pH adjuster for depilatories (d) Other uses as pH adjuster Callosity softener/remover (entry 15d), макс. (a) 5% (b) 2% (General use) and 4.5% (Professional use) Entry 15d: 1,5%; условия: «(b) 1. General use 2. Professional use (c) up to pH 12.7 (d) up to pH 11 15 d Contains alcakali, Avoid contact with eyes Keep out of reach of chindren ans Read directions for use carefully | (a) Contains alkali Avoid contact with eyes Can cause blindness Keep out of reach of children (b) 1. Contains alkali Avoid contact with eyes Can cause blindness Keep out of reach of children 2. For professional use only Avoid contact with eyes Can cause blindness (c) Keep out of reach of children Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: ["/POTASSIUM HYDROXIDE", "POTASSIUM HYDROXIDE+"],
   },
   {
@@ -39677,7 +39650,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "завивка/выпрямление волос; консервант; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Potassium Metabisulfite is the inorganic salt that conforms to the formula: Функции в составе: завивка/выпрямление волос; консервант; восстановитель. Идентификаторы: CAS 16731-55-8 / 4429-42-9, EC 240-795-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/99 V/9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/99): (a) Oxidative hair dye products (b) Hair straightening products (c) Self-tanning products for the face (d) Other self-tanning products, макс. (a) 0.67% (as free SO2) (b) 6.7% (as free SO2) (c) 0.45% (as free SO2) (d) 0.40% (as free SO2); условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/9): макс. 0.2% (as free SO2) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -39903,7 +39876,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "депилятор; завивка/выпрямление волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: депилятор; завивка/выпрямление волос. Идентификаторы: CAS 34452-51-2, EC 252-038-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/2a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/2a): (a) Hair products (b) Depilatories (c) Hair rinse-off products (d) Products intended for eyelash waving, макс. (a) (i) 8% (ii) 11% (b) 5% (c) 2% (d) 11% The abovementioned percentages are calculated as thioglycollic acid; условия: «(a) (i) General use ready for use pH 7 to 9.5 (ii) Professional use ready for use pH 7 to 9.5 (b) ready for use pH 7 to 12.7 (c) ready for use pH 7 to 9.5 (d) ready for use pH 7 to 9,5 | Conditions of use: (a) (b) (c) (d) Avoid contact with eyes Rinse eyes immediately if product comes into contact with them. (a) (c) (d) Wear suitable gloves Warnings to be printed on the label: (a)(i) (b) (c) Contains thioglycolate Follow the instructions Keep out of reach of children (a)(ii) (d) For professional use only Contains thioglycolate Follow the instructions’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -40527,7 +40500,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Propyl Benzoate is the ester of n-propyl alcohol and Benzoic Acid. It conforms to the formula: Функции в составе: отдушка; консервант. Идентификаторы: CAS 2315-68-6, EC 219-020-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/1a.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/1a): макс. 0.5% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -41615,7 +41588,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Quaternium-15 is the quaternary ammonium salt that conforms to the formula: Функции в составе: антимикробное действие; консервант. Идентификаторы: CAS 4080-31-3 / 51229-78-8, EC 223-805-0 / 426-020-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1386.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1385) — в рамках условия: «Cis-1-(3-chloroallyl)-3,5,7- triaza-1-azoniaadamantane chloride (cis-CTAC)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -41926,7 +41899,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; денатурирующее; крашение волос; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Resorcinol is the phenol that conforms to the formula Функции в составе: антиоксидант; денатурирующее; крашение волос; придание аромата. Идентификаторы: CAS 108-46-3, EC 203-585-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/22.",
+    safetyNotes: "Ограничен в ЕС (Annex III/22): (a) Hair dye substance in oxidative hair dye products (b) Products intended for colouring eyelashes (c) Hair lotions and shampoos, макс. (c) 0,5%; условия: «(For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyeslashes must not exceed 1,25 % (b) Professional use only | (a) To be printed on the label: The mixing ratio. “ Hair colorants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary ‘black henna’ tattoo in the past. Contains resorcinol. Rinse hair well after application. Rinse eyes immediately if product comes into contact with them.‘Do not use to dye eyelashes. (b) To be printed on the label: The mixing ratio. “For professional use only. Contains resorcinol. This product can cause severe allergic reactions. Read and follow instructions.This product is not intended for use on persons under the age of 16. Temporary ‘black henna’ tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary ‘black henna’ tattoo in the past. Rinse eyes immediately if product comes into contact with them.” (c) Contains resorcinol.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -41947,7 +41920,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Retinyl Acetate is the ester of Retinol and acetic acid. Функции в составе: уход за кожей. Идентификаторы: CAS 127-47-9, EC 204-844-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/376.",
+    safetyNotes: "Ограничен в ЕС (Annex III/376): (a) Body lotion (b) other leave-on and rinse-off products, макс. (a) 0,05 % Retinol Equivalent (RE) (b) 0,3 % RE; условия: «From 1 November 2025 cosmetic products containing that substance and not complying with the conditions shall not be placed on the Union market. From 1 May 2027 cosmetic products containing that substance and not complying with the conditions shall not be made available on the Union market. | For any cosmetic product containing Retinol, Retinyl Acetate or Retinyl Palmitate the following, labelling is obligatory: ‘Contains Vitamin A. Consider your daily intake before use’.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -42199,7 +42172,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Riboflavin is the organic compound that conforms to the formula: Функции в составе: краситель; уход за кожей. Идентификаторы: CAS 83-88-5, EC 201-507-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/145.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/145); «Purity criteria as set out in Commission Directive 95/45/EC (E101)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -42260,7 +42233,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Alba Flower Extract is an extract obtained from the flowers of the Rose, Rosa alba L., Rosaceae Функции в составе: смягчение кожи (эмолент); придание аромата. Идентификаторы: CAS 93334-48-6, EC 297-122-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42281,7 +42254,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Canina Flower Oil is the volatile oil obtained from the flowers of the Hip Rose, Rosa canina L., Rosaceae Функции в составе: смягчение кожи (эмолент); отдушка. Идентификаторы: CAS 84696-47-9, EC 283-652-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42362,7 +42335,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; отдушка; уход за кожей; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Centifolia Flower Extract is an extract of the flowers of the Cabbage Rose, Rosa centifolia (L.), Rosaceae Функции в составе: вяжущее действие; отдушка; уход за кожей; тонизирующее действие. Идентификаторы: CAS 84604-12-6, EC 283-289-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42373,7 +42346,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Centifolia Flower Oil is the volatile oil obtained from the flowers of the Cabbage Rose, Rosa centifolia (L.), Rosaceae Функции в составе: отдушка; тонизирующее действие. Идентификаторы: CAS 84604-12-6, EC 283-289-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42434,7 +42407,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Damascena Flower Extract is an extract of the flowers of the Damask Rose, Rosa damascena, Rosaceae Функции в составе: отдушка; тонизирующее действие. Идентификаторы: CAS 90106-38-0, EC 290-260-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42445,7 +42418,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Damascena Flower Oil is the volatile oil obtained from the flowers of the Damask Rose, Rosa damascena, Rosaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 90106-38-0 / 8007-01-0, EC 290-260-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42536,7 +42509,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; смягчение кожи (эмолент); отдушка; тонизирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Moschata Oil is the oil obtained from the Musk Rose, Rosa moschata, Rosaceae Функции в составе: вяжущее действие; смягчение кожи (эмолент); отдушка; тонизирующее действие.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42607,7 +42580,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Rosa Rugosa Flower Oil is the volatile oil obtained from the flowers of the Rose, Rosa rubiginosa L., Rosaceae Функции в составе: отдушка. Идентификаторы: CAS 92347-25-6, EC 296-213-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/366. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/366); условия: «The presence of the substance or substances shall be indicated as ‘Rose Flower Oil/Extract’ in the list of ingredients referred to in Article 19(1), point (g), when the concentration of the substance or substances exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -42659,7 +42632,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 57378-68-4, EC 260-709-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/161. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -43301,7 +43274,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Saccharomyces/Zinc Ferment is the product obtained by the fermentation product of Saccharomyces in the presence of zinc ions Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -43412,7 +43385,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "функция не указана (CosIng)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Salmon Egg Extract is the extract of salmon eggs Функции в составе: функция не указана (CosIng). Идентификаторы: CAS 94944-92-0, EC 305-671-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -43693,7 +43665,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: придание аромата. Идентификаторы: CAS 11031-45-1, EC 234-262-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/341. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/341); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -43734,7 +43706,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 8006-87-9/ 84787-70-2, EC 8006-87-9/ 84787-70-2.",
-    safetyNotes: "Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/367); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -44095,6 +44067,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7488-56-4, EC 231-303-8.",
+    safetyNotes: "Ограничен в ЕС (Annex III/49): Antidandruff shampoos, макс. 1%; условия: «Contains selenium disulphide Avoid contact with eyes or damaged skin» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -44365,7 +44338,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sheep Milk is whole milk obtained from the sheep, Ovis aries Функции в составе: уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Please consider whether entry 419 of Annex II to the Cosmetics Regulation 1223/2009 is applicable. According to entry 419, category 1 material and Category 2 material as defined in Articles 4 and 5 respectively of Regulation (EC) No 1774/2002, and ingredients derived therefrom are prohibited in cosmetics products. Regulation (EC) No 1774/2002 has been repealed and replaced by Regulation No. 1069/2009. For Category 1 and 2 materials in Regulation No. 1069/2009, please see Article 8 and 9, respectively..",
     synonyms: [],
   },
   {
@@ -44656,7 +44628,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; дезодорирующее действие; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Silver is a metallic element. (To identify the colourant meeting the requirements for labelling purposes in the EU, the INCI Name CI 77820 must be used) Функции в составе: краситель; дезодорирующее действие; уход за кожей. Идентификаторы: CAS 7440-22-4, EC 231-131-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/142 (CI 77820).",
+    safetyNotes: "Ограничен в ЕС (Annex III/379): (a) Toothpaste (b) Mouthwash, макс. For (a) and (b): 0,05 % (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -44667,7 +44639,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Silver Chloride is the inorganic salt that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 7783-90-6, EC 232-033-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/52.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/52): макс. 0.004% (as AgCl); «20% AgCl (w/w) on TiO2. Not to be used in products for children under 3 years of age, in oral products and in eye and lip products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -44678,7 +44650,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Silver Citrate is the organic salt that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант. Идентификаторы: CAS 36701-38-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/59.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/59): макс. 0,2% corresponding to 0,0024% of silver; «Not to be used in oral producrs and eye products» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45031,7 +45003,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; завивка/выпрямление волос; консервант; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Bisulfite is the inorganic salt that conforms to the formula: Функции в составе: антиоксидант; завивка/выпрямление волос; консервант; восстановитель. Идентификаторы: CAS 7631-90-5, EC 231-548-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/99 V/9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/99): (a) Oxidative hair dye products (b) Hair straightening products (c) Self-tanning products for the face (d) Other self-tanning products, макс. (a) 0.67% (as free SO2) (b) 6.7% (as free SO2) (c) 0.45% (as free SO2) (d) 0.40% (as free SO2); условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/9): макс. 0.2% (as free SO2) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45042,7 +45014,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Borate is the inorganic salt that conforms generally to the formula: Функции в составе: регулирование pH. Идентификаторы: CAS 1330-43-4 / 1303-96-4, EC 215-540-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1396.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1396) — в рамках условия: «Borates, tetraborates, octaborates and boric acid salts and esters, including: Disodium octaborate anhydrous [1] Disodium octaborate tetrahydrate [2] 2-Aminoethanol, monoester with boric acid [3] 2-Hydroxypropyl ammonium dihydrogen orthoborate [4] Potassium borate, boric acid potassium salt [5] Trioctyldodecyl borate [6] Zinc borate [7] Sodium borate, disodium tetraborate anhydrous; boric acid, sodium salt [8] Tetraboron disodium heptaoxide, hydrate [9] Orthoboric acid, sodium salt [10] Disodium tetraborate decahydrate; borax decahydrate [11] Disodium tetraborate pentahydrate; borax pentahydrate [12]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45053,7 +45025,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Butylparaben is the sodium salt of Butylparaben that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 36457-20-2, EC 253-049-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/12 a): макс. - 0,14% (as acid) for the sum of the individual concentrations - 0,8% (as acid) for mixtures of substances mentioned in entry 12 and 12a, here the sum of the individual concentrations of butyl and propylparaben and their salts does not exceed 0,14%; «Not to be used in leave-on products designed for application on the nappy area of children under three years of age. | For leave-on products designed for children under three years of age: \"Do not use on the nappy area\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45224,7 +45196,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "дезодорирующее действие; окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: дезодорирующее действие; окислитель. Идентификаторы: CAS 15630-89-4, EC 239-707-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/12.",
+    safetyNotes: "Ограничен в ЕС (Annex III/12): (a) Hair products (b) Skin products (c) Nail hardening products (d) Oral products, including mouth rinse, tooth paste and tooth whitening or bleaching products (e) Tooth whitening or bleaching products (f) Products intended for eyelashes, макс. (a) 12 % of H2O2 (40 volumes), present or released (b) 4 % of H2O2, present or released (c) 2 % of H2O2, present or released (d) ≤ 0,1 % of H2O2, present or released (e) > 0,1 % ≤ 6 % of H2O2, present or released (f) 2 % of H2O2, present or released; условия: «(e) To be only sold to dental practitioners. For each cycle of use, first use by dental practitioners as defined under Directive 2005/36/EC of the European Parliament and of the Council* or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. Not to be used on a person under 18 years of age. (f) For professional use only | (a) (f) Wear suitable gloves (a) (b) (c) (e) Contains hydrogen peroxide Avoid contact with eyes Rinse immediately if product comes into contact with them. (e) Concentration of H2O2 present or released indicated in percentage. Not to be used on a person under 18 years of age. To be only sold to dental practitioners. For each cycle of use, the first use to be only done by dental practitioners or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. f) To be printed on the label: ‘For professional use only. Avoid contact with eyes. Rinse eyes immediately if product comes into contact with them. Contains hydrogen peroxide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45555,7 +45527,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Dehydroacetate is the heterocyclic compound that conforms generally to the formula: Функции в составе: консервант. Идентификаторы: CAS 4418-26-2, EC 224-580-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/13.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/13): макс. 0.6% (as acid); «Not to be used in aerosol dispensers (sprays)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45636,7 +45608,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Ethylparaben is the sodium salt of Ethylparaben (q.v.) that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 35285-68-8, EC 252-487-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12.",
+    safetyNotes: "Разрешён в ЕС как консервант с ограничением концентрации (Annex V/12).",
     synonyms: [],
   },
   {
@@ -45657,7 +45629,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "против зубного налёта; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: против зубного налёта; уход за полостью рта. Идентификаторы: CAS 7681-49-4, EC 231-667-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/31.",
+    safetyNotes: "Ограничен в ЕС (Annex III/31): Oral products, макс. 0,15 % calculated as F. When mixed with other fluorine compounds permitted under this Annex, total F concentration must not exceed 0,15 %; условия: «Contains sodium fluoride For any toothpaste with compounds containing fluorine in a concentration of 0.1 to 0.15% calculated as F unless it is already labelled as contra-indicated for children (e.g. \"for adult use only\") the following labelling is obligatory: \"Children of 6 years and younger: use a pea-sized amount for supervised brushing to minimise swallowing. In case of intake of fluoride from other sources consult a dentist or doctor.\"» (текст регламента — дословно, EN).",
     synonyms: ["/SODIUM FLUORIDE"],
   },
   {
@@ -45668,7 +45640,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Formate is the organic salt that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 141-53-7, EC 205-488-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/14.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/14): макс. 0.5% (as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -45809,7 +45781,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Hydroxymethylglycinate is the sodium salt of the substituted amino acid that conforms to the formula: Функции в составе: уход за волосами; консервант. Идентификаторы: CAS 70161-44-3, EC 274-357-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/51.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1669) — в рамках условия: «Sodium N-(hydroxymethyl)glycinate; [formaldehyde released from sodium N-(hydroxymethyl)glycinate] if the maximum theoretical concentration of releasable formaldehyde, irrespective of the source, in the mixture as placed on the market is ≥ 0,1 % w/w» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/51): макс. 0.5%; «Not to be used if the maximum theoretical concentration of releasable formaldehyde, irrespective of the source, if the mixture as placed on the market is ≥ 0,1 % w/w» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46182,7 +46154,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; консервант; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Metabisulfite is the inorganic salt that conforms to the formula: Функции в составе: антиоксидант; консервант; восстановитель. Идентификаторы: CAS 7681-57-4 / 7757-74-6, EC 231-673-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/99 V/9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/99): (a) Oxidative hair dye products (b) Hair straightening products (c) Self-tanning products for the face (d) Other self-tanning products, макс. (a) 0.67% (as free SO2) (b) 6.7% (as free SO2) (c) 0.45% (as free SO2) (d) 0.40% (as free SO2); условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/9): макс. 0.2% (as free SO2) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46313,7 +46285,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: консервант. Идентификаторы: CAS 5026-62-0, EC 225-714-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12.",
+    safetyNotes: "Разрешён в ЕС как консервант с ограничением концентрации (Annex V/12).",
     synonyms: [],
   },
   {
@@ -46344,7 +46316,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "против зубного налёта; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: против зубного налёта; уход за полостью рта. Идентификаторы: CAS 10163-15-2 / 7631-97-2, EC 233-433-0 / 231-552-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/27.",
+    safetyNotes: "Ограничен в ЕС (Annex III/27): Oral products, макс. 0.15% calculated as F. When mixed with other fluorine compounds permitted under this Annex, total F concentration must not exceed 0.15%; условия: «Contains sodium monofluorophosphate For any toothpaste with compounds containing fluorine in a concentration of 0.1 to 0.15% calculated as F unless it is already labelled as contra-indicated for children (e.g. \"for adult use only\") the following labelling is obligatory: \"Children of 6 years and younger: use a pea-sized amount for supervised brushing to minimise swallowing. In case of intake of fluoride from other sources consult a dentist or doctor.\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46416,6 +46388,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 7632-00-0, EC 231-555-9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/17): Rust inhibitor, макс. 0.2%; условия: «Not to be used with secondary and/or tertiary amines or other substances forming nitrosamines» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46568,7 +46541,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за полостью рта; окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Perborate is the inorganic salt that conforms to the formula: Функции в составе: уход за полостью рта; окислитель. Идентификаторы: CAS 15120-21-5 / 7632-04-4 / 11138-47-9, EC 239-172-9 / 231-556-4 / 234-390-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1397.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1396) — в рамках условия: «Borates, tetraborates, octaborates and boric acid salts and esters, including: Disodium octaborate anhydrous [1] Disodium octaborate tetrahydrate [2] 2-Aminoethanol, monoester with boric acid [3] 2-Hydroxypropyl ammonium dihydrogen orthoborate [4] Potassium borate, boric acid potassium salt [5] Trioctyldodecyl borate [6] Zinc borate [7] Sodium borate, disodium tetraborate anhydrous; boric acid, sodium salt [8] Tetraboron disodium heptaoxide, hydrate [9] Orthoboric acid, sodium salt [10] Disodium tetraborate decahydrate; borax decahydrate [11] Disodium tetraborate pentahydrate; borax pentahydrate [12]» (текст регламента — дословно, EN). Входит в перечень запрещённых веществ ЕС (Annex II/1397) — в рамках условия: «Perboric acid (H3BO2(O2)), monosodium salt trihydrate [1] Perboric acid, sodium salt, tetrahydrate [2] Perboric acid (HBO(O2)), sodium salt, tetrahydrate [3] Sodium peroxoborate, hexahydrate [4] Sodium perborate [5] Sodium peroxometaborate; sodium peroxoborate [6] Perboric acid, sodium salt [7] Perboric acid, sodium salt, monohydrate [8] Perboric acid (HBO(O2)), sodium salt, monohydrate [9] Trimethyl borate [10]» (текст регламента — дословно, EN). Ограничен в ЕС (Annex III/12): (a) Hair products (b) Skin products (c) Nail hardening products (d) Oral products, including mouth rinse, tooth paste and tooth whitening or bleaching products (e) Tooth whitening or bleaching products (f) Products intended for eyelashes, макс. (a) 12 % of H2O2 (40 volumes), present or released (b) 4 % of H2O2, present or released (c) 2 % of H2O2, present or released (d) ≤ 0,1 % of H2O2, present or released (e) > 0,1 % ≤ 6 % of H2O2, present or released (f) 2 % of H2O2, present or released; условия: «(e) To be only sold to dental practitioners. For each cycle of use, first use by dental practitioners as defined under Directive 2005/36/EC of the European Parliament and of the Council* or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. Not to be used on a person under 18 years of age. (f) For professional use only | (a) (f) Wear suitable gloves (a) (b) (c) (e) Contains hydrogen peroxide Avoid contact with eyes Rinse immediately if product comes into contact with them. (e) Concentration of H2O2 present or released indicated in percentage. Not to be used on a person under 18 years of age. To be only sold to dental practitioners. For each cycle of use, the first use to be only done by dental practitioners or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. f) To be printed on the label: ‘For professional use only. Avoid contact with eyes. Rinse eyes immediately if product comes into contact with them. Contains hydrogen peroxide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46589,7 +46562,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 5997-53-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/6.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/6): макс. 8%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46720,7 +46693,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Propionate is the sodium salt of propionic acid that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 137-40-6, EC 205-290-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/2.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/2): макс. 2% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46741,7 +46714,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Propylparaben is the sodium salt of Propylparaben that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 35285-69-9, EC 252-488-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/12.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/12 a): макс. - 0,14% (as acid) for the sum of the individual concentrations - 0,8% (as acid) for mixtures of substances mentioned in entry 12 and 12a, here the sum of the individual concentrations of butyl and propylparaben and their salts does not exceed 0,14%; «Not to be used in leave-on products designed for application on the nappy area of children under three years of age. | For leave-on products designed for children under three years of age: \"Do not use on the nappy area\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46752,7 +46725,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: консервант. Идентификаторы: CAS 15922-78-8, EC 240-062-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/369.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/369) — в рамках условия: «Pyrithione sodium (INNM) (2)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46824,7 +46797,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "денатурирующее; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Salicylate is the sodium salt of salicylic acid that conforms to the formula: Функции в составе: денатурирующее; консервант. Идентификаторы: CAS 54-21-7, EC 200-198-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/3.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/3): макс. Salicylic acid: 0,5 % (acid) Salicylic acid salts: 0,5 % (acid); «Salicylic acid: Not to be used in products for children under 3 years of age. Not to be used in oral products. Not to be used in applications that may lead to exposure of the end-user’s lungs by inhalation. Salicylic acid salts: Not to be used in products for children under 3 years of age, except for shampoos. | Salicylic acid: Not to be used for children under 3 years of age** **Solely for products which might be used for children under 3 years of age. Salicylic acid salts: Not to be used for children under 3 years of age*** ***Solely for products which might be used for children under 3 years of age and which remain in prolonged contact with the skin.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46905,7 +46878,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Sorbate is the sodium salt of Sorbic Acid that conforms to the formula: Функции в составе: консервант. Идентификаторы: CAS 7757-81-5, EC 231-819-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/4.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/4): макс. 0.6% (acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46957,6 +46930,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование; придание непрозрачности; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Styrene/Acrylates Copolymer is the sodium salt of a polymer of styrene and a monomer consisting of acrylic acid, methacrylic acid or one of their simple esters. Функции в составе: плёнкообразование; придание непрозрачности; регулирование вязкости. Идентификаторы: CAS 9010-92-8.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1725) — в рамках условия: «Styrene/Acrylates copolymer (nano) [INCI] Sodium Styrene/Acrylates copolymer (nano) [INCI]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -46987,7 +46961,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; завивка/выпрямление волос; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sodium Sulfite is the inorganic salt that conforms to the formula: Функции в составе: антиоксидант; завивка/выпрямление волос; восстановитель. Идентификаторы: CAS 7757-83-7, EC 231-821-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/99 V/9.",
+    safetyNotes: "Ограничен в ЕС (Annex III/99): (a) Oxidative hair dye products (b) Hair straightening products (c) Self-tanning products for the face (d) Other self-tanning products, макс. (a) 0.67% (as free SO2) (b) 6.7% (as free SO2) (c) 0.45% (as free SO2) (d) 0.40% (as free SO2); условия: «For purposes other than inhibiting the development of micro-organisms in the product. This purpose has to be apparent from the presentation of the product» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/9): макс. 0.2% (as free SO2) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -47492,7 +47466,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Amides, soya, N,N-bis(hydroxyethyl) Функции в составе: ПАВ: эмульгирование; стабилизация эмульсии; ПАВ: усиление пены; ПАВ: очищение; регулирование вязкости. Идентификаторы: CAS 68425-47-8, EC 270-355-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -47543,7 +47517,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; ПАВ: эмульгирование; уход за волосами; консервант; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Quaternary ammonium compounds, trimethylsoya alkyl, chlorides Функции в составе: антистатический эффект; ПАВ: эмульгирование; уход за волосами; консервант; ПАВ: очищение. Идентификаторы: CAS 61790-41-8, EC 263-134-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -47734,7 +47708,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "против зубного налёта; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: против зубного налёта; уход за полостью рта. Идентификаторы: CAS 7783-47-3, EC 231-999-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/35.",
+    safetyNotes: "Ограничен в ЕС (Annex III/35): Oral products, макс. 0,15 % calculated as F. When mixed with other fluorine compounds permitted under this Annex, total F concentration must not exceed 0,15 %; условия: «Contains stannous fluoride For any toothpaste with compounds containing fluorine in a concentration of 0.1 to 0.15% calculated as F unless it is already labelled as contra-indicated for children (e.g. \"for adult use only\") the following labelling is obligatory: \"Children of 6 years and younger: use a pea-sized amount for supervised brushing to minimise swallowing. In case of intake of fluoride from other sources consult a dentist or doctor.\"» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -47785,7 +47759,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; консервант; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антистатический эффект; консервант; ПАВ: очищение. Идентификаторы: CAS 122-19-0, EC 204-527-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/65 V/54.",
+    safetyNotes: "Ограничен в ЕС (Annex III/65): Rinse-off hair (head) products, макс. 3% (as benzalkonium chloride); условия: «In the final products the concentrations of benzalkonium chloride, bromide and saccharinate with an alkyl chain of C14, or less must not exceed 0.1% (as benzalkonium chloride) For purposes other than inhibiting the development of micro-organismes in the product. This purpose has to be apparent from the presentation of the product | Avoid contact with the eyes» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/54): макс. 0.1% (as benzalkonium chloride); «Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48080,7 +48054,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Steartrimonium Bromide is the quaternary ammonium salt that conforms to the formula: Функции в составе: антистатический эффект; уход за волосами; консервант. Идентификаторы: CAS 1120-02-1, EC 214-294-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48091,7 +48065,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Steartrimonium Chloride is the quaternary ammonium salt that conforms to the formula: Функции в составе: антистатический эффект; уход за волосами; консервант. Идентификаторы: CAS 112-03-8, EC 203-929-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/44 III/286.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/44): макс. 0.1% (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48306,7 +48280,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за полостью рта; успокаивающее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за полостью рта; успокаивающее действие. Идентификаторы: CAS 543-94-2, EC 208-854-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/58.",
+    safetyNotes: "Ограничен в ЕС (Annex III/58): Oral products, макс. 3.5% (as strontium) When mixed with other permitted strontium products the total strontium content must not exceed 3.5%; условия: «Contains strontium acetate Frequent use by children is not advisable» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48317,6 +48291,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "Компонент косметической формулы",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Идентификаторы: CAS 10476-85-4, EC 233-971-6.",
+    safetyNotes: "Ограничен в ЕС (Annex III/57): (a) Oral products (b) Shampoo and face products, макс. (a) 3.5% (as strontium) When mixed with other permitted strontium products the total strontium content must not exceed 3.5% (b) 2.1% (as strontium) When mixed with other permitted strontium products the total strontium content must not exceed 2.1%; условия: «Contains strontium chloride Frequent use by children is not advisable» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48347,7 +48322,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Styrene is the organic compound that conforms to the formula: Функции в составе: растворитель. Идентификаторы: CAS 100-42-5, EC 202-851-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1575.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1575) — в рамках условия: «Styrene» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48358,7 +48333,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание непрозрачности",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 2-Propenamide, polymer with ethenylbenzene Функции в составе: придание непрозрачности. Идентификаторы: CAS 24981-13-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/66.",
+    safetyNotes: "Ограничен в ЕС (Annex III/66): (a) Body leave-on products (b) Other products; условия: «(a) Maximum residual acrylamide content 0.1mg/kg (b) Maximum residual acrylamide content 0.5mg/kg» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48369,6 +48344,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "плёнкообразование; придание непрозрачности",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Styrene/Acrylates Copolymer is a polymer of Styrene and a monomer consisting of Acrylic Acid, Methacrylic Acid or one of their simple esters. Функции в составе: плёнкообразование; придание непрозрачности. Идентификаторы: CAS 27306-39-4; 25034-86-0; 25085-34-1; 9010-92-8.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1725) — в рамках условия: «Styrene/Acrylates copolymer (nano) [INCI] Sodium Styrene/Acrylates copolymer (nano) [INCI]» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48636,7 +48612,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за волосами",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 12-(R)-Hydroxy-9-(Z)-octadecenoic acid, tris(2-hydroxyethyl)amine salt, sulfurized Функции в составе: уход за волосами. Идентификаторы: CAS 222721-88-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48707,7 +48683,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sunset Yellow is classed chemically as a monoazo color. It conforms to the formula. (To identify the colorant allowed for use in the European Union (EU), the INCI Name CI 15985 must be used, except for hair dye products). Функции в составе: краситель. Идентификаторы: CAS 2783-94-0, EC 220-491-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/31.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/31); «Purity criteria as set out in Commission Directive 95/45/EC (E 110)» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -48908,7 +48884,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "абразив; абсорбент; антислеживающее; наполнитель; придание непрозрачности; защита кожи; модификатор скольжения",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Talc is a powdered native, hydrous magnesium silicate sometimes containing a small portion of aluminum silicate. Функции в составе: абразив; абсорбент; антислеживающее; наполнитель; придание непрозрачности; защита кожи; модификатор скольжения. Идентификаторы: CAS 14807-96-6, EC 238-877-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/59. Комедогенность (шкала Fulton 1989, 0–5): 1.",
+    safetyNotes: "Ограничен в ЕС (Annex III/59): (a) Powdery products intended to be used for children under 3 years of age (b) Other products; условия: «(a) Keep powder away from children's nose and mouth» (текст регламента — дословно, EN). Комедогенность (шкала Fulton 1989, 0–5): 1.",
     synonyms: ["[PR-000883] TALC"],
   },
   {
@@ -49149,7 +49125,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; пенообразование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Fatty acids, coco, compds. with triethanolamine Функции в составе: очищение; ПАВ: эмульгирование; пенообразование; ПАВ: очищение. Идентификаторы: CAS 61790-64-5, EC 263-155-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49160,7 +49136,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; уход за волосами; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): L-Glutamic acid, N-coco acyl derivs., compds. with triethanolamine (1:1) Функции в составе: очищение; уход за волосами; ПАВ: очищение. Идентификаторы: CAS 68187-29-1, EC 269-084-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49171,7 +49147,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; пенообразование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzenesulfonic acid, C10-13-alkyl derivs., compds. with triethanolamine Функции в составе: очищение; пенообразование; ПАВ: очищение. Идентификаторы: CAS 27323-41-7 / 68411-31-4, EC 248-406-9 / 270-116-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49182,7 +49158,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "увлажнитель (гумектант); уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Tris(2-Hydroxyethyl)ammonium lactate Функции в составе: увлажнитель (гумектант); уход за кожей. Идентификаторы: CAS 20475-12-1, EC 243-846-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49193,7 +49169,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; пенообразование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): tris(2-Hydroxyethyl)ammonium dodecylsulphate Функции в составе: очищение; ПАВ: эмульгирование; пенообразование; ПАВ: очищение. Идентификаторы: CAS 139-96-8, EC 205-388-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49204,7 +49180,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): tris(2-Hydroxyethyl)ammonium palmitate Функции в составе: очищение; ПАВ: эмульгирование; ПАВ: очищение. Идентификаторы: CAS 49719-60-0, EC 256-444-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49215,7 +49191,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: очищение; ПАВ: эмульгирование; ПАВ: очищение. Идентификаторы: CAS 4568-28-9, EC 224-945-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62. Комедогенность (шкала Fulton 1989, 0–5): 3.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN). Комедогенность (шкала Fulton 1989, 0–5): 3.",
     synonyms: [],
   },
   {
@@ -49226,7 +49202,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 7376-31-0, EC 230-934-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49247,7 +49223,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Terephthalylidene Dicamphor Sulfonic Acid is the organic compound that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 92761-26-7 / 90457-82-2, EC 410-960-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/7.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/7): макс. 10%(as acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49288,7 +49264,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Terpineol; p-Menthenol (mixed isomers) Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 8000-41-7, EC 232-268-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/343. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/343); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -49299,7 +49275,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Terpinolene is the organic compound that conforms to the formula: Функции в составе: отдушка. Идентификаторы: CAS 586-62-9, EC 209-578-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/133. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/133); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products The peroxide value shall be less than 10 mmoles/L (This limit applies to the substance and not to the finished cosmetic product).» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -49400,7 +49376,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; растворитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Tetrahydrofurfuryl Alcohol is the cyclic alcohol that conforms to the formula: Функции в составе: отдушка; растворитель. Идентификаторы: CAS 97-99-4, EC 202-625-6.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): II/1576.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1576) — в рамках условия: «Tetrahydro-2-furylmethanol; tetrahydrofurfuryl alcohol» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49431,7 +49407,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Tetramethyl Acetyloctahydronaphthalenes is a mixture of isomers that conforms to the following formulae: Функции в составе: отдушка; придание аромата; уход за кожей. Идентификаторы: CAS 54464-57-2/ 54464-59-4/ 68155-66-8/ 68155-67-9, EC 259-174-3 / 259-175-9 / 268-978-3 / 268-979-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/344. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/344); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -49512,7 +49488,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "хелатор (связывание ионов металлов); стабилизация эмульсии; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: хелатор (связывание ионов металлов); стабилизация эмульсии; регулирование вязкости. Идентификаторы: CAS 3794-83-0, EC 223-267-7.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/53.",
+    safetyNotes: "Ограничен в ЕС (Annex III/53): (a) Hair product (b) Soap, макс. (a) 1.5% (as etidronic acid) (b) 0.2% (as etidronic acid) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49673,7 +49649,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; депилятор; завивка/выпрямление волос; восстановитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Thioglycolic Acid is the organic acid that conforms generally to the formula: Функции в составе: антиоксидант; депилятор; завивка/выпрямление волос; восстановитель. Идентификаторы: CAS 68-11-1, EC 200-677-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/2a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/2a): (a) Hair products (b) Depilatories (c) Hair rinse-off products (d) Products intended for eyelash waving, макс. (a) (i) 8% (ii) 11% (b) 5% (c) 2% (d) 11% The abovementioned percentages are calculated as thioglycollic acid; условия: «(a) (i) General use ready for use pH 7 to 9.5 (ii) Professional use ready for use pH 7 to 9.5 (b) ready for use pH 7 to 12.7 (c) ready for use pH 7 to 9.5 (d) ready for use pH 7 to 9,5 | Conditions of use: (a) (b) (c) (d) Avoid contact with eyes Rinse eyes immediately if product comes into contact with them. (a) (c) (d) Wear suitable gloves Warnings to be printed on the label: (a)(i) (b) (c) Contains thioglycolate Follow the instructions Keep out of reach of children (a)(ii) (d) For professional use only Contains thioglycolate Follow the instructions’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49714,7 +49690,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антиоксидант; осветление; уход за волосами; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Thuja Occidentalis Leaf Extract is an extract of the leaves of the Thuja, Thuja occidentalis L., Cupressacea Функции в составе: антиоксидант; осветление; уход за волосами; уход за кожей; придание аромата. Идентификаторы: CAS 90131-58-1, EC 290-370-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/119.",
+    safetyNotes: "Ограничен в ЕС (Annex III/119); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49725,7 +49701,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; тонизирующее действие; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Thuja Occidentalis Oil is the volatile oil expressed from the leaves and twigs of the Thuja, Thuja occidentalis L., Cupressacea Функции в составе: отдушка; тонизирующее действие; придание аромата. Идентификаторы: CAS 90131-58-1 / 8007-20-3, EC 290-370-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/119.",
+    safetyNotes: "Ограничен в ЕС (Annex III/119); условия: «Peroxide value less than 10 mmoles/L (15) | (15 ) This limit applies to the substance and not to the finished cosmetic product.’» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49976,7 +49952,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; пенообразование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): 1,1',1''-Nitrilotripropan-2-ol, salt with .alpha.-sulfo-.omega.-(dodecyloxy)poly(oxy-1,2-ethanediyl) (1:1) Функции в составе: очищение; пенообразование; ПАВ: очищение. Идентификаторы: CAS 107600-36-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -49997,6 +49973,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: УФ-фильтр. Идентификаторы: CAS 13463-67-7[1]/ 1317-70-0[2]/ 1317-80-2[3], EC 236-675-5[1] /215-280-1[2]/ 215-282-2[3].",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/27a): макс. 25% - In case of combined use of Titanium Dioxide and Titanium Dioxide (nano), the sum shall not exceed the limit of 25%.; «Not to be used in applications that may lead to exposure of the end-user's lungs by inhalation Only nanomaterials having the following characteristics are allowed: — purity ≥ 99 %, — rutile form, or rutile with up to 5 % anatase, with crystalline structure and physical appearance as clusters of spherical, needle, or lanceolate shapes, — median particle size based on number size distribution ≥ 30 nm, — aspect ratio from 1 to 4,5, and volume specific surface area ≤ 460 m2/cm3, — coated with Silica, Hydrated Silica, Alumina, Aluminium Hydroxide, Aluminium Stearate, Stearic Acid, Trimethoxycaprylylsilane, Glycerin, Dimethicone, Hydrogen Dimethicone, Simethicone; or coated with one of the follow­ing combinations: —Silica at a maximum concen­tration of 16 % and Cetyl Phosphate at a maximum concentration of 6 %, —Alumina at a maximum con­centration of 7 % and Manga­nese Dioxide at a maximum concentration of 0,7 % (not to be used in lip products), —Alumina at a maximum con­centration of 3 % and Triethoxycaprylylsilane at a maximum concentration of 9 %, — photocatalytic activity ≤ 10 % compared to corresponding non-coated or non-doped re­ference, — nanoparticles are photostable in the final formulation. Wording of conditions of use and warnings: For face products containing Tita­nium Dioxide (nano) coated with the combination Alumina and Manganese Dioxide: Not to be used on the lips.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50017,7 +49994,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; придание непрозрачности",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Titanium/Titanium Dioxide is a composite of titanium and titanium dioxide. Функции в составе: краситель; придание непрозрачности.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/27 IV/143.",
     synonyms: [],
   },
   {
@@ -50089,7 +50065,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 95-70-5, EC 202-442-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/9a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/9a): (a) Products intended for colouring eyelashes (b) Products intended for colouring eyelashes; условия: «(a) (i) General use (a) (ii) Professional use (b) Professional use For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 2,0 % (cal­culated as free base) or 3,6 % (calculated as sulfate salt) | (a) To be printed on the label: The mixing ratio. ' Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past. Contains phenylenediamines (toluenediamines) (a) (i) Do not use to dye eyelashes. (a) (ii) Wear suitable gloves. For professional use only.’ (b) As from 3 March 2018, to be printed on the label: The mixing ratio. ' This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary “black henna” tattoo in the past. Rinse eyes immediately if product comes into contact with them. Contains phenylenediamines (toluenediamines). Wear suitable gloves. For professional use only’.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50100,7 +50076,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: крашение волос. Идентификаторы: CAS 615-50-9, EC 210-431-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/9a.",
+    safetyNotes: "Ограничен в ЕС (Annex III/9a): (a) Products intended for colouring eyelashes (b) Products intended for colouring eyelashes; условия: «(a) (i) General use (a) (ii) Professional use (b) Professional use For (a) and (b): After mixing under oxidative conditions the maximum concentration applied to hair or eyelashes must not exceed 2,0 % (cal­culated as free base) or 3,6 % (calculated as sulfate salt) | (a) To be printed on the label: The mixing ratio. ' Hair colourants can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase your risk of allergy. Do not colour your hair if: — you have a rash on your face or sensitive, irritated and damaged scalp, — you have ever experienced any reaction after colouring your hair, — you have experienced a reaction to a temporary “black henna” tattoo in the past. Contains phenylenediamines (toluenediamines) (a) (i) Do not use to dye eyelashes. (a) (ii) Wear suitable gloves. For professional use only.’ (b) As from 3 March 2018, to be printed on the label: The mixing ratio. ' This product can cause severe allergic reactions. Read and follow instructions. This product is not intended for use on persons under the age of 16. Temporary “black henna” tattoos may increase the risk of allergy. Eyelashes shall not be coloured if the consumer: — has a rash on the face or sensitive, irritated and damaged scalp, — has experienced any reaction after colouring hair or eyelashes, — has experienced a reaction to a temporary “black henna” tattoo in the past. Rinse eyes immediately if product comes into contact with them. Contains phenylenediamines (toluenediamines). Wear suitable gloves. For professional use only’.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50364,7 +50340,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Triclocarban is the substituted carbanilide that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант. Идентификаторы: CAS 101-20-2, EC 202-924-1.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/100 V/23.",
+    safetyNotes: "Ограничен в ЕС (Annex III/100): Rinse-off products, макс. 1.5%; условия: «Purity criteria: 3, 3', 4, 4'-Tetrachloroazobenzene» (текст регламента — дословно, EN). Разрешён в ЕС как консервант с условиями (Annex V/23): All cosmetic products, with the exception of mouthwash., макс. 0,2 %; «Purity criteria: 3,3',4,4'-Tetrachloroazobenzene ≤ 1 ppm 3,3',4,4'-Tetrachloroazoxybenzene ≤ 1 ppm Not to be used in toothpaste intended for children under 6 years of age. Cosmetic products containing that substance that do not comply with the conditions may, provided that they comply with the conditions applicable on 23 April 2024, be placed on the Union market until 31 December 2024 and, if they have already been placed on the market before that date, continue to be made available on the Union market until 31 October 2025. | For toothpaste containing Triclocarban the following labelling is obligatory: ‘Not to be used for children under 6 years of age’.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50375,7 +50351,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; дезодорирующее действие; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Triclosan is the substituted organic ether that conforms to the formula: Функции в составе: антимикробное действие; дезодорирующее действие; консервант. Идентификаторы: CAS 3380-34-5, EC 222-182-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/25.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/25): Toothpastes; Hand soaps; Body soaps/Shower gels; Deodorants (non-spray); Face powders and blemish concealers; Nail products for cleaning the fingernails and toenails before the application of artificial nail systems;, макс. 0.3%; «Not to be used in toothpaste intended for children under 3 years of age. Cosmetic products containing that substance that do not comply with the conditions may, provided that they comply with the conditions applicable on 23 April 2024, be placed on the Union market until 31 December 2024 and, if they have already been placed on the market before that date, continue to be made available on the Union market until 31 October 2025. | For toothpaste containing Triclosan the following labelling is obligatory: ‘Not to be used for children under 3 years of age’.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50568,7 +50544,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH; ПАВ: эмульгирование; отдушка; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH; ПАВ: эмульгирование; отдушка; ПАВ: очищение. Идентификаторы: CAS 102-71-6, EC 203-049-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62. Комедогенность (шкала Fulton 1989, 0–5): 2.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN). Комедогенность (шкала Fulton 1989, 0–5): 2.",
     synonyms: ["TRIETHANO- LAMINE"],
   },
   {
@@ -50609,7 +50585,6 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "стабилизация эмульсии",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: стабилизация эмульсии. Идентификаторы: CAS 121-44-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62 Trialkylamines, trialkanolamines and their salts.",
     synonyms: [],
   },
   {
@@ -50750,7 +50725,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "регулирование pH",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: регулирование pH. Идентификаторы: CAS 122-20-3, EC 204-528-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/62.",
+    safetyNotes: "Ограничен в ЕС (Annex III/62): (a) Leave-on products (b) Rinse-off products, макс. (a) 2.5%; условия: «(a) (b) - Do not use with nitrosating systems - Minimum purity: 99% - Maximum secondary amine content: 0.5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -50871,7 +50846,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка; придание аромата. Идентификаторы: CAS 103694-68-4, EC 403-140-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/345. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/345); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -50902,7 +50877,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Trimethylcyclopentenyl Methylisopentenol is the organic compound that conforms to the formula Функции в составе: отдушка. Идентификаторы: CAS 67801-20-1, EC 267-140-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/339. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/339); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -51174,7 +51149,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Tris-Biphenyl Triazine is the heterocyclic compound that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 31274-51-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): VI/29.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/29): макс. 10%; «Not to be used in sprays. Only nanomaterials having the folloing characteristics are allowed: - Median primary particle size >80 nm; - Purity ≥ 98%; - Uncoated» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -51495,7 +51470,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Turpentine, oil. Any of the volatile predominately terpenic fractions or distillates resulting from the solvent extraction of, gum collection from, or pulping of softwoods. Turpentine is a mixture of terpene hydrocarbons obtained from various species of Pinus Функции в составе: придание аромата. Идентификаторы: CAS 8006-64-2 / 9005-90-7 / 8052-14-0, EC 232-350-7 / 232-688-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/124. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/124); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products. The peroxide value for each substance shall be less than 10 mmoles/L. (This limit applies to the substance and not to the finished cosmetic product).» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -51556,7 +51531,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "крашение волос",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ultramarines (blue, green, pink, red and violet) are synthetic pigments composed of complex sodium aluminum sulfosilicates having a typical formula Na(AlSiO)S with proportions of each element varying with each colour. To identify the colorant allowed for use in the European Union (EU), the INCI… Функции в составе: крашение волос. Идентификаторы: CAS 1302-83-6 / 1317-97-1 / 1345-00-2 / 11118-33-5 / 12703-66-1 / 12769-96-9 / 57455-37-5, EC 215-111-1 / 215-711-3 / 235-811-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/120.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/120).",
     synonyms: [],
   },
   {
@@ -51677,7 +51652,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; антимикробное действие; антистатический эффект; ПАВ: усиление пены; уход за волосами; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: противосеборейное действие; антимикробное действие; антистатический эффект; ПАВ: усиление пены; уход за волосами; регулирование вязкости. Идентификаторы: CAS 25377-64-4, EC 246-914-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/60.",
+    safetyNotes: "Ограничен в ЕС (Annex III/60): макс. Maximum secondary amine content: 0.5%; условия: «- Do not use with nitrosating systems - Maximum secondary amine content: 5% (applies to raw materials) - Maximum nitrosamine content: 50 microgram/kg - Keep in nitrite-free containers» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -51708,7 +51683,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; ПАВ: эмульгирование; отдушка; консервант; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Undecylenic Acid is the aliphatic acid that conforms generally to the formula: Функции в составе: антимикробное действие; ПАВ: эмульгирование; отдушка; консервант; ПАВ: очищение. Идентификаторы: CAS 112-38-9, EC 203-965-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): V/18. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Разрешён в ЕС как консервант с условиями (Annex V/18): макс. 0.2% (as acid) (текст регламента — дословно, EN). Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -51749,7 +51724,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "окислитель",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: окислитель. Идентификаторы: CAS 124-43-6, EC 204-701-4.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/12.",
+    safetyNotes: "Ограничен в ЕС (Annex III/12): (a) Hair products (b) Skin products (c) Nail hardening products (d) Oral products, including mouth rinse, tooth paste and tooth whitening or bleaching products (e) Tooth whitening or bleaching products (f) Products intended for eyelashes, макс. (a) 12 % of H2O2 (40 volumes), present or released (b) 4 % of H2O2, present or released (c) 2 % of H2O2, present or released (d) ≤ 0,1 % of H2O2, present or released (e) > 0,1 % ≤ 6 % of H2O2, present or released (f) 2 % of H2O2, present or released; условия: «(e) To be only sold to dental practitioners. For each cycle of use, first use by dental practitioners as defined under Directive 2005/36/EC of the European Parliament and of the Council* or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. Not to be used on a person under 18 years of age. (f) For professional use only | (a) (f) Wear suitable gloves (a) (b) (c) (e) Contains hydrogen peroxide Avoid contact with eyes Rinse immediately if product comes into contact with them. (e) Concentration of H2O2 present or released indicated in percentage. Not to be used on a person under 18 years of age. To be only sold to dental practitioners. For each cycle of use, the first use to be only done by dental practitioners or under their direct supervision if an equivalent level of safety is ensured. Afterwards to be provided to the consumer to complete the cycle of use. f) To be printed on the label: ‘For professional use only. Avoid contact with eyes. Rinse eyes immediately if product comes into contact with them. Contains hydrogen peroxide» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -52130,7 +52105,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: отдушка. Идентификаторы: CAS 121-33-5, EC 204-465-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/346. Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
+    safetyNotes: "Ограничен в ЕС (Annex III/346); условия: «The presence of the substance shall be indicated in the list of ingredients referred to in Article 19(1), point (g), when its concentration exceeds: — 0,001 % in leave-on products — 0,01 % in rinse-off products.» (текст регламента — дословно, EN). Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545): декларируется на этикетке при >0.001% (не смываемые) / >0.01% (смываемые).",
     synonyms: [],
   },
   {
@@ -53062,7 +53037,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; вяжущее действие; уход за полостью рта; защита кожи",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Acetate is the zinc salt of acetic acid that conforms to the formula: Функции в составе: антимикробное действие; вяжущее действие; уход за полостью рта; защита кожи. Идентификаторы: CAS 557-34-6(anhydrous)/5970-45-6 (hydrate), EC 209-170-2/-.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53073,7 +53048,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: уход за кожей. Идентификаторы: CAS 36393-20-1, EC 253-012-5.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53094,7 +53069,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; вяжущее действие; уход за полостью рта; успокаивающее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Chloride is the inorganic salt that conforms to the formula: Функции в составе: антимикробное действие; вяжущее действие; уход за полостью рта; успокаивающее действие. Идентификаторы: CAS 7646-85-7, EC 231-592-0.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53115,7 +53090,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; против зубного налёта; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Citrate is the zinc salt of citric acid that conforms to the formula: Функции в составе: антимикробное действие; против зубного налёта; уход за полостью рта. Идентификаторы: CAS 546-46-3, EC 208-901-2.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53126,7 +53101,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc di(coco-alkylpoly(oxyethylene)sulfate) (1-4 mol EO average) Функции в составе: очищение; ПАВ: эмульгирование; ПАВ: очищение.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53137,7 +53112,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "очищение; ПАВ: эмульгирование; ПАВ: очищение",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sulfuric Acid, monococo-alkyl ester, zinc salt, (2:1) Функции в составе: очищение; ПАВ: эмульгирование; ПАВ: очищение.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53148,7 +53123,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "увлажнитель (гумектант); уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Hydrolyzed Hyaluronate is the zinc salt of Hydrolyzed Hyaluronic Acid Функции в составе: увлажнитель (гумектант); уход за кожей.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53169,7 +53144,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: дезодорирующее действие. Идентификаторы: CAS 16039-53-5, EC 240-178-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53201,6 +53176,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: УФ-фильтр. Идентификаторы: CAS 1314-13-2, EC 215-222-5.",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/30a): макс. 25% - In case of combined use of zinc oxide and zinc oxide (nano), the sum shall not exceed the limit of 25%; «Not to be used in applications that may lead to exposure of the end-user's lungs by inhalation. Only nanomaterials having the following characteristics are allowed: — purity ≥ 96 %, with wurtzite crystalline structure and physical appearance as clusters that are rod-like, star-like and/or isometric shapes, with impurities consisting only of carbon dioxide and water, whilst any other impurities are less than 1 % in total, — median diameter of the particle number size distribution D50 (50 % of the number below this diameter) > 30 nm and D1 (1 % below this size) > 20 nm, — water solubility < 50 mg/L —uncoated, or coated with triethoxycaprylylsilane, dimethicone, dimethoxydiphenylsilanetriethoxycaprylylsilane cross- polymer, or octyl triethoxy silane.» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53211,7 +53187,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; вяжущее действие; дезодорирующее действие",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Функции в составе: антимикробное действие; вяжущее действие; дезодорирующее действие. Идентификаторы: CAS 127-82-2, EC 204-867-8.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/25.",
+    safetyNotes: "Ограничен в ЕС (Annex III/25): Deodorants, antiperspirants and astringent lotions, макс. 6% (as % of anhydrous substance); условия: «Avoid contact with eyes» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53232,7 +53208,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "противосеборейное действие; регулирование себума; уход за волосами; консервант",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Pyrithione is the aromatic zinc compound Функции в составе: противосеборейное действие; регулирование себума; уход за волосами; консервант. Идентификаторы: CAS 13463-41-7, EC 236-671-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): Annex II/1670.",
+    safetyNotes: "Входит в перечень запрещённых веществ ЕС (Annex II/1670) — в рамках условия: «Pyrithione zinc; (T-4)- bis[1-(hydroxy-.kappa.O)pyridine-2(1H)- thionato-.kappa.S]zinc» (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {
@@ -53254,7 +53230,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антислеживающее; краситель; регулирование вязкости; модификатор скольжения",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Stearate is the zinc salt of stearic acid that conforms generally to the formula: Функции в составе: антислеживающее; краситель; регулирование вязкости; модификатор скольжения. Идентификаторы: CAS 557-05-1, EC 209-151-9.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): IV/150. Комедогенность (шкала Fulton 1989, 0–5): 0. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/150). Комедогенность (шкала Fulton 1989, 0–5): 0. Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика (жирные кислоты C11–C24 и их эфиры, полисорбаты), не измеренное свойство.",
     synonyms: [],
   },
   {
@@ -53265,7 +53241,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антимикробное действие; против зубного налёта; вяжущее действие; уход за полостью рта",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zinc Sulfate is the inorganic salt that conforms to the formula: Функции в составе: антимикробное действие; против зубного налёта; вяжущее действие; уход за полостью рта. Идентификаторы: CAS 7446-19-7 (monohydrate)/ 7446-20-0 (heptahydrate) / 7733-02-0 (anhydrous), EC 231-793-3.",
-    safetyNotes: "Статус в ЕС (CosIng Annex II–VI): III/24.",
+    safetyNotes: "Ограничен в ЕС (Annex III/24): (a) Toothpaste intended for users above 1 year of age (b) Toothpaste intended for children between 6 months and 1 year of age (c) Mouthwash intended for users above 6 years of age (d) Other products, макс. (a) 1 % (as zinc) (b) 0,72 % (as zinc) (c) 0,1 % (as zinc) (d) 1 % (as zinc) (текст регламента — дословно, EN).",
     synonyms: [],
   },
   {

@@ -110,7 +110,9 @@ def main() -> int:
             ing_slug[r["ingredient_id"]] = slug
 
     comp: dict[str, list[tuple[int, str]]] = {}
+    total_rows: Counter[str] = Counter()  # все строки product_ingredients (полнота состава)
     for r in csv.DictReader(open(CSV / "product_ingredients.csv", encoding="utf-8"), delimiter="|"):
+        total_rows[r["product_id"]] += 1
         slug = ing_slug.get(r["ingredient_id"])
         if slug:
             comp.setdefault(r["product_id"], []).append((int(r["position_index"]), slug))
@@ -120,28 +122,33 @@ def main() -> int:
     skipped = 0
     for r in csv.DictReader(open(CSV / "products.csv", encoding="utf-8"), delimiter="|"):
         pairs = sorted(comp.get(r["product_id"], []))
-        # уникальные slug'и в порядке позиций (дубль slug'а сломает @@unique(productId, ingredientId))
+        # уникальные slug'и с ИСХОДНЫМИ позициями этикетки (position_index);
+        # дубль slug'а сломает @@unique(productId, ingredientId) — оставляем первую позицию
         seen: set[str] = set()
-        slugs = []
-        for _, s in pairs:
+        entries: list[tuple[str, int]] = []
+        for pos, s in pairs:
             if s not in seen:
                 seen.add(s)
-                slugs.append(s)
-        if len(slugs) < MIN_RECOGNIZED:
+                entries.append((s, pos))
+        if len(entries) < MIN_RECOGNIZED:
             skipped += 1
             continue
         name = re.sub(r"\s+", " ", r["name"]).strip()
         brand = (brands.get(r["brand_id"]) or "").strip()
         base = slugify(f"{brand} {name}" if brand else name)[:60].strip("-") or "product"
-        slug = f"{base}-{r['product_id']}"
+        prod_slug = f"{base}-{r['product_id']}"
+        raw = (r["raw_ingredient_text"] or "").strip() or None
         items.append(
             {
                 "brand": brand or "Без бренда",
                 "name": name,
-                "slug": slug,
+                "slug": prod_slug,
                 "category": categorize(r["obf_categories_tags"], name),
                 "sourceUrl": f"https://world.openbeautyfacts.org/product/{r['barcode_ean']}",
-                "ingredients": slugs,
+                "rawIngredients": raw,
+                "ingredientsTotal": total_rows[r["product_id"]],
+                "ingredientsRecognized": len(entries),
+                "ingredients": entries,
             }
         )
         cats[items[-1]["category"]] += 1
@@ -152,8 +159,9 @@ def main() -> int:
         " *",
         " * Каталог продуктов из INCIDB Complete (снимок 2026.09; данные составов",
         " * © Open Beauty Facts contributors, ODbL v1.0 — sourceUrl ведёт на карточку OBF).",
-        " * Состав — slug'и карточек каталога в порядке INCI, только распознанные",
-        " * (полный список токенов — в исходном архиве, products.raw_ingredient_text).",
+        " * Состав — slug'и карточек каталога с ИСХОДНЫМИ позициями этикетки",
+        " * (position_index источника, без перенумерации); rawIngredients — verbatim-текст",
+        " * объявления; ingredientsTotal/ingredientsRecognized — полнота распознавания.",
         " * Импорт в БД: pnpm exec tsx scripts/import-incidb-products.ts",
         " */",
         "",
@@ -163,20 +171,27 @@ def main() -> int:
         "  slug: string;",
         "  category: string;",
         "  sourceUrl?: string;",
-        "  ingredients: string[];",
+        "  rawIngredients?: string;",
+        "  ingredientsTotal: number;",
+        "  ingredientsRecognized: number;",
+        "  ingredients: Array<{ slug: string; position: number }>;",
         "}",
         "",
         "export const INCIDB_PRODUCTS: IncidbProductSeed[] = [",
     ]
     for it in items:
-        syns = ", ".join(ts_string(s) for s in it["ingredients"])
+        entries = ", ".join(f"{{ slug: {ts_string(s)}, position: {p} }}" for s, p in it["ingredients"])
         lines.append("  {")
         lines.append(f"    brand: {ts_string(it['brand'])},")
         lines.append(f"    name: {ts_string(it['name'])},")
         lines.append(f"    slug: {ts_string(it['slug'])},")
         lines.append(f"    category: {ts_string(it['category'])},")
         lines.append(f"    sourceUrl: {ts_string(it['sourceUrl'])},")
-        lines.append(f"    ingredients: [{syns}],")
+        if it["rawIngredients"]:
+            lines.append(f"    rawIngredients: {ts_string(it['rawIngredients'])},")
+        lines.append(f"    ingredientsTotal: {it['ingredientsTotal']},")
+        lines.append(f"    ingredientsRecognized: {it['ingredientsRecognized']},")
+        lines.append(f"    ingredients: [{entries}],")
         lines.append("  },")
     lines.append("];")
     lines.append("")
@@ -184,6 +199,11 @@ def main() -> int:
 
     print(f"Продуктов в каталоге: {len(items)} (пропущено без распознанного состава: {skipped})")
     print("Категории:", dict(cats.most_common()))
+    # полнота распознавания: аудитные пороги 25% / 50% / 80%
+    low25 = sum(1 for it in items if it["ingredientsTotal"] and it["ingredientsRecognized"] / it["ingredientsTotal"] < 0.25)
+    low50 = sum(1 for it in items if it["ingredientsTotal"] and it["ingredientsRecognized"] / it["ingredientsTotal"] < 0.5)
+    low80 = sum(1 for it in items if it["ingredientsTotal"] and it["ingredientsRecognized"] / it["ingredientsTotal"] < 0.8)
+    print(f"Полнота состава: <25% — {low25}, <50% (noindex) — {low50}, <80% (баннер) — {low80}")
     print(f"Файл: {OUT} ({OUT.stat().st_size / 1e6:.1f} МБ)")
     return 0
 

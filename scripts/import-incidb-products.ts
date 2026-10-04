@@ -27,8 +27,8 @@ async function main() {
   // защита от опечаток в сгенерированном файле
   const missingSlugs = new Set<string>();
   for (const p of INCIDB_PRODUCTS) {
-    for (const s of p.ingredients) {
-      if (!idBySlug.has(s)) missingSlugs.add(s);
+    for (const e of p.ingredients) {
+      if (!idBySlug.has(e.slug)) missingSlugs.add(e.slug);
     }
   }
   if (missingSlugs.size) {
@@ -45,7 +45,7 @@ async function main() {
   for (let i = offset; i < end; i += BATCH) {
     const batch = INCIDB_PRODUCTS.slice(i, Math.min(i + BATCH, end));
     for (const p of batch) {
-      const { ingredients: slugs, ...data } = p;
+      const { ingredients: entries, ...data } = p;
       const product = await prisma.product.upsert({
         where: { slug: p.slug },
         update: data,
@@ -53,13 +53,14 @@ async function main() {
       });
       await prisma.productIngredient.deleteMany({ where: { productId: product.id } });
       await prisma.productIngredient.createMany({
-        data: slugs.map((slug, idx) => ({
+        // position — исходный position_index этикетки (без перенумерации)
+        data: entries.map((e) => ({
           productId: product.id,
-          ingredientId: idBySlug.get(slug)!,
-          position: idx + 1,
+          ingredientId: idBySlug.get(e.slug)!,
+          position: e.position,
         })),
       });
-      linked += slugs.length;
+      linked += entries.length;
     }
     done += batch.length;
     console.log(`Импортировано ${done}/${INCIDB_PRODUCTS.length}…`);

@@ -108,6 +108,34 @@ describe("buildCompatibilityMatrix", () => {
     expect(pairs).toHaveLength(6); // C(4,2)
     expect(pairs.filter((p) => p.status === "conflict")).toHaveLength(1);
   });
+
+  it("неполный состав (< 80% распознано) — вывод помечается оговоркой", () => {
+    const partial: ShelfProductInput = {
+      id: "p-partial",
+      title: "Крем из INCIDB",
+      category: "cream",
+      actives: [active("i-nia", "niacinamide")],
+      compositionComplete: false,
+    };
+    const pairs = buildCompatibilityMatrix([niaSerum, partial], []);
+    expect(pairs[0].status).toBe("ok");
+    expect(pairs[0].note).toContain("распознан не полностью");
+    // конфликт тоже дополняется оговоркой
+    const conflictPairs = buildCompatibilityMatrix(
+      [{ ...ahaToner }, { ...partial, actives: [active("i-ret", "retinol")] }],
+      [RET_AHA_EDGE],
+    );
+    expect(conflictPairs[0].status).toBe("conflict");
+    expect(conflictPairs[0].note).toContain("распознан не полностью");
+    // состав без распознанного ни одного ингредиента — прежнее правило spread
+    const unknown: ShelfProductInput = {
+      ...partial,
+      id: "p-unknown-2",
+      hasComposition: false,
+    };
+    const spreadPairs = buildCompatibilityMatrix([niaSerum, unknown], []);
+    expect(spreadPairs[0].note).not.toContain("распознан не полностью");
+  });
 });
 
 describe("findDuplicates", () => {
@@ -121,6 +149,12 @@ describe("findDuplicates", () => {
   it("не считает дублем пересечение в 1 актив", () => {
     const dups = findDuplicates([retinolSerum, niaSerum]);
     expect(dups).toHaveLength(0);
+  });
+
+  it("дубль с неполным составом помечается incomplete", () => {
+    const partial = { ...retCream, compositionComplete: false };
+    expect(findDuplicates([retinolSerum, partial])[0].incomplete).toBe(true);
+    expect(findDuplicates([retinolSerum, retCream])[0].incomplete).toBe(false);
   });
 });
 

@@ -43,10 +43,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const [ingredients, products, ingredientCategories, productPairs] = await Promise.all([
       prisma.ingredient.findMany({ select: { slug: true } }),
-      prisma.product.findMany({ select: { slug: true } }),
+      // noindex-продукты (распознано < 50% состава) и скрытые в sitemap не включаем
+      prisma.product.findMany({
+        where: { hidden: false },
+        select: { slug: true, ingredientsTotal: true, ingredientsRecognized: true },
+      }),
       prisma.ingredient.findMany({ select: { category: true }, distinct: ["category"] }),
-      prisma.product.groupBy({ by: ["brand", "category"] }),
+      prisma.product.groupBy({ by: ["brand", "category"], where: { hidden: false } }),
     ]);
+    const indexableProducts = products.filter(
+      (p) => p.ingredientsTotal === 0 || p.ingredientsRecognized / p.ingredientsTotal >= 0.5
+    );
     const brands = [...new Set(productPairs.map((p) => p.brand))];
     const productCategories = [...new Set(productPairs.map((p) => p.category))];
 
@@ -64,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         entry(`/products?${productFiltersQuery({ brands: [p.brand], categories: [p.category] })}`, 0.6, "weekly")
       ),
       ...ingredients.map((i) => entry(`/ingredients/${i.slug}`, 0.8, "monthly")),
-      ...products.map((p) => entry(`/products/${p.slug}`, 0.8, "monthly")),
+      ...indexableProducts.map((p) => entry(`/products/${p.slug}`, 0.8, "monthly")),
     ];
   } catch {
     // БД недоступна — отдаём хотя бы статические страницы.

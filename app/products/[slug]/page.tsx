@@ -104,6 +104,8 @@ export async function generateMetadata({
     },
   });
   if (!product) return { title: "Продукт не найден", robots: { index: false } };
+  // покрытие распознавания (0 = карточка вне INCIDB, состав курируемый — считаем полным)
+  const coverage = product.ingredientsTotal > 0 ? product.ingredientsRecognized / product.ingredientsTotal : 1;
   const full = `${product.brand} ${product.name}`;
   const title = `${full}: состав и разбор ингредиентов`;
   const actives = product.ingredients
@@ -127,6 +129,8 @@ export async function generateMetadata({
     description,
     alternates: { canonical: path },
     openGraph: { title, description, type: "article", url: path },
+    // состав распознан меньше чем наполовину — страница не для индексации
+    ...(coverage < 0.5 ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -158,11 +162,22 @@ export default async function ProductPage({
   const names = (items: typeof list) => items.map((i) => i.displayName).join(", ");
   const n = list.length;
   const nWord = `${n} ${pluralRu(n, "ингредиент", "ингредиента", "ингредиентов")}`;
+  // полнота состава: 0 в ingredientsTotal = курируемая карточка вне INCIDB (считаем полной)
+  const coverageKnown = product.ingredientsTotal > 0;
+  const coverage = coverageKnown ? product.ingredientsRecognized / product.ingredientsTotal : 1;
+  const incomplete = coverage < 0.8; // порог баннера из аудита импорта INCIDB
+  const partialNote = " в распознанной части состава";
   const brandHref = `/products?${productFiltersQuery({ brands: [product.brand] })}`;
   const categoryHref = `/products?${productFiltersQuery({ categories: [product.category] })}`;
 
   const summary: { label: string; value: string; tone: "ok" | "warn" | "neutral" }[] = [
-    { label: "Разобрано ингредиентов", value: String(n), tone: "neutral" },
+    coverageKnown
+      ? {
+          label: "Распознано компонентов",
+          value: `${product.ingredientsRecognized} из ${product.ingredientsTotal}`,
+          tone: incomplete ? "warn" : "neutral",
+        }
+      : { label: "Разобрано ингредиентов", value: String(n), tone: "neutral" },
     {
       label: "Активы с доказанным действием",
       value: actives.length ? names(actives) : "нет",
@@ -170,29 +185,49 @@ export default async function ProductPage({
     },
     {
       label: "Комедогенные компоненты",
-      value: comedogenic.length ? names(comedogenic) : "не найдены",
-      tone: comedogenic.length ? "warn" : "ok",
+      value: comedogenic.length
+        ? names(comedogenic)
+        : incomplete
+          ? `не найдены${partialNote}`
+          : "не найдены",
+      tone: comedogenic.length ? "warn" : incomplete ? "neutral" : "ok",
     },
     {
       label: "Отдушки и аллергены",
-      value: allergens.length ? names(allergens) : "не найдены",
-      tone: allergens.length ? "warn" : "ok",
+      value: allergens.length
+        ? names(allergens)
+        : incomplete
+          ? `не найдены${partialNote}`
+          : "не найдены",
+      tone: allergens.length ? "warn" : incomplete ? "neutral" : "ok",
     },
     {
       label: "Конфликты внутри формулы",
-      value: conflicts.length ? String(conflicts.length) : "нет",
-      tone: conflicts.length ? "warn" : "ok",
+      value: conflicts.length
+        ? String(conflicts.length)
+        : incomplete
+          ? `нет${partialNote}`
+          : "нет",
+      tone: conflicts.length ? "warn" : incomplete ? "neutral" : "ok",
     },
   ];
 
   const faq: FaqItem[] = [
     {
       q: `Какой состав у ${full}?`,
-      a: `В нашей базе разобрано ${nWord} этого средства: ${inciList}. Функция и доказательная база каждого — в разделе «Ингредиенты с расшифровкой».`,
+      a: `В нашей базе разобрано ${nWord} этого средства${
+        coverageKnown
+          ? ` (распознано ${product.ingredientsRecognized} из ${product.ingredientsTotal} компонентов с этикетки)`
+          : ""
+      }: ${inciList}. Функция и доказательная база каждого — в разделе «Ингредиенты с расшифровкой».${
+        incomplete ? " Состав распознан не полностью — сверьтесь с упаковкой." : ""
+      }`,
     },
     {
       q: `Хороший ли состав у ${full}?`,
-      a: `Мы не ставим оценку «хорошо/плохо» — она зависит от вашей кожи. По данным: ${
+      a: `Мы не ставим оценку «хорошо/плохо» — она зависит от вашей кожи. По данным${
+        incomplete ? " распознанной части состава" : ""
+      }: ${
         actives.length
           ? `активы с доказанным действием — ${names(actives)}`
           : "активов с сильной или умеренной доказательной базой нет"
@@ -208,7 +243,9 @@ export default async function ProductPage({
         ? `Да: ${conflicts
             .map((c) => `${c.ingredientA.displayName} + ${c.ingredientB.displayName}`)
             .join("; ")}. Подробности — в разделе «Конфликты внутри формулы».`
-        : "Зафиксированных конфликтов между ингредиентами этой формулы нет.",
+        : `Зафиксированных конфликтов между ингредиентами этой формулы нет${
+            incomplete ? " (по распознанной части состава)" : ""
+          }.`,
     },
   ];
   if (similar.length > 0) {
@@ -292,7 +329,27 @@ export default async function ProductPage({
               </Button>
             )}
           </div>
+          {coverageKnown && (
+            <p className="text-sm text-muted-foreground">
+              Распознано {product.ingredientsRecognized} из {product.ingredientsTotal}{" "}
+              компонентов с этикетки.
+            </p>
+          )}
         </GlassCard>
+
+        {incomplete && (
+          <GlassCard className="border-amber-300 bg-amber-50 p-6" role="alert">
+            <p className="font-semibold text-amber-800">
+              Состав распознан не полностью
+            </p>
+            <p className="mt-1 text-sm text-amber-800">
+              На этикетке {product.ingredientsTotal} компонентов, в нашей базе распознано{" "}
+              {product.ingredientsRecognized}. Разбор может быть неточным: аллергены,
+              консерванты или кислоты могли остаться в нераспознанной части — сверьтесь
+              с упаковкой (исходный текст состава ниже).
+            </p>
+          </GlassCard>
+        )}
 
         <GlassCard className="space-y-4 p-8">
           <h2 className="font-display text-2xl font-bold">Коротко о составе</h2>
@@ -403,6 +460,26 @@ export default async function ProductPage({
               Открыть в разборе состава
             </Link>
           </Button>
+          {product.rawIngredients && (
+            <details className="accordion-item border-t border-ink-hair pt-4">
+              <summary>Состав с упаковки (исходный текст)</summary>
+              <p className="max-w-3xl whitespace-pre-line pb-2 pt-3 text-[15px] leading-relaxed text-ink-muted">
+                {product.rawIngredients}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Данные о продукте © Open Beauty Facts contributors,{" "}
+                <a
+                  href="https://opendatacommons.org/licenses/odbl/1-0/"
+                  target="_blank"
+                  rel="noopener"
+                  className="underline hover:text-brand"
+                >
+                  ODbL v1.0
+                </a>
+                .
+              </p>
+            </details>
+          )}
         </GlassCard>
 
         {similar.length > 0 && (

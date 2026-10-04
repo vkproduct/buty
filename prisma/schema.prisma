@@ -76,6 +76,11 @@ model Product {
   category    String
   sourceUrl   String?
   partnerUrl  String? // партнёрская ссылка (заполняется в части 4, используется в части 7)
+  // Полнота состава (INCIDB): исходный текст с упаковки и покрытие распознавания
+  rawIngredients       String? // verbatim-объявление состава с этикетки (Open Beauty Facts)
+  ingredientsTotal     Int     @default(0) // всего позиций в product_ingredients источника
+  ingredientsRecognized Int    @default(0) // из них распознано в карточки каталога
+  hidden      Boolean             @default(false) // выпал из каталога INCIDB, но есть ссылки (ShelfItem/PartnerClick)
   ingredients  ProductIngredient[]
   shelfItems   ShelfItem[]
   partnerClicks PartnerClick[]

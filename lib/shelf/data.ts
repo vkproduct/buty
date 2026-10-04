@@ -46,20 +46,26 @@ function pickActives(ingredients: RawIngredient[]) {
     }));
 }
 
-/** Активы средства + известен ли его состав вообще. */
+/** Активы средства + известен ли его состав вообще и насколько он полон. */
 async function itemComposition(item: ItemWithProduct) {
   if (item.product) {
     const ingredients = item.product.ingredients.map((pi) => pi.ingredient);
+    const { ingredientsTotal, ingredientsRecognized } = item.product;
     return {
       actives: pickActives(ingredients),
       hasComposition: ingredients.length > 0,
+      // полнота по INCIDB; 0 = курируемая карточка вне INCIDB — считаем полной
+      compositionComplete:
+        ingredientsTotal === 0 || ingredientsRecognized / ingredientsTotal >= 0.8,
     };
   }
-  if (!item.customInci) return { actives: [], hasComposition: false };
+  if (!item.customInci)
+    return { actives: [], hasComposition: false, compositionComplete: false };
   const analysis = await analyzeText(item.customInci);
   return {
     actives: pickActives(analysis.ingredients),
     hasComposition: analysis.ingredients.length > 0,
+    compositionComplete: analysis.ingredients.length > 0,
   };
 }
 

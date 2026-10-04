@@ -265,6 +265,12 @@ function CompatibilityTab({
                   Общие активы:{" "}
                   {d.sharedActives.map((a) => a.displayName).join(", ")}
                 </p>
+                {d.incomplete && (
+                  <p className="mt-1 text-xs text-amber-700">
+                    Состав одного из средств распознан не полностью — совпадение
+                    по распознанной части.
+                  </p>
+                )}
               </GlassCard>
             ))}
           </div>

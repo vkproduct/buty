@@ -21,6 +21,11 @@ export interface ShelfProductInput {
    * ни один ингредиент: проверить пару нельзя. По умолчанию считается известным.
    */
   hasComposition?: boolean;
+  /**
+   * Распознан ли состав полностью (INCIDB: recognized/total >= 0.8).
+   * false — выводы по паре помечаются как неполные. По умолчанию true.
+   */
+  compositionComplete?: boolean;
 }
 
 export interface ConflictEdge {
@@ -53,6 +58,8 @@ export interface DuplicateGroup {
   productIds: string[];
   titles: string[];
   sharedActives: { slug: string; displayName: string }[];
+  /** true, если состав хотя бы одного средства распознан не полностью */
+  incomplete: boolean;
 }
 
 export interface RoutineStep {
@@ -138,6 +145,15 @@ export function buildCompatibilityMatrix(
           "В паре нет сильных активов, которые конфликтуют между собой, — средства можно сочетать.";
       }
 
+      // неполный состав (< 80% распознано): любой вывод по паре — предварительный
+      const incompleteTitles = [a, b]
+        .filter((p) => p.hasComposition !== false && p.compositionComplete === false)
+        .map((p) => `«${p.title}»`);
+      if (incompleteTitles.length > 0 && status !== "spread") {
+        const caveat = `Состав ${incompleteTitles.join(" и ")} распознан не полностью — вывод по распознанной части, сверьтесь с упаковкой.`;
+        note = note ? `${note} ${caveat}` : caveat;
+      }
+
       results.push({
         productAId: a.id,
         productBId: b.id,
@@ -176,6 +192,8 @@ export function findDuplicates(
             slug: x.slug,
             displayName: x.displayName,
           })),
+          incomplete:
+            a.compositionComplete === false || b.compositionComplete === false,
         });
       }
     }

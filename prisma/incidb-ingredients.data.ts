@@ -5405,7 +5405,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "фотостабилизатор; УФ-поглотитель; УФ-фильтр",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Benzophenone-3 is a benzophenone derivative that conforms to the formula: Функции в составе: фотостабилизатор; УФ-поглотитель; УФ-фильтр. Идентификаторы: CAS 131-57-7, EC 205-031-5.",
-    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/4): a) Face products, hand products, and lip products, excluding propellant and pump spray products b) Body products, including propellant and pump spray products c) Other products, макс. a) 6% b) 2,2% c) 0,5% Footnote 1: However, cosmetic products containing '2-Hydroxy-4-methoxy-benzophenone/Oxybenzone' and complying with the restrictions set out in Regulation (EC) No 1223/2009 as applicable on 27 July 2022 may be placed on the Union market until 28 January 2023 and be made available on the Union market until 28 July 2023.; «a) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 5,5 %. b) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 1,7 %. | For a) and b): Contains Benzophenone-3 (*) Footnote (*): Not required if concentration is 0,5 % or less and when it is used only for product protection purposes.» (текст регламента — дословно, EN).",
+    safetyNotes: "Разрешён в ЕС как УФ-фильтр с условиями (Annex VI/4): a) Face products, hand products, and lip products, excluding propellant and pump spray products b) Body products, including propellant and pump spray products c) Other products, макс. a) 6% b) 2,2% c) 0,5% Footnote 1: However, cosmetic products containing '2-Hydroxy-4-methoxy-benzophenone/Oxybenzone' and complying with the restrictions set out in Regulation (EC) No 1223/2009 as applicable on 27 July 2022 may be placed on the Union market until 28 January 2023 and be made available on the Union market until 28 July 2023.; «a) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 5,5 %. b) If used at 0,5 % to protect product formulation, the levels used as UV filter must not exceed 1,7 %. | For a) and b): Contains Benzophenone-3 (*) Footnote (*): Not required if concentration is 0,5 % or less and when it is used only for product protection purposes.» (текст регламента — дословно, EN). Комедогенность (Fulton 1989, оценка для «OXYBENZONE»): 0.",
     synonyms: [],
   },
   {
@@ -8909,6 +8909,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Carthamus Tinctorius Seed Oil is the oily liquid obtained from the seeds of Safflower, Carthamus tinctorius L., Compositae. It consists principally of the triglycerides of linoleic acid Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 8001-23-8, EC 232-276-5.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «SAFFLOWER OIL»): 0.",
     synonyms: [],
   },
   {
@@ -9225,6 +9226,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "связывающее; стабилизация эмульсии; плёнкообразование; отдушка; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Cellulose, carboxymethyl ether, sodium salt Функции в составе: связывающее; стабилизация эмульсии; плёнкообразование; отдушка; регулирование вязкости. Идентификаторы: CAS 9004-32-4.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CARBOXYMETHYL CELLULOSE»): 0.",
     synonyms: [],
   },
   {
@@ -9465,6 +9467,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "антистатический эффект; связывающее; стабилизация эмульсии; уход за волосами; придание непрозрачности; регулирование вязкости",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ceresin. A complex combination of hydrocarbons produced by the purification of ozocerite with sulfuric acid and filtration through bone black to form waxy cakes Функции в составе: антистатический эффект; связывающее; стабилизация эмульсии; уход за волосами; придание непрозрачности; регулирование вязкости. Идентификаторы: CAS 8001-75-0, EC 232-290-1.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CERESIN WAX»): 0.",
     synonyms: [],
   },
   {
@@ -11253,7 +11256,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "краситель; отдушка",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): CI 75470 is classed chemically as an anthraquinone derived colour. It conforms to the formula: Функции в составе: краситель; отдушка. Идентификаторы: CAS 1390-65-4, EC 215-724-4.",
-    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/115); «Purity criteria as set out in Commission Directive 95/45/EC (E 120)» (текст регламента — дословно, EN).",
+    safetyNotes: "Разрешён в ЕС как краситель с условиями (Annex IV/115); «Purity criteria as set out in Commission Directive 95/45/EC (E 120)» (текст регламента — дословно, EN). Комедогенность (Fulton 1989, оценка для «CARMINE»): 0.",
     synonyms: [],
   },
   {
@@ -13758,6 +13761,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); плёнкообразование; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Copernicia Cerifera Cera is a wax obtained from the leaves and leaf buds of Copernicia cerifera, Palmaceae. Функции в составе: смягчение кожи (эмолент); плёнкообразование; уход за кожей. Идентификаторы: CAS 8015-86-9, EC 232-399-4.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CARNAUBA WAX»): 1.",
     synonyms: [],
   },
   {
@@ -18446,6 +18450,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "вяжущее действие; стабилизация эмульсии; плёнкообразование; уход за кожей; регулирование вязкости; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Euphorbia Cerifera Cera is a wax obtained from the Candelilla, Euphorbia cerifera, Euphorbiaceae Функции в составе: вяжущее действие; стабилизация эмульсии; плёнкообразование; уход за кожей; регулирование вязкости; придание аромата. Идентификаторы: CAS 8006-44-8, EC 232-347-0.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CANDELILLA WAX»): 1.",
     synonyms: [],
   },
   {
@@ -20115,6 +20120,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Glycine Soja Oil is the oil obtained from the soybean, Glycine soja, Leguminosae, by extraction or expression. It consists esentially of triglycerides of oleic, linoleic and saturated acids Функции в составе: смягчение кожи (эмолент); уход за кожей; придание аромата. Идентификаторы: CAS 8001-22-7, EC 232-274-4.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «SOYBEAN OIL»): 3.",
     synonyms: [],
   },
   {
@@ -31291,6 +31297,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Oenothera Biennis Oil is the fixed oil derived from the seeds of the Evening Primrose, Oenothera biennis, Onagraceae Функции в составе: смягчение кожи (эмолент). Идентификаторы: CAS 90028-66-3, EC 289-859-2.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «EVENING PRIMROSE OIL»): 3.",
     synonyms: [],
   },
   {
@@ -31950,6 +31957,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент)",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Orbignya Oleifera Seed Oil is the fixed oil obtained from the nuts of the babassu, Orbignya oleifera, Palmaceae. It consists primarily of the glycerides of the fatty acids lauric, myristic and oleic Функции в составе: смягчение кожи (эмолент). Идентификаторы: CAS 91078-92-1, EC 293-376-2.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «BABASSU OIL»): 1.",
     synonyms: [],
   },
   {
@@ -40827,6 +40835,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Prunus Armeniaca Kernel Oil is the fixed oil expressed from the kernels of the Apricot, Prunus armeniaca L., Rosaceae Функции в составе: отдушка; уход за кожей. Идентификаторы: CAS 68650-44-2 / 72869-69-3, EC 272-046-1.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «APRICOT KERNEL OIL»): 2.",
     synonyms: [],
   },
   {
@@ -42223,6 +42232,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "отдушка; уход за кожей; придание аромата",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Ricinus Communis Seed Oil is the fixed oil obtained from the seeds of Castor, Ricinus communis, Euphorbiaceae Функции в составе: отдушка; уход за кожей; придание аромата. Идентификаторы: CAS 8001-79-4, EC 232-293-8.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CASTOR OIL»): 1.",
     synonyms: [],
   },
   {
@@ -44168,6 +44178,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за волосами; отдушка; уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Sesamum Indicum Seed Oil is the oil obtained from the seed of the Sesame, Sesamum indicum L., Pedaliaceae Функции в составе: смягчение кожи (эмолент); уход за волосами; отдушка; уход за кожей. Идентификаторы: CAS 8008-74-0, EC 232-370-6.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «SESAME OIL»): 3.",
     synonyms: [],
   },
   {
@@ -52957,6 +52968,7 @@ export const INCIDB_INGREDIENTS: IngredientSeed[] = [
     function: "смягчение кожи (эмолент); уход за кожей",
     evidenceLevel: "LIMITED",
     description: "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) и ждёт редакторской доработки: описание, механизм и сочетания пока не заполнены. Описание CosIng (EN): Zea Mays Germ Oil is the fixed oil obtained from the germ of the Corn, Zea mays L., Gramineae Функции в составе: смягчение кожи (эмолент); уход за кожей. Идентификаторы: CAS 8001-30-7, EC 232-281-2.",
+    safetyNotes: "Комедогенность (Fulton 1989, оценка для «CORN OIL»): 3.",
     synonyms: [],
   },
   {

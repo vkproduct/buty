@@ -131,6 +131,7 @@ export const INCIDB_FLAGS: Record<string, IncidbFlags> = {
   "glyceryl-ricinoleate": { feedsMalassezia: true },
   "glyceryl-stearate-se": { comedogenic: true },
   "glyceryl-undecylenate": { feedsMalassezia: true },
+  "glycine-soja-oil": { comedogenic: true },
   "glycol-dilaurate": { feedsMalassezia: true },
   "glycol-distearate": { feedsMalassezia: true },
   "glycol-palmitate": { feedsMalassezia: true },
@@ -208,6 +209,7 @@ export const INCIDB_FLAGS: Record<string, IncidbFlags> = {
   "octyldodecyl-oleate": { feedsMalassezia: true },
   "octyldodecyl-stearate": { feedsMalassezia: true },
   "octyldodecyl-stearoyl-stearate": { feedsMalassezia: true },
+  "oenothera-biennis-oil": { comedogenic: true },
   "oleic-acid": { feedsMalassezia: true },
   "oleth-5": { comedogenic: true },
   "oleyl-alcohol": { comedogenic: true },
@@ -345,6 +347,7 @@ export const INCIDB_FLAGS: Record<string, IncidbFlags> = {
   "rose-ketones": { fragranceAllergen: true },
   "santalol": { fragranceAllergen: true },
   "santalum-album-oil": { fragranceAllergen: true },
+  "sesamum-indicum-seed-oil": { comedogenic: true },
   "sodium-arachidate": { feedsMalassezia: true },
   "sodium-laurate": { feedsMalassezia: true },
   "sodium-linoleate": { feedsMalassezia: true },
@@ -393,12 +396,14 @@ export const INCIDB_FLAGS: Record<string, IncidbFlags> = {
   "undecylenic-acid": { feedsMalassezia: true },
   "vanillin": { fragranceAllergen: true },
   "wheat-germ-glycerides": { comedogenic: true },
+  "zea-mays-germ-oil": { comedogenic: true },
   "zinc-laurate": { feedsMalassezia: true },
   "zinc-ricinoleate": { feedsMalassezia: true },
   "zinc-stearate": { feedsMalassezia: true },
   "zinc-undecylenate": { feedsMalassezia: true },
 
   // обогащение курируемых карточек (только факты, которых нет в flags.data.ts)
+  "avocado-oil": { comedogenic: true },
   "mentha-piperita-oil": { fragranceAllergen: true },
   "myristic-acid": { comedogenic: true },
 };

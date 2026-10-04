@@ -149,6 +149,40 @@ MISSING_ANNEX_V12 = {
 
 ANNEX_ROLE_RU = {"IV": "краситель", "V": "консервант", "VI": "УФ-фильтр"}
 
+# Перенос оценок комедогенности Fulton 1989 с бытовых имён (cosing_matched=0)
+# на INCI-формы. Рейтинг берётся из ingredients.csv по ИСХОДНОМУ имени;
+# перенос — только если целевое INCI есть в ingredients.csv с cosing_matched=1
+# и без собственной оценки. IRON OXIDES и CHAMOMILE EXTRACT намеренно
+# отсутствуют: однозначного INCI нет — выводятся в отчёт.
+FULTON_TRANSFER = [
+    ("AVOCADO OIL", "PERSEA GRATISSIMA OIL"),
+    ("COCOA BUTTER", "THEOBROMA CACAO SEED BUTTER"),
+    ("CORN OIL", "ZEA MAYS GERM OIL"),
+    ("EVENING PRIMROSE OIL", "OENOTHERA BIENNIS OIL"),
+    ("SESAME OIL", "SESAMUM INDICUM SEED OIL"),
+    ("SOYBEAN OIL", "GLYCINE SOJA OIL"),
+    ("ALMOND OIL", "PRUNUS AMYGDALUS DULCIS OIL"),
+    ("APRICOT KERNEL OIL", "PRUNUS ARMENIACA KERNEL OIL"),
+    ("OLIVE OIL", "OLEA EUROPAEA FRUIT OIL"),
+    ("BABASSU OIL", "ORBIGNYA OLEIFERA SEED OIL"),
+    ("CASTOR OIL", "RICINUS COMMUNIS SEED OIL"),
+    ("CARNAUBA WAX", "COPERNICIA CERIFERA CERA"),
+    ("CANDELILLA WAX", "EUPHORBIA CERIFERA CERA"),
+    ("CARBOMER 940", "CARBOMER"),
+    ("POLYETHYLENE GLYCOL 400", "PEG-8"),
+    ("SUNFLOWER OIL", "HELIANTHUS ANNUUS SEED OIL"),
+    ("SAFFLOWER OIL", "CARTHAMUS TINCTORIUS SEED OIL"),
+    ("CERESIN WAX", "CERESIN"),
+    ("METHYL PARABEN", "METHYLPARABEN"),
+    ("OCTYL METHOXYCINNAMATE", "ETHYLHEXYL METHOXYCINNAMATE"),
+    ("OXYBENZONE", "BENZOPHENONE-3"),
+    ("CARBOXYMETHYL CELLULOSE", "CELLULOSE GUM"),
+    ("CARMINE", "CI 75470"),
+]
+
+# Оценки Fulton без однозначного INCI — не переносим, только отчёт
+FULTON_UNMAPPED = ["IRON OXIDES", "CHAMOMILE EXTRACT"]
+
 SILICONE_RE = re.compile(r"(SILOXANE|DIMETHICONE|SILICONE|POLYSILSESQUIOXANE|SILSESQUIOXANE|SILICONE)")
 
 
@@ -325,6 +359,25 @@ def main() -> int:
     rows = list(csv.DictReader(open(ingredients_path, encoding="utf-8"), delimiter="|"))
     matched = [r for r in rows if r["cosing_matched"] == "1"]
 
+    # перенос оценок Fulton 1989 с бытовых имён на INCI-формы
+    rating_by_name = {r["inci_name"].strip().upper(): (r.get("comedogenic_rating") or "") for r in rows}
+    matched_names = {r["inci_name"].strip().upper() for r in matched}
+    fulton_transfer: dict[str, tuple[str, str]] = {}  # target_up → (source_name, rating)
+    for src, tgt in FULTON_TRANSFER:
+        rating = rating_by_name.get(src, "")
+        if not rating:
+            print(f"  ! Fulton: у источника {src} нет оценки — пропуск", file=sys.stderr)
+            continue
+        if tgt not in matched_names:
+            print(f"  ! Fulton: цель {tgt} без cosing_matched=1 — пропуск", file=sys.stderr)
+            continue
+        if rating_by_name.get(tgt):
+            continue  # у цели своя оценка — не перезаписываем
+        fulton_transfer[tgt] = (src, rating)
+    for name in FULTON_UNMAPPED:
+        if rating_by_name.get(name):
+            print(f"  ! Fulton без переноса (нет однозначного INCI): {name} = {rating_by_name[name]}")
+
     # точный источник статусов ЕС: regulatory_status (CosIng Annex II–VI exports).
     # Ключ — вся строка: (ingredient_id, list_ref) не уникален, храним список.
     regulatory_by_ing: dict[str, list[dict]] = {}
@@ -382,6 +435,7 @@ def main() -> int:
     flags_new: dict[str, dict[str, bool]] = {}
     flags_enrich: dict[str, dict[str, bool]] = {}
     curated_reg_review: list[tuple[str, str, list[str]]] = []
+    fulton_moved: list[tuple[str, str, str]] = []  # (источник, INCI-цель, рейтинг)
     skipped_dup = skipped_junk = 0
     used_slugs = set(curated_slugs)
 
@@ -403,6 +457,8 @@ def main() -> int:
             # обогащение флагов курируемой карточки
             enrich: dict[str, bool] = {}
             rating = r.get("comedogenic_rating") or ""
+            if not rating and inci_up in fulton_transfer:
+                rating = fulton_transfer[inci_up][1]  # перенос Fulton на INCI-форму
             if rating and float(rating) >= 3 and "comedogenic" not in curated_flags.get(target_slug, set()):
                 enrich["comedogenic"] = True
             is_allergen = r.get("is_common_allergen") == "1" or inci_up in eu_allergen_names
@@ -470,8 +526,15 @@ def main() -> int:
             else:
                 safety.append("Отдушечный аллерген ЕС (Annex III, Регл. (EU) 2023/1545).")
         rating = r.get("comedogenic_rating") or ""
+        rating_src = None
+        if not rating and inci_up in fulton_transfer:
+            rating_src, rating = fulton_transfer[inci_up]
+            fulton_moved.append((rating_src, inci, rating))
         if rating:
-            safety.append(f"Комедогенность (шкала Fulton 1989, 0–5): {rating}.")
+            if rating_src:
+                safety.append(f"Комедогенность (Fulton 1989, оценка для «{rating_src}»): {rating}.")
+            else:
+                safety.append(f"Комедогенность (шкала Fulton 1989, 0–5): {rating}.")
         if (r.get("is_fungal_acne_trigger") or "") not in ("", "0", "0.0"):
             safety.append(
                 "Помечен в INCIDB как потенциальный триггер грибкового акне — правило-эвристика "
@@ -597,6 +660,9 @@ def main() -> int:
     rl.append("")
     report_path.write_text("\n".join(rl), encoding="utf-8")
     print(f"Курируемых с записями Annex:   {len(curated_reg_review)} → {report_path.name}")
+    print(f"Переносов комедогенности:      {len(fulton_moved)}")
+    for src, tgt, rating in fulton_moved:
+        print(f"    {src} → {tgt} ({rating})")
     print("Категории:", dict(sorted(cats.items(), key=lambda x: -x[1])))
     return 0
 

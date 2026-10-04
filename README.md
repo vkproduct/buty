@@ -65,33 +65,15 @@ pnpm dev                    # http://localhost:3000
 
 Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: пользователи и подписки, заявки брендов, нераспознанные токены, добавление/правка продуктов и ингредиентов, базовая аналитика для брендов.
 
-## Деплой (Vercel)
+## Деплой (прод: Beget VPS)
 
-1. **База.** Managed Postgres — Supabase (или Neon/Vercel Postgres). Для Supabase: pooled-строка (порт 6543) → `DATABASE_URL` с суффиксом `?pgbouncer=true&connection_limit=1`, direct-строка (порт 5432) → `DIRECT_URL` (миграции идут через неё, `directUrl` в `prisma/schema.prisma`).
-2. **Импорт.** vercel.com → New Project → импорт репозитория. `vercel.json` уже задаёт buildCommand: `prisma generate → migrate deploy → db seed → next build` (миграции и сид идемпотентны, выполняются при каждом деплое).
-3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://buty.app`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM="Buty.app <noreply@buty.app>"`, `RESEND_API_KEY` (см. раздел «Реальные адаптеры»). Mock-режим оплаты оставить: `PAYMENTS_PROVIDER=mock`; OCR — `GOOGLE_VISION_API_KEY` (без ключа — mock). Email — Resend, без ключа работает mock (magic-link в логах Vercel).
-4. **Домен.** Project Settings → Domains → подключить `buty.app` и `www.buty.app` (Vercel сам выпускает TLS и даёт редирект www → bare). У регистратора buty.app: A-запись `@` → IP из подсказки Vercel (Settings → Domains; обычно `76.76.21.21`), CNAME `www` → `cname.vercel-dns.com`. После подключения обновить `NEXTAUTH_URL` → Redeploy.
-5. **Cron.** `vercel.json` дёргает `/api/cron/reminders` ежедневно в 03:17 UTC (на Hobby-тарифе — не чаще раза в день); Vercel автоматически шлёт `Authorization: Bearer $CRON_SECRET` — роут принимает и его, и `x-cron-secret`.
-6. **Проверки после деплоя:** `curl https://<домен>/api/health` → `{"ok":true,"db":"up"}`; `/robots.txt`, `/sitemap.xml` → 200. CI/CD: push в `main` → автоматический деплой ≤5 минут.
-7. **Бэкапы.** У Neon/Vercel Postgres включены автоматические снапшоты; дополнительно точечный дамп: `pg_dump "$DATABASE_URL" --clean --if-exists | gzip > buty-$(date +%Y%m%d).sql.gz`. Восстановление: `gunzip -c файл.sql.gz | psql "$DATABASE_URL"`.
-8. **Мониторинг.** Better Stack — HTTP-чек `https://<домен>/api/health` каждые 30 с, алерт в Telegram/email.
+Прод живёт на VPS Beget: **62.217.180.33**, Ubuntu 24.04, `/opt/buty`, пользователь `deploy`. Стек `docker-compose.prod.yml`: `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (HTTPS Let's Encrypt, редирект www → bare, gzip). Docker Hub в РФ недоступен — в `/etc/docker/daemon.json` на сервере прописаны зеркала `dockerhub1.beget.com` и `mirror.gcr.io`.
 
-## Деплой (альтернатива: свой VPS)
+**Схема CI/CD (уже работает):** push в `main` → GitHub Action `.github/workflows/deploy.yml` → SSH на сервер → `git pull --ff-only` → `docker compose -f docker-compose.prod.yml up -d --build` → prune образов. При старте контейнера entrypoint идемпотентно накатывает `prisma migrate deploy` + `db:seed`; импорт каталога INCIDB (~17k продуктов) выполняется только если в БД меньше 17 000 продуктов (рестарты быстрые). В репозитории заданы: переменные `SERVER_HOST=62.217.180.33`, `SERVER_USER=deploy` и секрет `SERVER_SSH_KEY` (отдельный deploy-ключ `github-actions-deploy@buty`; отзыв — удалить строку из `~deploy/.ssh/authorized_keys` на сервере).
 
-<details>
-<summary>Docker-стек на арендованном сервере (если понадобятся российские платёжки/cron на хосте)</summary>
+**Ручной деплой:** `./scripts/deploy.sh` (или `ssh deploy@62.217.180.33` и команды из таблицы ниже).
 
-Стек на сервере: `docker-compose.prod.yml` — `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (автоматический HTTPS Let's Encrypt, редирект www → bare, gzip). Отдельная внутренняя сеть, `restart: unless-stopped`.
-
-1. **DNS.** A-записи `<DOMAIN>` и `www.<DOMAIN>` → IP сервера (у регистратора).
-2. **Подготовка сервера (один раз, от root):** `bash scripts/server-setup.sh` — обновления, пользователь `deploy` (без root-логина и паролей), UFW 22/80/443, fail2ban, Docker + compose plugin.
-3. **Код и секреты (от deploy):** `cd /opt/buty && git clone <repo> . && cp .env.example .env`. В `.env` заполнить: `DOMAIN`, `NEXT_PUBLIC_SITE_URL=https://<DOMAIN>`, `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET` (сгенерировать заново: `openssl rand -base64 32`), `NEXTAUTH_URL=https://<DOMAIN>`, `CRON_SECRET`, `ADMIN_EMAILS`. Mock-режим оплаты оставить: `PAYMENTS_PROVIDER=mock`; OCR — `GOOGLE_VISION_API_KEY` (без ключа — mock).
-4. **Запуск:** `docker compose -f docker-compose.prod.yml up -d --build`. Миграции и сид выполняются entrypoint'ом при каждом старте (идемпотентно).
-5. **CI/CD:** push в `main` → GitHub Action `.github/workflows/deploy.yml` (ssh → git pull → build → up -d). Settings → Secrets and variables → Actions: переменные `SERVER_HOST` (IP сервера) и `SERVER_USER` (`deploy`), секрет `SERVER_SSH_KEY` (приватный ключ). Пока `SERVER_HOST` не задан, workflow пропускается. Запасной вариант: `./scripts/deploy.sh deploy@<SERVER_IP>`.
-6. **Cron-напоминания:** на хосте `crontab -e` (deploy): `*/15 * * * * DOMAIN=<DOMAIN> CRON_SECRET=<секрет> /opt/buty/scripts/cron-reminders.sh`.
-7. **Мониторинг:** Better Stack (бесплатный тариф) — HTTP-чек `https://<DOMAIN>/api/health` каждые 30 с, алерт в Telegram/email.
-
-**Проверки после деплоя:** `curl -I https://<DOMAIN>`, `curl https://<DOMAIN>/robots.txt`, `curl https://<DOMAIN>/sitemap.xml`, `curl https://<DOMAIN>/api/health` → `{"ok":true,"db":"up"}`; `docker compose -f docker-compose.prod.yml ps` — все контейнеры healthy.
+**Проверки после деплоя:** `curl https://buty.app/api/health` → `{"ok":true,"db":"up"}`; `curl -I https://buty.app`; `docker compose -f docker-compose.prod.yml ps` — все контейнеры healthy.
 
 **Операции на сервере** (из `/opt/buty`):
 
@@ -100,16 +82,31 @@ pnpm dev                    # http://localhost:3000
 | Логи | `docker compose -f docker-compose.prod.yml logs -f app` |
 | Перезапуск | `docker compose -f docker-compose.prod.yml restart app` |
 | Откат на прошлый коммит | `git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build` |
+| Доимпорт каталога INCIDB вручную | `docker compose -f docker-compose.prod.yml exec app pnpm db:import-incidb` |
 
-**Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней: `crontab -e` (deploy) → `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`.
+**Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh`).
 
-Восстановление из бэкапа (5 шагов):
+Восстановление из бэкапа:
 
 ```bash
 docker compose -f docker-compose.prod.yml stop app
 gunzip -c /opt/buty-backups/buty-<дата>.sql.gz | docker compose -f docker-compose.prod.yml exec -T db psql -U buty -d buty
 docker compose -f docker-compose.prod.yml start app
-curl https://<DOMAIN>/api/health   # {"ok":true,"db":"up"}
+curl https://buty.app/api/health   # {"ok":true,"db":"up"}
 ```
+
+**Первичная настройка нового сервера** (если переезжаем): `scripts/server-setup.sh` от root (пользователь deploy, UFW, fail2ban, Docker), затем `git clone` в `/opt/buty`, `.env` из `.env.example` (DOMAIN, POSTGRES_PASSWORD, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS), `docker compose -f docker-compose.prod.yml up -d --build`, cron-напоминания `scripts/cron-reminders.sh`. Мониторинг: Better Stack — HTTP-чек `https://buty.app/api/health` каждые 30 с.
+
+<details>
+<summary>Архив: деплой на Vercel (прод уехал с Vercel — платформа недоступна из РФ)</summary>
+
+1. **База.** Managed Postgres — Supabase (или Neon/Vercel Postgres). Для Supabase: pooled-строка (порт 6543) → `DATABASE_URL` с суффиксом `?pgbouncer=true&connection_limit=1`, direct-строка (порт 5432) → `DIRECT_URL` (миграции идут через неё, `directUrl` в `prisma/schema.prisma`).
+2. **Импорт.** vercel.com → New Project → импорт репозитория. `vercel.json` задаёт buildCommand: `prisma generate → migrate deploy → db seed → импорт INCIDB (одноразово) → next build` (миграции и сид идемпотентны).
+3. **Переменные окружения (Project Settings → Environment Variables):** `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_URL=https://buty.app`, `NEXTAUTH_SECRET` (сгенерировать: `openssl rand -base64 32`), `CRON_SECRET`, `ADMIN_EMAILS`, `EMAIL_FROM="Buty.app <noreply@buty.app>"`, `RESEND_API_KEY` (см. раздел «Реальные адаптеры»). Mock-режим оплаты оставить: `PAYMENTS_PROVIDER=mock`; OCR — `GOOGLE_VISION_API_KEY` (без ключа — mock).
+4. **Домен.** Project Settings → Domains → подключить `buty.app` и `www.buty.app` (Vercel сам выпускает TLS и даёт редирект www → bare). У регистратора: A-запись `@` → IP из подсказки Vercel, CNAME `www` → `cname.vercel-dns.com`. После подключения обновить `NEXTAUTH_URL` → Redeploy.
+5. **Cron.** `vercel.json` дёргает `/api/cron/reminders` ежедневно в 03:17 UTC; Vercel автоматически шлёт `Authorization: Bearer $CRON_SECRET`.
+6. **Проверки после деплоя:** `curl https://<домен>/api/health` → `{"ok":true,"db":"up"}`; `/robots.txt`, `/sitemap.xml` → 200.
+7. **Бэкапы.** Снапшоты managed-БД; точечный дамп: `pg_dump "$DATABASE_URL" --clean --if-exists | gzip > buty-$(date +%Y%m%d).sql.gz`. Восстановление: `gunzip -c файл.sql.gz | psql "$DATABASE_URL"`.
+8. **Мониторинг.** Better Stack — HTTP-чек `https://<домен>/api/health` каждые 30 с, алерт в Telegram/email.
 
 </details>

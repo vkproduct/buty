@@ -1,0 +1,13 @@
+{
+  "name": "buty-ocr-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "functions-framework --target=ocrProxy"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0"
+  }
+}

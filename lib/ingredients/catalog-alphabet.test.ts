@@ -39,9 +39,12 @@ describe("catalogEntries", () => {
   it("даёт карточку и под русским, и под латинским названием", () => {
     const entries = catalogEntries([water]);
     expect(entries).toHaveLength(2);
-    expect(entries.map((e) => e.letter)).toEqual(["В", "M"]);
-    expect(entries[0]).toMatchObject({ title: water.displayName, subtitle: water.inciName });
-    expect(entries[1]).toMatchObject({ title: water.inciName, subtitle: water.displayName });
+    expect(entries.map((e) => e.letter)).toEqual(["M", "В"]);
+    // Заголовок — всегда INCI, русское название — вторым.
+    for (const entry of entries) {
+      expect(entry).toMatchObject({ title: water.inciName, subtitle: water.displayName });
+    }
+    expect(entries.map((e) => e.sortKey)).toEqual([water.inciName, water.displayName]);
     expect(entries[0].ingredient).toBe(water);
     expect(entries[1].ingredient).toBe(water);
   });
@@ -49,7 +52,7 @@ describe("catalogEntries", () => {
   it("не дублирует карточку, если оба названия в одной букве", () => {
     const entries = catalogEntries([sls]);
     expect(entries).toHaveLength(1);
-    expect(entries[0]).toMatchObject({ letter: "S", title: "SLS", subtitle: sls.inciName });
+    expect(entries[0]).toMatchObject({ letter: "S", title: sls.inciName, subtitle: "SLS" });
   });
 
   it("цифровые названия попадают в общую группу один раз", () => {
@@ -59,18 +62,20 @@ describe("catalogEntries", () => {
   it("не падает на пустом названии", () => {
     const entries = catalogEntries([{ displayName: "Ниацинамид", inciName: "" }]);
     expect(entries).toHaveLength(1);
-    expect(entries[0]).toMatchObject({ letter: "Н", subtitle: "" });
+    expect(entries[0]).toMatchObject({ letter: "Н", title: "Ниацинамид", subtitle: "" });
   });
 });
 
 describe("groupByLetter", () => {
   it("складывает ингредиент в обе буквы и сортирует внутри группы", () => {
     const groups = groupByLetter(catalogEntries([water, sls, { displayName: "Аллантоин", inciName: "ALLANTOIN" }]));
-    expect(groups.get("В")?.map((e) => e.title)).toEqual([water.displayName]);
-    expect(groups.get("M")?.map((e) => e.title)).toEqual([water.inciName]);
-    expect(groups.get("A")?.map((e) => e.title)).toEqual(["ALLANTOIN"]);
-    expect(groups.get("S")?.map((e) => e.title)).toEqual(["SLS"]);
-    expect(groups.get("А")?.map((e) => e.title)).toEqual(["Аллантоин"]);
+    expect(groups.get("В")?.map((e) => e.sortKey)).toEqual([water.displayName]);
+    expect(groups.get("M")?.map((e) => e.sortKey)).toEqual([water.inciName]);
+    expect(groups.get("A")?.map((e) => e.sortKey)).toEqual(["ALLANTOIN"]);
+    expect(groups.get("S")?.map((e) => e.sortKey)).toEqual([sls.inciName]);
+    expect(groups.get("А")?.map((e) => e.sortKey)).toEqual(["Аллантоин"]);
+    // Под любой буквой заголовок — INCI.
+    expect(groups.get("А")?.map((e) => e.title)).toEqual(["ALLANTOIN"]);
   });
 });
 

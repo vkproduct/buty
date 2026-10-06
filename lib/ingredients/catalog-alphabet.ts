@@ -1,11 +1,12 @@
 /**
  * Алфавитная раскладка каталога ингредиентов.
  *
- * Ингредиент известен под двумя названиями — русским (displayName) и
- * латинским INCI (inciName), — поэтому в алфавитной выдаче он появляется
- * под каждым из них: «Вода листьев чайного дерева» ищется по кириллической
- * «В», а MELALEUCA ALTERNIFOLIA LEAF WATER — по латинской «M». Ссылка у обеих
- * карточек одна и та же.
+ * Ингредиент известен под двумя названиями — латинским INCI (inciName) и
+ * русским (displayName), — поэтому в алфавитной выдаче он появляется
+ * под каждым из них: MELALEUCA ALTERNIFOLIA LEAF WATER ищется по латинской «M»,
+ * а «Вода листьев чайного дерева» — по кириллической «В». Заголовком карточки
+ * всегда служит INCI, русское название идёт вторым. Ссылка у обеих карточек
+ * одна и та же.
  */
 
 /** Ингредиент в объёме, нужном алфавитной раскладке. */
@@ -14,12 +15,14 @@ export type AlphabetIngredient = { displayName: string; inciName: string };
 /** Карточка алфавитной выдачи: ингредиент под одним из своих названий. */
 export type CatalogEntry<T extends AlphabetIngredient> = {
   ingredient: T;
-  /** Название, под которым карточка попала в эту букву. */
+  /** Заголовок карточки: INCI (если INCI пуст — русское название). */
   title: string;
-  /** Второе название — подписью под заголовком (пусто, если названия совпали). */
+  /** Второе название — русское, подписью под заголовком (пусто, если названия совпали). */
   subtitle: string;
   /** Ключ алфавитной группы. */
   letter: string;
+  /** Название, по первой букве которого карточка попала в группу (по нему сортируем). */
+  sortKey: string;
 };
 
 export const DIGITS_KEY = "0–9";
@@ -58,36 +61,32 @@ export const EN_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 /**
  * Карточки алфавитной выдачи: по одной на каждое название ингредиента.
  * Если оба названия начинаются с одной и той же буквы (латинский
- * displayName вида «SLS»), карточка в этой букве остаётся одна —
- * под основным названием.
+ * displayName вида «SLS»), карточка в этой букве остаётся одна.
+ * Заголовок и подпись у всех карточек одного ингредиента одинаковые:
+ * INCI — заголовок, русское название — подпись.
  */
 export function catalogEntries<T extends AlphabetIngredient>(
   ingredients: readonly T[]
 ): CatalogEntry<T>[] {
   const entries: CatalogEntry<T>[] = [];
   for (const ingredient of ingredients) {
-    const pairs: Array<[string, string]> = [
-      [ingredient.displayName, ingredient.inciName],
-      [ingredient.inciName, ingredient.displayName],
-    ];
+    const inci = ingredient.inciName?.trim() ?? "";
+    const ru = ingredient.displayName?.trim() ?? "";
+    const title = inci || ru;
+    const subtitle = inci && ru && ru !== inci ? ru : "";
     const seen = new Set<string>();
-    for (const [title, subtitle] of pairs) {
-      if (!title?.trim()) continue;
-      const letter = letterOf(title);
+    for (const sortKey of [inci, ru]) {
+      if (!sortKey) continue;
+      const letter = letterOf(sortKey);
       if (seen.has(letter)) continue;
       seen.add(letter);
-      entries.push({
-        ingredient,
-        title,
-        subtitle: subtitle?.trim() && subtitle !== title ? subtitle : "",
-        letter,
-      });
+      entries.push({ ingredient, title, subtitle, letter, sortKey });
     }
   }
   return entries;
 }
 
-/** Группировка карточек по буквам: внутри группы — по названию-заголовку. */
+/** Группировка карточек по буквам: внутри группы — по названию, давшему букву. */
 export function groupByLetter<T extends AlphabetIngredient>(
   entries: readonly CatalogEntry<T>[]
 ): Map<string, CatalogEntry<T>[]> {
@@ -98,7 +97,7 @@ export function groupByLetter<T extends AlphabetIngredient>(
     else groups.set(entry.letter, [entry]);
   }
   for (const bucket of groups.values()) {
-    bucket.sort((a, b) => a.title.localeCompare(b.title, "ru"));
+    bucket.sort((a, b) => a.sortKey.localeCompare(b.sortKey, "ru"));
   }
   return groups;
 }

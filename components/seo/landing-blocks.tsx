@@ -72,11 +72,11 @@ export function IngredientGrid({ items }: { items: IngredientCardData[] }) {
               className="group block h-full rounded-2xl border border-ink-hair bg-white p-4 transition-shadow hover:shadow-glass"
             >
               <span className="block font-semibold text-foreground group-hover:text-brand-700">
-                {i.displayName}
-              </span>
-              <span className="block text-xs uppercase tracking-wide text-ink-muted">
                 {inciTitle(i.inciName)}
               </span>
+              {i.displayName.trim().toLowerCase() !== i.inciName.trim().toLowerCase() && (
+                <span className="block text-sm text-ink-muted">{i.displayName}</span>
+              )}
               <span className="mt-2 flex flex-wrap gap-1.5">
                 <Badge variant="outline">{CATEGORY_LABEL[i.category] ?? i.category}</Badge>
                 <Badge variant={ev.variant}>{ev.label}</Badge>

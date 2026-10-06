@@ -6,6 +6,7 @@ import type { Ingredient, Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { CATEGORY_LABEL, EVIDENCE_LABEL, EVIDENCE_META, EVIDENCE_ORDER } from "@/lib/seo/labels";
+import { inciTitle } from "@/lib/seo/site";
 import {
   CATEGORY_GROUPS,
   CATEGORY_PLURAL,
@@ -208,9 +209,14 @@ export default async function IngredientsCatalogPage({
     ? catalogEntries(ingredients)
     : ingredients.map((ingredient) => ({
         ingredient,
-        title: ingredient.displayName,
-        subtitle: ingredient.inciName,
+        // Заголовок — INCI, русское название — вторым.
+        title: ingredient.inciName || ingredient.displayName,
+        subtitle:
+          ingredient.inciName && ingredient.displayName !== ingredient.inciName
+            ? ingredient.displayName
+            : "",
         letter: "all",
+        sortKey: ingredient.displayName,
       }));
   const letterGroups = groupByLetter(rows);
   const letters = sortLetters(letterGroups.keys());
@@ -445,8 +451,8 @@ export default async function IngredientsCatalogPage({
                     </div>
                   )}
                   <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {items.map(({ ingredient, title, subtitle }) => (
-                      <li key={`${ingredient.id}-${title}`} className="min-w-0">
+                    {items.map(({ ingredient, title, subtitle, letter: entryLetter }) => (
+                      <li key={`${ingredient.id}-${entryLetter}`} className="min-w-0">
                         <Link
                           href={`/ingredients/${ingredient.slug}`}
                           className="group flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-line hover:shadow-glass-lg"
@@ -462,15 +468,11 @@ export default async function IngredientsCatalogPage({
                           </div>
 
                           <h3 className="mt-4 break-words text-[17px] font-semibold leading-snug text-foreground transition-colors group-hover:text-brand-700">
-                            {title}
+                            {title === ingredient.inciName ? inciTitle(title) : title}
                           </h3>
                           {subtitle && (
                             <p
-                              className={cn(
-                                "mt-1 truncate text-xs font-medium text-ink-muted",
-                                // INCI-подпись — капсом, русское название — как есть.
-                                subtitle === ingredient.inciName && "uppercase tracking-wide"
-                              )}
+                              className="mt-1 truncate text-sm font-medium text-ink-muted"
                               title={subtitle}
                             >
                               {subtitle}

@@ -426,7 +426,13 @@ export default async function ProductPage({
                     <div className="h-full space-y-2 rounded-2xl bg-white p-4 transition-shadow hover:shadow-glass">
                       <div className="flex items-center justify-between gap-2">
                         <span className="font-semibold text-brand">
-                          {ingredient.displayName}
+                          {inciTitle(ingredient.inciName)}
+                          {ingredient.displayName.trim().toLowerCase() !==
+                            ingredient.inciName.trim().toLowerCase() && (
+                            <span className="block text-sm font-normal text-muted-foreground">
+                              {ingredient.displayName}
+                            </span>
+                          )}
                         </span>
                         <span className="text-xs text-muted-foreground">
                           №{pi.position}

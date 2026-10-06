@@ -242,7 +242,7 @@ export default async function IngredientPage({
             </>
           )}
           <span className="mx-2">/</span>
-          <span>{ingredient.displayName}</span>
+          <span>{inciTitle(ingredient.inciName)}</span>
         </nav>
 
         <GlassCard className="space-y-4 p-8">
@@ -259,18 +259,20 @@ export default async function IngredientPage({
             )}
           </div>
           <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
-            {ingredient.displayName}{" "}
+            {inciTitle(ingredient.inciName)}{" "}
             <span className="text-ink-muted">в составе косметики</span>
           </h1>
-          <p className="text-sm text-muted-foreground">
-            <span className="uppercase tracking-wide">INCI: {ingredient.inciName}</span>
-            {names.length > 0 && (
-              <>
-                <br />
-                <span>Другие названия в составе: {names.join(", ")}</span>
-              </>
-            )}
-          </p>
+          {ingredient.displayName.trim().toLowerCase() !==
+            ingredient.inciName.trim().toLowerCase() && (
+            <p className="font-display text-xl font-medium text-ink-soft sm:text-2xl">
+              {ingredient.displayName}
+            </p>
+          )}
+          {names.length > 0 && (
+            <p className="text-sm text-muted-foreground">
+              Другие названия в составе: {names.join(", ")}
+            </p>
+          )}
           <p className="max-w-3xl text-lg text-muted-foreground">
             {ingredient.function}
           </p>

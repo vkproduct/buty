@@ -31,6 +31,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { GlassCard } from "@/components/ui/glass-card";
+import { inciTitle } from "@/lib/seo/site";
 
 const EVIDENCE_LABEL: Record<string, { label: string; variant: "success" | "brand" | "amber" | "coral" | "outline" }> = {
   STRONG: { label: "Сильная доказательная база", variant: "success" },
@@ -332,7 +333,7 @@ function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
           href={`/ingredients/${ingredient.slug}`}
           className="font-display text-lg font-bold text-brand-700 underline-offset-4 hover:underline"
         >
-          {ingredient.displayName}
+          {inciTitle(ingredient.inciName)}
         </Link>
         <Badge variant="outline">
           {CATEGORY_LABEL[ingredient.category] ?? ingredient.category}
@@ -345,9 +346,10 @@ function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
           }}
         />
       </div>
-      <p className="text-xs uppercase tracking-wide text-muted-foreground">
-        {ingredient.inciName}
-      </p>
+      {ingredient.displayName.trim().toLowerCase() !==
+        ingredient.inciName.trim().toLowerCase() && (
+        <p className="text-sm text-muted-foreground">{ingredient.displayName}</p>
+      )}
       <p className="text-sm">{ingredient.function}</p>
       <div className="mt-auto flex flex-wrap gap-2">
         {ingredient.typicalConc && (

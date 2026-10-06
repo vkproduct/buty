@@ -3,6 +3,7 @@ import { INGREDIENTS } from "./ingredients.data";
 import { INGREDIENT_FLAGS } from "./flags.data";
 import { INCIDB_INGREDIENTS } from "./incidb-ingredients.data";
 import { INCIDB_FLAGS } from "./incidb-flags.data";
+import { INCIDB_NAMES_RU } from "./incidb-ingredients-ru.data";
 
 const prisma = new PrismaClient();
 const CONFLICTS: Array<{ a: string; b: string; severity: string; reason: string }> = [
@@ -241,8 +242,14 @@ async function main() {
   // импортированные из INCIDB карточки — upsert по inciName (не по slug):
   // если ингредиент с таким INCI-именем уже появился в базе (в т.ч. вручную),
   // обновим его данные, а не создадим дубль
+  // INCI остаётся каноническим именем (inciName, ключ upsert), а русское название
+  // для UI берём из ручного словаря incidb-ingredients-ru.data.ts.
+  const withoutRuName: string[] = [];
   for (const item of INCIDB_INGREDIENTS) {
-    const { synonyms, ...data } = item;
+    const { synonyms, ...rest } = item;
+    const nameRu = INCIDB_NAMES_RU[item.inciName];
+    if (!nameRu) withoutRuName.push(item.inciName);
+    const data = { ...rest, displayName: nameRu ?? rest.displayName };
     const flags = flagsFor(item.slug);
     const ingredient = await prisma.ingredient.upsert({
       where: { inciName: item.inciName },
@@ -255,6 +262,15 @@ async function main() {
     await prisma.synonym.createMany({
       data: synonyms.map((alias) => ({ ingredientId: ingredient.id, alias })),
     });
+  }
+
+  if (withoutRuName.length > 0) {
+    console.warn(
+      `Нет русского названия для ${withoutRuName.length} INCI-карточек ` +
+        `(допишите в prisma/incidb-ingredients-ru.data.ts): ` +
+        withoutRuName.slice(0, 20).join("; ") +
+        (withoutRuName.length > 20 ? "; …" : "")
+    );
   }
 
   await prisma.ingredientConflict.deleteMany();

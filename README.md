@@ -53,6 +53,12 @@ pnpm dev                    # http://localhost:3000
 9. UI: Tailwind + shadcn/ui, обёртки GlassCard/Container, стекломорфизм (`/components`).
 10. Внешние API — только за интерфейсами-адаптерами с mock по умолчанию (OCR, email, платежи).
 
+## Мобильное приложение (iOS)
+
+Папка `mobile/` — приложение на Expo (React Native). Оно работает с этим же сервером через `/api/mobile/*`
+и общие API: вход по коду из письма с Bearer-токеном, push-напоминания через Expo.
+Сборка, TestFlight и публикация описаны в [docs/ios.md](docs/ios.md), команды — в [mobile/README.md](mobile/README.md).
+
 ## Реальные адаптеры (что включать в проде)
 
 **OCR (`/lib/ocr`).** Google Cloud Vision (`DOCUMENT_TEXT_DETECTION`). Браузер отправляет фото на `/api/ocr`, сервер пересылает его в Google со своим ключом — ключ в браузер не попадает. Включение: `GOOGLE_VISION_API_KEY` в `.env`; без ключа роут отвечает 501, и на сайте показывается «OCR скоро». Из распознанного текста берётся часть после «Ingredients:»/«Состав:» (`extractInci`). Ограничения: фото до 7 МБ, 20 распознаваний в час с одного IP. Если Google не принимает запросы с сервера в РФ — поставить переходник в Европе и указать его адрес в `GOOGLE_VISION_ENDPOINT`.

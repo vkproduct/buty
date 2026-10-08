@@ -1,14 +1,18 @@
 import { ReminderType } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
-import { MockNotifier } from "./mock";
-import type { NotificationMessage, Notifier } from "./notifier";
+import { REMINDER_COPY } from "./constants";
+import { ExpoPushNotifier } from "./expo";
+import type { Notifier } from "./notifier";
 
 export type { NotificationMessage, Notifier } from "./notifier";
 
-/** Фабрика уведомителя: реальных провайдеров пока нет — всегда Mock. */
+/**
+ * Фабрика уведомителя: push в приложение (Expo), если у пользователя есть
+ * устройство с приложением; иначе — MockNotifier (запись в NotificationLog).
+ */
 export function getNotifier(): Notifier {
-  return new MockNotifier();
+  return new ExpoPushNotifier();
 }
 
 export { REMINDER_COPY, REMINDER_DELAYS_DAYS } from "./constants";
@@ -38,7 +42,10 @@ export async function processDueReminders(now = new Date()): Promise<number> {
       "Своё средство";
     await notifier.send({
       reminderId: reminder.id,
+      userId: reminder.userId,
       userEmail: reminder.user.email,
+      shelfItemId: reminder.shelfItemId,
+      title: REMINDER_COPY[reminder.type].title,
       text: reminderText(reminder.type, title),
     });
     await prisma.reminder.update({

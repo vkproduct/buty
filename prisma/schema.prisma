@@ -167,6 +167,8 @@ model User {
   reminders     Reminder[]
   subscription  Subscription?
   partnerClicks PartnerClick[]
+  mobileSessions MobileSession[]
+  pushTokens    PushToken[]
 }
 
 enum ShelfStatus {
@@ -307,4 +309,46 @@ model BrandLead {
   email     String
   message   String
   createdAt DateTime @default(now())
+}
+
+// --- Мобильное приложение (iOS, Expo) ---
+
+// Одноразовый код входа из письма (6 цифр). Хранится только HMAC кода.
+model MobileLoginCode {
+  id        String   @id @default(cuid())
+  email     String
+  codeHash  String
+  attempts  Int      @default(0) // неверные попытки ввода
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email, createdAt])
+}
+
+// Сессия мобильного приложения: Bearer-токен, в базе — только SHA-256 токена.
+// Отдельно от Session NextAuth, чтобы хэш нельзя было подставить как cookie сайта.
+model MobileSession {
+  id         String   @id @default(cuid())
+  userId     String
+  tokenHash  String   @unique
+  deviceName String?
+  expiresAt  DateTime
+  lastUsedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Push-токен устройства (Expo Push Service) для напоминаний полки.
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique // ExponentPushToken[...]
+  platform  String // ios | android
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

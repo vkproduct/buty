@@ -1,9 +1,12 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import type { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
-import { getServerSession } from "next-auth";
+import { getServerSession, type Session } from "next-auth";
+import { headers } from "next/headers";
 
 import { getEmailProvider } from "@/lib/email";
+import { parseBearer } from "@/lib/mobile/crypto";
+import { getMobileSession } from "@/lib/mobile/session";
 import { prisma } from "@/lib/prisma";
 
 /** Конфиг NextAuth: email magic-link + Prisma-сессии в БД. */
@@ -34,7 +37,23 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-/** Серверная сессия текущего пользователя (или null). */
-export function getSession() {
+/** Bearer-токен мобильного приложения из заголовков текущего запроса. */
+function bearerFromRequest(): string | null {
+  try {
+    return parseBearer(headers().get("authorization"));
+  } catch {
+    // вне контекста запроса (скрипты, сборка) заголовков нет
+    return null;
+  }
+}
+
+/**
+ * Сессия текущего пользователя (или null).
+ * Сайт — cookie NextAuth; приложение — заголовок «Authorization: Bearer bt_…».
+ * Формат сессии одинаковый, поэтому API-роуты обслуживают оба клиента.
+ */
+export async function getSession(): Promise<Session | null> {
+  const bearer = bearerFromRequest();
+  if (bearer) return getMobileSession(bearer);
   return getServerSession(authOptions);
 }

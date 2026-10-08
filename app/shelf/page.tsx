@@ -4,21 +4,14 @@ import { redirect } from "next/navigation";
 import { Lock, Sparkles } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
-import { analyzeText } from "@/lib/analysis/analyze";
-import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
+import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
-import {
-  buildCompatibilityMatrix,
-  buildRoutine,
-  findDuplicates,
-} from "@/lib/shelf/compatibility";
-import { loadConflictEdges, loadShelfProducts } from "@/lib/shelf/data";
+import { loadShelfView } from "@/lib/shelf/view";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SignInForm } from "@/components/sign-in-form";
-import { ShelfTabs, type ReactionView, type ReminderView } from "@/components/shelf-tabs";
-import type { ShelfItemView } from "@/components/shelf-client";
+import { ShelfTabs } from "@/components/shelf-tabs";
 
 export const metadata: Metadata = { title: "Моя полка" };
 export const dynamic = "force-dynamic";
@@ -70,176 +63,16 @@ export default async function ShelfPage() {
   });
   if (!profile) redirect("/onboarding");
 
-  const items = await prisma.shelfItem.findMany({
-    where: { userId: session.user.id },
-    include: {
-      product: {
-        include: {
-          ingredients: {
-            include: { ingredient: true },
-            orderBy: { position: "asc" },
-          },
-        },
-      },
-      reminders: {
-        where: { doneAt: null },
-        orderBy: { nextRunAt: "asc" },
-        select: { id: true, type: true, nextRunAt: true },
-      },
-    },
-    orderBy: { addedAt: "desc" },
-  });
-
-  const baseView: Omit<ShelfItemView, "reactions">[] = await Promise.all(
-    items.map(async (item) => {
-      const reminders = item.reminders.map((r) => ({
-        id: r.id,
-        type: r.type,
-        nextRunAt: r.nextRunAt.toISOString(),
-      }));
-      if (item.product) {
-        return {
-          id: item.id,
-          kind: "catalog" as const,
-          status: item.status,
-          addedAt: item.addedAt.toISOString(),
-          title: item.product.name,
-          subtitle: item.product.brand,
-          slug: item.product.slug,
-          ingredientNames: item.product.ingredients.map(
-            (pi) => pi.ingredient.displayName,
-          ),
-          customInci: null,
-          unrecognizedCount: 0,
-          reminders,
-        };
-      }
-      const analysis = item.customInci ? await analyzeText(item.customInci) : null;
-      return {
-        id: item.id,
-        kind: "custom" as const,
-        status: item.status,
-        addedAt: item.addedAt.toISOString(),
-        title: item.customName ?? "Своё средство",
-        subtitle: "Своё средство",
-        slug: null,
-        ingredientNames:
-          analysis?.ingredients.map((i) => i.displayName) ?? [],
-        customInci: item.customInci,
-        unrecognizedCount: analysis
-          ? Math.max(0, analysis.summary.total - analysis.summary.recognized)
-          : 0,
-        reminders,
-      };
-    }),
-  );
-
-  const plan = await getUserPlan(session.user.id);
-
-  // Совместимость считается для всех: на free полка ограничена
-  // FREE_SHELF_LIMIT средствами, Pro — вся полка без лимита.
-  // Поиск дублей и режим утро/вечер — только Pro.
-  const products = await loadShelfProducts(session.user.id, true);
-  const ingredientIds = [
-    ...new Set(products.flatMap((p) => p.actives.map((a) => a.id))),
-  ];
-  const edges = await loadConflictEdges(ingredientIds);
-  const pairs = buildCompatibilityMatrix(products, edges);
-  let duplicates: ReturnType<typeof findDuplicates> = [];
-  let routine: ReturnType<typeof buildRoutine> = {
-    morning: [],
-    evening: [],
-    notes: [],
-  };
-  if (plan.isPro) {
-    duplicates = findDuplicates(products);
-    routine = buildRoutine(products, profile);
-  }
-
-  // История реакций: free — последние FREE_REACTIONS_LIMIT, Pro — без лимита
-  const reactionRows = await prisma.skinReaction.findMany({
-    where: { userId: session.user.id },
-    include: {
-      shelfItem: { include: { product: { select: { name: true } } } },
-    },
-    orderBy: { occurredAt: "desc" },
-    ...(plan.isPro ? {} : { take: FREE_REACTIONS_LIMIT + 1 }),
-  });
-  const reactionsLimited = reactionRows.length > FREE_REACTIONS_LIMIT;
-  const visibleReactions = plan.isPro
-    ? reactionRows
-    : reactionRows.slice(0, FREE_REACTIONS_LIMIT);
-  const suspectIds = [
-    ...new Set(
-      visibleReactions.flatMap(
-        (r) => JSON.parse(r.suspectIngredientIds) as string[],
-      ),
-    ),
-  ];
-  const suspectIngredients = suspectIds.length
-    ? await prisma.ingredient.findMany({
-        where: { id: { in: suspectIds } },
-        select: { id: true, displayName: true },
-      })
-    : [];
-  const suspectNameById = new Map(
-    suspectIngredients.map((i) => [i.id, i.displayName]),
-  );
-  // Реакции по каждому средству — для окна средства на полке
-  const reactionsByItem = new Map<string, ShelfItemView["reactions"]>();
-  for (const r of visibleReactions) {
-    const list = reactionsByItem.get(r.shelfItemId) ?? [];
-    list.push({
-      id: r.id,
-      type: r.type,
-      note: r.note,
-      occurredAt: r.occurredAt.toISOString(),
-      suspects: (JSON.parse(r.suspectIngredientIds) as string[])
-        .map((id) => suspectNameById.get(id))
-        .filter((n): n is string => Boolean(n)),
-    });
-    reactionsByItem.set(r.shelfItemId, list);
-  }
-  const view: ShelfItemView[] = baseView.map((item) => ({
-    ...item,
-    reactions: reactionsByItem.get(item.id) ?? [],
-  }));
-
-  const reactions: ReactionView[] = visibleReactions.map((r) => ({
-    id: r.id,
-    type: r.type,
-    note: r.note,
-    photoUrl: r.photoUrl,
-    occurredAt: r.occurredAt.toISOString(),
-    itemTitle:
-      r.shelfItem.product?.name ?? r.shelfItem.customName ?? "Своё средство",
-    suspects: (JSON.parse(r.suspectIngredientIds) as string[])
-      .map((id) => suspectNameById.get(id))
-      .filter((n): n is string => Boolean(n)),
-  }));
-
-  const reminderRows = await prisma.reminder.findMany({
-    where: { userId: session.user.id },
-    include: {
-      shelfItem: { include: { product: { select: { name: true } } } },
-      logs: { orderBy: { createdAt: "desc" } },
-    },
-    orderBy: { nextRunAt: "asc" },
-  });
-  const reminders: ReminderView[] = reminderRows.map((r) => ({
-    id: r.id,
-    type: r.type,
-    nextRunAt: r.nextRunAt.toISOString(),
-    doneAt: r.doneAt ? r.doneAt.toISOString() : null,
-    itemTitle:
-      r.shelfItem.product?.name ?? r.shelfItem.customName ?? "Своё средство",
-    logs: r.logs.map((l) => ({
-      id: l.id,
-      channel: l.channel,
-      message: l.message,
-      createdAt: l.createdAt.toISOString(),
-    })),
-  }));
+  const {
+    plan,
+    items: view,
+    pairs,
+    duplicates,
+    routine,
+    reactions,
+    reactionsLimited,
+    reminders,
+  } = await loadShelfView(session.user.id, profile);
 
   return (
     <main className="bg-gradient-hero min-h-screen">
@@ -252,7 +85,7 @@ export default async function ShelfPage() {
           reactions={reactions}
           reminders={reminders}
           isPro={plan.isPro}
-          reactionsLimited={!plan.isPro && reactionsLimited}
+          reactionsLimited={reactionsLimited}
         />
         {plan.isPro ? (
           <GlassCard className="mt-8 flex items-center gap-3 p-5">

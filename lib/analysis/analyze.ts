@@ -12,16 +12,30 @@ import type {
 /** Полный цикл анализа: сырая строка состава → разбор, сводка, конфликты, советы. */
 export async function analyzeText(raw: string): Promise<AnalysisResult> {
   const { matched, unmatched } = await matchInciString(raw);
-  const totalTokens = normalizeInci(raw).length;
+  return analyzeMatched(
+    matched.map((m) => ({ id: m.ingredient.id, matchedVia: m.matchedVia })),
+    unmatched,
+    normalizeInci(raw).length,
+  );
+}
 
-  const ids = matched.map((m) => m.ingredient.id);
+/**
+ * Разбор уже известного списка ингредиентов (например, состава продукта из базы):
+ * карточки, сводка, конфликты, советы. Порядок списка сохраняется.
+ */
+export async function analyzeMatched(
+  matched: { id: string; matchedVia: string }[],
+  unmatched: string[],
+  totalTokens: number,
+): Promise<AnalysisResult> {
+  const ids = matched.map((m) => m.id);
   const details = ids.length
     ? await prisma.ingredient.findMany({ where: { id: { in: ids } } })
     : [];
   const byId = new Map(details.map((d) => [d.id, d]));
 
   const ingredients: AnalyzedIngredient[] = matched.flatMap((m) => {
-    const d = byId.get(m.ingredient.id);
+    const d = byId.get(m.id);
     if (!d) return [];
     return [
       {

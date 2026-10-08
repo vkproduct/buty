@@ -48,3 +48,11 @@ __pycache__/
 /android-keystore/
 *.jks
 *.keystore
+*.p8
+*.p12
+
+# зависимости Expo-приложения
+mobile/node_modules/
+
+# скриншоты отладки OCR-прокси — не коммитим
+ocr-proxy-screenshot*.png

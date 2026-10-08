@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.buty.android",
+      "sha256_cert_fingerprints": [
+        "67:7F:34:45:2A:56:F0:AD:BE:1E:7A:0E:53:C1:C4:B9:F2:93:1F:D8:6B:57:AD:F0:00:3D:9C:DC:71:63:63:23"
+      ]
+    }
+  }
+]

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Белые системные панели, как шапка сайта; Chrome сам подбирает тёмные значки -->
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="navigationColor">#FFFFFF</color>
+    <color name="navigationColorDark">#FFFFFF</color>
+    <color name="navigationDividerColor">#EBEBEB</color>
+    <color name="navigationDividerColorDark">#EBEBEB</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="ic_launcher_background">#FF385C</color>
+    <color name="shortcutBackground">#FFE8EC</color>
+    <color name="shortcutForeground">#FF385C</color>
+</resources>

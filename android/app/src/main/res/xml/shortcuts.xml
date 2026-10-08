@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ярлыки по долгому нажатию на иконку приложения -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_analyze"
+        android:shortcutId="analyze"
+        android:shortcutLongLabel="@string/shortcutAnalyzeLong"
+        android:shortcutShortLabel="@string/shortcutAnalyzeShort">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://buty.app/analyze"
+            android:targetClass="app.buty.android.LauncherActivity"
+            android:targetPackage="app.buty.android" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_shelf"
+        android:shortcutId="shelf"
+        android:shortcutLongLabel="@string/shortcutShelfLong"
+        android:shortcutShortLabel="@string/shortcutShelfShort">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://buty.app/shelf"
+            android:targetClass="app.buty.android.LauncherActivity"
+            android:targetPackage="app.buty.android" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_catalog"
+        android:shortcutId="catalog"
+        android:shortcutLongLabel="@string/shortcutCatalogLong"
+        android:shortcutShortLabel="@string/shortcutCatalogShort">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://buty.app/products"
+            android:targetClass="app.buty.android.LauncherActivity"
+            android:targetPackage="app.buty.android" />
+    </shortcut>
+</shortcuts>

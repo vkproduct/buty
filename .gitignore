@@ -43,3 +43,8 @@ tmp-screenshot*.png
 # сырые CSV купленного архива INCIDB Complete (не коммитим: 40 МБ, лицензия)
 /incidb-complete/csv/
 __pycache__/
+
+# ключ подписи Android-приложения — только локально (см. docs/android.md)
+/android-keystore/
+*.jks
+*.keystore

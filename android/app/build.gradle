@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Номер сборки и версия приходят из GitHub Actions (VERSION_CODE = номер запуска workflow).
+// Локально без переменных собирается версия 1 / 1.0.0.
+def envVersionCode = System.getenv("VERSION_CODE") ?: "1"
+def envVersionName = System.getenv("VERSION_NAME") ?: "1.0.0"
+
+// Ключ подписи: путь и пароли передаются переменными окружения, в репозиторий ключ не попадает.
+def keystorePath = System.getenv("BUTY_KEYSTORE_PATH")
+def hasReleaseKey = keystorePath != null && !keystorePath.isEmpty() && file(keystorePath).exists()
+
+android {
+    namespace 'app.buty.android'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'app.buty.android'
+        minSdk 24
+        targetSdk 36
+        versionCode envVersionCode.toInteger()
+        versionName envVersionName
+    }
+
+    signingConfigs {
+        release {
+            if (hasReleaseKey) {
+                storeFile file(keystorePath)
+                storePassword System.getenv("BUTY_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("BUTY_KEY_ALIAS")
+                keyPassword System.getenv("BUTY_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (hasReleaseKey) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    lint {
+        // Lint не должен останавливать выпуск сборки из-за предупреждений
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.3'
+}

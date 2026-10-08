@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">Buty — разбор составов</string>
+    <string name="launcherName">Buty</string>
+    <string name="hostName" translatable="false">buty.app</string>
+    <string name="launchUrl" translatable="false">https://buty.app/?utm_source=android_app&amp;utm_medium=app</string>
+    <string name="webManifestUrl" translatable="false">https://buty.app/manifest.webmanifest</string>
+    <string name="providerAuthority" translatable="false">app.buty.android.fileprovider</string>
+    <string name="fallbackType" translatable="false">customtabs</string>
+    <string name="assetStatements" translatable="false">
+        [{
+            \"relation\": [\"delegate_permission/common.handle_all_urls\"],
+            \"target\": {\"namespace\": \"web\", \"site\": \"https://buty.app\"}
+        }]
+    </string>
+    <string name="shareTarget" translatable="false">
+        {
+            \"action\": \"/analyze\",
+            \"method\": \"GET\",
+            \"params\": {\"title\": \"title\", \"text\": \"text\"}
+        }
+    </string>
+    <string name="shortcutAnalyzeShort">Разбор</string>
+    <string name="shortcutAnalyzeLong">Разобрать состав</string>
+    <string name="shortcutShelfShort">Полка</string>
+    <string name="shortcutShelfLong">Моя полка</string>
+    <string name="shortcutCatalogShort">Каталог</string>
+    <string name="shortcutCatalogLong">Каталог средств</string>
+</resources>

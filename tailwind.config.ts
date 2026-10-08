@@ -155,10 +155,11 @@ const config: Config = {
         pop: "0 8px 28px rgba(0, 0, 0, 0.18)",
         sticky: "0 -1px 0 rgba(0, 0, 0, 0.06), 0 -4px 16px rgba(0, 0, 0, 0.06)",
       },
-      // Бывшие градиенты — теперь плоские фоны секций (имена сохранены для совместимости).
+      // gradient-cta — фирменный акцентный градиент (кнопки, плашки тегов): #FB5774 → #FA263D сверху вниз.
+      // Остальные бывшие градиенты — плоские фоны секций (имена сохранены для совместимости).
       backgroundImage: {
         "gradient-hero": "linear-gradient(#FFFFFF, #FFFFFF)",
-        "gradient-cta": "linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%)",
+        "gradient-cta": "linear-gradient(180deg, #FB5774 0%, #FA263D 100%)",
         "gradient-brand": "linear-gradient(#FFF1F3, #FFF1F3)",
         "gradient-sky": "linear-gradient(#ECF1FB, #ECF1FB)",
       },

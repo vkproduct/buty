@@ -519,7 +519,7 @@ export default async function HomePage() {
                 )}
               >
                 {p.flag ? (
-                  <span className="absolute -top-3.5 left-6 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold leading-none text-white">
+                  <span className="absolute -top-3.5 left-6 rounded-full bg-gradient-cta px-3 py-1.5 text-xs font-semibold leading-none text-white">
                     {p.flag}
                   </span>
                 ) : null}

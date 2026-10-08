@@ -91,7 +91,7 @@ const PAIR_STYLE = {
 
 function ProTag() {
   return (
-    <span className="absolute -right-7 -top-1 rounded-full bg-brand px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
+    <span className="absolute -right-7 -top-1 rounded-full bg-gradient-cta px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
       Pro
     </span>
   );
@@ -211,7 +211,7 @@ export function ShelfShowcase() {
                 <ol className="mt-3 space-y-2">
                   {steps.map((s, i) => (
                     <li key={s} className="flex items-start gap-2.5 text-sm">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gradient-cta text-[10px] font-bold text-white">
                         {i + 1}
                       </span>
                       {s}

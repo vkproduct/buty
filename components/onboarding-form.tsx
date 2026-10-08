@@ -291,7 +291,7 @@ export function OnboardingForm({ initial }: OnboardingFormProps) {
             key={s.label}
             className={cn(
               "h-1.5 rounded-full transition-colors duration-300",
-              i <= step ? "bg-brand" : "bg-ink-hair",
+              i <= step ? "bg-gradient-cta" : "bg-ink-hair",
             )}
           />
         ))}
@@ -766,7 +766,7 @@ function OptionCard({
           "mt-0.5 grid h-5 w-5 shrink-0 place-items-center border transition-colors",
           type === "radio" ? "rounded-full" : "rounded-md",
           compact && "mt-0",
-          checked ? "border-brand bg-brand text-white" : "border-ink-faint bg-white",
+          checked ? "border-transparent bg-gradient-cta text-white" : "border-ink-faint bg-white",
         )}
       >
         {checked ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : null}

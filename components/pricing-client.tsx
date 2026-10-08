@@ -160,7 +160,7 @@ export function PricingClient({ isLoggedIn, isPro, currentPeriodEnd }: Props) {
 
       {/* Pro — год */}
       <GlassCard className="relative flex flex-col border-2 border-foreground shadow-glass-lg">
-        <span className="absolute -top-3.5 left-6 rounded-full bg-brand px-3 py-1.5 text-xs font-semibold leading-none text-white">
+        <span className="absolute -top-3.5 left-6 rounded-full bg-gradient-cta px-3 py-1.5 text-xs font-semibold leading-none text-white">
           Выгоднее
         </span>
         {head("Тариф", "Pro — год", "2 месяца в подарок")}

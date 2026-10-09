@@ -1,4 +1,5 @@
 import type { OcrProvider } from "./index";
+import { toVisionCompatibleJpeg } from "./heic";
 
 export const GOOGLE_VISION_ENDPOINT = "https://vision.googleapis.com/v1/images:annotate";
 
@@ -28,7 +29,8 @@ export class GoogleVisionOcrProvider implements OcrProvider {
   ) {}
 
   async extractText(image: File | Blob): Promise<string> {
-    const content = Buffer.from(await image.arrayBuffer()).toString("base64");
+    const raw = Buffer.from(await image.arrayBuffer());
+    const content = (await toVisionCompatibleJpeg(raw)).toString("base64");
     let res: Response;
     try {
       res = await fetch(`${this.endpoint}?key=${encodeURIComponent(this.apiKey)}`, {

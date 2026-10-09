@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { matchInciString } from "@/lib/ingredients/match";
-import { normalizeInci } from "@/lib/ingredients/normalize";
 import { summarizeCategories, summarizeFlags } from "./summary";
 import { buildAdvice } from "./advice";
+import { hasPhotosensitizer } from "./photosensitivity";
 import type {
   AnalysisResult,
   AnalyzedIngredient,
@@ -15,7 +15,9 @@ export async function analyzeText(raw: string): Promise<AnalysisResult> {
   return analyzeMatched(
     matched.map((m) => ({ id: m.ingredient.id, matchedVia: m.matchedVia })),
     unmatched,
-    normalizeInci(raw).length,
+    // «Распознано X из Y»: Y — ингредиенты, которые мы увидели в тексте (узнанные + нет),
+    // а не сырые токены, иначе счётчики расходились со списком «Не распознано».
+    matched.length + unmatched.length,
   );
 }
 
@@ -85,9 +87,7 @@ export async function analyzeMatched(
     summary,
     conflicts,
     categories: ingredients.map((i) => i.category),
-    hasRetinoid: ingredients.some((i) =>
-      ["retinol", "adapalene"].includes(i.slug),
-    ),
+    hasPhotosensitizer: hasPhotosensitizer(ingredients.map((i) => i.slug)),
   });
 
   return { ingredients, unmatched, summary, conflicts, advice };

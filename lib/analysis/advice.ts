@@ -4,7 +4,7 @@ interface AdviceInput {
   summary: CompositionSummary;
   conflicts: ConflictInfo[];
   categories: string[];
-  hasRetinoid: boolean; // ретинол/адапален в составе
+  hasPhotosensitizer: boolean; // ретиноиды или AHA в рабочей концентрации (см. photosensitivity.ts)
 }
 
 const SEVERITY_RANK: Record<string, number> = { high: 0, medium: 1, low: 2 };
@@ -27,14 +27,14 @@ export function buildAdvice(input: AdviceInput): string[] {
     );
   }
 
-  const hasAcidsOrRetinoid =
-    input.hasRetinoid || input.categories.includes("active");
-  if (input.summary.actives > 0 && input.summary.spfFilters === 0 && hasAcidsOrRetinoid) {
+  // Совет про SPF — только при настоящих фотосенсибилизаторах. Раньше он срабатывал
+  // на любой «актив» (ниацинамид, лимонная кислота как регулятор pH) и вводил в заблуждение.
+  if (input.hasPhotosensitizer && input.summary.spfFilters === 0) {
     advice.push(
-      "В составе есть активы, повышающие чувствительность кожи, — утром обязателен отдельный SPF.",
+      "В составе есть ретиноиды или кислоты, повышающие чувствительность кожи к солнцу, — утром обязателен отдельный SPF.",
     );
   }
-  if (input.summary.spfFilters > 0 && input.summary.actives > 0) {
+  if (input.summary.spfFilters > 0 && input.hasPhotosensitizer) {
     advice.push(
       "UV-фильтры здесь уместны: активы повышают фоточувствительность, защита утром обязательна.",
     );

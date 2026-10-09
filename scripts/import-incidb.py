@@ -230,7 +230,35 @@ def ru_functions(functions: str) -> list[str]:
     return out
 
 
-def categorize(inci: str, functions: str) -> str:
+FRAGRANCE_FUNCTIONS = ("fragrance", "perfuming", "masking")
+TRUE_FRAGRANCE_NAMES = {"PARFUM", "FRAGRANCE", "AROMA", "FLAVOR", "PARFUM/FRAGRANCE", "FRAGRANCE/PARFUM"}
+# Технологические функции: если они есть, запах — побочная роль, а не причина ввода в формулу.
+TECHNICAL_FUNCTIONS = (
+    "emollient", "occlusive", "solvent", "plasticiser", "viscosity controlling", "binding",
+    "film forming", "antioxidant", "skin protecting", "bulking", "absorbent", "opacifying",
+    "chelating", "abrasive", "humectant", "anticaking", "smoothing",
+)
+
+
+def is_fragrance(name: str, functions: str, is_allergen: bool = False) -> bool:
+    """Отдушка — только то, что в составе ради запаха.
+
+    Аудит 2026-10-09: прежнее правило «есть PERFUMING среди функций → отдушка» записало
+    в отдушки ингредиенты с побочной функцией ароматизации (Triethyl Citrate — пластификатор,
+    Glycine Soja Oil — эмолент), и у средств без отдушки в сводке появлялось «1 отдушка».
+    Теперь: Parfum/Fragrance/Aroma и EU-аллергены — всегда отдушка; остальное с функцией
+    запаха — отдушка, только если у него нет технологической функции (эмолент, растворитель,
+    пластификатор, загуститель и т.п.). Ароматические молекулы и эфирные масла остаются отдушками.
+    """
+    fl = functions.lower()
+    if name in TRUE_FRAGRANCE_NAMES or is_allergen:
+        return True
+    if not any(f in fl for f in FRAGRANCE_FUNCTIONS):
+        return False
+    return not any(f in fl for f in TECHNICAL_FUNCTIONS)
+
+
+def categorize(inci: str, functions: str, is_allergen: bool = False) -> str:
     f = functions
     fl = f.lower()
     name = inci.upper()
@@ -248,7 +276,7 @@ def categorize(inci: str, functions: str) -> str:
         return "preservative"
     if "buffering" in fl:
         return "ph-buffer"
-    if "fragrance" in fl or "perfuming" in fl or "masking" in fl:
+    if is_fragrance(name, f, is_allergen):
         return "fragrance"
     if "antioxidant" in fl:
         return "antioxidant"
@@ -266,6 +294,8 @@ def categorize(inci: str, functions: str) -> str:
         return "emollient"
     if "hair conditioning" in fl or "antistatic" in fl or "hair dyeing" in fl or "oral care" in fl:
         return "texture"
+    if name in ("PARAFFIN", "PARAFFINUM LIQUIDUM", "PETROLATUM", "MINERAL OIL"):
+        return "emollient"
     if "skin conditioning" in fl:
         return "active"
     return "texture"
@@ -495,7 +525,12 @@ def main() -> int:
         used_slugs.add(slug)
 
         funcs_ru = ru_functions(r.get("functions") or "")
-        category = categorize(inci, r.get("functions") or "")
+        is_allergen = (
+            r.get("is_common_allergen") == "1"
+            or inci_up in eu_allergen_names
+            or inci_up in MANUAL_ALLERGENS
+        )
+        category = categorize(inci, r.get("functions") or "", is_allergen)
 
         desc_parts = [
             "Карточка импортирована автоматически из INCIDB (обогащение CosIng, снимок 2026.09) "
@@ -531,11 +566,6 @@ def main() -> int:
             else:
                 print(f"  ! {inci_up}: ожидался Annex V/12 в cosing_restriction, не найдено",
                       file=sys.stderr)
-        is_allergen = (
-                r.get("is_common_allergen") == "1"
-                or inci_up in eu_allergen_names
-                or inci_up in MANUAL_ALLERGENS
-            )
         if is_allergen:
             th = allergen_thresholds.get(r["ingredient_id"])
             if inci_up in MANUAL_ALLERGENS:

@@ -1798,8 +1798,8 @@ export const INGREDIENTS: IngredientSeed[] = [
     inciName: "CITRIC ACID",
     slug: "citric-acid",
     displayName: "Лимонная кислота",
-    category: "active",
-    function: "AHA-кислота: главный регулятор pH косметических формул",
+    category: "ph-buffer",
+    function: "Регулятор pH формулы; как AHA-кислота работает только в высоких концентрациях (от 3–5%)",
     evidenceLevel: "MODERATE",
     typicalConc: "0.1–1% (pH-регуляция)",
     description:

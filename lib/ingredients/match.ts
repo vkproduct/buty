@@ -22,6 +22,52 @@ interface DictEntry extends IngredientHit {
   aliases: string[];
 }
 
+// Одиночные слова, которые не вытаскиваем из «мусорных» фрагментов: это обычные слова
+// с упаковки («Peptide Cream»), хотя в словаре есть одноимённые INCI.
+const SALVAGE_STOPWORDS = new Set(["cream", "water", "milk", "honey", "oil", "extract", "complex"]);
+const MAX_PHRASE_WORDS = 7;
+
+export interface SalvageHit {
+  hit: IngredientHit;
+  phrase: string;
+}
+
+/**
+ * Достаёт известные ингредиенты из токена, который целиком не распознан:
+ * склейки без запятой («butylene glycol benzoic acid») и фрагменты с чужим текстом
+ * («renewing peptide cream. tocopherol»). Жадный поиск самой длинной фразы из словаря.
+ */
+export function salvageToken(token: string, byToken: Map<string, IngredientHit>): SalvageHit[] {
+  const words = token
+    .split(/[\s.]+/)
+    .map((w) => w.replace(/^[^\p{L}\d]+|[^\p{L}\d]+$/gu, ""))
+    .filter((w) => w.length > 0);
+  const hits: SalvageHit[] = [];
+  let covered = 0;
+  let i = 0;
+  while (i < words.length) {
+    let found = 0;
+    for (let len = Math.min(MAX_PHRASE_WORDS, words.length - i); len >= 1; len--) {
+      const phrase = words.slice(i, i + len).join(" ");
+      if (len === 1 && (phrase.length < 5 || SALVAGE_STOPWORDS.has(phrase))) continue;
+      const hit = byToken.get(phrase);
+      if (hit) {
+        hits.push({ hit, phrase });
+        covered += len;
+        found = len;
+        break;
+      }
+    }
+    i += found || 1;
+  }
+  // Принимаем находку, только если она похожа на правду: несколько ингредиентов,
+  // фрагмент явно склеен с чужим предложением (есть точка) или найденное покрывает
+  // хотя бы половину слов. Иначе одно знакомое слово из длинной неизвестной фразы
+  // выдавало бы ложный ингредиент.
+  const plausible = hits.length >= 2 || token.includes(".") || covered * 2 >= words.length;
+  return plausible ? hits : [];
+}
+
 /**
  * Чистая функция матчинга: сопоставляет токены со словарём
  * (INCI-имена + алиасы), нераспознанное возвращает отдельно.
@@ -38,14 +84,16 @@ export function matchTokens(tokens: string[], dictionary: DictEntry[]): MatchRes
   const matched: MatchedIngredient[] = [];
   const unmatched: string[] = [];
   const seen = new Set<string>();
+  const add = (hit: IngredientHit, via: string) => {
+    if (seen.has(hit.id)) return;
+    seen.add(hit.id);
+    matched.push({ ingredient: hit, matchedVia: via });
+  };
 
   for (const token of tokens) {
     const hit = byToken.get(token);
     if (hit) {
-      if (!seen.has(hit.id)) {
-        seen.add(hit.id);
-        matched.push({ ingredient: hit, matchedVia: token });
-      }
+      add(hit, token);
       continue;
     }
     // Промах по целому токену: режем по слэшу и матчим части по отдельности
@@ -55,22 +103,34 @@ export function matchTokens(tokens: string[], dictionary: DictEntry[]): MatchRes
         .split("/")
         .map((p) => p.replace(/\s+/g, " ").trim())
         .filter((p) => p.length > 0);
-      for (const part of parts) {
-        const partHit = byToken.get(part);
-        if (partHit) {
-          if (!seen.has(partHit.id)) {
-            seen.add(partHit.id);
-            matched.push({ ingredient: partHit, matchedVia: part });
-          }
-        } else {
-          unmatched.push(part);
-        }
+      const partHits = parts.map((part) => byToken.get(part));
+      if (partHits.some(Boolean)) {
+        // «X/Y» на этикетке — это одно вещество под двумя именами (INCI/бытовое):
+        // если узнали хотя бы одно имя, второе считаем синонимом, а не новым ингредиентом.
+        parts.forEach((part, i) => {
+          const partHit = partHits[i];
+          if (partHit) add(partHit, part);
+        });
+        continue;
       }
+      // ни одна часть не узнана — пробуем вытащить ингредиенты из каждой части
+      for (const part of parts) {
+        const salvaged = salvageToken(part, byToken);
+        if (salvaged.length > 0) salvaged.forEach((h) => add(h.hit, h.phrase));
+        else unmatched.push(part);
+      }
+      continue;
+    }
+    // Склейка или фрагмент с чужим текстом: если удалось вытащить известные ингредиенты,
+    // остаток — шум распознавания, в «не распознано» его не показываем.
+    const salvaged = salvageToken(token, byToken);
+    if (salvaged.length > 0) {
+      salvaged.forEach((h) => add(h.hit, h.phrase));
       continue;
     }
     unmatched.push(token);
   }
-  return { matched, unmatched };
+  return { matched, unmatched: [...new Set(unmatched)] };
 }
 
 /** Загружает словарь из БД и мапит сырые токены на ингредиенты. */

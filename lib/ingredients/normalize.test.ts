@@ -119,11 +119,13 @@ describe("matchTokens", () => {
     expect(r.unmatched).toEqual([]);
   });
 
-  it("14. при промахе режет по слэшу и матчит части по отдельности", () => {
+  it("14. при промахе режет по слэшу; вторая половина узнанной пары — синоним", () => {
     const r = matchTokens(["aqua/eau", "glycerin/unknown-part"], DICTIONARY);
     expect(slugs(r)).toEqual(["water", "glycerin"]);
     expect(r.matched.map((m) => m.matchedVia)).toEqual(["aqua", "glycerin"]);
-    expect(r.unmatched).toEqual(["unknown-part"]);
+    // «X/Y» на этикетке — одно вещество под двумя именами, поэтому «unknown-part»
+    // не считается отдельным нераспознанным ингредиентом
+    expect(r.unmatched).toEqual([]);
   });
 
   it("15. слэш-фолбэк не дублирует ингредиент, уже найденный ранее", () => {

@@ -47,6 +47,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   barrier: "Барьерный компонент",
   antioxidant: "Антиоксидант",
   emollient: "Эмолент",
+  silicone: "Силикон",
   botanical: "Растительный экстракт",
   soothing: "Успокаивающий",
   fragrance: "Отдушка",
@@ -324,6 +325,19 @@ function AdviceBlock({ advice }: { advice: string[] }) {
   );
 }
 
+/**
+ * Имя с этикетки, если мы нашли ингредиент по синониму (Sodium Hyaluronate → Hyaluronic Acid):
+ * иначе пользователь не узнаёт в карточке то, что читает на упаковке.
+ */
+function showLabelName(ingredient: AnalyzedIngredient): boolean {
+  const via = ingredient.matchedVia.trim().toLowerCase();
+  if (via.length < 4 || !/^[a-z0-9 ,()/'-]+$/.test(via)) return false;
+  return (
+    via !== ingredient.inciName.trim().toLowerCase() &&
+    via !== ingredient.displayName.trim().toLowerCase()
+  );
+}
+
 function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
   const evidence = EVIDENCE_LABEL[ingredient.evidenceLevel] ?? EVIDENCE_LABEL.ANECDOTAL;
   return (
@@ -349,6 +363,11 @@ function IngredientCard({ ingredient }: { ingredient: AnalyzedIngredient }) {
       {ingredient.displayName.trim().toLowerCase() !==
         ingredient.inciName.trim().toLowerCase() && (
         <p className="text-sm text-muted-foreground">{ingredient.displayName}</p>
+      )}
+      {showLabelName(ingredient) && (
+        <p className="text-xs text-muted-foreground">
+          На этикетке: {inciTitle(ingredient.matchedVia)}
+        </p>
       )}
       <p className="text-sm">{ingredient.function}</p>
       <div className="mt-auto flex flex-wrap gap-2">

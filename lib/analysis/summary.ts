@@ -12,7 +12,8 @@ export function summarizeCategories(categories: string[]): {
 } {
   const summary = { actives: 0, fragrances: 0, alcohols: 0, spfFilters: 0 };
   for (const category of categories) {
-    if (category === "active") summary.actives += 1;
+    // пептиды — тоже активы: ради них средство и покупают
+    if (category === "active" || category === "peptide") summary.actives += 1;
     else if (category === "fragrance") summary.fragrances += 1;
     else if (category === "alcohol") summary.alcohols += 1;
     else if (category === "uv-filter") summary.spfFilters += 1;

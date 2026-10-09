@@ -1,5 +1,6 @@
 import type { OcrProvider } from "./index";
 import { toVisionCompatibleJpeg } from "./heic";
+import { inciColumnText, type VisionTextAnnotation } from "./layout";
 
 export const GOOGLE_VISION_ENDPOINT = "https://vision.googleapis.com/v1/images:annotate";
 
@@ -17,7 +18,7 @@ export class OcrProviderError extends Error {
 type VisionError = { code?: number; message?: string };
 type VisionResponse = {
   error?: VisionError;
-  responses?: Array<{ error?: VisionError; fullTextAnnotation?: { text?: string } }>;
+  responses?: Array<{ error?: VisionError; fullTextAnnotation?: VisionTextAnnotation }>;
 };
 
 /** Google Cloud Vision (DOCUMENT_TEXT_DETECTION) через REST API и API-ключ. */
@@ -58,6 +59,8 @@ export class GoogleVisionOcrProvider implements OcrProvider {
       console.error("[ocr] Google Vision ошибка:", res.status, error?.message ?? "нет тела ответа");
       throw new OcrProviderError("Сервис распознавания вернул ошибку, попробуйте позже");
     }
-    return data?.responses?.[0]?.fullTextAnnotation?.text ?? "";
+    const annotation = data?.responses?.[0]?.fullTextAnnotation;
+    // Текст только из колонки состава: соседние колонки и фон отбрасываются по геометрии слов.
+    return annotation ? inciColumnText(annotation) : "";
   }
 }

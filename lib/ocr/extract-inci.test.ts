@@ -25,4 +25,22 @@ describe("extractInci", () => {
     expect(extractInci("   \n ")).toBe("");
     expect(extractInci("a".repeat(MAX_INCI_LENGTH + 50))).toHaveLength(MAX_INCI_LENGTH);
   });
+
+  it("находит маркер, приклеенный к номеру партии через дефис", () => {
+    expect(extractInci("Peptide Cream\n20215014V45-INGREDIENTS: AQUA/WATER, GLYCERIN")).toBe(
+      "AQUA/WATER, GLYCERIN",
+    );
+  });
+
+  it("обрезает состав на служебном коде и штрихкоде", () => {
+    const raw = "INGREDIENTS: XANTHAN GUM, BENZOIC ACID. (CODE F.I.L. Z70036017/1) 3612624638476\nCeraVe";
+    expect(extractInci(raw)).toBe("XANTHAN GUM, BENZOIC ACID.");
+    expect(extractInci("Состав: Aqua, Glycerin\n4601234567890")).toBe("Aqua, Glycerin");
+  });
+
+  it("убирает значок срока после вскрытия, но не трогает PEG-12 и CI 77491", () => {
+    expect(extractInci("INCI: CITRIC ACID, 12M CAPRYLYL GLYCOL")).toBe("CITRIC ACID, CAPRYLYL GLYCOL");
+    expect(extractInci("INCI: PEG-12 Dimethicone, CI 77491")).toBe("PEG-12 Dimethicone, CI 77491");
+  });
 });
+

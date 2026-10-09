@@ -70,7 +70,7 @@ const ORGANIZATION = {
   "@type": "Organization",
   name: SITE_NAME,
   url: absoluteUrl("/"),
-  logo: absoluteUrl("/icon.svg"),
+  logo: absoluteUrl("/icon.png"),
   description: "Научный разбор составов косметики с дерматологической точки зрения.",
 };
 

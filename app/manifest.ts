@@ -22,9 +22,9 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["health", "beauty", "lifestyle"],
     icons: [
       {
-        src: "/icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
+        src: "/icon.png",
+        sizes: "360x360",
+        type: "image/png",
         purpose: "any",
       },
       {

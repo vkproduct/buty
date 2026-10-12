@@ -93,8 +93,8 @@ export default function RootLayout({
       <body className="font-sans">
         <JsonLd data={ORGANIZATION} />
         <YandexMetrika />
-        <MixpanelTracker />
         <Providers>
+          <MixpanelTracker />
           <Header />
           {children}
           <SiteFooter />

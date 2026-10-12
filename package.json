@@ -26,6 +26,8 @@
     "clsx": "^2.1.1",
     "heic-convert": "^2.1.0",
     "lucide-react": "^0.454.0",
+    "mixpanel": "^0.24.0",
+    "mixpanel-browser": "^2.84.0",
     "next": "14.2.15",
     "next-auth": "^4.24.15",
     "react": "^18.3.1",

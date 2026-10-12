@@ -17,6 +17,11 @@ COPY . .
 # Канонический домен вшивается в клиентский и серверный бандл на этапе сборки
 ARG NEXT_PUBLIC_SITE_URL=https://buty.app
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+# Mixpanel: токен проекта и (для EU-проекта) хост API. Пусто — трекинг выключен
+ARG NEXT_PUBLIC_MIXPANEL_TOKEN=""
+ENV NEXT_PUBLIC_MIXPANEL_TOKEN=$NEXT_PUBLIC_MIXPANEL_TOKEN
+ARG NEXT_PUBLIC_MIXPANEL_API_HOST=""
+ENV NEXT_PUBLIC_MIXPANEL_API_HOST=$NEXT_PUBLIC_MIXPANEL_API_HOST
 RUN pnpm prisma generate
 # generateStaticParams и SSG идут в БД — поднимаем одноразовый Postgres на время сборки
 RUN mkdir -p /tmp/pgdata && chown postgres:postgres /tmp/pgdata \

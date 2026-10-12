@@ -19,6 +19,7 @@ import type {
 } from "@/lib/analysis/types";
 import { getOcrProvider, OcrNotReadyError } from "@/lib/ocr";
 import { takePendingPhoto } from "@/lib/pending-photo";
+import { trackEvent } from "@/lib/analytics/mixpanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -92,7 +93,7 @@ export function AnalyzeView({
   const photoRan = useRef(false);
   const [photoHint, setPhotoHint] = useState(false);
 
-  async function runAnalysis(raw: string) {
+  async function runAnalysis(raw: string, inputMethod: "text" | "photo" = "text") {
     if (!raw.trim() || loading) return;
     setLoading(true);
     setError(null);
@@ -106,6 +107,18 @@ export function AnalyzeView({
       if (!res.ok) throw new Error(data?.error ?? "Ошибка анализа");
       setResult(data as AnalysisResult);
       setAnalyzedText(raw);
+      // Value Moment: состав успешно разобран
+      const summary = (data as AnalysisResult).summary;
+      trackEvent("composition_analyzed", {
+        input_method: inputMethod,
+        recognized: summary.recognized,
+        total: summary.total,
+        actives: summary.actives,
+        fragrances: summary.fragrances,
+        alcohols: summary.alcohols,
+        spf_filters: summary.spfFilters,
+        conflicts: (data as AnalysisResult).conflicts.length,
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось разобрать состав");
     } finally {
@@ -150,7 +163,7 @@ export function AnalyzeView({
     try {
       const extracted = await getOcrProvider().extractText(file);
       setText(extracted);
-      if (autoAnalyze && extracted.trim()) void runAnalysis(extracted);
+      if (autoAnalyze && extracted.trim()) void runAnalysis(extracted, "photo");
     } catch (e) {
       if (e instanceof OcrNotReadyError) setOcrNotice(true);
       else setError(e instanceof Error ? e.message : "Не удалось обработать фото");

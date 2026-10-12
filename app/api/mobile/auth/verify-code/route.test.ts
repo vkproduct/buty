@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
-    user: { upsert: vi.fn(), update: vi.fn() },
+    user: { upsert: vi.fn(), update: vi.fn(), findUnique: vi.fn() },
     skinProfile: { findUnique: vi.fn() },
   },
 }));
@@ -39,6 +39,8 @@ describe("POST /api/mobile/auth/verify-code", () => {
       email: "vee@mail.ru",
       emailVerified: new Date(),
     } as never);
+    // существующий пользователь — вход, не регистрация
+    vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: "u1" } as never);
     vi.mocked(prisma.skinProfile.findUnique).mockResolvedValue(null);
     createMobileSession.mockResolvedValue({ token: "bt_x", expiresAt: new Date("2027-01-01") });
   });

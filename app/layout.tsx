@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
 import { YandexMetrika } from "@/components/analytics/yandex-metrika";
+import { MixpanelTracker } from "@/components/analytics/mixpanel-tracker";
 import { CookieBanner } from "@/components/analytics/cookie-banner";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
@@ -92,6 +93,7 @@ export default function RootLayout({
       <body className="font-sans">
         <JsonLd data={ORGANIZATION} />
         <YandexMetrika />
+        <MixpanelTracker />
         <Providers>
           <Header />
           {children}

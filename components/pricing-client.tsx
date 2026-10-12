@@ -8,6 +8,7 @@ import { Check, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GOALS, reachGoal } from "@/lib/analytics/metrika";
+import { trackEvent } from "@/lib/analytics/mixpanel";
 import { PLAN_PRICES } from "@/lib/payments/provider";
 
 const FREE_FEATURES = [
@@ -44,6 +45,8 @@ export function PricingClient({ isLoggedIn, isPro, currentPeriodEnd }: Props) {
 
   async function pay(period: "month" | "year") {
     reachGoal(GOALS.paymentStart, { period });
+    // Старт оплаты (клик «Оплатить») — пара серверного payment_completed
+    trackEvent("payment_started", { period, price: PLAN_PRICES[period] });
     setPending(period);
     setError(null);
     const res = await fetch("/api/payments", {

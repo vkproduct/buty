@@ -11,6 +11,7 @@ import {
   initMixpanel,
   resetIfIdentified,
   resetUser,
+  trackEvent,
 } from "@/lib/analytics/mixpanel";
 
 /**
@@ -21,6 +22,8 @@ import {
  * - Если согласие дано уже после входа — identify догоняет при инициализации.
  * - Отзыв согласия («Только необходимые») — opt-out, отправка прекращается.
  * - Выход перезагружает страницу, поэтому без сессии проверяем, не остался ли id прошлого пользователя.
+ * - Делегированный клик по партнёрским ссылкам /go/ → partner_link_clicked
+ *   (клиент, а не /go/-роут: у анонимов есть $device_id и ID Merge свяжет историю после входа).
  */
 export function MixpanelTracker() {
   const [enabled, setEnabled] = useState(false);
@@ -59,6 +62,25 @@ export function MixpanelTracker() {
     }
     prevUserId.current = userId;
   }, [enabled, session, status]);
+
+  // Клик по партнёрской ссылке «Где купить» (/go/[productId]) — цель where_to_buy.
+  // Делегировано, как цели Метрики: ссылки рендерятся в серверных компонентах.
+  useEffect(() => {
+    if (!enabled) return;
+    function onClick(e: MouseEvent) {
+      const el = (e.target as HTMLElement | null)?.closest<HTMLAnchorElement>("a[href*='/go/']");
+      if (!el) return;
+      const url = new URL(el.href, window.location.origin);
+      const productId = /^\/go\/([^/?]+)/.exec(url.pathname)?.[1];
+      if (!productId) return;
+      trackEvent("partner_link_clicked", {
+        product_id: productId,
+        source: url.searchParams.get("source") ?? "direct",
+      });
+    }
+    document.addEventListener("click", onClick, { capture: true });
+    return () => document.removeEventListener("click", onClick, { capture: true });
+  }, [enabled]);
 
   return null;
 }

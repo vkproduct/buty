@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
 import { canAddShelfItem, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
+import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -71,6 +72,12 @@ export async function POST(request: Request) {
     const item = await prisma.shelfItem.create({
       data: { userId: session.user.id, productId },
     });
+    trackServerEvent(session.user.id, "product_added_to_shelf", {
+      add_method: "product",
+      product_id: productId,
+      is_pro: plan.isPro,
+      shelf_count: count + 1,
+    });
     return NextResponse.json({ item }, { status: 201 });
   }
 
@@ -90,6 +97,12 @@ export async function POST(request: Request) {
         customName: customName.trim(),
         customInci: typeof customInci === "string" ? customInci : null,
       },
+    });
+    trackServerEvent(session.user.id, "product_added_to_shelf", {
+      add_method: "custom",
+      has_inci: typeof customInci === "string" && customInci.length > 0,
+      is_pro: plan.isPro,
+      shelf_count: count + 1,
     });
     return NextResponse.json({ item }, { status: 201 });
   }

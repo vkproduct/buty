@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
+import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
 import { decodeMockPaymentId } from "@/lib/payments";
 import { grantPro } from "@/lib/payments/grant";
 
@@ -53,6 +54,11 @@ export async function POST(request: Request) {
   }
 
   const subscription = await grantPro(session.user.id, mock.period);
+  // Оплата прошла — пара клиентского payment_started (полная воронка цели payment_start)
+  trackServerEvent(session.user.id, "payment_completed", {
+    period: mock.period,
+    plan: subscription.plan,
+  });
   return NextResponse.json({
     ok: true,
     plan: subscription.plan,

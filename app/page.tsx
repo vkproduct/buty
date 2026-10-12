@@ -324,8 +324,8 @@ export default async function HomePage() {
           >
             <h2 className="text-[22px] font-semibold">Разбор состава</h2>
             <p className="mb-5 mt-1.5 text-[15px] leading-relaxed text-ink-muted">
-              Вставьте INCI-список с упаковки или карточки товара — разберём
-              каждый ингредиент за несколько секунд.
+              Вставьте INCI-список с карточки товара или загрузите фото состава
+              с упаковки — разберём каждый ингредиент за несколько секунд.
             </p>
             <AnalyzeForm id="inci-hero" />
             <p className="mt-4 text-center text-sm text-ink-muted">

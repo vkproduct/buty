@@ -18,6 +18,7 @@ import type {
   ConflictInfo,
 } from "@/lib/analysis/types";
 import { getOcrProvider, OcrNotReadyError } from "@/lib/ocr";
+import { takePendingPhoto } from "@/lib/pending-photo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -68,7 +69,14 @@ const SEVERITY_STYLE: Record<string, { label: string; variant: "coral" | "amber"
 };
 
 /** Страница разбора состава: форма ввода, результат анализа, заглушка OCR. */
-export function AnalyzeView({ initialText }: { initialText: string }) {
+export function AnalyzeView({
+  initialText,
+  fromPhoto = false,
+}: {
+  initialText: string;
+  /** Переход с формы «Загрузить фото» (?photo=1) */
+  fromPhoto?: boolean;
+}) {
   const [text, setText] = useState(initialText);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,7 +87,10 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
   const [ocrLoading, setOcrLoading] = useState(false);
   const [feedbackToken, setFeedbackToken] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const photoButtonRef = useRef<HTMLButtonElement>(null);
   const autoRan = useRef(false);
+  const photoRan = useRef(false);
+  const [photoHint, setPhotoHint] = useState(false);
 
   async function runAnalysis(raw: string) {
     if (!raw.trim() || loading) return;
@@ -111,12 +122,35 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function handlePhoto(file: File) {
+  // Переход с главной/лендинга по кнопке «Загрузить фото»: забираем выбранный там файл
+  // и сразу распознаём. Если файла нет (перезагрузка, прямая ссылка) — подсвечиваем кнопку.
+  useEffect(() => {
+    if (!fromPhoto || photoRan.current) return;
+    photoRan.current = true;
+    const file = takePendingPhoto();
+    if (file) {
+      void handlePhoto(file, { autoAnalyze: true });
+    } else {
+      setPhotoHint(true);
+      photoButtonRef.current?.focus();
+    }
+    // Убираем служебный ?photo=1, чтобы при обновлении страницы не было повторной реакции
+    window.history.replaceState(window.history.state, "", "/analyze");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * Распознать фото. autoAnalyze — сразу запустить разбор распознанного текста
+   * (переход с главной/лендинга, где пользователь уже нажал «Загрузить фото»).
+   */
+  async function handlePhoto(file: File, { autoAnalyze = false }: { autoAnalyze?: boolean } = {}) {
+    setPhotoHint(false);
     setError(null);
     setOcrLoading(true);
     try {
       const extracted = await getOcrProvider().extractText(file);
       setText(extracted);
+      if (autoAnalyze && extracted.trim()) void runAnalysis(extracted);
     } catch (e) {
       if (e instanceof OcrNotReadyError) setOcrNotice(true);
       else setError(e instanceof Error ? e.message : "Не удалось обработать фото");
@@ -166,10 +200,12 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
                 {loading ? "Разбираем…" : "Разобрать"}
               </Button>
               <Button
+                ref={photoButtonRef}
                 type="button"
                 variant="secondary"
                 size="lg"
                 disabled={ocrLoading}
+                className={photoHint ? "ring-2 ring-brand ring-offset-2" : undefined}
                 onClick={() => fileInputRef.current?.click()}
               >
                 {ocrLoading ? (
@@ -192,6 +228,16 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
               />
             </div>
           </form>
+          {ocrLoading && (
+            <p className="text-sm text-muted-foreground">
+              Распознаём состав с фото — это займёт несколько секунд.
+            </p>
+          )}
+          {photoHint && !ocrLoading && (
+            <p className="text-sm text-muted-foreground">
+              Нажмите «Загрузить фото» и выберите снимок состава с упаковки.
+            </p>
+          )}
           {error && <p className="text-sm text-coral-700">{error}</p>}
         </GlassCard>
 
@@ -201,6 +247,7 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
             <AiSummaryBlock
               key={analyzedText}
               text={analyzedText}
+              result={result}
               onReport={(token) => setFeedbackToken(token)}
             />
             {result.conflicts.length > 0 && (

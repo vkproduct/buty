@@ -28,6 +28,16 @@ const logo = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
+  // Явно перечисляем иконки: без этого Next не добавляет в <head> ссылку на app/icon.svg
+  // (при наличии icon.png оставляет только PNG) и не знает про apple-touch-icon из public/.
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "360x360" },
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "16x16" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
   title: {
     default: "Buty.app — проверка и разбор состава косметики онлайн",
     template: `%s | ${SITE_NAME}`,

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Camera } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { GOALS, reachGoal } from "@/lib/analytics/metrika";
+import { setPendingPhoto } from "@/lib/pending-photo";
 
 interface AnalyzeFormProps {
   /** id поля — чтобы на странице могли жить две формы */
@@ -13,16 +14,27 @@ interface AnalyzeFormProps {
   rows?: number;
 }
 
-/** Форма вставки состава: отправляет текст на /analyze. */
+/**
+ * Форма вставки состава: отправляет текст на /analyze.
+ * Кнопка «Загрузить фото» выбирает снимок здесь же и переводит на /analyze,
+ * где распознавание запускается автоматически.
+ */
 export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
   const router = useRouter();
   const [text, setText] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (text.trim()) reachGoal(GOALS.analyzeSubmit);
     const query = text.trim() ? `?text=${encodeURIComponent(text.trim())}` : "";
     router.push(`/analyze${query}`);
+  }
+
+  function handlePhoto(file: File) {
+    reachGoal(GOALS.analyzePhoto);
+    setPendingPhoto(file);
+    router.push("/analyze?photo=1");
   }
 
   return (
@@ -42,6 +54,28 @@ export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
         Разобрать состав
         <ArrowRight className="h-4 w-4" />
       </Button>
+      <Button
+        type="button"
+        variant="secondary"
+        size="lg"
+        className="w-full"
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <Camera className="h-4 w-4" />
+        Загрузить фото состава
+      </Button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        aria-label="Фото состава"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handlePhoto(file);
+          e.target.value = "";
+        }}
+      />
     </form>
   );
 }

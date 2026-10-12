@@ -13,10 +13,12 @@ const DESCRIPTION =
 export function generateMetadata({
   searchParams,
 }: {
-  searchParams: { text?: string };
+  searchParams: { text?: string; photo?: string };
 }): Metadata {
-  // Страница с конкретным составом в ?text= — служебная: не индексируем, канонизируем на /analyze.
-  const withText = typeof searchParams.text === "string" && searchParams.text.length > 0;
+  // Страница с конкретным составом в ?text= или служебным ?photo= — не индексируем, канонизируем на /analyze.
+  const withText =
+    (typeof searchParams.text === "string" && searchParams.text.length > 0) ||
+    typeof searchParams.photo === "string";
   return {
     title: { absolute: `${TITLE} | ${SITE_NAME}` },
     description: DESCRIPTION,
@@ -29,12 +31,13 @@ export function generateMetadata({
 export default function AnalyzePage({
   searchParams,
 }: {
-  searchParams: { text?: string };
+  searchParams: { text?: string; photo?: string };
 }) {
   const initialText = typeof searchParams.text === "string" ? searchParams.text : "";
+  const fromPhoto = searchParams.photo === "1";
   return (
     <>
-      <AnalyzeView initialText={initialText} />
+      <AnalyzeView initialText={initialText} fromPhoto={fromPhoto} />
       <section className="border-t border-ink-hair bg-white py-12">
         <Container className="space-y-5">
           <h2 className="font-display text-[22px] font-semibold leading-tight">

@@ -15,6 +15,7 @@ export const YM_ID =
 /** Идентификаторы целей — те же строки нужно завести в Метрике (тип «JavaScript-событие»). */
 export const GOALS = {
   analyzeSubmit: "analyze_submit",
+  analyzePhoto: "analyze_photo",
   signupSubmit: "signup_submit",
   whereToBuy: "where_to_buy",
   paymentStart: "payment_start",

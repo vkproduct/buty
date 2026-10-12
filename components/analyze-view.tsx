@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dialog";
 import { GlassCard } from "@/components/ui/glass-card";
 import { inciTitle } from "@/lib/seo/site";
+import { AI_SUMMARY_REPORT_PREFIX, AiSummaryBlock } from "@/components/ai-summary-block";
 
 const EVIDENCE_LABEL: Record<string, { label: string; variant: "success" | "brand" | "amber" | "coral" | "outline" }> = {
   STRONG: { label: "Сильная доказательная база", variant: "success" },
@@ -72,6 +73,8 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  // Текст, по которому построен текущий результат: по нему же запрашивается резюме ИИ
+  const [analyzedText, setAnalyzedText] = useState("");
   const [ocrNotice, setOcrNotice] = useState(false);
   const [ocrLoading, setOcrLoading] = useState(false);
   const [feedbackToken, setFeedbackToken] = useState<string | null>(null);
@@ -91,6 +94,7 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error ?? "Ошибка анализа");
       setResult(data as AnalysisResult);
+      setAnalyzedText(raw);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось разобрать состав");
     } finally {
@@ -194,6 +198,11 @@ export function AnalyzeView({ initialText }: { initialText: string }) {
         {result && (
           <>
             <SummaryBlock result={result} />
+            <AiSummaryBlock
+              key={analyzedText}
+              text={analyzedText}
+              onReport={(token) => setFeedbackToken(token)}
+            />
             {result.conflicts.length > 0 && (
               <ConflictsBlock conflicts={result.conflicts} />
             )}
@@ -462,14 +471,27 @@ function FeedbackDialog({
     <Dialog open={token !== null} onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Сообщить об ингредиенте</DialogTitle>
-          <DialogDescription>
-            Токен «{token}» отсутствует в словаре. Мы проверим и добавим его.
-          </DialogDescription>
+          {token?.startsWith(AI_SUMMARY_REPORT_PREFIX) ? (
+            <>
+              <DialogTitle>Неточность в резюме</DialogTitle>
+              <DialogDescription>
+                Мы перепроверим резюме по базе и исправим его. Оставьте email, если хотите получить ответ.
+              </DialogDescription>
+            </>
+          ) : (
+            <>
+              <DialogTitle>Сообщить об ингредиенте</DialogTitle>
+              <DialogDescription>
+                Токен «{token}» отсутствует в словаре. Мы проверим и добавим его.
+              </DialogDescription>
+            </>
+          )}
         </DialogHeader>
         {sent ? (
           <p className="text-sm text-brand-700">
-            Спасибо! Мы получили сообщение и разберёмся с этим ингредиентом.
+            {token?.startsWith(AI_SUMMARY_REPORT_PREFIX)
+              ? "Спасибо! Мы получили сообщение и перепроверим резюме."
+              : "Спасибо! Мы получили сообщение и разберёмся с этим ингредиентом."}
           </p>
         ) : (
           <>

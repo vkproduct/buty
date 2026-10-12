@@ -1,0 +1,107 @@
+import { CATEGORY_LABEL, EVIDENCE_META } from "@/lib/seo/labels";
+import { hasPhotosensitizer } from "@/lib/analysis/photosensitivity";
+import type { AnalysisResult } from "@/lib/analysis/types";
+
+/** Увеличьте при изменении промпта или формата: старые резюме перестанут браться из кэша. */
+export const PROMPT_VERSION = 1;
+
+/** Сколько ингредиентов передаём в ИИ: хвост длинных составов почти не влияет на резюме. */
+const MAX_INGREDIENTS = 60;
+const MAX_FIELD_CHARS = 160;
+
+export const SYSTEM_INSTRUCTION = `Ты — редактор сервиса Buty, который разбирает составы косметики с позиций доказательной дерматологии.
+Тебе передают готовый разбор состава из базы Buty: распознанные ингредиенты в порядке этикетки, их категории, функции, уровень доказательности, флаги и конфликты.
+Порядок на этикетке примерно соответствует убыванию концентрации; ингредиенты после консервантов обычно присутствуют в количестве не больше 1%.
+
+Напиши короткое резюме состава для обычного покупателя на русском языке.
+
+Правила:
+1. Опирайся только на переданные данные. Не добавляй ингредиенты, свойства, концентрации, исследования и цифры, которых нет во входных данных.
+2. Не называй бренд. Не оценивай средство словами «плохое», «хорошее», «опасное», «токсичное», «вредное».
+3. Не ставь диагнозы и не обещай лечебного эффекта: никаких «лечит», «избавит», «гарантирует». Это косметика, а не лекарство.
+4. Не делай выводов о беременности, кормлении грудью и детях.
+5. Если ингредиент стоит в конце списка, не утверждай, что его концентрация рабочая; можно написать «вероятно, в небольшом количестве».
+6. Утверждать, что в составе чего-то нет («без отдушек», «без кислот»), можно только если во входных данных указано «весь состав распознан: да».
+7. Флаг «комедогенность» означает лишь наличие опубликованных данных, а не гарантию высыпаний; флаг «малассезия» — что ингредиент может служить питанием для дрожжей Malassezia. Формулируй осторожно.
+8. Называй ингредиенты русскими названиями из данных; INCI-название можно добавить в скобках.
+9. Пиши просто и по-человечески, без канцелярита, списков и эмодзи. Обращайся на «вы».
+
+Ответ — JSON с полями:
+- verdict: одна фраза до 140 символов — что это за средство по составу. Пример: «Лёгкий увлажняющий крем с ниацинамидом и пептидами».
+- inside: 2–3 предложения до 450 символов — на чём основан состав и какие активы в нём главные.
+- suits: 1–2 предложения до 300 символов — кому по составу это может подойти.
+- caution: 1–2 предложения до 300 символов — на что обратить внимание: конфликты, отдушки, флаги, фоточувствительность. Если обращать внимание не на что, пустая строка.`;
+
+/** JSON-схема ответа для режима структурированного вывода Gemini. */
+export const RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    verdict: { type: "string" },
+    inside: { type: "string" },
+    suits: { type: "string" },
+    caution: { type: "string" },
+  },
+  required: ["verdict", "inside", "suits", "caution"],
+} as const;
+
+function clip(text: string | null | undefined): string {
+  const clean = (text ?? "").replace(/\s+/g, " ").trim();
+  return clean.length > MAX_FIELD_CHARS ? `${clean.slice(0, MAX_FIELD_CHARS - 1)}…` : clean;
+}
+
+/** Весь ли состав распознан: от этого зависит, можно ли писать «без …». */
+export function isFullyRecognized(result: AnalysisResult): boolean {
+  return result.summary.total > 0 && result.summary.recognized >= result.summary.total;
+}
+
+/**
+ * Текст запроса к ИИ: только факты из базы Buty, без исходного текста с упаковки.
+ * Нераспознанные слова не передаются: по ним нельзя делать выводы.
+ */
+export function buildSummaryInput(result: AnalysisResult): string {
+  const lines: string[] = [];
+  const { recognized, total } = result.summary;
+  lines.push(
+    `Распознано ингредиентов: ${recognized} из ${total}. Весь состав распознан: ${
+      isFullyRecognized(result) ? "да" : "нет"
+    }.`,
+  );
+  lines.push("");
+  lines.push("Ингредиенты в порядке этикетки:");
+
+  result.ingredients.slice(0, MAX_INGREDIENTS).forEach((ing, i) => {
+    const parts = [
+      `категория: ${(CATEGORY_LABEL[ing.category] ?? ing.category).toLowerCase()}`,
+      `функция: ${clip(ing.function)}`,
+      `доказательность: ${EVIDENCE_META[ing.evidenceLevel]?.short.toLowerCase() ?? "нет данных"}`,
+    ];
+    if (ing.typicalConc) parts.push(`обычная рабочая концентрация: ${ing.typicalConc}`);
+    const flags: string[] = [];
+    if (ing.comedogenic) flags.push("комедогенность");
+    if (ing.feedsMalassezia) flags.push("малассезия");
+    if (ing.fragranceAllergen) flags.push("аллерген-отдушка ЕС");
+    if (flags.length) parts.push(`флаги: ${flags.join(", ")}`);
+    if (ing.safetyNotes) parts.push(`примечание: ${clip(ing.safetyNotes)}`);
+    lines.push(`${i + 1}. ${ing.displayName} (${ing.inciName}) — ${parts.join("; ")}`);
+  });
+  if (result.ingredients.length > MAX_INGREDIENTS) {
+    lines.push(`…и ещё ${result.ingredients.length - MAX_INGREDIENTS} ингредиентов в конце списка.`);
+  }
+
+  lines.push("");
+  if (result.conflicts.length > 0) {
+    lines.push("Конфликты активов внутри состава:");
+    for (const c of result.conflicts) {
+      lines.push(`- ${c.a.displayName} + ${c.b.displayName} (риск: ${c.severity}): ${clip(c.reason)}`);
+    }
+  } else {
+    lines.push("Конфликтов активов внутри состава нет.");
+  }
+
+  const photo = hasPhotosensitizer(result.ingredients.map((i) => i.slug));
+  lines.push(
+    `Повышает чувствительность кожи к солнцу (ретиноиды или AHA в рабочей концентрации): ${photo ? "да" : "нет"}.`,
+  );
+  lines.push(`UV-фильтров в составе: ${result.summary.spfFilters}.`);
+  return lines.join("\n");
+}

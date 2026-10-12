@@ -22,6 +22,9 @@ ARG NEXT_PUBLIC_MIXPANEL_TOKEN=""
 ENV NEXT_PUBLIC_MIXPANEL_TOKEN=$NEXT_PUBLIC_MIXPANEL_TOKEN
 ARG NEXT_PUBLIC_MIXPANEL_API_HOST=""
 ENV NEXT_PUBLIC_MIXPANEL_API_HOST=$NEXT_PUBLIC_MIXPANEL_API_HOST
+# Session Replay: доля сессий с записью, % (по умолчанию 100)
+ARG NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT=100
+ENV NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT=$NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT
 RUN pnpm prisma generate
 # generateStaticParams и SSG идут в БД — поднимаем одноразовый Postgres на время сборки
 RUN mkdir -p /tmp/pgdata && chown postgres:postgres /tmp/pgdata \

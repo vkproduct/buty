@@ -14,6 +14,8 @@ import mixpanel from "mixpanel-browser";
 export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? "";
 /** Для проекта Mixpanel с хранением в ЕС: "https://api-eu.mixpanel.com". Пусто — США (по умолчанию). */
 const MIXPANEL_API_HOST = process.env.NEXT_PUBLIC_MIXPANEL_API_HOST ?? "";
+/** Доля сессий с Session Replay, % (0 — выключено). Запись стартует только после init, т.е. после согласия. */
+const REPLAY_PERCENT = Number(process.env.NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT ?? "100") || 0;
 
 let initialized = false;
 
@@ -28,6 +30,9 @@ export function initMixpanel(): void {
   mixpanel.init(MIXPANEL_TOKEN, {
     ...(MIXPANEL_API_HOST ? { api_host: MIXPANEL_API_HOST } : {}),
     autocapture: false,
+    // Session Replay: работает независимо от autocapture, но требует явной опции.
+    record_sessions_percent: REPLAY_PERCENT,
+    // В реплеях по умолчанию весь текст и инпуты замаскированы (privacy-first).
     track_pageview: false,
     persistence: "localStorage",
     // ip: false — гео по IP отключено, минимизация PII

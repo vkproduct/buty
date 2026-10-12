@@ -33,6 +33,7 @@ Wrong assumptions about platform, identity, or consent will produce broken Mixpa
 | **Consent required** | yes — SDK init is gated behind cookie consent `"all"` (same gate as Yandex Metrika, `lib/analytics/consent.ts`). EU/CA status to be confirmed with the owner. |
 | **Mixpanel project token location** | `.env.local` → `NEXT_PUBLIC_MIXPANEL_TOKEN` (declared in `.env.example`; never commit the value). Production: the same variable in `/opt/buty/.env` on the server (must be present at build time — it is a `NEXT_PUBLIC_` var) |
 | **Data residency** | **EU** — проект с EU Data Residency, endpoint `NEXT_PUBLIC_MIXPANEL_API_HOST="https://api-eu.mixpanel.com"` (обязателен и на клиенте, и на сервере; без него события уходят в US и не попадают в проект) |
+| **Session Replay** | включён: `record_sessions_percent` = `NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT` (по умолчанию 100). Работает независимо от `autocapture: false`; запись стартует только после init, т.е. после согласия. В реплеях по умолчанию замаскированы весь текст и инпуты |
 
 ---
 

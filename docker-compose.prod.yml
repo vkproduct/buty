@@ -28,6 +28,7 @@ services:
         # Mixpanel (необязательно): пусто — трекинг выключен
         NEXT_PUBLIC_MIXPANEL_TOKEN: ${NEXT_PUBLIC_MIXPANEL_TOKEN:-}
         NEXT_PUBLIC_MIXPANEL_API_HOST: ${NEXT_PUBLIC_MIXPANEL_API_HOST:-}
+        NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT: ${NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT:-100}
     restart: unless-stopped
     depends_on:
       db:

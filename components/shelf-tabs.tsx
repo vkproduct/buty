@@ -533,7 +533,7 @@ function RemindersTab({
           {items.map((i) => (
             <div
               key={i.id}
-              className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white px-4 py-3"
+              className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-ink-wash px-4 py-3"
             >
               <p className="text-sm font-medium">{i.title}</p>
               <div className="flex gap-2">

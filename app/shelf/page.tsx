@@ -21,7 +21,7 @@ export default async function ShelfPage() {
 
   if (!session?.user) {
     return (
-      <main className="bg-gradient-hero min-h-screen">
+      <main className="min-h-screen bg-ink-wash">
         <Container className="flex min-h-[70vh] items-center justify-center py-20">
           <GlassCard className="w-full max-w-lg p-8 sm:p-10">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-50">
@@ -75,7 +75,7 @@ export default async function ShelfPage() {
   } = await loadShelfView(session.user.id, profile);
 
   return (
-    <main className="bg-gradient-hero min-h-screen">
+    <main className="min-h-screen bg-ink-wash">
       <Container className="py-12">
         <ShelfTabs
           items={view}

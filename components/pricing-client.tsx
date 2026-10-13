@@ -7,7 +7,7 @@ import { Check, Minus, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
-import { GOALS, reachGoal } from "@/lib/analytics/metrika";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 import { trackEvent } from "@/lib/analytics/mixpanel";
 import { PLAN_PRICES } from "@/lib/payments/provider";
 
@@ -44,7 +44,7 @@ export function PricingClient({ isLoggedIn, isPro, currentPeriodEnd }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   async function pay(period: "month" | "year") {
-    reachGoal(GOALS.paymentStart, { period });
+    trackGoal(GOALS.paymentStart, { period, value: PLAN_PRICES[period], currency: "RUB" });
     // Старт оплаты (клик «Оплатить») — пара серверного payment_completed
     trackEvent("payment_started", { period, price: PLAN_PRICES[period] });
     setPending(period);

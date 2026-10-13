@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GOALS, reachGoal } from "@/lib/analytics/metrika";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 
 interface SignInFormProps {
   /** Текст кнопки (на лендинге — «Собрать полку бесплатно») */
@@ -32,7 +32,7 @@ export function SignInForm({ cta = "Получить ссылку для вхо�
       setError("Не удалось отправить ссылку. Проверьте email и попробуйте ещё раз.");
       return;
     }
-    reachGoal(GOALS.signupSubmit);
+    trackGoal(GOALS.signupSubmit);
     window.location.href = "/auth/verify";
   }
 

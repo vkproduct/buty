@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Camera } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { GOALS, reachGoal } from "@/lib/analytics/metrika";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 import { setPendingPhoto } from "@/lib/pending-photo";
 
 interface AnalyzeFormProps {
@@ -26,13 +26,13 @@ export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (text.trim()) reachGoal(GOALS.analyzeSubmit);
+    if (text.trim()) trackGoal(GOALS.analyzeSubmit);
     const query = text.trim() ? `?text=${encodeURIComponent(text.trim())}` : "";
     router.push(`/analyze${query}`);
   }
 
   function handlePhoto(file: File) {
-    reachGoal(GOALS.analyzePhoto);
+    trackGoal(GOALS.analyzePhoto);
     setPendingPhoto(file);
     router.push("/analyze?photo=1");
   }

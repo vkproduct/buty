@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter, Outfit } from "next/font/google";
 
 import { Header } from "@/components/header";
@@ -7,6 +8,7 @@ import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
 import { YandexMetrika } from "@/components/analytics/yandex-metrika";
 import { MixpanelTracker } from "@/components/analytics/mixpanel-tracker";
+import { GoogleTag } from "@/components/analytics/google-tag";
 import { CookieBanner } from "@/components/analytics/cookie-banner";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
@@ -93,6 +95,9 @@ export default function RootLayout({
       <body className="font-sans">
         <JsonLd data={ORGANIZATION} />
         <YandexMetrika />
+        <Suspense fallback={null}>
+          <GoogleTag />
+        </Suspense>
         <Providers>
           <MixpanelTracker />
           <Header />

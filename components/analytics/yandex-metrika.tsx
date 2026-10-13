@@ -4,7 +4,8 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { CONSENT_EVENT, readConsent, type Consent } from "@/lib/analytics/consent";
-import { reachGoal, YM_ID, type Goal } from "@/lib/analytics/metrika";
+import { trackGoal } from "@/lib/analytics/goals";
+import { YM_ID, type Goal } from "@/lib/analytics/metrika";
 
 type Ym = ((id: number, method: string, ...args: unknown[]) => void) & { a?: unknown[]; l?: number };
 type YmWindow = Window & { ym?: Ym };
@@ -51,11 +52,12 @@ function PageHits() {
     prevUrl.current = url;
   }, [pathname, searchParams]);
 
-  // Цели по клику на элементы с data-ym-goal (например, «Где купить» в серверных компонентах).
+  // Цели по клику на элементы с data-ym-goal (например, «Где купить» в серверных компонентах) —
+  // отправляются в оба счётчика (trackGoal: Метрика + GA4).
   useEffect(() => {
     function onClick(e: MouseEvent) {
       const el = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-ym-goal]");
-      if (el?.dataset.ymGoal) reachGoal(el.dataset.ymGoal as Goal);
+      if (el?.dataset.ymGoal) trackGoal(el.dataset.ymGoal as Goal);
     }
     document.addEventListener("click", onClick, { capture: true });
     return () => document.removeEventListener("click", onClick, { capture: true });

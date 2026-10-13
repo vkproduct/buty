@@ -2,7 +2,7 @@
 
 This project uses **Mixpanel** for all product analytics. Mixpanel is the single source of truth for event tracking, user identification, and behavioral data. Do not introduce any other analytics tools, SDKs, or tracking libraries without explicit instruction from a user.
 
-> Note: Яндекс Метрика (вебвизор, цели) остаётся для SEO/маркетинговой аналитики рунета. Продуктовая аналитика действий пользователей — в Mixpanel.
+> Note: Яндекс Метрика (вебвизор, цели) и Google tag (GA4, NEXT_PUBLIC_GA_ID в `lib/analytics/gtag.ts`) остаются для SEO/маркетинговой аналитики. Продуктовая аналитика действий пользователей — в Mixpanel.
 
 ---
 

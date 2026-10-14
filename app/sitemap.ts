@@ -37,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/products", 0.9, "weekly"),
     entry("/pricing", 0.5, "monthly"),
     entry("/for-brands", 0.4, "monthly"),
+    entry("/privacy", 0.2, "yearly"),
   ];
 
   let dbEntries: Entry[] = [];

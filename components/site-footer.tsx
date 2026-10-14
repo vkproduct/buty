@@ -69,6 +69,9 @@ export function SiteFooter() {
         <Container className="flex flex-col gap-2 py-6 text-sm text-ink-soft sm:flex-row sm:justify-between">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <p>© {new Date().getFullYear()} Buty.app</p>
+            <Link href="/privacy" className="hover:underline">
+              Политика конфиденциальности
+            </Link>
             <Link href="/cookies" className="hover:underline">
               Cookie
             </Link>

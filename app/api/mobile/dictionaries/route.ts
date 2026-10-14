@@ -64,7 +64,7 @@ export async function GET() {
     limits: { freeShelf: FREE_SHELF_LIMIT, freeReactions: FREE_REACTIONS_LIMIT },
     links: {
       site: process.env.NEXT_PUBLIC_SITE_URL ?? "https://buty.app",
-      privacy: "/cookies",
+      privacy: "/privacy",
       support: "mailto:support@buty.app",
     },
   });

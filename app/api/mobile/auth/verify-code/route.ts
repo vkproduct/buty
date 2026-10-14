@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { setServerProfile, trackServerEvent } from "@/lib/analytics/mixpanel-server";
+import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
 import { getUserPlan } from "@/lib/billing";
 import { isValidEmail, isWellFormedCode, normalizeEmail } from "@/lib/mobile/crypto";
 import { jsonError, readJsonObject } from "@/lib/mobile/http";
@@ -40,12 +40,12 @@ export async function POST(request: Request) {
     await prisma.user.update({ where: { id: user.id }, data: { emailVerified: now } });
   }
   if (!existing) {
-    // Регистрация из приложения (на сайте то же событие шлёт NextAuth events.createUser)
+    // Регистрация из приложения (на сайте то же событие шлёт NextAuth events.createUser).
+    // В Mixpanel только анонимный id, без email.
     trackServerEvent(user.id, "sign_up_completed", {
       sign_up_method: "email_code",
       platform: "mobile_app",
     });
-    setServerProfile(user.id, { $email: user.email ?? email });
   }
 
   const deviceName = typeof body.deviceName === "string" ? body.deviceName : null;

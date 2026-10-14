@@ -30,7 +30,7 @@ Wrong assumptions about platform, identity, or consent will produce broken Mixpa
 | **SDK version** | `mixpanel-browser` ^2.84.0, `mixpanel` ^0.24.0 |
 | **Tracking method** | client-side (web UI events, identity) + server-side (signup via NextAuth) |
 | **CDP (if any)** | none |
-| **Consent required** | yes — SDK init is gated behind cookie consent `"all"` (same gate as Yandex Metrika, `lib/analytics/consent.ts`). EU/CA status to be confirmed with the owner. |
+| **Consent required** | yes — client SDK init is gated behind cookie consent `"all"`; server events (`trackServerEvent`) check the same cookie `buty_cookie_consent=all` for web requests, are allowed for mobile Bearer requests, and are dropped outside a request context |
 | **Mixpanel project token location** | `.env.local` → `NEXT_PUBLIC_MIXPANEL_TOKEN` (declared in `.env.example`; never commit the value). Production: the same variable in `/opt/buty/.env` on the server (must be present at build time — it is a `NEXT_PUBLIC_` var) |
 | **Data residency** | **EU** — проект с EU Data Residency, endpoint `NEXT_PUBLIC_MIXPANEL_API_HOST="https://api-eu.mixpanel.com"` (обязателен и на клиенте, и на сервере; без него события уходят в US и не попадают в проект) |
 | **Session Replay** | включён: `record_sessions_percent` = `NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT` (по умолчанию 100). Работает независимо от `autocapture: false`; запись стартует только после init, т.е. после согласия. В реплеях по умолчанию замаскированы весь текст и инпуты |
@@ -68,7 +68,7 @@ Mixpanel identity is managed through these calls (Simplified ID Merge is enabled
 | `resetIfIdentified()` | Page loads without a session but the browser still holds a previous `$user_id` (signOut reloads the page) | `components/analytics/mixpanel-tracker.tsx` |
 | `disableMixpanel()` | Consent withdrawn ("necessary") → `opt_out_tracking()`; re-consent → `opt_in_tracking()` | `components/analytics/mixpanel-tracker.tsx` |
 | server `distinct_id` | Server events pass `distinct_id: user.id` | `lib/analytics/mixpanel-server.ts` |
-| `setServerProfile` | On user creation (`$email` only) | `lib/auth.ts` → NextAuth `events.createUser`; `app/api/mobile/auth/verify-code/route.ts` |
+| `setServerProfile` | Not called anywhere. No Mixpanel user profiles and no email are sent (152-ФЗ). PII keys are stripped by `stripPii()` | `lib/analytics/mixpanel-server.ts` |
 
 **Rules:**
 - `identify()` uses the stable internal user ID (Prisma `user.id`) — never email
@@ -137,8 +137,8 @@ trackServerEvent(user.id, "subscription_started", { plan_type: "premium" });
 
 - **Do not introduce other analytics tools.** All product tracking goes through Mixpanel.
 - **Do not track events on page load** unless explicitly measuring page views.
-- **Do not track PII as event properties** — no emails, names, phone numbers, IPs (disabled), or payment details. (`$email` on the user profile is set once at signup and is not an event property.)
-- **Do not fire events before consent** — client SDK is not initialized until cookie consent `"all"`.
+- **Do not send PII to Mixpanel at all** — no emails (not even `$email` on the profile), names, phone numbers, IPs (disabled on client and server), or payment details. Only the Prisma `user.id` identifies a user.
+- **Do not fire events before consent** — client SDK is not initialized until cookie consent `"all"`; server events go through `trackServerEvent`, which enforces the same consent for web requests.
 - **Do not fire events inside loops.**
 - **Do not hardcode the project token** — read it from `NEXT_PUBLIC_MIXPANEL_TOKEN`.
 - **Do not skip `reset()` on logout** — the tracker handles it via session state; keep it that way.
@@ -151,4 +151,4 @@ trackServerEvent(user.id, "subscription_started", { plan_type: "premium" });
 1. `pnpm dev` → open the site, accept cookies («Принять все») so the SDK initializes.
 2. Trigger the event (e.g., paste a composition on `/analyze` → «Разобрать»).
 3. Mixpanel → Live View: the event appears with expected properties.
-4. Log in with a magic link → `sign_up_completed` (first account) appears server-side, and later events are attributed to the user ID (ID Merge).
+4. Log in with a magic link in a browser where «Принять все» was accepted → `sign_up_completed` (first account) appears server-side (without it the event is correctly dropped), and later events are attributed to the user ID (ID Merge). In Mixpanel → Users no new profiles with email appear.

@@ -8,7 +8,7 @@ import { getEmailProvider } from "@/lib/email";
 import { parseBearer } from "@/lib/mobile/crypto";
 import { getMobileSession } from "@/lib/mobile/session";
 import { prisma } from "@/lib/prisma";
-import { setServerProfile, trackServerEvent } from "@/lib/analytics/mixpanel-server";
+import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
 
 /** Конфиг NextAuth: email magic-link + Prisma-сессии в БД. */
 export const authOptions: NextAuthOptions = {
@@ -38,12 +38,12 @@ export const authOptions: NextAuthOptions = {
   },
   events: {
     // Первое создание пользователя (email magic-link) — регистрация, не вход.
+    // В Mixpanel уходит только анонимный id, email не передаётся (152-ФЗ).
     createUser({ user }) {
       trackServerEvent(user.id, "sign_up_completed", {
         sign_up_method: "email",
         platform: "web",
       });
-      setServerProfile(user.id, { $email: user.email ?? "" });
     },
   },
 };

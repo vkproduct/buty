@@ -101,7 +101,7 @@ docker compose -f docker-compose.prod.yml start app
 curl https://buty.app/api/health   # {"ok":true,"db":"up"}
 ```
 
-**Первичная настройка нового сервера** (если переезжаем): `scripts/server-setup.sh` от root (пользователь deploy, UFW, fail2ban, Docker), затем `git clone` в `/opt/buty`, `.env` из `.env.example` (DOMAIN, POSTGRES_PASSWORD, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS), `docker compose -f docker-compose.prod.yml up -d --build`, cron-напоминания `scripts/cron-reminders.sh`. Мониторинг: Better Stack — HTTP-чек `https://buty.app/api/health` каждые 30 с.
+**Первичная настройка нового сервера** (если переезжаем): `scripts/server-setup.sh` от root (пользователь deploy, UFW, fail2ban, Docker), затем `git clone` в `/opt/buty`, `.env` из `.env.example` (DOMAIN, POSTGRES_PASSWORD, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS, RESEND_API_KEY, EMAIL_FROM), `docker compose -f docker-compose.prod.yml up -d --build`, cron-напоминания `scripts/cron-reminders.sh`. Мониторинг: Better Stack — HTTP-чек `https://buty.app/api/health` каждые 30 с.
 
 <details>
 <summary>Архив: деплой на Vercel (прод уехал с Vercel — платформа недоступна из РФ)</summary>

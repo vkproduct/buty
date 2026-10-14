@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { GlassCard } from "@/components/ui/glass-card";
 import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = { title: "Проверьте почту" };
+
+const isDev = process.env.NODE_ENV !== "production";
 
 export default function VerifyPage() {
   return (
@@ -16,8 +19,18 @@ export default function VerifyPage() {
             «Мою полку».
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            В dev-режиме ссылка выводится в консоль сервера.
+            Письмо приходит в течение пары минут. Если его нет, проверьте папку «Спам»
+            или{" "}
+            <Link href="/auth/signin" className="underline underline-offset-4">
+              введите email ещё раз
+            </Link>
+            .
           </p>
+          {isDev ? (
+            <p className="mt-4 text-xs text-muted-foreground">
+              Dev-режим: ссылка выводится в консоль сервера.
+            </p>
+          ) : null}
         </GlassCard>
       </Container>
     </main>

@@ -23,7 +23,16 @@ export async function POST(request: Request) {
   if (!takeQuota(`code:${clientIp(request)}`, CODES_PER_IP_PER_HOUR)) {
     return jsonError("Слишком много запросов — попробуйте через час", 429);
   }
-  const result = await requestLoginCode(email);
+  let result: Awaited<ReturnType<typeof requestLoginCode>>;
+  try {
+    result = await requestLoginCode(email);
+  } catch (err) {
+    console.error(
+      "[mobile/request-code] email send failed",
+      err instanceof Error ? err.message : err,
+    );
+    return jsonError("Не удалось отправить письмо. Попробуйте позже.", 503);
+  }
   if (!result.ok) {
     return NextResponse.json(
       { error: result.error, retryAfterSec: result.retryAfterSec },

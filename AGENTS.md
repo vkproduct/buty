@@ -98,12 +98,13 @@ These are the Mixpanel events currently tracked in this project. **All new Mixpa
 | `composition_analyzed` | `/api/analyze` returned a successful analysis (Value Moment) | `input_method` (`"text"`/`"photo"`), `recognized`, `total`, `actives`, `fragrances`, `alcohols`, `spf_filters`, `conflicts` (numbers), + super property `platform: "web"` | `components/analyze-view.tsx` (`runAnalysis`, client) |
 | `partner_link_clicked` | Click on a `/go/[productId]` partner link («Где купить») | `product_id`, `source` (query param, default `"direct"`), + super property `platform: "web"` | `components/analytics/mixpanel-tracker.tsx` (delegated click, client) |
 | `payment_started` | Click «Оплатить» on /pricing (start of checkout) | `period` (`"month"`/`"year"`), `price` (number, ₽) | `components/pricing-client.tsx` (`pay`, client) |
-| `payment_completed` | Payment callback confirmed and Pro granted | `period` (`"month"`/`"year"`), `plan` (`"pro"`) | `app/api/payments/callback/route.ts` (server) |
-| `product_added_to_shelf` | `POST /api/shelf` created an item (201) | `add_method` (`"product"`/`"custom"`), `is_pro` (boolean), `shelf_count` (number), `has_inci` (boolean, custom only), `product_id` (product method only) | `app/api/shelf/route.ts` (server) |
+| `payment_completed` | Payment callback confirmed and Pro granted | `period` (`"month"`/`"year"`), `plan` (`"pro"`), `platform` (auto) | `app/api/payments/callback/route.ts` (server) |
+| `product_added_to_shelf` | `POST /api/shelf` created an item (201) | `add_method` (`"product"`/`"custom"`), `is_pro` (boolean), `shelf_count` (number), `has_inci` (boolean, custom only), `product_id` (product method only), `platform` (auto) | `app/api/shelf/route.ts` (server) |
 
 ### Super properties
 
 Registered once at client init (`mixpanel.register`): `platform: "web"`. `ip: false` — no IP-based geo enrichment.
+Server events: `platform` is set automatically in `trackServerEvent` by request type — `Bearer bt_…` → `"mobile_app"`, otherwise `"web"`; an explicitly passed `platform` is not overwritten.
 
 ---
 

@@ -84,11 +84,29 @@ export function hasServerAnalyticsConsent(): boolean {
   }
 }
 
+/**
+ * Платформа текущего запроса: Bearer bt_… — мобильное приложение, иначе сайт.
+ * Вне HTTP-запроса headers() бросает — платформа неизвестна, свойство не добавляем.
+ */
+function detectPlatform(): "mobile_app" | "web" | undefined {
+  try {
+    return parseBearer(headers().get("authorization")) ? "mobile_app" : "web";
+  } catch {
+    return undefined;
+  }
+}
+
 /** Трекинг события от имени пользователя. Без токена, без согласия или при ошибке — тихий no-op. */
 export function trackServerEvent(userId: string, name: string, properties?: Props): void {
   try {
     if (!hasServerAnalyticsConsent()) return;
-    getClient()?.track(name, { ...stripPii(properties), distinct_id: userId });
+    const clean = stripPii(properties);
+    const platform = clean.platform ?? detectPlatform();
+    getClient()?.track(name, {
+      ...clean,
+      ...(platform ? { platform } : {}),
+      distinct_id: userId,
+    });
   } catch {
     // аналитика не должна ломать бизнес-логику
   }

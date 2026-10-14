@@ -97,6 +97,46 @@ describe("серверный Mixpanel — PII и согласие", () => {
     expect(mocks.track).not.toHaveBeenCalled();
   });
 
+  it("Bearer-запрос без явного platform — подставляется mobile_app", async () => {
+    const mod = await importModule();
+    mocks.headersGet.mockReturnValue("Bearer bt_testtoken123");
+    mocks.cookiesGet.mockReturnValue(undefined);
+
+    mod.trackServerEvent("user-1", "product_added_to_shelf", { add_method: "product" });
+
+    expect(mocks.track).toHaveBeenCalledTimes(1);
+    expect(mocks.track.mock.calls[0][1]).toMatchObject({
+      add_method: "product",
+      platform: "mobile_app",
+      distinct_id: "user-1",
+    });
+  });
+
+  it("cookie-запрос с согласием без явного platform — подставляется web", async () => {
+    const mod = await importModule();
+    mocks.headersGet.mockReturnValue(null);
+    mocks.cookiesGet.mockReturnValue({ value: "all" });
+
+    mod.trackServerEvent("user-1", "product_added_to_shelf");
+
+    expect(mocks.track).toHaveBeenCalledTimes(1);
+    expect(mocks.track.mock.calls[0][1]).toMatchObject({
+      platform: "web",
+      distinct_id: "user-1",
+    });
+  });
+
+  it("явно переданный platform не перезаписывается автодетектом", async () => {
+    const mod = await importModule();
+    mocks.headersGet.mockReturnValue("Bearer bt_testtoken123");
+    mocks.cookiesGet.mockReturnValue(undefined);
+
+    mod.trackServerEvent("user-1", "sign_up_completed", { platform: "web" });
+
+    expect(mocks.track).toHaveBeenCalledTimes(1);
+    expect(mocks.track.mock.calls[0][1]).toMatchObject({ platform: "web" });
+  });
+
   it("setServerProfile только с PII — people.set не вызывается", async () => {
     const mod = await importModule();
     mocks.headersGet.mockReturnValue(null);

@@ -48,7 +48,10 @@ COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/scripts ./scripts
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml next.config.mjs ./
+# Скрипты импорта (import-goldapple-products.ts, import-incidb-products.ts)
+# шарят код каталога из lib/ (нормализация INCI, матчинг, slugify).
+COPY --from=build /app/lib ./lib
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml next.config.mjs tsconfig.json ./
 COPY docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 EXPOSE 3000

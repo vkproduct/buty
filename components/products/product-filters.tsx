@@ -139,11 +139,41 @@ export function ProductFilterSheet({
     if (!isDesktop) setSelCategories([]);
   };
 
-  // Поиск по брендам: подстрока без учёта регистра.
+  // Поиск по брендам: подстрока без учёта регистра. Сервер отдаёт в панель
+  // топ-50 брендов — поиск дозапрашивает /api/brands, чтобы найти остальные.
   const needle = brandQuery.trim().toLowerCase();
-  const visibleBrands = needle
-    ? brands.filter((b) => b.toLowerCase().includes(needle))
-    : brands;
+  const [fetched, setFetched] = React.useState<Array<{ brand: string; count: number }> | null>(null);
+  React.useEffect(() => {
+    if (!needle) {
+      setFetched(null);
+      return;
+    }
+    const ctrl = new AbortController();
+    const t = setTimeout(() => {
+      fetch(`/api/brands?q=${encodeURIComponent(needle)}`, { signal: ctrl.signal })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data: { brands?: Array<{ brand: string; count: number }> } | null) =>
+          setFetched(data?.brands ?? []),
+        )
+        .catch(() => {
+          // AbortError при очистке — не ошибка; сетевой сбой оставляем локальную выдачу.
+        });
+    }, 250);
+    return () => {
+      clearTimeout(t);
+      ctrl.abort();
+    };
+  }, [needle]);
+
+  const fetchedCounts = React.useMemo(() => new Map((fetched ?? []).map((f) => [f.brand, f.count])), [fetched]);
+  const visibleBrands = React.useMemo(() => {
+    if (!needle) return brands;
+    const local = brands.filter((b) => b.toLowerCase().includes(needle));
+    const merged = new Map<string, string>(local.map((b) => [b, b]));
+    for (const { brand } of fetched ?? []) merged.set(brand, brand);
+    return [...merged.values()].sort(compareNames);
+  }, [needle, brands, fetched]);
+  const countFor = (b: string) => byBrand.get(b) ?? fetchedCounts.get(b) ?? 0;
   const grouped = !needle && brands.length > BRAND_GROUPING_THRESHOLD;
   const brandGroups = React.useMemo(() => {
     const map = new Map<string, string[]>();
@@ -321,7 +351,7 @@ export function ProductFilterSheet({
                     <ul>
                       {items.map((b) => {
                         const checked = selBrands.includes(b);
-                        const count = byBrand.get(b) ?? 0;
+                        const count = countFor(b);
                         return (
                           <li key={b}>
                             <label

@@ -81,11 +81,14 @@ model Product {
   ingredientsTotal     Int     @default(0) // всего позиций в product_ingredients источника
   ingredientsRecognized Int    @default(0) // из них распознано в карточки каталога
   hidden      Boolean             @default(false) // выпал из каталога INCIDB, но есть ссылки (ShelfItem/PartnerClick)
+  source      String? // откуда продукт: "incidb" | "goldapple" | null (демо из seed)
+  externalId  String? // артикул во внешнем источнике (для goldapple — sku)
   ingredients  ProductIngredient[]
   shelfItems   ShelfItem[]
   partnerClicks PartnerClick[]
 
   @@index([brand])
+  @@unique([source, externalId])
 }
 
 // Join-таблица Product → Ingredient с позицией в INCI-списке (порядок = убывание концентрации)

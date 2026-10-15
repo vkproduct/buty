@@ -2790,7 +2790,7 @@ export const INGREDIENTS: IngredientSeed[] = [
     combinations:
       "Практически со всеми компонентами. Классическая пара — с феноксиэтанолом или этилгексилглицерином как система консервации.",
     risks: "Очень низкие. Редкое кратковременное покалывание при чувствительной коже.",
-    synonyms: ["1,2-hexanediol", "1,2 гександиол"],
+    synonyms: ["1,2-hexanediol", "1,2 гександиол", "1, 2-hexanediol"],
   },
   {
     inciName: "TROMETHAMINE",

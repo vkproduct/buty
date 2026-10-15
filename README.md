@@ -36,6 +36,8 @@ pnpm dev                    # http://localhost:3000
 | `pnpm test` | тесты (vitest) |
 | `pnpm db:migrate` | prisma migrate dev |
 | `pnpm db:seed` | сид справочников |
+| `DRY_RUN=1 pnpm db:import-goldapple` | сухой прогон импорта каталога ЗЯ: отчёт без записи в БД (`data/goldapple/import-report.json`, CSV не в git) |
+| `DRY_RUN=0 pnpm db:import-goldapple` | импорт каталога ЗЯ из `data/goldapple/goldapple_products_inci.csv` (идемпотентно, upsert по source+sku) |
 | `pnpm exec tsx scripts/check-compositions.ts` | замер покрытия базы на 15 реальных INCI-составах (через БД) |
 | `pnpm exec tsx scripts/check-compositions-local.ts` | тот же замер без БД — словарь собирается из сида |
 | `docker compose up --build` | полный локальный запуск на чистой машине |
@@ -89,6 +91,7 @@ pnpm dev                    # http://localhost:3000
 | Перезапуск | `docker compose -f docker-compose.prod.yml restart app` |
 | Откат на прошлый коммит | `git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build` |
 | Доимпорт каталога INCIDB вручную | `docker compose -f docker-compose.prod.yml exec app pnpm db:import-incidb` |
+| Импорт каталога ЗЯ (CSV уже на сервере в `data/goldapple/`) | `docker compose -f docker-compose.prod.yml exec -e DRY_RUN=0 app pnpm db:import-goldapple` |
 
 **Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh`).
 

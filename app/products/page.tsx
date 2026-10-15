@@ -165,10 +165,19 @@ export default async function ProductsCatalogPage({
   ]);
 
   const { byCategory } = facetCounts(searchFacets, brands, categories);
-  // Бренды в панели: найденные поиском + уже выбранные (чтобы их можно было снять).
-  const sheetBrands = [
-    ...new Set([...searchFacets.map((r) => r.brand), ...brands]),
-  ].sort(compareNames);
+  // Бренды в панели: топ-50 по числу продуктов + уже выбранные (чтобы их можно
+  // было снять). Остальные ~6 000 брендов находятся через поиск в панели —
+  // он дозапрашивает /api/brands. Полный список known.brands остаётся
+  // справочником допустимых значений для ?brand= в URL.
+  const brandTotals = new Map<string, number>();
+  for (const r of matrix) {
+    brandTotals.set(r.brand, (brandTotals.get(r.brand) ?? 0) + r.count);
+  }
+  const topBrands = [...brandTotals.entries()]
+    .sort((a, b) => b[1] - a[1] || compareNames(a[0], b[0]))
+    .slice(0, 50)
+    .map(([brand]) => brand);
+  const sheetBrands = [...new Set([...topBrands, ...brands])].sort(compareNames);
   const categoryOptions = known.categories.map((value) => ({
     value,
     label: productCategoryLabel(value),

@@ -40,6 +40,8 @@ tmp-screenshot*.png
 
 # скачанные артефакты INCIDB (регенерируются по scripts/import-incidb.py)
 /tmp-incidb/
+# данные импорта goldapple и прочие рабочие выгрузки (не в git)
+/data/
 # сырые CSV купленного архива INCIDB Complete (не коммитим: 40 МБ, лицензия)
 /incidb-complete/csv/
 __pycache__/

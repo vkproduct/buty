@@ -49,8 +49,8 @@ async function main() {
       const product = await prisma.product.upsert({
         where: { slug: p.slug },
         // продукт снова в каталоге — снимаем hidden, если он был скрыт ранее
-        update: { ...data, hidden: false },
-        create: data,
+        update: { ...data, source: "incidb", hidden: false },
+        create: { ...data, source: "incidb" },
       });
       await prisma.productIngredient.deleteMany({ where: { productId: product.id } });
       await prisma.productIngredient.createMany({
@@ -76,7 +76,11 @@ async function main() {
     const keepSlugs = new Set(INCIDB_PRODUCTS.map((p) => p.slug));
     // продукты INCIDB имеют slug с суффиксом -<product_id> (≥3 цифр, min 352);
     // демо из seed могут кончаться на -1/-10 (concentration) — не трогаем их
-    const dbProducts = await prisma.product.findMany({ select: { id: true, slug: true } });
+    // чистим только продукты INCIDB (source) — демо из seed и goldapple не трогаем
+    const dbProducts = await prisma.product.findMany({
+      where: { source: "incidb" },
+      select: { id: true, slug: true },
+    });
     const orphans = dbProducts.filter((p) => /-\d{3,}$/.test(p.slug) && !keepSlugs.has(p.slug));
     let hidden = 0;
     let deleted = 0;

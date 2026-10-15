@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
     "db:import-incidb": "tsx scripts/import-incidb-products.ts",
+    "db:import-goldapple": "tsx scripts/import-goldapple-products.ts",
     "db:verify-incidb": "tsx scripts/verify-incidb-db.ts"
   },
   "prisma": {

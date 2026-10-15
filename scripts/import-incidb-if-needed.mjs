@@ -10,7 +10,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 try {
-  const count = await prisma.product.count();
+  // считаем только продукты INCIDB: после импорта goldapple общий count больше не показатель
+  const count = await prisma.product.count({ where: { source: "incidb" } });
   // FORCE_INCIDB_IMPORT=1 — принудительный прогон (исправления импорта на проде)
   if (process.env.FORCE_INCIDB_IMPORT === "1") {
     console.log("INCIDB products: FORCE_INCIDB_IMPORT=1 — запускаю импорт каталога…");

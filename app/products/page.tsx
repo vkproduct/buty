@@ -1,12 +1,14 @@
-import { cache } from "react";
+import { cache, Children, type ReactElement, type ReactNode } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight, LayoutGrid, Search, SearchX, X } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import {
+  ALL_BRANDS,
   facetCounts,
   isIndexableFilterPage,
   PAGE_SIZE,
@@ -63,14 +65,16 @@ function searchWhere(q: string): Prisma.ProductWhereInput {
     : {};
 }
 
-/** Заголовок посадочной: «Сыворотки CeraVe», «CeraVe», «Тонеры» или общий. */
+/** Заголовок посадочной — готовая строка для h1 и <title> (без добавок,
+ *  чтобы не было дублей вида «разбор — разбор ингредиентов»). */
 function landingTitle(filters: ProductFilters): string | null {
   const brand = filters.brands.length === 1 ? filters.brands[0] : null;
   const category = filters.categories.length === 1 ? filters.categories[0] : null;
   if (filters.brands.length > 1 || filters.categories.length > 1) return null;
-  if (brand && category) return `${productCategoryPlural(category)} ${brandWithRu(brand)}: составы`;
-  if (brand) return `Составы ${brandWithRu(brand)}`;
-  if (category) return `${productCategoryPlural(category)}: составы и разбор`;
+  if (brand && category)
+    return `${productCategoryPlural(category)} ${brandWithRu(brand)}: составы и разбор ингредиентов`;
+  if (brand) return `Составы ${brandWithRu(brand)}: разбор ингредиентов`;
+  if (category) return `${productCategoryPlural(category)}: составы и разбор ингредиентов`;
   return null;
 }
 
@@ -95,8 +99,8 @@ export async function generateMetadata({
   }
   if (landing) {
     return {
-      title: `${landing} — разбор ингредиентов${pageSuffix}`,
-      description: `${landing}: полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`,
+      title: `${landing}${pageSuffix}`,
+      description: `${landing}. Полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`,
       alternates: { canonical },
     };
   }
@@ -109,7 +113,7 @@ export async function generateMetadata({
 }
 
 function CategoryIcon({ category, size = "md" }: { category: string; size?: "sm" | "md" }) {
-  const { icon: Icon, tint } = productCategoryStyle(category);
+  const { tint } = productCategoryStyle(category);
   return (
     <span
       className={cn(
@@ -119,12 +123,57 @@ function CategoryIcon({ category, size = "md" }: { category: string; size?: "sm"
       )}
       aria-hidden
     >
-      <Icon className={size === "md" ? "h-[18px] w-[18px]" : "h-3.5 w-3.5"} strokeWidth={2} />
+      <svg className={cn("icon", size === "md" ? "h-[18px] w-[18px]" : "h-3.5 w-3.5")}>
+        <use href={`#cat-${category}`} />
+      </svg>
     </span>
   );
 }
 
-/** Удаляемый чип активного фильтра. */
+/** Внутренности SVG иконки lucide — для <symbol> спрайта. Иконки категорий и
+ *  стрелка карточки повторяются десятки раз на странице: инлайн-SVG с
+ *  boilerplate-атрибутами весил ~0.6 КБ каждый, <use> — ~60 байт.
+ *  lucide-react хранит иконку как forwardRef: render возвращает <svg>,
+ *  дети которого — элементы path/circle/… c готовыми SVG-атрибутами. */
+function iconBody(Icon: LucideIcon): string {
+  const render = (Icon as unknown as { render: (props: object, ref: null) => ReactElement }).render;
+  const svg = render({}, null);
+  const serialize = (node: ReactNode): string =>
+    Children.toArray(node)
+      .map((child) => {
+        const el = child as ReactElement<Record<string, unknown>>;
+        const attrs = Object.entries(el.props)
+          .filter(([k]) => k !== "children")
+          .map(([k, v]) => ` ${k}="${String(v)}"`)
+          .join("");
+        const inner = el.props.children ? serialize(el.props.children as ReactNode) : "";
+        return `<${el.type}${attrs}>${inner}</${el.type}>`;
+      })
+      .join("");
+  return serialize(svg.props.children);
+}
+
+/** Скрытый SVG-спрайт иконок страницы каталога. */
+function IconSprite({ categories }: { categories: readonly string[] }) {
+  const symbols: Array<{ id: string; body: string }> = [
+    { id: "icon-arrow-up-right", body: iconBody(ArrowUpRight) },
+  ];
+  const seen = new Set<string>();
+  for (const c of categories) {
+    if (seen.has(c)) continue;
+    seen.add(c);
+    symbols.push({ id: `cat-${c}`, body: iconBody(productCategoryStyle(c).icon) });
+  }
+  return (
+    <svg width="0" height="0" className="absolute" aria-hidden focusable="false">
+      <defs>
+        {symbols.map((s) => (
+          <symbol key={s.id} id={s.id} viewBox="0 0 24 24" dangerouslySetInnerHTML={{ __html: s.body }} />
+        ))}
+      </defs>
+    </svg>
+  );
+}
 function ActiveChip({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
@@ -192,6 +241,22 @@ export default async function ProductsCatalogPage({
     .slice(0, 50)
     .map(([brand]) => brand);
   const sheetBrands = [...new Set([...topBrands, ...brands])].sort(compareNames);
+  // Клиенту отдаём не всю матрицу (это сотни КБ HTML), а только строки брендов,
+  // которые реально показаны в панели, плюс итоги по категориям по всем брендам
+  // (строки ALL_BRANDS) — для счётчиков категорий и «Показать N».
+  const sheetBrandSet = new Set(sheetBrands);
+  const categoryTotals = new Map<string, number>();
+  for (const r of searchFacets) {
+    categoryTotals.set(r.category, (categoryTotals.get(r.category) ?? 0) + r.count);
+  }
+  const clientFacets: FacetRow[] = [
+    ...[...categoryTotals.entries()].map(([category, count]) => ({
+      brand: ALL_BRANDS,
+      category,
+      count,
+    })),
+    ...searchFacets.filter((r) => sheetBrandSet.has(r.brand)),
+  ];
   const categoryOptions = known.categories.map((value) => ({
     value,
     label: productCategoryLabel(value),
@@ -219,6 +284,7 @@ export default async function ProductsCatalogPage({
 
   return (
     <main className="min-h-screen bg-white pb-24">
+      <IconSprite categories={known.categories} />
       {/* ── Шапка раздела ─────────────────────────────────────────────── */}
       <Container className="pb-10 pt-10 sm:pt-12">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -293,7 +359,7 @@ export default async function ProductsCatalogPage({
             applied={filters}
             brands={sheetBrands}
             categories={categoryOptions}
-            facets={searchFacets}
+            facets={clientFacets}
             className="shrink-0 lg:ml-auto"
           />
 
@@ -306,12 +372,8 @@ export default async function ProductsCatalogPage({
           >
             <Link
               href={productFiltersHref(filters, { categories: [] })}
-              className={cn(
-                "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm font-medium transition-colors",
-                categories.length === 0
-                  ? "border-foreground bg-foreground text-white"
-                  : "border-ink-hair text-foreground hover:border-foreground"
-              )}
+              aria-pressed={categories.length === 0}
+              className="chip"
             >
               <LayoutGrid className="h-3.5 w-3.5" aria-hidden />
               Все
@@ -324,17 +386,11 @@ export default async function ProductsCatalogPage({
                   key={c}
                   href={productFiltersHref(filters, { categories: toggleValue(categories, c) })}
                   aria-pressed={active}
-                  className={cn(
-                    "inline-flex h-9 shrink-0 items-center gap-2 rounded-full border pl-1.5 pr-3.5 text-sm font-medium transition-colors",
-                    active
-                      ? "border-foreground bg-foreground text-white"
-                      : "border-ink-hair text-foreground hover:border-foreground",
-                    !active && count === 0 && "opacity-40"
-                  )}
+                  className={cn("chip", "gap-2 pl-1.5", !active && count === 0 && "opacity-40")}
                 >
                   <CategoryIcon category={c} size="sm" />
                   {productCategoryLabel(c)}
-                  <span className={active ? "text-white/70" : "text-ink-muted"}>{count}</span>
+                  <span className="chip-count">{count}</span>
                 </Link>
               );
             })}
@@ -378,29 +434,19 @@ export default async function ProductsCatalogPage({
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <li key={product.id} className="min-w-0">
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-line hover:shadow-glass-lg"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="flex min-w-0 items-center gap-2.5">
+                <Link href={`/products/${product.slug}`} className="product-card">
+                  <div className="product-card-top">
+                    <span className="product-card-category">
                       <CategoryIcon category={product.category} />
-                      <span className="truncate text-[13px] font-medium text-ink-muted">
-                        {productCategoryLabel(product.category)}
-                      </span>
+                      <span>{productCategoryLabel(product.category)}</span>
                     </span>
-                    <ArrowUpRight
-                      className="h-4 w-4 shrink-0 text-ink-faint transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-                      aria-hidden
-                    />
+                    <svg className="icon product-card-arrow" aria-hidden>
+                      <use href="#icon-arrow-up-right" />
+                    </svg>
                   </div>
-                  <p className="mt-4 truncate text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                    {product.brand}
-                  </p>
-                  <h2 className="mt-1 break-words text-[17px] font-semibold leading-snug text-foreground transition-colors group-hover:text-brand-700">
-                    {product.name}
-                  </h2>
-                  <p className="mt-auto pt-4 text-sm text-ink-soft">
+                  <p className="product-card-brand">{product.brand}</p>
+                  <h2 className="product-card-name">{product.name}</h2>
+                  <p className="product-card-ingredients">
                     {product._count.ingredients}{" "}
                     {pluralRu(
                       product._count.ingredients,

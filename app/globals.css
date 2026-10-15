@@ -79,6 +79,85 @@
     content: "";
     @apply absolute left-1 top-[0.7rem] h-2.5 w-1.5 rotate-45 border-b-2 border-r-2 border-foreground;
   }
+  /* Карточка продукта в каталоге: классы вынесены из разметки — 48 карточек
+     на странице, каждый повтор длинных utility-списков весил ~1.8 КБ в HTML
+     и столько же в RSC-полезной нагрузке. */
+  .product-card {
+    @apply flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-line hover:shadow-glass-lg;
+  }
+  .product-card-top {
+    @apply flex items-center justify-between gap-3;
+  }
+  .product-card-category {
+    @apply flex min-w-0 items-center gap-2.5;
+  }
+  .product-card-category > span:last-child {
+    @apply truncate text-[13px] font-medium text-ink-muted;
+  }
+  .product-card-arrow {
+    @apply h-4 w-4 shrink-0 text-ink-faint transition-all;
+  }
+  .product-card:hover .product-card-arrow {
+    @apply -translate-y-0.5 translate-x-0.5 text-foreground;
+  }
+  .product-card-brand {
+    @apply mt-4 truncate text-xs font-semibold uppercase tracking-wide text-ink-muted;
+  }
+  .product-card-name {
+    @apply mt-1 break-words text-[17px] font-semibold leading-snug text-foreground transition-colors;
+  }
+  .product-card:hover .product-card-name {
+    @apply text-brand-700;
+  }
+  .product-card-ingredients {
+    @apply mt-auto pt-4 text-sm text-ink-soft;
+  }
+  /* Чип фильтра (категории в тулбаре и в листе): классы вынесены — чипы
+     повторяются по разу на категорию в двух местах страницы. */
+  .chip {
+    @apply inline-flex h-9 shrink-0 select-none items-center gap-1.5 rounded-full border border-ink-hair px-3.5 text-sm font-medium text-foreground transition-colors hover:border-foreground;
+  }
+  .chip[aria-pressed="true"] {
+    @apply border-foreground bg-foreground text-white;
+  }
+  .chip .chip-count {
+    @apply text-ink-muted;
+  }
+  .chip[aria-pressed="true"] .chip-count {
+    @apply text-white/70;
+  }
+  .chip:has(:focus-visible) {
+    box-shadow:
+      0 0 0 2px #ffffff,
+      0 0 0 4px #222222;
+  }
+  /* Строка бренда в панели фильтров (повторяется ~50 раз). */
+  .sheet-brand {
+    @apply flex min-h-11 cursor-pointer select-none items-center gap-3 rounded-xl px-2 text-[15px] transition-colors hover:bg-ink-wash lg:min-h-10 lg:text-sm;
+  }
+  .sheet-brand:has(:checked) {
+    @apply font-semibold;
+  }
+  .sheet-box {
+    @apply grid h-5 w-5 shrink-0 place-items-center rounded-md border border-ink-line bg-white transition-colors;
+  }
+  .sheet-brand input:checked + .sheet-box {
+    @apply border-foreground bg-foreground text-white;
+  }
+  .sheet-brand input:focus-visible + .sheet-box {
+    box-shadow:
+      0 0 0 2px #ffffff,
+      0 0 0 4px #222222;
+  }
+  /* Иконка lucide через <use> из спрайта: presentation-атрибуты (были на
+     инлайн-<svg>) задаём один раз в CSS. */
+  .icon {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
 
 @layer utilities {

@@ -116,8 +116,65 @@ export function ProductFilterSheet({
     }
   };
 
-  const total = countMatching(facets, selBrands, selCategories);
-  const { byBrand, byCategory } = facetCounts(facets, selBrands, selCategories);
+  // Поиск по брендам: подстрока без учёта регистра. Сервер отдаёт в панель
+  // топ-50 брендов — поиск дозапрашивает /api/brands, чтобы найти остальные.
+  // Ответ включает разбивку по категориям: докидываем её в матрицу фасетов,
+  // чтобы «Показать N» и счётчики категорий были верными для найденного бренда.
+  const needle = brandQuery.trim().toLowerCase();
+  const [fetched, setFetched] = React.useState<Array<{
+    brand: string;
+    count: number;
+    categories?: Array<{ category: string; count: number }>;
+  }> | null>(null);
+  React.useEffect(() => {
+    if (!needle) {
+      setFetched(null);
+      return;
+    }
+    const ctrl = new AbortController();
+    const t = setTimeout(() => {
+      fetch(`/api/brands?q=${encodeURIComponent(needle)}`, { signal: ctrl.signal })
+        .then((res) => (res.ok ? res.json() : null))
+        .then(
+          (data: {
+            brands?: Array<{
+              brand: string;
+              count: number;
+              categories?: Array<{ category: string; count: number }>;
+            }>;
+          } | null) => setFetched(data?.brands ?? []),
+        )
+        .catch(() => {
+          // AbortError при очистке — не ошибка; сетевой сбой оставляем локальную выдачу.
+        });
+    }, 250);
+    return () => {
+      clearTimeout(t);
+      ctrl.abort();
+    };
+  }, [needle]);
+
+  // Матрица для живых счётчиков: переданные сервером строки (топ-50 + выбранные
+  // бренды + агрегат по категориям) плюс строки брендов из поиска, которых
+  // в матрице нет. Дубли бренд+категория не добавляем — иначе двойной счёт.
+  const effectiveFacets = React.useMemo(() => {
+    if (!fetched || fetched.length === 0) return facets;
+    const present = new Set(facets.map((r) => `${r.brand} ${r.category}`));
+    const extra: FacetRow[] = [];
+    for (const f of fetched) {
+      for (const c of f.categories ?? []) {
+        const key = `${f.brand} ${c.category}`;
+        if (!present.has(key)) {
+          present.add(key);
+          extra.push({ brand: f.brand, category: c.category, count: c.count });
+        }
+      }
+    }
+    return extra.length > 0 ? [...facets, ...extra] : facets;
+  }, [facets, fetched]);
+
+  const total = countMatching(effectiveFacets, selBrands, selCategories);
+  const { byBrand, byCategory } = facetCounts(effectiveFacets, selBrands, selCategories);
   const dirty =
     selBrands.join("\u0000") !== applied.brands.join("\u0000") ||
     selCategories.join("\u0000") !== applied.categories.join("\u0000");
@@ -138,32 +195,6 @@ export function ProductFilterSheet({
     setSelBrands([]);
     if (!isDesktop) setSelCategories([]);
   };
-
-  // Поиск по брендам: подстрока без учёта регистра. Сервер отдаёт в панель
-  // топ-50 брендов — поиск дозапрашивает /api/brands, чтобы найти остальные.
-  const needle = brandQuery.trim().toLowerCase();
-  const [fetched, setFetched] = React.useState<Array<{ brand: string; count: number }> | null>(null);
-  React.useEffect(() => {
-    if (!needle) {
-      setFetched(null);
-      return;
-    }
-    const ctrl = new AbortController();
-    const t = setTimeout(() => {
-      fetch(`/api/brands?q=${encodeURIComponent(needle)}`, { signal: ctrl.signal })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data: { brands?: Array<{ brand: string; count: number }> } | null) =>
-          setFetched(data?.brands ?? []),
-        )
-        .catch(() => {
-          // AbortError при очистке — не ошибка; сетевой сбой оставляем локальную выдачу.
-        });
-    }, 250);
-    return () => {
-      clearTimeout(t);
-      ctrl.abort();
-    };
-  }, [needle]);
 
   const fetchedCounts = React.useMemo(() => new Map((fetched ?? []).map((f) => [f.brand, f.count])), [fetched]);
   const visibleBrands = React.useMemo(() => {
@@ -269,13 +300,8 @@ export function ProductFilterSheet({
                 return (
                   <label
                     key={value}
-                    className={cn(
-                      "inline-flex h-10 cursor-pointer select-none items-center gap-1.5 rounded-full border px-4 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-foreground has-[:focus-visible]:ring-offset-2",
-                      checked
-                        ? "border-foreground bg-foreground text-white"
-                        : "border-ink-hair text-foreground hover:border-foreground",
-                      !checked && count === 0 && "opacity-40"
-                    )}
+                    aria-pressed={checked}
+                    className={cn("chip", "h-10 cursor-pointer px-4", !checked && count === 0 && "opacity-40")}
                   >
                     <input
                       type="checkbox"
@@ -286,7 +312,7 @@ export function ProductFilterSheet({
                       className="sr-only"
                     />
                     {label}
-                    <span className={checked ? "text-white/70" : "text-ink-muted"}>{count}</span>
+                    <span className="chip-count">{count}</span>
                   </label>
                 );
               })}
@@ -355,11 +381,7 @@ export function ProductFilterSheet({
                         return (
                           <li key={b}>
                             <label
-                              className={cn(
-                                "flex min-h-11 cursor-pointer select-none items-center gap-3 rounded-xl px-2 text-[15px] transition-colors hover:bg-ink-wash lg:min-h-10 lg:text-sm",
-                                checked && "font-semibold",
-                                !checked && count === 0 && "opacity-40"
-                              )}
+                              className={cn("sheet-brand", !checked && count === 0 && "opacity-40")}
                             >
                               <input
                                 type="checkbox"
@@ -369,13 +391,7 @@ export function ProductFilterSheet({
                                 onChange={() => setSelBrands((s) => toggleValue(s, b))}
                                 className="peer sr-only"
                               />
-                              <span
-                                aria-hidden
-                                className={cn(
-                                  "grid h-5 w-5 shrink-0 place-items-center rounded-md border transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-foreground peer-focus-visible:ring-offset-2",
-                                  checked ? "border-foreground bg-foreground text-white" : "border-ink-line bg-white"
-                                )}
-                              >
+                              <span aria-hidden className="sheet-box">
                                 {checked && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
                               </span>
                               <span className="flex-1 truncate">{b}</span>

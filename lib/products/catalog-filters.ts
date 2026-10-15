@@ -31,6 +31,14 @@ export interface FacetRow {
   count: number;
 }
 
+/**
+ * Бренд-сентинел: строка с агрегатом по категории по ВСЕМ брендам.
+ * Клиенту панели фильтров отдаём сокращённую матрицу — только показанные
+ * бренды + такие строки-итоги; без них счётчики категорий и «Показать N»
+ * при невыбранном бренде занижались бы до суммы показанных брендов.
+ */
+export const ALL_BRANDS = "";
+
 export const PRODUCTS_PATH = "/products";
 /** Размер страницы каталога: весь каталог одной страницей не отдаём. */
 export const PAGE_SIZE = 48;
@@ -123,6 +131,11 @@ export function toggleValue(list: readonly string[], value: string): string[] {
  * Сколько продуктов попадёт в выдачу при выбранных брендах и категориях.
  * Пустой список = «любой». Между брендами — ИЛИ, между категориями — ИЛИ,
  * между измерениями — И (стандартная логика фасетного фильтра).
+ *
+ * Сокращённый набор: если бренды не выбраны и в матрице есть строки ALL_BRANDS,
+ * сумма берётся из них (это итоги по всем брендам); строки конкретных брендов
+ * тогда не учитываются — иначе был бы двойной счёт. Если бренды выбраны,
+ * суммируются только их строки (строки выбранных брендов обязаны быть в матрице).
  */
 export function countMatching(
   facets: readonly FacetRow[],
@@ -131,9 +144,13 @@ export function countMatching(
 ): number {
   const b = new Set(brands);
   const c = new Set(categories);
+  const hasAggregate = facets.some((r) => r.brand === ALL_BRANDS);
   let total = 0;
   for (const row of facets) {
-    if ((b.size === 0 || b.has(row.brand)) && (c.size === 0 || c.has(row.category))) {
+    if (c.size > 0 && !c.has(row.category)) continue;
+    if (b.size === 0) {
+      if (hasAggregate ? row.brand === ALL_BRANDS : true) total += row.count;
+    } else if (row.brand !== ALL_BRANDS && b.has(row.brand)) {
       total += row.count;
     }
   }
@@ -145,6 +162,9 @@ export function countMatching(
  * только его при текущих категориях; для каждой категории — при текущих брендах.
  * Собственный выбор измерения не сужает его же счётчики — иначе при выбранном
  * бренде все остальные обнулились бы.
+ *
+ * byCategory при невыбранных брендах берётся из строк ALL_BRANDS, если они есть
+ * (сокращённый набор: итоги по всем брендам, а не только по показанным).
  */
 export function facetCounts(
   facets: readonly FacetRow[],
@@ -153,13 +173,20 @@ export function facetCounts(
 ): { byBrand: Map<string, number>; byCategory: Map<string, number> } {
   const b = new Set(brands);
   const c = new Set(categories);
+  const hasAggregate = facets.some((r) => r.brand === ALL_BRANDS);
   const byBrand = new Map<string, number>();
   const byCategory = new Map<string, number>();
   for (const row of facets) {
+    if (row.brand === ALL_BRANDS) {
+      if (b.size === 0) {
+        byCategory.set(row.category, (byCategory.get(row.category) ?? 0) + row.count);
+      }
+      continue;
+    }
     if (c.size === 0 || c.has(row.category)) {
       byBrand.set(row.brand, (byBrand.get(row.brand) ?? 0) + row.count);
     }
-    if (b.size === 0 || b.has(row.brand)) {
+    if ((b.size === 0 && !hasAggregate) || b.has(row.brand)) {
       byCategory.set(row.category, (byCategory.get(row.category) ?? 0) + row.count);
     }
   }

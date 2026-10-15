@@ -24,11 +24,15 @@ export interface SitemapEntry {
 
 /** Индексируемые продукты (правило не менять): noindex-продукты (распознано < 50%
  *  состава) и скрытые в sitemap не включаем. */
-const INDEXABLE_PRODUCT_SQL = `
-  SELECT count(*)::int AS count FROM "Product"
+const INDEXABLE_PRODUCT_WHERE = `
   WHERE "hidden" = false
     AND ("ingredientsTotal" = 0
          OR "ingredientsRecognized"::float / "ingredientsTotal" >= 0.5)
+`;
+
+const INDEXABLE_PRODUCT_SQL = `
+  SELECT count(*)::int AS count FROM "Product"
+${INDEXABLE_PRODUCT_WHERE}
 `;
 
 export async function indexableProductCount(): Promise<number> {
@@ -36,10 +40,15 @@ export async function indexableProductCount(): Promise<number> {
   return rows[0]?.count ?? 0;
 }
 
+/** Число файлов sitemap по числу индексируемых продуктов: id 0 (статика) + пачки. */
+export function sitemapFileCountForProducts(indexableCount: number): number {
+  return 1 + Math.ceil(indexableCount / PRODUCT_CHUNK);
+}
+
 /** Число файлов sitemap: id 0 (статика) + пачки продуктов. */
 export async function sitemapFileCount(): Promise<number> {
   const count = await indexableProductCount().catch(() => 0);
-  return 1 + Math.ceil(count / PRODUCT_CHUNK);
+  return sitemapFileCountForProducts(count);
 }
 
 /** URL в sitemap.xml не экранируются фреймворком: «&» в посадочных ломает XML. */
@@ -103,18 +112,17 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
   return entries;
 }
 
-/** Файлы 1…N: карточки продуктов (стабильный порядок — по id). */
+/** Файлы 1…N: карточки продуктов (стабильный порядок — по id). Выборка в БД
+ *  тем же условием индексации, что и indexableProductCount(), — иначе при
+ *  > PRODUCT_CHUNK не скрытых продуктов хвост каталога потерялся бы. */
 export async function productEntries(id: number): Promise<SitemapEntry[]> {
-  const products = await prisma.product.findMany({
-    where: { hidden: false },
-    select: { slug: true, id: true, ingredientsTotal: true, ingredientsRecognized: true },
-    orderBy: { id: "asc" },
-    skip: (id - 1) * PRODUCT_CHUNK,
-    take: PRODUCT_CHUNK,
-  });
-  return products
-    .filter((p) => p.ingredientsTotal === 0 || p.ingredientsRecognized / p.ingredientsTotal >= 0.5)
-    .map((p) => entry(`/products/${p.slug}`, 0.8, "monthly"));
+  const products = await prisma.$queryRawUnsafe<Array<{ slug: string }>>(
+    `SELECT "slug" FROM "Product"
+${INDEXABLE_PRODUCT_WHERE}
+  ORDER BY "id" ASC
+  LIMIT ${PRODUCT_CHUNK} OFFSET ${(id - 1) * PRODUCT_CHUNK}`
+  );
+  return products.map((p) => entry(`/products/${p.slug}`, 0.8, "monthly"));
 }
 
 export function toUrlSetXml(entries: SitemapEntry[]): string {

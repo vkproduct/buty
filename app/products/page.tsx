@@ -1,13 +1,16 @@
 import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, LayoutGrid, Search, SearchX, X } from "lucide-react";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, ArrowUpRight, LayoutGrid, Search, SearchX, X } from "lucide-react";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import {
   facetCounts,
   isIndexableFilterPage,
+  PAGE_SIZE,
+  parsePage,
   parseProductFilters,
   productFiltersHref,
   toggleValue,
@@ -77,28 +80,31 @@ export async function generateMetadata({
   searchParams: SearchParams;
 }): Promise<Metadata> {
   const { filters } = await loadFilters(searchParams);
+  const page = parsePage(searchParams.page);
   const landing = isIndexableFilterPage(filters) ? landingTitle(filters) : null;
+  const pageSuffix = page > 1 ? ` — страница ${page}` : "";
+  const canonical = productFiltersHref(filters, {}, { anchor: false, page });
 
   if (!isIndexableFilterPage(filters)) {
     // Мультивыбор и поиск — служебные состояния: не индексируем, но ходим по ссылкам.
     return {
-      title: "Составы косметики: разбор средств по брендам",
-      alternates: { canonical: "/products" },
+      title: `Составы косметики: разбор средств по брендам${pageSuffix}`,
+      alternates: { canonical },
       robots: { index: false, follow: true },
     };
   }
   if (landing) {
     return {
-      title: `${landing} — разбор ингредиентов`,
+      title: `${landing} — разбор ингредиентов${pageSuffix}`,
       description: `${landing}: полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`,
-      alternates: { canonical: productFiltersHref(filters, {}, { anchor: false }) },
+      alternates: { canonical },
     };
   }
   return {
-    title: "Составы косметики: разбор средств по брендам",
+    title: `Составы косметики: разбор средств по брендам${pageSuffix}`,
     description:
       "Разобранные составы популярной косметики: кремы, сыворотки, тоники, средства для умывания и SPF. Расшифровка каждого ингредиента, комедогенность, конфликты активов и аналоги по составу.",
-    alternates: { canonical: "/products" },
+    alternates: { canonical },
   };
 }
 
@@ -138,6 +144,7 @@ export default async function ProductsCatalogPage({
 }) {
   const { matrix, known, filters } = await loadFilters(searchParams);
   const { q, brands, categories } = filters;
+  const page = parsePage(searchParams.page);
 
   const where: Prisma.ProductWhereInput = {
     AND: [
@@ -148,12 +155,15 @@ export default async function ProductsCatalogPage({
     ],
   };
 
-  const [products, searchFacets] = await Promise.all([
+  const [products, total, searchFacets] = await Promise.all([
     prisma.product.findMany({
       where,
       include: { _count: { select: { ingredients: true } } },
-      orderBy: [{ brand: "asc" }, { name: "asc" }],
+      orderBy: [{ brand: "asc" }, { name: "asc" }, { id: "asc" }],
+      take: PAGE_SIZE,
+      skip: (page - 1) * PAGE_SIZE,
     }),
+    prisma.product.count({ where }),
     // Матрица с учётом поиска — для фасетных счётчиков и живого счётчика панели.
     q
       ? prisma.product
@@ -163,6 +173,10 @@ export default async function ProductsCatalogPage({
           )
       : Promise.resolve(matrix),
   ]);
+
+  // Страница за пределами последней — 404 (а не пустая выдача).
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (total > 0 && page > totalPages) notFound();
 
   const { byCategory } = facetCounts(searchFacets, brands, categories);
   // Бренды в панели: топ-50 по числу продуктов + уже выбранные (чтобы их можно
@@ -332,8 +346,8 @@ export default async function ProductsCatalogPage({
       <Container className="pt-8">
         <div className="mb-6 flex flex-wrap items-center gap-2">
           <p className="mr-2 text-sm text-ink-muted" aria-live="polite">
-            <span className="text-base font-semibold text-foreground">{products.length}</span>{" "}
-            {pluralRu(products.length, "средство", "средства", "средств")}
+            <span className="text-base font-semibold text-foreground">{total}</span>{" "}
+            {pluralRu(total, "средство", "средства", "средств")}
             {hasActiveFilters && ` из ${totalProducts}`}
           </p>
           {q && <ActiveChip href={productFiltersHref(filters, { q: "" })}>«{q}»</ActiveChip>}
@@ -424,6 +438,48 @@ export default async function ProductsCatalogPage({
               </Link>
             </div>
           </div>
+        )}
+
+        {/* Постраничная навигация: обычные ссылки, чтобы робот проходил страницы. */}
+        {totalPages > 1 && (
+          <nav
+            aria-label="Страницы каталога"
+            className="mt-10 flex items-center justify-center gap-4"
+          >
+            {page > 1 ? (
+              <Link
+                href={productFiltersHref(filters, {}, { page: page - 1 })}
+                className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-ink-hair px-4 text-sm font-semibold transition-colors hover:border-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden /> Назад
+              </Link>
+            ) : (
+              <span
+                aria-hidden
+                className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-ink-hair px-4 text-sm font-semibold text-ink-faint"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden /> Назад
+              </span>
+            )}
+            <span className="text-sm text-ink-muted">
+              Страница {page} из {totalPages}
+            </span>
+            {page < totalPages ? (
+              <Link
+                href={productFiltersHref(filters, {}, { page: page + 1 })}
+                className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-ink-hair px-4 text-sm font-semibold transition-colors hover:border-foreground"
+              >
+                Вперёд <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            ) : (
+              <span
+                aria-hidden
+                className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-ink-hair px-4 text-sm font-semibold text-ink-faint"
+              >
+                Вперёд <ArrowRight className="h-4 w-4" aria-hidden />
+              </span>
+            )}
+          </nav>
         )}
       </Container>
     </main>

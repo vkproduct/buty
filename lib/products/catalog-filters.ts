@@ -15,6 +15,7 @@ export interface RawProductSearchParams {
   q?: RawParam;
   brand?: RawParam;
   category?: RawParam;
+  page?: RawParam;
 }
 
 export interface ProductFilters {
@@ -31,6 +32,8 @@ export interface FacetRow {
 }
 
 export const PRODUCTS_PATH = "/products";
+/** Размер страницы каталога: весь каталог одной страницей не отдаём. */
+export const PAGE_SIZE = 48;
 /** Якорь выдачи: после смены фильтра пользователь сразу видит панель и карточки. */
 export const CATALOG_ANCHOR = "#catalog";
 
@@ -81,12 +84,17 @@ export function parseProductFilters(
 }
 
 /** Query-строка без «?» (пустая, если фильтров нет). */
-export function productFiltersQuery(filters: Partial<ProductFilters>): string {
+export function productFiltersQuery(
+  filters: Partial<ProductFilters>,
+  { page }: { page?: number } = {}
+): string {
   const params = new URLSearchParams();
   const q = filters.q?.trim();
   if (q) params.set("q", q);
   for (const b of [...new Set(filters.brands ?? [])].sort(compareNames)) params.append("brand", b);
   for (const c of [...new Set(filters.categories ?? [])].sort()) params.append("category", c);
+  // page=1 в URL не пишем — первая страница канонична без параметра.
+  if (page !== undefined && page > 1) params.set("page", String(page));
   return params.toString();
 }
 
@@ -94,10 +102,16 @@ export function productFiltersQuery(filters: Partial<ProductFilters>): string {
 export function productFiltersHref(
   base: ProductFilters,
   patch: Partial<ProductFilters> = {},
-  { anchor = true }: { anchor?: boolean } = {}
+  { anchor = true, page }: { anchor?: boolean; page?: number } = {}
 ): string {
-  const qs = productFiltersQuery({ ...base, ...patch });
+  const qs = productFiltersQuery({ ...base, ...patch }, { page });
   return `${PRODUCTS_PATH}${qs ? `?${qs}` : ""}${anchor ? CATALOG_ANCHOR : ""}`;
+}
+
+/** Номер страницы из URL: с 1, невалидное значение → 1. */
+export function parsePage(raw: RawParam): number {
+  const n = Number.parseInt(firstString(raw), 10);
+  return Number.isFinite(n) && n >= 1 ? n : 1;
 }
 
 /** Добавить значение в список или убрать, если оно уже выбрано. */

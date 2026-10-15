@@ -472,18 +472,20 @@ export default async function ProductPage({
               <p className="max-w-3xl whitespace-pre-line pb-2 pt-3 text-[15px] leading-relaxed text-ink-muted">
                 {product.rawIngredients}
               </p>
-              <p className="text-xs text-muted-foreground">
-                Данные о продукте © Open Beauty Facts contributors,{" "}
-                <a
-                  href="https://opendatacommons.org/licenses/odbl/1-0/"
-                  target="_blank"
-                  rel="noopener"
-                  className="underline hover:text-brand"
-                >
-                  ODbL v1.0
-                </a>
-                .
-              </p>
+              {product.source === "incidb" && (
+                <p className="text-xs text-muted-foreground">
+                  Данные о продукте © Open Beauty Facts contributors,{" "}
+                  <a
+                    href="https://opendatacommons.org/licenses/odbl/1-0/"
+                    target="_blank"
+                    rel="noopener"
+                    className="underline hover:text-brand"
+                  >
+                    ODbL v1.0
+                  </a>
+                  .
+                </p>
+              )}
             </details>
           )}
         </GlassCard>

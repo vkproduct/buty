@@ -78,7 +78,7 @@ export function SiteFooter() {
             <CookieSettingsButton />
           </div>
           <p className="max-w-2xl text-ink-muted sm:text-right">
-            Данные о составах продуктов © Open Beauty Facts contributors,{" "}
+            Часть данных о составах продуктов © Open Beauty Facts contributors,{" "}
             <a
               href="https://opendatacommons.org/licenses/odbl/1-0/"
               target="_blank"

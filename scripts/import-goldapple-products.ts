@@ -164,11 +164,17 @@ async function main() {
   }));
   console.log(`Словарь ингредиентов: ${dictionary.length}`);
 
-  // Существующие продукты для проверки дублей (бренд + название).
+  // Существующие продукты для проверки дублей (бренд + название) — только
+  // не из Золотого яблока, иначе повторный импорт уходил бы в skipped_duplicate
+  // и никогда не обновлял данные. `NOT: { source }` отбросил бы строки с null,
+  // поэтому явный OR.
   const existing = new Set(
-    (await prisma.product.findMany({ select: { brand: true, name: true } })).map((p) =>
-      dupKey(p.brand, p.name),
-    ),
+    (
+      await prisma.product.findMany({
+        where: { OR: [{ source: null }, { source: { not: "goldapple" } }] },
+        select: { brand: true, name: true },
+      })
+    ).map((p) => dupKey(p.brand, p.name)),
   );
   console.log(`Продуктов уже в БД: ${existing.size}`);
 

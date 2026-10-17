@@ -83,6 +83,8 @@ model Product {
   hidden      Boolean             @default(false) // выпал из каталога INCIDB, но есть ссылки (ShelfItem/PartnerClick)
   source      String? // откуда продукт: "incidb" | "goldapple" | null (демо из seed)
   externalId  String? // артикул во внешнем источнике (для goldapple — sku)
+  productType     String? // тип средства по-русски, нижний регистр: "шампунь", "крем для лица"
+  categorySource  String? // откуда category: "rules" | "ai"; null — исторические данные
   ingredients  ProductIngredient[]
   shelfItems   ShelfItem[]
   partnerClicks PartnerClick[]

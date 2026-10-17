@@ -119,7 +119,7 @@ docker compose -f docker-compose.prod.yml exec -d app sh -c "nice -n 19 pnpm db:
 docker compose -f docker-compose.prod.yml exec app tail -f /tmp/import-goldapple.log  # прогресс
 ```
 
-**Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh`).
+**Бэкапы.** Ежедневно в `/opt/buty-backups` (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`): дамп Postgres `buty-<дата>.sql.gz` + архив данных `data-<дата>.tar.gz` (CSV каталога ЗЯ, кэш ИИ-типов; `.env` не бэкапится). Локальная ротация 14 дней. Если в `/opt/buty/.env` заданы `BACKUP_S3_ENDPOINT`/`BACKUP_S3_BUCKET`/`BACKUP_S3_KEY`/`BACKUP_S3_SECRET`, свежие файлы дополнительно уходят в объектное хранилище через образ `rclone/rclone` (хранение 30 дней); без ключей — только локальный бэкап, скрипт не падает.
 
 Восстановление из бэкапа:
 

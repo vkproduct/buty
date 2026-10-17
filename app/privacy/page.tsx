@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const UPDATED_AT = "14 октября 2026 г.";
+const UPDATED_AT = "17 октября 2026 г.";
 const CONTACT_EMAIL = "support@buty.app";
 
 const COLLECTED: [string, string, string][] = [
@@ -180,6 +180,22 @@ export default function PrivacyPage() {
             Сервисы отправки писем и push-уведомлений, Mixpanel и Google находятся за пределами России, поэтому передача им
             данных — трансграничная. Мы передаём только то, что указано в таблице. Кроме этого,
             данные могут быть раскрыты только по законному требованию государственных органов.
+          </p>
+        </Section>
+
+        <Section id="sources" title="Источники данных о продуктах">
+          <p className="text-ink-soft">
+            Часть данных о составах продуктов © Open Beauty Facts contributors, распространяется
+            по лицензии{" "}
+            <a
+              href="https://opendatacommons.org/licenses/odbl/1-0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground underline"
+            >
+              ODbL v1.0
+            </a>
+            .
           </p>
         </Section>
 

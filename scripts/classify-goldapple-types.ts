@@ -231,10 +231,19 @@ async function main() {
     let products = await prisma.product.findMany({
       where: { source: "goldapple", hidden: false },
       select: { externalId: true, brand: true, name: true, slug: true, category: true, rawIngredients: true },
+      orderBy: { externalId: "asc" }, // стабильный порядок — выборка seed 42 воспроизводима
     });
     console.log(`Продуктов goldapple в БД: ${products.length}`);
 
-    if (CLASSIFY_SAMPLE) {
+    // Явный список sku (один на строку) — например, перепрогнать прошлую выборку.
+    const skusFile = process.env.CLASSIFY_SKUS_FILE;
+    if (skusFile) {
+      const wanted = new Set(
+        readFileSync(skusFile, "utf8").split("\n").map((s) => s.trim()).filter(Boolean),
+      );
+      products = products.filter((p) => p.externalId && wanted.has(p.externalId));
+      console.log(`Режим списка sku (${skusFile}): ${products.length} продуктов`);
+    } else if (CLASSIFY_SAMPLE) {
       const limit = Number.isFinite(CLASSIFY_LIMIT) ? Number(CLASSIFY_LIMIT) : 150;
       products = shuffleSeeded(products, 42).slice(0, limit);
       console.log(`Режим выборки (seed 42): ${products.length} продуктов`);
@@ -311,7 +320,7 @@ async function main() {
         categoryDist[r.category] = (categoryDist[r.category] ?? 0) + 1;
         typeCount.set(r.type, (typeCount.get(r.type) ?? 0) + 1);
         if (r.confidence >= 0.6) confident++;
-        if (CLASSIFY_SAMPLE) {
+        if (CLASSIFY_SAMPLE || skusFile) {
           const p = inputs.find((x) => x.sku === r.sku);
           if (p) sampleRows.push({ p, r });
         }
@@ -349,7 +358,7 @@ async function main() {
     writeFileSync(REPORT_FILE, JSON.stringify(report, null, 2));
     console.log(`Отчёт: ${REPORT_FILE}`);
 
-    if (CLASSIFY_SAMPLE) {
+    if (CLASSIFY_SAMPLE || skusFile) {
       const esc = (s: string) => `"${s.replaceAll('"', '""')}"`;
       const header = "sku,brand,name,type,category,confidence,rule_category,url";
       const rows = sampleRows.map(({ p, r }) => {

@@ -353,7 +353,7 @@ async function main() {
           update: {
             brand: r.brand,
             name,
-            slug,
+            // slug намеренно не обновляем: он проиндексирован и содержит sku
             category,
             productType: decision.productType,
             categorySource: decision.categorySource,

@@ -310,7 +310,9 @@ async function main() {
           })),
         });
         linked += matched.length;
-        existing.add(dupKey(r.brand, v.name));
+        // existing.add() не нужен: дубли внутри ЗЯ разрешены препассом
+        // resolveVariants (по составу), а не по имени — иначе одноимённые
+        // варианты блокировали бы друг друга (и только в реальном прогоне).
       }
     }
   };

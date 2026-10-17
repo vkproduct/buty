@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, FlaskConical, ShieldAlert } from "lucide-react";
@@ -62,7 +63,7 @@ async function getInternalConflicts(ingredientIds: string[]) {
  * Похожие по составу средства: доля общих ингредиентов (коэффициент Жаккара).
  * Отвечает на запросы «аналоги по составу» и связывает карточки перелинковкой.
  */
-async function getSimilarProducts(productId: string, ingredientIds: string[]) {
+async function getSimilarProductsUncached(productId: string, ingredientIds: string[]) {
   if (ingredientIds.length < 3) return [];
   const shared = await prisma.productIngredient.groupBy({
     by: ["productId"],
@@ -92,6 +93,18 @@ async function getSimilarProducts(productId: string, ingredientIds: string[]) {
     .sort((a, b) => b.score - a.score)
     .slice(0, 4);
 }
+
+/**
+ * Кэш «похожих» на 24 ч по productId: groupBy по всей ProductIngredient
+ * (42 тыс. продуктов × сотни тысяч связей) — тяжёлый запрос, боты не должны
+ * гонять его на каждый показ страницы.
+ */
+const getSimilarProducts = (productId: string, ingredientIds: string[]) =>
+  unstable_cache(
+    () => getSimilarProductsUncached(productId, ingredientIds),
+    ["similar-products", productId],
+    { revalidate: 86_400, tags: [`similar-${productId}`] },
+  )();
 
 /** Категории, которые считаются «работающими» активами в сводке. */
 const ACTIVE_CATEGORIES = new Set(["active", "peptide", "antioxidant", "uv-filter"]);

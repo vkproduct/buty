@@ -30,6 +30,10 @@ services:
         NEXT_PUBLIC_MIXPANEL_API_HOST: ${NEXT_PUBLIC_MIXPANEL_API_HOST:-}
         NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT: ${NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT:-100}
     restart: unless-stopped
+    volumes:
+      # Данные (кэш ИИ-типов, CSV каталога ЗЯ) живут на хосте — иначе
+      # стираются при каждой пересборке образа.
+      - ./data:/app/data
     depends_on:
       db:
         condition: service_healthy

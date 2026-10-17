@@ -10,7 +10,7 @@ describe("MockPaymentProvider", () => {
       { id: "user1", email: "u@example.com" },
       { tier: "pro", period: "month" },
     );
-    expect(link.amount).toBe(299);
+    expect(link.amount).toBe(99);
     expect(link.currency).toBe("RUB");
     expect(link.url).toContain("/pricing?mockPayment=");
 
@@ -18,7 +18,7 @@ describe("MockPaymentProvider", () => {
       { id: "user1", email: "u@example.com" },
       { tier: "pro", period: "year" },
     );
-    expect(year.amount).toBe(2990);
+    expect(year.amount).toBe(990);
   });
 });
 

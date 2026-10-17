@@ -24,6 +24,6 @@ export interface PaymentProvider {
 }
 
 export const PLAN_PRICES: Record<BillingPeriod, number> = {
-  month: 299,
-  year: 2990,
+  month: 99,
+  year: 990,
 };

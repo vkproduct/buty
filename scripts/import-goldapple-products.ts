@@ -15,13 +15,15 @@
  */
 
 import { PrismaClient } from "@prisma/client";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, unlinkSync } from "node:fs";
 import path from "node:path";
 
 import { slugify } from "../lib/admin";
 import { normalizeInci } from "../lib/ingredients/normalize";
 import { matchTokens } from "../lib/ingredients/match";
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
+import { dupKey, resolveVariants, type VariantRow } from "../lib/products/goldapple-dedupe";
+import { PRODUCT_CATEGORY_LABEL } from "../lib/seo/labels";
 
 const prisma = new PrismaClient();
 const BATCH = 500;
@@ -30,6 +32,35 @@ const MIN_COVERAGE = 0.6;
 
 const CSV_PATH = process.env.GOLDAPPLE_CSV ?? "data/goldapple/goldapple_products_inci.csv";
 const DRY_RUN = process.env.DRY_RUN !== "0";
+const LOCK_PATH = "/tmp/import-goldapple.lock";
+
+/** Блокировка от параллельных прогонов: два импорта одновременно уже клали
+ *  прод (load ~30). PID живого процесса в lock-файле → отказ. */
+function acquireLock(): void {
+  try {
+    const pid = Number(readFileSync(LOCK_PATH, "utf8").trim());
+    if (pid && pid !== process.pid) {
+      try {
+        process.kill(pid, 0); // жив
+        console.error(`Импорт уже идёт (PID ${pid}, lock ${LOCK_PATH}) — выход.`);
+        process.exit(1);
+      } catch {
+        // процесс умер, lock протух — перезаписываем
+      }
+    }
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
+  }
+  writeFileSync(LOCK_PATH, String(process.pid));
+}
+
+function releaseLock(): void {
+  try {
+    unlinkSync(LOCK_PATH);
+  } catch {
+    // уже снят
+  }
+}
 
 interface CsvRow {
   sku: string;
@@ -96,12 +127,6 @@ export function stripBrand(name: string, brand: string): string {
   return n;
 }
 
-/** Нормализация для сравнения бренд+название при поиске дублей. */
-function dupKey(brand: string, name: string): string {
-  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
-  return `${norm(brand)}|${norm(name)}`;
-}
-
 function percentile(sorted: number[], p: number): number {
   if (sorted.length === 0) return 0;
   const idx = Math.min(sorted.length - 1, Math.max(0, Math.ceil((p / 100) * sorted.length) - 1));
@@ -109,6 +134,7 @@ function percentile(sorted: number[], p: number): number {
 }
 
 async function main() {
+  acquireLock();
   console.log(`Режим: ${DRY_RUN ? "DRY_RUN (ничего не пишем в БД)" : "РЕАЛЬНЫЙ ИМПОРТ"}`);
 
   const grid = parseCsv(readFileSync(CSV_PATH, "utf8"));
@@ -145,6 +171,24 @@ async function main() {
   const slice = filtered.slice(offset, offset + limit);
   console.log(`Обрабатываю ${slice.length} строк (offset=${offset}, limit=${limit})`);
 
+  // Препасс дедупликации внутри ЗЯ (одинаково и в DRY_RUN, и в реальном
+  // прогоне): одинаковые бренд+название — дубли только при сходстве составов
+  // >= 0.8; разные составы — отдельные продукты с суффиксом в имени.
+  const variantRows: VariantRow[] = slice.map((r) => {
+    const name = stripBrand(r.name, r.brand);
+    return {
+      sku: r.sku,
+      brand: r.brand,
+      name,
+      tokens: normalizeInci(r.inci),
+      category: categorizeGoldapple(name, r.flags),
+    };
+  });
+  const resolved = resolveVariants(variantRows, (c) => PRODUCT_CATEGORY_LABEL[c]);
+  const skippedSameFormulaRows = [...resolved.values()].filter((r) => r.duplicateOf).length;
+  const renamedRows = [...resolved.values()].filter((r) => !r.duplicateOf && r.finalName !== r.name).length;
+  console.log(`Одноимённые группы: дублей по составу ${skippedSameFormulaRows}, переименовано ${renamedRows}`);
+
   // Словарь ингредиентов — один раз на весь прогон (как в matchIngredients).
   const dictRows = await prisma.ingredient.findMany({
     select: {
@@ -180,6 +224,8 @@ async function main() {
 
   let imported = 0;
   let skippedDuplicate = 0;
+  let skippedSameFormula = 0;
+  let renamedVariants = 0;
   let skippedLowCoverage = 0;
   const byCategory: Record<string, number> = {};
   const unmatchedCount = new Map<string, number>();
@@ -189,14 +235,22 @@ async function main() {
 
   const flushBatch = async (batch: typeof slice) => {
     for (const r of batch) {
-      const name = stripBrand(r.name, r.brand);
-      if (existing.has(dupKey(r.brand, name))) {
+      const v = resolved.get(r.sku)!;
+      const name = v.finalName;
+      // Дубль против INCIDB — по базовому бренд+названию (без суффиксов).
+      if (existing.has(dupKey(r.brand, v.name))) {
         skippedDuplicate++;
         continue;
       }
+      // Дубль внутри ЗЯ: тот же бренд+название и состав со сходством >= 0.8.
+      if (v.duplicateOf) {
+        skippedSameFormula++;
+        continue;
+      }
+      if (name !== v.name) renamedVariants++;
 
-      const tokens = normalizeInci(r.inci);
-      const { matched, unmatched } = matchTokens(tokens, dictionary);
+      const tokens = v.tokens;
+      const { matched, unmatched } = matchTokens([...tokens], dictionary);
       const total = tokens.length;
       const recognized = matched.length;
       const coverage = total > 0 ? recognized / total : 0;
@@ -210,7 +264,7 @@ async function main() {
       }
 
       imported++;
-      const category = categorizeGoldapple(name, r.flags);
+      const category = v.category; // от базового имени и flags, без суффикса варианта
       byCategory[category] = (byCategory[category] ?? 0) + 1;
 
       // Основа slug — до 80 символов; суффикс -ga<sku> уникален и не подходит
@@ -256,7 +310,7 @@ async function main() {
           })),
         });
         linked += matched.length;
-        existing.add(dupKey(r.brand, name));
+        existing.add(dupKey(r.brand, v.name));
       }
     }
   };
@@ -264,7 +318,8 @@ async function main() {
   for (let i = 0; i < slice.length; i += BATCH) {
     await flushBatch(slice.slice(i, i + BATCH));
     console.log(`Обработано ${Math.min(i + BATCH, slice.length)}/${slice.length} ` +
-      `(импортировано/будет: ${imported}, дубли: ${skippedDuplicate}, низкое покрытие: ${skippedLowCoverage})`);
+      `(импортировано/будет: ${imported}, дубли INCIDB: ${skippedDuplicate}, ` +
+      `дубли по составу: ${skippedSameFormula}, низкое покрытие: ${skippedLowCoverage})`);
   }
 
   const sorted = [...coverages].sort((a, b) => a - b);
@@ -273,6 +328,8 @@ async function main() {
     rows_after_filter: filtered.length,
     imported_or_would_import: imported,
     skipped_duplicate: skippedDuplicate,
+    skipped_duplicate_same_formula: skippedSameFormula,
+    renamed_variants: renamedVariants,
     skipped_low_coverage: skippedLowCoverage,
     coverage: {
       median: sorted.length ? percentile(sorted, 50) : 0,
@@ -300,6 +357,8 @@ async function main() {
   console.log(`После фильтра: ${report.rows_after_filter}`);
   console.log(`${DRY_RUN ? "Было бы импортировано" : "Импортировано"}: ${imported}${DRY_RUN ? "" : `, связей: ${linked}`}`);
   console.log(`Пропущено (дубль INCIDB): ${skippedDuplicate}`);
+  console.log(`Пропущено (дубль по составу): ${skippedSameFormula}`);
+  console.log(`Переименовано вариантов: ${renamedVariants}`);
   console.log(`Пропущено (низкое покрытие): ${skippedLowCoverage}`);
   console.log(`Покрытие: median=${report.coverage.median.toFixed(3)} p25=${report.coverage.p25.toFixed(3)} ` +
     `p75=${report.coverage.p75.toFixed(3)} share>=0.8=${(report.coverage.share_ge_0_8 * 100).toFixed(1)}%`);
@@ -310,6 +369,9 @@ async function main() {
 main()
   .catch((e) => {
     console.error(e);
-    process.exit(1);
+    process.exitCode = 1;
   })
-  .finally(() => prisma.$disconnect());
+  .finally(async () => {
+    releaseLock();
+    await prisma.$disconnect();
+  });

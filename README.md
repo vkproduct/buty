@@ -93,6 +93,15 @@ pnpm dev                    # http://localhost:3000
 | Доимпорт каталога INCIDB вручную | `docker compose -f docker-compose.prod.yml exec app pnpm db:import-incidb` |
 | Импорт каталога ЗЯ (CSV уже на сервере в `data/goldapple/`) | `docker compose -f docker-compose.prod.yml exec -e DRY_RUN=0 app pnpm db:import-goldapple` |
 
+Импорт ЗЯ на проде — только в фоне, с пониженным приоритетом и не в рабочее
+время (полный прогон грузит VPS на несколько минут; параллельный запуск
+блокируется lock-файлом `/tmp/import-goldapple.lock` в контейнере):
+
+```bash
+docker compose -f docker-compose.prod.yml exec -d app sh -c "nice -n 19 pnpm db:import-goldapple > /tmp/import-goldapple.log 2>&1"
+docker compose -f docker-compose.prod.yml exec app tail -f /tmp/import-goldapple.log  # прогресс
+```
+
 **Бэкапы.** Ежедневный `pg_dump` в `/opt/buty-backups`, ротация 14 дней (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh`).
 
 Восстановление из бэкапа:

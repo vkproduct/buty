@@ -69,7 +69,14 @@ async function getSimilarProducts(productId: string, ingredientIds: string[]) {
     where: { ingredientId: { in: ingredientIds }, productId: { not: productId } },
     _count: { _all: true },
   });
-  const candidates = shared.filter((r) => r._count._all >= 3);
+  // Кандидатов у популярных ингредиентов (aqua и т.п.) десятки тысяч —
+  // без ограничения findMany упирается в лимит БД на 32767 bind-переменных.
+  // Берём топ-200 по числу общих ингредиентов: для топ-4 по Жаккару этого
+  // достаточно, а запрос остаётся дешёвым.
+  const candidates = shared
+    .filter((r) => r._count._all >= 3)
+    .sort((a, b) => b._count._all - a._count._all)
+    .slice(0, 200);
   if (candidates.length === 0) return [];
   const products = await prisma.product.findMany({
     where: { id: { in: candidates.map((c) => c.productId) }, hidden: false },
@@ -495,20 +502,6 @@ export default async function ProductPage({
               <p className="max-w-3xl whitespace-pre-line pb-2 pt-3 text-[15px] leading-relaxed text-ink-muted">
                 {product.rawIngredients}
               </p>
-              {product.source === "incidb" && (
-                <p className="text-xs text-muted-foreground">
-                  Данные о продукте © Open Beauty Facts contributors,{" "}
-                  <a
-                    href="https://opendatacommons.org/licenses/odbl/1-0/"
-                    target="_blank"
-                    rel="noopener"
-                    className="underline hover:text-brand"
-                  >
-                    ODbL v1.0
-                  </a>
-                  .
-                </p>
-              )}
             </details>
           )}
         </GlassCard>

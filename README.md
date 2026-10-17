@@ -92,6 +92,23 @@ pnpm dev                    # http://localhost:3000
 | Откат на прошлый коммит | `git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build` |
 | Доимпорт каталога INCIDB вручную | `docker compose -f docker-compose.prod.yml exec app pnpm db:import-incidb` |
 | Импорт каталога ЗЯ (CSV уже на сервере в `data/goldapple/`) | `docker compose -f docker-compose.prod.yml exec -e DRY_RUN=0 app pnpm db:import-goldapple` |
+| Классификация типов средств ЗЯ через Gemini (кэш `data/goldapple/product-types.jsonl`, возобновляемо; переменные `CLASSIFY_LIMIT`, `CLASSIFY_SAMPLE=1`, `CLASSIFY_CONCURRENCY`, `CLASSIFY_MAX_REQUESTS`, `CLASSIFY_SKUS_FILE`, `TYPES_FILE`) | `pnpm db:classify-types` |
+
+Классификация типов ЗЯ на проде — в фоне, с пониженным приоритетом
+(lock-файл `/tmp/classify-types.lock` в контейнере; повторный запуск
+продолжает с места остановки и не делает лишних запросов к Gemini):
+
+```bash
+docker compose -f docker-compose.prod.yml exec -d app sh -c "nice -n 19 pnpm db:classify-types > /tmp/classify.log 2>&1"
+docker compose -f docker-compose.prod.yml exec app tail -f /tmp/classify.log  # прогресс
+# контрольная выборка 150 продуктов (seed 42) + classify-sample.csv:
+docker compose -f docker-compose.prod.yml exec -d app sh -c "CLASSIFY_SAMPLE=1 CLASSIFY_LIMIT=150 nice -n 19 pnpm db:classify-types > /tmp/classify.log 2>&1"
+```
+
+Внимание: `/app/data` в контейнере не примонтировано — кэш `product-types.jsonl`
+пересоздаётся при каждом деплое. После полного прогона скачайте файл на хост
+(`docker compose ... cp app:/app/data/goldapple/product-types.jsonl .`) и при
+необходимости закиньте обратно перед импортом.
 
 Импорт ЗЯ на проде — только в фоне, с пониженным приоритетом и не в рабочее
 время (полный прогон грузит VPS на несколько минут; параллельный запуск

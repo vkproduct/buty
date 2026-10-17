@@ -10,8 +10,9 @@ const row = (
   tokens: string[],
   category = "hair",
   name = "AMBIENT ANTI YELLOW",
-  brand = "TEFIA"
-): VariantRow => ({ sku, brand, name, tokens, category });
+  brand = "TEFIA",
+  productType: string | null = null
+): VariantRow => ({ sku, brand, name, tokens, category, productType });
 
 describe("jaccard", () => {
   it("идентичные множества → 1, непересекающиеся → 0, дубли токенов не считаются", () => {
@@ -72,5 +73,29 @@ describe("resolveVariants", () => {
       () => undefined
     );
     expect(res.get("2")!.finalName).toBe("AMBIENT ANTI YELLOW · вариант 2");
+  });
+
+  it("разные типы из ИИ-кэша → суффикс типа, а не категории и не «вариант N»", () => {
+    const a = row("1", ["a", "b"], "hair", "AMBIENT ANTI YELLOW", "TEFIA", "шампунь");
+    const b = row("2", ["x", "y"], "hair", "AMBIENT ANTI YELLOW", "TEFIA", "маска для волос");
+    const c = row("3", ["p", "q"], "hair", "AMBIENT ANTI YELLOW", "TEFIA", "кондиционер для волос");
+    const res = resolveVariants([a, b, c], label);
+    expect(res.get("1")!.finalName).toBe("AMBIENT ANTI YELLOW");
+    expect(res.get("2")!.finalName).toBe("AMBIENT ANTI YELLOW (маска для волос)");
+    expect(res.get("3")!.finalName).toBe("AMBIENT ANTI YELLOW (кондиционер для волос)");
+  });
+
+  it("одинаковые типы → « · вариант N», даже если категории разные", () => {
+    const a = row("1", ["a"], "hair", "N", "B", "шампунь");
+    const b = row("2", ["x"], "mask", "N", "B", "шампунь");
+    const res = resolveVariants([a, b], label);
+    expect(res.get("2")!.finalName).toBe("N · вариант 2");
+  });
+
+  it("тип есть только у варианта, у первого нет → старая логика по категории", () => {
+    const a = row("1", ["a"], "hair");
+    const b = row("2", ["x"], "mask", "AMBIENT ANTI YELLOW", "TEFIA", "маска для волос");
+    const res = resolveVariants([a, b], label);
+    expect(res.get("2")!.finalName).toBe("AMBIENT ANTI YELLOW (Маска)");
   });
 });

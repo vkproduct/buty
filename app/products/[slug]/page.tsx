@@ -89,6 +89,18 @@ async function getSimilarProducts(productId: string, ingredientIds: string[]) {
 /** Категории, которые считаются «работающими» активами в сводке. */
 const ACTIVE_CATEGORIES = new Set(["active", "peptide", "antioxidant", "uv-filter"]);
 
+/**
+ * Тип средства с заглавной буквы для title/H1 («Шампунь»), если тип есть
+ * и его ещё нет в названии (без учёта регистра) — у одноимённых вариантов
+ * тип уже в имени: «… (маска для волос)».
+ */
+function typeTitle(product: { productType: string | null; name: string }): string | null {
+  const t = product.productType?.trim();
+  if (!t) return null;
+  if (product.name.toLowerCase().includes(t.toLowerCase())) return null;
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -107,14 +119,16 @@ export async function generateMetadata({
   // покрытие распознавания (0 = карточка вне INCIDB, состав курируемый — считаем полным)
   const coverage = product.ingredientsTotal > 0 ? product.ingredientsRecognized / product.ingredientsTotal : 1;
   const full = `${product.brand} ${product.name}`;
-  const title = `${full}: состав и разбор ингредиентов`;
+  const type = typeTitle(product);
+  const fullWithType = type ? `${type} ${full}` : full;
+  const title = `${fullWithType}: состав и разбор ингредиентов`;
   const actives = product.ingredients
     .filter((pi) => ACTIVE_CATEGORIES.has(pi.ingredient.category))
     .slice(0, 3)
     .map((pi) => pi.ingredient.displayName.toLowerCase());
   const n = product.ingredients.length;
   const description = clampDescription(
-    `Состав ${brandWithRu(product.brand)} ${product.name}: расшифровка ${n} ${pluralRu(
+    `${type ? `${fullWithType}` : `Состав ${brandWithRu(product.brand)} ${product.name}`}: расшифровка ${n} ${pluralRu(
       n,
       "ингредиента",
       "ингредиентов",
@@ -149,6 +163,8 @@ export default async function ProductPage({
   ]);
 
   const full = `${product.brand} ${product.name}`;
+  const type = typeTitle(product);
+  const fullWithType = type ? `${type} ${full}` : full;
   const path = `/products/${product.slug}`;
   const ru = brandRu(product.brand);
   const list = product.ingredients.map((pi) => pi.ingredient);
@@ -269,7 +285,9 @@ export default async function ProductPage({
     brand: { "@type": "Brand", name: product.brand },
     category: PRODUCT_CATEGORY_LABEL[product.category] ?? product.category,
     url: absoluteUrl(path),
-    description: `Состав: ${inciList}`,
+    description: product.productType
+      ? `${fullWithType}. Состав: ${inciList}`
+      : `Состав: ${inciList}`,
   };
 
   return (
@@ -305,9 +323,14 @@ export default async function ProductPage({
                 {PRODUCT_CATEGORY_LABEL[product.category] ?? product.category}
               </Badge>
             </Link>
+            {product.productType && (
+              <Badge variant="outline" className="text-ink-muted">
+                {product.productType}
+              </Badge>
+            )}
           </div>
           <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
-            <span className="text-ink-muted">Состав</span> {full}
+            <span className="text-ink-muted">Состав:</span> {fullWithType}
           </h1>
           <p className="max-w-3xl text-muted-foreground">
             Разбор состава {brandWithRu(product.brand)} {product.name}: распознанные

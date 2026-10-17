@@ -37,8 +37,10 @@ export interface VariantRow {
   name: string;
   /** Токены состава (normalizeInci). */
   tokens: readonly string[];
-  /** Категория из categorizeGoldapple. */
+  /** Категория из categorizeGoldapple или из ИИ-кэша типов. */
   category: string;
+  /** Нормализованный тип средства из ИИ-кэша (null — типа нет). */
+  productType?: string | null;
 }
 
 export interface ResolvedRow extends VariantRow {
@@ -80,11 +82,21 @@ export function resolveVariants(
       }
       let finalName = r.name;
       if (kept.length > 0) {
+        const t0 = kept[0].productType ?? null;
+        const t = r.productType ?? null;
         const label = categoryLabel(r.category);
-        finalName =
-          r.category !== kept[0].category && r.category !== "other" && label
-            ? `${r.name} (${label})`
-            : `${r.name} · вариант ${kept.length + 1}`;
+        if (t && t0 && t !== t0) {
+          // Типы известны и разные: «AMBIENT ANTI YELLOW Cool Violet (маска для волос)».
+          finalName = `${r.name} (${t})`;
+        } else if (t && t0 && t === t0) {
+          // Типы одинаковые — суффикс по типу ничего не различает.
+          finalName = `${r.name} · вариант ${kept.length + 1}`;
+        } else {
+          finalName =
+            r.category !== kept[0].category && r.category !== "other" && label
+              ? `${r.name} (${label})`
+              : `${r.name} · вариант ${kept.length + 1}`;
+        }
       }
       const resolved: ResolvedRow = { ...r, finalName, duplicateOf: null };
       kept.push(resolved);

@@ -15,7 +15,7 @@
  */
 
 import { PrismaClient } from "@prisma/client";
-import { readFileSync, writeFileSync, unlinkSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, unlinkSync } from "node:fs";
 import path from "node:path";
 
 import { slugify } from "../lib/admin";
@@ -23,6 +23,8 @@ import { normalizeInci } from "../lib/ingredients/normalize";
 import { matchTokens } from "../lib/ingredients/match";
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import { dupKey, resolveVariants, type VariantRow } from "../lib/products/goldapple-dedupe";
+import { typeFingerprint, type TypeProductInput } from "../lib/products/product-type";
+import { TYPE_PROMPT_VERSION } from "../lib/products/product-type-prompt";
 import { PRODUCT_CATEGORY_LABEL } from "../lib/seo/labels";
 
 const prisma = new PrismaClient();
@@ -31,8 +33,69 @@ const MIN_RECOGNIZED = 2;
 const MIN_COVERAGE = 0.6;
 
 const CSV_PATH = process.env.GOLDAPPLE_CSV ?? "data/goldapple/goldapple_products_inci.csv";
+const TYPES_FILE = process.env.TYPES_FILE ?? "data/goldapple/product-types.jsonl";
 const DRY_RUN = process.env.DRY_RUN !== "0";
 const LOCK_PATH = "/tmp/import-goldapple.lock";
+
+/** Порог уверенности ИИ-классификатора: ниже — категория по правилам. */
+const TYPE_MIN_CONFIDENCE = 0.6;
+
+interface TypeCacheRow {
+  sku: string;
+  fingerprint: string;
+  promptVersion: number;
+  type: string;
+  category: string;
+  confidence: number;
+}
+
+/** Кэш типов из классификатора: последняя запись по каждому sku. Пустая Map, если файла нет. */
+function loadTypeCache(): Map<string, TypeCacheRow> {
+  const map = new Map<string, TypeCacheRow>();
+  if (!existsSync(TYPES_FILE)) return map;
+  for (const line of readFileSync(TYPES_FILE, "utf8").split("\n")) {
+    const t = line.trim();
+    if (!t) continue;
+    try {
+      const row = JSON.parse(t) as TypeCacheRow;
+      if (row.sku) map.set(row.sku, row);
+    } catch {
+      // битая строка — пропускаем
+    }
+  }
+  return map;
+}
+
+interface TypeDecision {
+  category: string;
+  categorySource: "ai" | "rules";
+  productType: string | null;
+}
+
+/**
+ * Категория и тип продукта с учётом кэша классификатора:
+ * - запись есть, confidence >= 0.6 и fingerprint совпадает → категория и тип из записи, source "ai";
+ * - иначе → категория по правилам, source "rules"; тип сохраняем, только если
+ *   категория из записи совпала с правилами (иначе типу нельзя верить), при
+ *   расхождении fingerprint типа нет.
+ */
+function decideType(
+  rec: TypeCacheRow | undefined,
+  fingerprint: string,
+  ruleCategory: string,
+): TypeDecision {
+  if (rec && rec.fingerprint === fingerprint) {
+    if (rec.confidence >= TYPE_MIN_CONFIDENCE) {
+      return { category: rec.category, categorySource: "ai", productType: rec.type };
+    }
+    return {
+      category: ruleCategory,
+      categorySource: "rules",
+      productType: rec.category === ruleCategory ? rec.type : null,
+    };
+  }
+  return { category: ruleCategory, categorySource: "rules", productType: null };
+}
 
 /** Блокировка от параллельных прогонов: два импорта одновременно уже клали
  *  прод (load ~30). PID живого процесса в lock-файле → отказ. */
@@ -174,14 +237,21 @@ async function main() {
   // Препасс дедупликации внутри ЗЯ (одинаково и в DRY_RUN, и в реальном
   // прогоне): одинаковые бренд+название — дубли только при сходстве составов
   // >= 0.8; разные составы — отдельные продукты с суффиксом в имени.
+  const typeCache = loadTypeCache();
+  console.log(`Кэш типов: ${typeCache.size} записей (${TYPES_FILE})`);
+  const decisions = new Map<string, TypeDecision>();
   const variantRows: VariantRow[] = slice.map((r) => {
     const name = stripBrand(r.name, r.brand);
+    const fp = typeFingerprint({ sku: r.sku, brand: r.brand, name, inci: r.inci } satisfies TypeProductInput);
+    const d = decideType(typeCache.get(r.sku), fp, categorizeGoldapple(name, r.flags));
+    decisions.set(r.sku, d);
     return {
       sku: r.sku,
       brand: r.brand,
       name,
       tokens: normalizeInci(r.inci),
-      category: categorizeGoldapple(name, r.flags),
+      category: d.category,
+      productType: d.productType,
     };
   });
   const resolved = resolveVariants(variantRows, (c) => PRODUCT_CATEGORY_LABEL[c]);
@@ -227,6 +297,8 @@ async function main() {
   let skippedSameFormula = 0;
   let renamedVariants = 0;
   let skippedLowCoverage = 0;
+  let aiCategories = 0;
+  let typedProducts = 0;
   const byCategory: Record<string, number> = {};
   const unmatchedCount = new Map<string, number>();
   const coverages: number[] = [];
@@ -264,8 +336,11 @@ async function main() {
       }
 
       imported++;
-      const category = v.category; // от базового имени и flags, без суффикса варианта
+      const decision = decisions.get(r.sku)!;
+      const category = decision.category; // ИИ (confidence >= 0.6) или правила
       byCategory[category] = (byCategory[category] ?? 0) + 1;
+      if (decision.categorySource === "ai") aiCategories++;
+      if (decision.productType) typedProducts++;
 
       // Основа slug — до 80 символов; суффикс -ga<sku> уникален и не подходит
       // под регулярку INCIDB /-\d{3,}$/ ('a' перед цифрами).
@@ -280,6 +355,8 @@ async function main() {
             name,
             slug,
             category,
+            productType: decision.productType,
+            categorySource: decision.categorySource,
             sourceUrl: null,
             rawIngredients: r.inci,
             ingredientsTotal: total,
@@ -291,6 +368,8 @@ async function main() {
             name,
             slug,
             category,
+            productType: decision.productType,
+            categorySource: decision.categorySource,
             source: "goldapple",
             externalId: r.sku,
             sourceUrl: null,
@@ -333,6 +412,8 @@ async function main() {
     skipped_duplicate_same_formula: skippedSameFormula,
     renamed_variants: renamedVariants,
     skipped_low_coverage: skippedLowCoverage,
+    categories_from_ai: aiCategories,
+    products_with_type: typedProducts,
     coverage: {
       median: sorted.length ? percentile(sorted, 50) : 0,
       p25: sorted.length ? percentile(sorted, 25) : 0,
@@ -362,6 +443,7 @@ async function main() {
   console.log(`Пропущено (дубль по составу): ${skippedSameFormula}`);
   console.log(`Переименовано вариантов: ${renamedVariants}`);
   console.log(`Пропущено (низкое покрытие): ${skippedLowCoverage}`);
+  console.log(`Категория от ИИ: ${aiCategories}, с типом средства: ${typedProducts}`);
   console.log(`Покрытие: median=${report.coverage.median.toFixed(3)} p25=${report.coverage.p25.toFixed(3)} ` +
     `p75=${report.coverage.p75.toFixed(3)} share>=0.8=${(report.coverage.share_ge_0_8 * 100).toFixed(1)}%`);
   console.log(`По категориям: ${JSON.stringify(byCategory)}`);

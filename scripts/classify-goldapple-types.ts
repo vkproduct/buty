@@ -37,6 +37,7 @@ import { geminiConfigFromEnv, generateJson, GeminiError } from "../lib/ai-summar
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import {
   classifyInputLine,
+  normalizeTypeResult,
   typeFingerprint,
   validateTypeResult,
   type TypeProductInput,
@@ -184,7 +185,7 @@ async function processBatch(
     for (const item of items) {
       const sku = (item as { sku?: unknown })?.sku;
       const validated = validateTypeResult(item, typeof sku === "string" ? brandBySku.get(sku) ?? "" : "");
-      if (validated) results.push(validated);
+      if (validated) results.push(normalizeTypeResult(validated));
       else rejected++;
     }
     return { results, inputTokens: res.inputTokens, outputTokens: res.outputTokens, rejected, failed: false };

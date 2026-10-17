@@ -48,6 +48,45 @@ function nameWithoutBrand(name: string, brand: string): string {
   return name.trim();
 }
 
+/** Суффикс одноимённого варианта: « · вариант 2» или « (маска для волос)» в конце имени. */
+const VARIANT_SUFFIX = /\s+(·\s+вариант\s+\d+|\([^)]*\))$/u;
+
+/**
+ * Базовое имя без суффикса варианта. После применения типов имя станет
+ * «… (маска для волос)» — fingerprint должен остаться тем же, поэтому и в
+ * classifyInputLine, и в typeFingerprint используется базовое имя.
+ */
+export function baseProductName(name: string): string {
+  return name.replace(VARIANT_SUFFIX, "").trim();
+}
+
+/** Канонические типы: один смысл — одна строка (v2). */
+const CANONICAL_TYPES: Record<string, string> = {
+  "шампунь для волос": "шампунь",
+  "кондиционер": "кондиционер для волос",
+  "тоник для лица": "тоник",
+  "тушь": "тушь для ресниц",
+  "лак": "лак для ногтей",
+  "гель для умывания лица": "гель для умывания",
+  "пенка для умывания лица": "пенка для умывания",
+  "мыло для рук": "мыло",
+};
+
+/**
+ * Нормализация после validateTypeResult (v2):
+ * - тип приводится к каноническому по словарю CANONICAL_TYPES;
+ * - если type начинается со «скраб», «пилинг» или «гоммаж», а category = other — peeling.
+ * Сравнение типов вариантов в resolveVariants — только по нормализованным типам.
+ */
+export function normalizeTypeResult(r: TypeResult): TypeResult {
+  const type = CANONICAL_TYPES[r.type] ?? r.type;
+  let category = r.category;
+  if (category === "other" && /^(скраб|пилинг|гоммаж)/.test(type)) {
+    category = "peeling";
+  }
+  return { ...r, type, category };
+}
+
 /**
  * Одна строка для модели:
  * `<sku> | <brand> | <name без бренда> | <первые 15 токенов normalizeInci через ", ">`.
@@ -58,7 +97,7 @@ export function classifyInputLine(p: TypeProductInput): string {
   const line = [
     clean(p.sku),
     clean(p.brand.trim()),
-    clean(nameWithoutBrand(p.name, p.brand)),
+    clean(baseProductName(nameWithoutBrand(p.name, p.brand))),
     firstInciTokens(p.inci).join(", "),
   ].join(" | ");
   return line.slice(0, MAX_LINE);
@@ -97,8 +136,8 @@ export function validateTypeResult(raw: unknown, brand: string): TypeResult | nu
   return { sku: r.sku, type, category: r.category, confidence: r.confidence };
 }
 
-/** sha1 от `brand|name|первые 15 токенов` — кэш-ключ, чтобы не платить повторно. */
+/** sha1 от `brand|базовое name|первые 15 токенов` — кэш-ключ, чтобы не платить повторно. */
 export function typeFingerprint(p: TypeProductInput): string {
-  const payload = [p.brand.trim(), p.name.trim(), ...firstInciTokens(p.inci)].join("|");
+  const payload = [p.brand.trim(), baseProductName(p.name.trim()), ...firstInciTokens(p.inci)].join("|");
   return createHash("sha1").update(payload, "utf8").digest("hex");
 }

@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  baseProductName,
   classifyInputLine,
+  normalizeTypeResult,
   PRODUCT_TYPE_CATEGORIES,
   typeFingerprint,
   validateTypeResult,
@@ -120,5 +122,59 @@ describe("typeFingerprint", () => {
     expect(typeFingerprint({ ...p, inci: "Aqua, Alcohol" })).not.toBe(base);
     expect(typeFingerprint({ ...p, name: "Other Name" })).not.toBe(base);
     expect(typeFingerprint({ ...p, sku: "ga2" })).toBe(base);
+  });
+
+  it("одинаков для «X», «X · вариант 2» и «X (маска для волос)» при одинаковом составе", () => {
+    const p = { sku: "ga1", brand: "TEFIA", name: "Cool Violet", inci: "Aqua, Parfum" };
+    const base = typeFingerprint(p);
+    expect(typeFingerprint({ ...p, name: "Cool Violet · вариант 2" })).toBe(base);
+    expect(typeFingerprint({ ...p, name: "Cool Violet · вариант 12" })).toBe(base);
+    expect(typeFingerprint({ ...p, name: "Cool Violet (маска для волос)" })).toBe(base);
+  });
+});
+
+describe("baseProductName", () => {
+  it("отрезает суффиксы вариантов", () => {
+    expect(baseProductName("11 PM · вариант 2")).toBe("11 PM");
+    expect(baseProductName("ОМОЛОЖЕНИЕ И ЛИФТИНГ · вариант 2")).toBe("ОМОЛОЖЕНИЕ И ЛИФТИНГ");
+    expect(baseProductName("Cool Violet (маска для волос)")).toBe("Cool Violet");
+    expect(baseProductName("Обычное название")).toBe("Обычное название");
+  });
+});
+
+describe("normalizeTypeResult", () => {
+  const base = { sku: "ga1", type: "крем", category: "cream", confidence: 0.9 };
+
+  it("приводит типы к каноническим", () => {
+    const cases: Array<[string, string]> = [
+      ["шампунь для волос", "шампунь"],
+      ["кондиционер", "кондиционер для волос"],
+      ["тоник для лица", "тоник"],
+      ["тушь", "тушь для ресниц"],
+      ["лак", "лак для ногтей"],
+      ["гель для умывания лица", "гель для умывания"],
+      ["пенка для умывания лица", "пенка для умывания"],
+      ["мыло для рук", "мыло"],
+    ];
+    for (const [from, to] of cases) {
+      expect(normalizeTypeResult({ ...base, type: from }).type).toBe(to);
+    }
+  });
+
+  it("не трогает типы вне словаря", () => {
+    expect(normalizeTypeResult(base).type).toBe("крем");
+    expect(normalizeTypeResult({ ...base, type: "шампунь" }).type).toBe("шампунь");
+  });
+
+  it("скраб/пилинг/гоммаж с category other → peeling", () => {
+    for (const type of ["скраб для тела", "пилинг для лица", "гоммаж"]) {
+      const r = normalizeTypeResult({ ...base, type, category: "other" });
+      expect(r.category).toBe("peeling");
+    }
+  });
+
+  it("скраб с осмысленной категорией не трогает", () => {
+    expect(normalizeTypeResult({ ...base, type: "скраб для тела", category: "peeling" }).category).toBe("peeling");
+    expect(normalizeTypeResult({ ...base, type: "скраб для губ", category: "makeup" }).category).toBe("makeup");
   });
 });

@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 import { CONSENT_EVENT, readConsent, type Consent } from "@/lib/analytics/consent";
 import { trackGoal } from "@/lib/analytics/goals";
-import { YM_ID, type Goal } from "@/lib/analytics/metrika";
+import { flushPendingGoals, YM_ID, type Goal } from "@/lib/analytics/metrika";
 
 type Ym = ((id: number, method: string, ...args: unknown[]) => void) & { a?: unknown[]; l?: number };
 type YmWindow = Window & { ym?: Ym };
@@ -32,6 +32,7 @@ function loadMetrika() {
     accurateTrackBounce: true,
     webvisor: true,
   });
+  flushPendingGoals();
 }
 
 /**

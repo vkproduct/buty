@@ -20,6 +20,7 @@ import {
   type SkinTypeValue,
 } from "@/lib/skin-profile/options";
 import { cn } from "@/lib/utils";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 
 export interface OnboardingInitial {
   skinType: string;
@@ -202,6 +203,7 @@ export function OnboardingForm({ initial }: OnboardingFormProps) {
         }),
       });
       if (!res.ok) throw new Error();
+      trackGoal(GOALS.skinProfileComplete);
       router.push("/shelf");
       router.refresh();
     } catch {

@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
     verifyRequest: "/auth/verify",
+    newUser: "/onboarding?signup=1",
   },
   providers: [
     EmailProvider({

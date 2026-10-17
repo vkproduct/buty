@@ -50,6 +50,7 @@ describe("POST /api/payments/callback", () => {
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.plan).toBe("pro");
+    expect(data.period).toBe("month");
 
     expect(upsert).toHaveBeenCalledOnce();
     const args = upsert.mock.calls[0][0] as {

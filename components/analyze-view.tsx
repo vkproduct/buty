@@ -20,6 +20,7 @@ import type {
 import { getOcrProvider, OcrNotReadyError } from "@/lib/ocr";
 import { takePendingPhoto } from "@/lib/pending-photo";
 import { trackEvent } from "@/lib/analytics/mixpanel";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -119,6 +120,7 @@ export function AnalyzeView({
         spf_filters: summary.spfFilters,
         conflicts: (data as AnalysisResult).conflicts.length,
       });
+      trackGoal(GOALS.analyzeSuccess, { input_method: inputMethod });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось разобрать состав");
     } finally {

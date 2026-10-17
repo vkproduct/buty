@@ -17,6 +17,7 @@ import {
 import { GlassCard } from "@/components/ui/glass-card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { GOALS, trackGoal } from "@/lib/analytics/goals";
 import type { AnalysisResult } from "@/lib/analysis/types";
 import { REMINDER_COPY } from "@/lib/reminders/constants";
 import {
@@ -244,8 +245,13 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
       body: JSON.stringify({ productId }),
     });
     setPending(false);
-    if (res.ok) onAdded();
-    else setError(await readError(res));
+    if (res.ok) {
+      trackGoal(GOALS.shelfAdd, { add_method: "product" });
+      onAdded();
+      return;
+    }
+    if (res.status === 402) trackGoal(GOALS.shelfLimit); // лимит FREE_SHELF_LIMIT из /api/shelf
+    setError(await readError(res));
   }
 
   async function analyze() {
@@ -273,8 +279,13 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
       body: JSON.stringify({ customName, customInci: customInci || undefined }),
     });
     setPending(false);
-    if (res.ok) onAdded();
-    else setError(await readError(res));
+    if (res.ok) {
+      trackGoal(GOALS.shelfAdd, { add_method: "custom" });
+      onAdded();
+      return;
+    }
+    if (res.status === 402) trackGoal(GOALS.shelfLimit); // лимит FREE_SHELF_LIMIT из /api/shelf
+    setError(await readError(res));
   }
 
   const tab = (active: boolean) =>

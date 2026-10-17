@@ -17,9 +17,15 @@ export type { Goal };
 export const GA_GOAL_EVENTS: Record<Goal, string> = {
   analyze_submit: "analyze_submit",
   analyze_photo: "analyze_photo",
+  analyze_success: "analyze_success",
   signup_submit: "sign_up",
+  signup_complete: "sign_up_completed",
+  skin_profile_complete: "skin_profile_completed",
+  shelf_add: "shelf_add",
+  shelf_limit: "shelf_limit_reached",
   where_to_buy: "where_to_buy",
   payment_start: "begin_checkout",
+  payment_success: "purchase",
   brand_lead: "generate_lead",
 };
 

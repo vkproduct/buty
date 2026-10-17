@@ -62,6 +62,7 @@ export async function POST(request: Request) {
   return NextResponse.json({
     ok: true,
     plan: subscription.plan,
+    period: mock.period,
     currentPeriodEnd: subscription.currentPeriodEnd,
   });
 }

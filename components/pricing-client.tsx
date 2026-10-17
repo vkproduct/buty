@@ -77,6 +77,15 @@ export function PricingClient({ isLoggedIn, isPro, currentPeriodEnd }: Props) {
       setError("Платёж не прошёл. Попробуйте ещё раз.");
       return;
     }
+    const data = (await res.json()) as { period?: "month" | "year" };
+    if (data.period) {
+      trackGoal(GOALS.paymentSuccess, {
+        period: data.period,
+        order_price: PLAN_PRICES[data.period], // доход цели в Метрике
+        currency: "RUB",
+        value: PLAN_PRICES[data.period], // для GA4 purchase
+      });
+    }
     router.push("/shelf");
     router.refresh();
   }

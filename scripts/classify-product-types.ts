@@ -1,22 +1,36 @@
 /**
- * Классификация типа средства и категории каталога goldapple через Gemini (этап 1).
+ * Классификация типа средства и категории каталога через Gemini.
  *
- * Источник: продукты БД с source = "goldapple", hidden = false; ингредиенты —
- * из rawIngredients через normalizeInci. Скрипт НИЧЕГО не пишет в таблицу
- * Product — только кэш data/goldapple/product-types.jsonl и отчёт.
+ * Источник (CLASSIFY_SOURCE):
+ *   goldapple (по умолчанию) — продукты БД с source = "goldapple",
+ *     hidden = false; ключ — externalId (sku).
+ *   incidb — продукты БД с source = "incidb", hidden = false и
+ *     category = "other" (CLASSIFY_ALL=1 — все продукты INCIDB); ключ —
+ *     slug (у INCIDB нет externalId, slug уникален и не меняется).
+ * Ингредиенты — из rawIngredients через normalizeInci. Скрипт НИЧЕГО не
+ * пишет в таблицу Product — только кэш data/<source>/product-types.jsonl
+ * и отчёт.
  *
  * Кэш: одна строка JSON на продукт { sku, fingerprint, promptVersion, model,
- * type, category, confidence, at }. Продукт пропускается, если в файле уже
- * есть запись с тем же fingerprint и promptVersion — прогон можно прервать
- * и продолжить, повторный запуск ничего не стоит.
+ * type, category, confidence, at }; поле sku содержит ключ (sku ЗЯ или slug
+ * INCIDB). Продукт пропускается, если в файле уже есть запись с тем же
+ * fingerprint и promptVersion >= CLASSIFY_MIN_PROMPT_VERSION — прогон можно
+ * прервать и продолжить, повторный запуск ничего не стоит.
  *
  * Переменные:
+ *   CLASSIFY_SOURCE         — goldapple | incidb (по умолчанию goldapple);
+ *   CLASSIFY_ALL=1          — для incidb: классифицировать все продукты
+ *                             INCIDB, а не только category = "other";
+ *   CLASSIFY_MIN_PROMPT_VERSION — записи кэша с promptVersion >= значения
+ *                             действительны (по умолчанию TYPE_PROMPT_VERSION;
+ *                             для проверки старого кэша ЗЯ на v3 задайте 2);
  *   CLASSIFY_LIMIT          — сколько продуктов обработать за запуск (по умолчанию все);
  *   CLASSIFY_SAMPLE=1       — случайная, но воспроизводимая выборка (seed 42)
  *                             из CLASSIFY_LIMIT продуктов + выгрузка classify-sample.csv;
  *   CLASSIFY_CONCURRENCY    — параллельных запросов (по умолчанию 2, максимум 4);
  *   CLASSIFY_MAX_REQUESTS   — жёсткий потолок запросов за запуск (по умолчанию 800);
- *   TYPES_FILE              — путь к кэшу (по умолчанию data/goldapple/product-types.jsonl).
+ *   CLASSIFY_SKUS_FILE      — файл с явным списком ключей (sku ЗЯ / slug INCIDB);
+ *   TYPES_FILE              — путь к кэшу (по умолчанию data/<source>/product-types.jsonl).
  *
  * Запуск: pnpm db:classify-types
  * На проде — в фоне, nice -n 19 (см. README), lock /tmp/classify-types.lock.
@@ -37,6 +51,7 @@ import { geminiConfigFromEnv, generateJson, GeminiError } from "../lib/ai-summar
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import {
   classifyInputLine,
+  NON_COSMETIC_TYPE,
   normalizeTypeResult,
   typeFingerprint,
   validateTypeResult,
@@ -48,11 +63,15 @@ import { TYPE_PROMPT_VERSION, TYPE_RESPONSE_SCHEMA, TYPE_SYSTEM_PROMPT } from ".
 const prisma = new PrismaClient();
 
 const BATCH_SIZE = 40;
-const TYPES_FILE = process.env.TYPES_FILE ?? "data/goldapple/product-types.jsonl";
-const REPORT_FILE = "data/goldapple/classify-report.json";
-const SAMPLE_FILE = "data/goldapple/classify-sample.csv";
+const IS_INCIDB = process.env.CLASSIFY_SOURCE === "incidb";
+const SOURCE = IS_INCIDB ? "incidb" : "goldapple";
+const TYPES_FILE = process.env.TYPES_FILE ?? `data/${SOURCE}/product-types.jsonl`;
+const REPORT_FILE = `data/${SOURCE}/classify-report.json`;
+const SAMPLE_FILE = `data/${SOURCE}/classify-sample.csv`;
 const LOCK_PATH = "/tmp/classify-types.lock";
 
+const CLASSIFY_ALL = process.env.CLASSIFY_ALL === "1";
+const CLASSIFY_MIN_PROMPT_VERSION = Number(process.env.CLASSIFY_MIN_PROMPT_VERSION ?? TYPE_PROMPT_VERSION);
 const CLASSIFY_LIMIT = Number(process.env.CLASSIFY_LIMIT ?? 0) || Infinity;
 const CLASSIFY_SAMPLE = process.env.CLASSIFY_SAMPLE === "1";
 const CLASSIFY_CONCURRENCY = Math.min(4, Math.max(1, Number(process.env.CLASSIFY_CONCURRENCY ?? 2)));
@@ -100,7 +119,7 @@ function releaseLock(): void {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/** Чтение кэша: последняя запись по каждому sku. */
+/** Чтение кэша: последняя запись по каждому ключу (sku / slug). */
 function loadCache(): Map<string, CacheRow> {
   const map = new Map<string, CacheRow>();
   if (!existsSync(TYPES_FILE)) return map;
@@ -153,8 +172,8 @@ async function processBatch(
   batch: TypeProductInput[],
 ): Promise<BatchOutcome> {
   const input = batch.map(classifyInputLine).join("\n");
-  const brandBySku = new Map(batch.map((p) => [p.sku, p.brand]));
-  const sentSkus = new Set(batch.map((p) => p.sku));
+  const brandByKey = new Map(batch.map((p) => [p.sku, p.brand]));
+  const sentKeys = new Set(batch.map((p) => p.sku));
 
   const attempt = async (): Promise<BatchOutcome | null> => {
     const res = await generateJson(cfg, {
@@ -171,20 +190,20 @@ async function processBatch(
     }
     const items = (parsed as { items?: unknown })?.items;
     if (!Array.isArray(items)) return null;
-    const returnedSkus = new Set(
+    const returnedKeys = new Set(
       items
         .map((it) => (it && typeof it === "object" ? (it as { sku?: unknown }).sku : null))
         .filter((s): s is string => typeof s === "string"),
     );
-    // sku в ответе должны совпадать с отправленными
-    for (const sku of returnedSkus) {
-      if (!sentSkus.has(sku)) return null;
+    // ключи в ответе должны совпадать с отправленными (sku ЗЯ / slug INCIDB)
+    for (const key of returnedKeys) {
+      if (!sentKeys.has(key)) return null;
     }
     const results: TypeResult[] = [];
     let rejected = 0;
     for (const item of items) {
       const sku = (item as { sku?: unknown })?.sku;
-      const validated = validateTypeResult(item, typeof sku === "string" ? brandBySku.get(sku) ?? "" : "");
+      const validated = validateTypeResult(item, typeof sku === "string" ? brandByKey.get(sku) ?? "" : "");
       if (validated) results.push(normalizeTypeResult(validated));
       else rejected++;
     }
@@ -196,7 +215,7 @@ async function processBatch(
     try {
       const outcome = await attempt();
       if (outcome) return outcome;
-      // разбор не удался или sku не совпали — один повтор пачки, потом пропуск
+      // разбор не удался или ключи не совпали — один повтор пачки, потом пропуск
       const retryOutcome = await attempt();
       if (retryOutcome) return retryOutcome;
       console.error(`Пачка (${batch.length} шт.): ответ не разобран дважды — пропускаю.`);
@@ -215,6 +234,20 @@ async function processBatch(
   }
 }
 
+interface ProductRow {
+  externalId: string | null;
+  slug: string;
+  brand: string;
+  name: string;
+  category: string;
+  rawIngredients: string | null;
+}
+
+/** Ключ продукта для кэша и ответа модели: sku ЗЯ или slug INCIDB. */
+function keyOf(p: ProductRow): string | null {
+  return IS_INCIDB ? p.slug : p.externalId;
+}
+
 async function main() {
   acquireLock();
   try {
@@ -223,26 +256,37 @@ async function main() {
       console.error("GEMINI_API_KEY не задан — классификация невозможна.");
       process.exit(1);
     }
-    console.log(`Модель: ${cfg.model}, промпт v${TYPE_PROMPT_VERSION}, пачка ${BATCH_SIZE}, параллельность ${CLASSIFY_CONCURRENCY}, потолок ${CLASSIFY_MAX_REQUESTS} запросов`);
+    console.log(`Источник: ${SOURCE}, модель: ${cfg.model}, промпт v${TYPE_PROMPT_VERSION}, ` +
+      `мин. версия кэша ${CLASSIFY_MIN_PROMPT_VERSION}, пачка ${BATCH_SIZE}, ` +
+      `параллельность ${CLASSIFY_CONCURRENCY}, потолок ${CLASSIFY_MAX_REQUESTS} запросов`);
 
     const cache = loadCache();
     console.log(`Кэш: ${cache.size} записей (${TYPES_FILE})`);
 
     let products = await prisma.product.findMany({
-      where: { source: "goldapple", hidden: false },
-      select: { externalId: true, brand: true, name: true, slug: true, category: true, rawIngredients: true },
-      orderBy: { externalId: "asc" }, // стабильный порядок — выборка seed 42 воспроизводима
+      where: {
+        source: SOURCE,
+        hidden: false,
+        // INCIDB: по умолчанию только «Другое»; CLASSIFY_ALL=1 — весь каталог.
+        ...(IS_INCIDB && !CLASSIFY_ALL ? { category: "other" } : {}),
+      },
+      select: { externalId: true, slug: true, brand: true, name: true, category: true, rawIngredients: true },
+      // стабильный порядок — выборка seed 42 воспроизводима
+      orderBy: IS_INCIDB ? { slug: "asc" } : { externalId: "asc" },
     });
-    console.log(`Продуктов goldapple в БД: ${products.length}`);
+    console.log(`Продуктов ${SOURCE} в БД: ${products.length}`);
 
-    // Явный список sku (один на строку) — например, перепрогнать прошлую выборку.
-    const skusFile = process.env.CLASSIFY_SKUS_FILE;
-    if (skusFile) {
+    // Явный список ключей (один на строку) — например, перепрогнать прошлую выборку.
+    const keysFile = process.env.CLASSIFY_SKUS_FILE;
+    if (keysFile) {
       const wanted = new Set(
-        readFileSync(skusFile, "utf8").split("\n").map((s) => s.trim()).filter(Boolean),
+        readFileSync(keysFile, "utf8").split("\n").map((s) => s.trim()).filter(Boolean),
       );
-      products = products.filter((p) => p.externalId && wanted.has(p.externalId));
-      console.log(`Режим списка sku (${skusFile}): ${products.length} продуктов`);
+      products = products.filter((p) => {
+        const key = keyOf(p);
+        return key !== null && wanted.has(key);
+      });
+      console.log(`Режим списка ключей (${keysFile}): ${products.length} продуктов`);
     } else if (CLASSIFY_SAMPLE) {
       const limit = Number.isFinite(CLASSIFY_LIMIT) ? Number(CLASSIFY_LIMIT) : 150;
       products = shuffleSeeded(products, 42).slice(0, limit);
@@ -252,24 +296,25 @@ async function main() {
     }
 
     const inputs: TypeProductInput[] = [];
-    const metaBySku = new Map<string, { brand: string; name: string; slug: string; category: string; fingerprint: string }>();
+    const metaByKey = new Map<string, { brand: string; name: string; slug: string; category: string; fingerprint: string }>();
     let cached = 0;
     for (const p of products) {
-      if (!p.externalId) continue;
+      const key = keyOf(p);
+      if (!key) continue;
       const input: TypeProductInput = {
-        sku: p.externalId,
+        sku: key,
         brand: p.brand,
         name: p.name,
         inci: p.rawIngredients ?? "",
       };
       const fingerprint = typeFingerprint(input);
-      const hit = cache.get(p.externalId);
-      if (hit && hit.fingerprint === fingerprint && hit.promptVersion === TYPE_PROMPT_VERSION) {
+      const hit = cache.get(key);
+      if (hit && hit.fingerprint === fingerprint && hit.promptVersion >= CLASSIFY_MIN_PROMPT_VERSION) {
         cached++;
         continue;
       }
       inputs.push(input);
-      metaBySku.set(p.externalId, { brand: p.brand, name: p.name, slug: p.slug, category: p.category, fingerprint });
+      metaByKey.set(key, { brand: p.brand, name: p.name, slug: p.slug, category: p.category, fingerprint });
     }
     console.log(`К обработке: ${inputs.length} (уже в кэше: ${cached})`);
 
@@ -284,6 +329,8 @@ async function main() {
     let failedBatches = 0;
     let inputTokens = 0;
     let outputTokens = 0;
+    let nonCosmetic = 0;
+    let nonCosmeticConfident = 0;
     const categoryDist: Record<string, number> = {};
     const typeCount = new Map<string, number>();
     let confident = 0;
@@ -302,7 +349,7 @@ async function main() {
       }
       const lines: string[] = [];
       for (const r of outcome.results) {
-        const meta = metaBySku.get(r.sku);
+        const meta = metaByKey.get(r.sku);
         if (!meta) continue;
         lines.push(
           JSON.stringify({
@@ -320,7 +367,11 @@ async function main() {
         categoryDist[r.category] = (categoryDist[r.category] ?? 0) + 1;
         typeCount.set(r.type, (typeCount.get(r.type) ?? 0) + 1);
         if (r.confidence >= 0.6) confident++;
-        if (CLASSIFY_SAMPLE || skusFile) {
+        if (r.type === NON_COSMETIC_TYPE) {
+          nonCosmetic++;
+          if (r.confidence >= 0.6) nonCosmeticConfident++;
+        }
+        if (CLASSIFY_SAMPLE || keysFile) {
           const p = inputs.find((x) => x.sku === r.sku);
           if (p) sampleRows.push({ p, r });
         }
@@ -343,6 +394,7 @@ async function main() {
 
     const total = processed + rejected;
     const report = {
+      source: SOURCE,
       processed,
       cached,
       requests,
@@ -350,6 +402,8 @@ async function main() {
       failedBatches,
       inputTokens,
       outputTokens,
+      nonCosmetic,
+      nonCosmeticConfident,
       byCategory: categoryDist,
       topTypes: [...typeCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 50),
       confidentShare: processed > 0 ? confident / processed : 0,
@@ -358,12 +412,15 @@ async function main() {
     writeFileSync(REPORT_FILE, JSON.stringify(report, null, 2));
     console.log(`Отчёт: ${REPORT_FILE}`);
 
-    if (CLASSIFY_SAMPLE || skusFile) {
+    if (CLASSIFY_SAMPLE || keysFile) {
       const esc = (s: string) => `"${s.replaceAll('"', '""')}"`;
       const header = "sku,brand,name,type,category,confidence,rule_category,url";
       const rows = sampleRows.map(({ p, r }) => {
-        const meta = metaBySku.get(p.sku);
-        const ruleCategory = categorizeGoldapple(meta?.name ?? p.name, "");
+        const meta = metaByKey.get(p.sku);
+        // ЗЯ: категория по правилам из названия; INCIDB: текущая категория из БД.
+        const ruleCategory = IS_INCIDB
+          ? (meta?.category ?? "")
+          : categorizeGoldapple(meta?.name ?? p.name, "");
         return [
           p.sku,
           esc(p.brand),

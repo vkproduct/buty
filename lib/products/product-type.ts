@@ -28,6 +28,68 @@ export interface TypeResult {
   confidence: number;
 }
 
+/** Тип-метка не-косметики из промпта v3 (БАД, бытовая химия, еда и т.п.). */
+export const NON_COSMETIC_TYPE = "не косметика";
+
+/** Порог уверенности ИИ-классификатора: ниже — категория по правилам. */
+export const TYPE_MIN_CONFIDENCE = 0.6;
+
+/** Одна запись кэша классификатора (data/<source>/product-types.jsonl). */
+export interface TypeCacheRow {
+  sku: string;
+  fingerprint: string;
+  promptVersion: number;
+  type: string;
+  category: string;
+  confidence: number;
+}
+
+export interface TypeDecision {
+  category: string;
+  categorySource: "ai" | "rules";
+  productType: string | null;
+  /** true — ИИ уверенно (confidence ≥ 0.6) определил, что это не косметика. */
+  nonCosmetic: boolean;
+}
+
+/**
+ * Категория и тип продукта с учётом кэша классификатора (общая для импортов
+ * goldapple и INCIDB):
+ * - запись есть, fingerprint совпадает, confidence >= 0.6 → категория и тип
+ *   из записи, categorySource "ai";
+ * - запись есть, fingerprint совпадает, confidence < 0.6 → категория по
+ *   правилам, categorySource "rules"; тип сохраняем, только если категория из
+ *   записи совпала с правилами (иначе типу нельзя верить); тип «не косметика»
+ *   при низком confidence не доверяем — продукт остаётся видимым;
+ * - записи нет или fingerprint другой → правила, типа нет;
+ * - если итоговый тип — «не косметика» → nonCosmetic, типа в title нет,
+ *   категория "other".
+ */
+export function decideType(
+  rec: TypeCacheRow | undefined,
+  fingerprint: string,
+  ruleCategory: string,
+): TypeDecision {
+  let category = ruleCategory;
+  let categorySource: "ai" | "rules" = "rules";
+  let productType: string | null = null;
+  if (rec && rec.fingerprint === fingerprint) {
+    if (rec.confidence >= TYPE_MIN_CONFIDENCE) {
+      category = rec.category;
+      categorySource = "ai";
+      productType = rec.type;
+    } else if (rec.category === ruleCategory && rec.type !== NON_COSMETIC_TYPE) {
+      productType = rec.type;
+    }
+  }
+  const nonCosmetic = productType === NON_COSMETIC_TYPE;
+  if (nonCosmetic) {
+    productType = null;
+    category = "other";
+  }
+  return { category, categorySource, productType, nonCosmetic };
+}
+
 /** Слова-обещания эффекта, запрещённые в типе средства. */
 const BANNED_TYPE_WORDS = ["лечит", "избавит", "от прыщей", "от выпадения"];
 

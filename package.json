@@ -13,7 +13,7 @@
     "db:seed": "prisma db seed",
     "db:import-incidb": "tsx scripts/import-incidb-products.ts",
     "db:import-goldapple": "tsx scripts/import-goldapple-products.ts",
-    "db:classify-types": "tsx scripts/classify-goldapple-types.ts",
+    "db:classify-types": "tsx scripts/classify-product-types.ts",
     "db:verify-incidb": "tsx scripts/verify-incidb-db.ts"
   },
   "prisma": {

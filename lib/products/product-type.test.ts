@@ -3,8 +3,11 @@ import { describe, expect, it } from "vitest";
 import {
   baseProductName,
   classifyInputLine,
+  decideType,
+  NON_COSMETIC_TYPE,
   normalizeTypeResult,
   PRODUCT_TYPE_CATEGORIES,
+  type TypeCacheRow,
   typeFingerprint,
   validateTypeResult,
 } from "./product-type";
@@ -176,5 +179,76 @@ describe("normalizeTypeResult", () => {
   it("скраб с осмысленной категорией не трогает", () => {
     expect(normalizeTypeResult({ ...base, type: "скраб для тела", category: "peeling" }).category).toBe("peeling");
     expect(normalizeTypeResult({ ...base, type: "скраб для губ", category: "makeup" }).category).toBe("makeup");
+  });
+});
+
+describe("decideType", () => {
+  const fp = "f".repeat(40);
+  const rec = (over: Partial<TypeCacheRow> = {}): TypeCacheRow => ({
+    sku: "s1",
+    fingerprint: fp,
+    promptVersion: 3,
+    type: "шампунь",
+    category: "hair",
+    confidence: 0.9,
+    ...over,
+  });
+
+  it("ветка 1: запись есть, fingerprint совпадает, confidence ≥ 0.6 → ИИ", () => {
+    expect(decideType(rec(), fp, "other")).toEqual({
+      category: "hair",
+      categorySource: "ai",
+      productType: "шампунь",
+      nonCosmetic: false,
+    });
+  });
+
+  it("ветка 2: confidence < 0.6, категория записи совпала с правилами → тип сохраняется", () => {
+    expect(decideType(rec({ confidence: 0.5, category: "hair", type: "маска для волос" }), fp, "hair")).toEqual({
+      category: "hair",
+      categorySource: "rules",
+      productType: "маска для волос",
+      nonCosmetic: false,
+    });
+  });
+
+  it("ветка 3: confidence < 0.6, категория записи не совпала с правилами → типа нет", () => {
+    expect(decideType(rec({ confidence: 0.5 }), fp, "other")).toEqual({
+      category: "other",
+      categorySource: "rules",
+      productType: null,
+      nonCosmetic: false,
+    });
+  });
+
+  it("ветка 4: записи нет или fingerprint другой → правила, типа нет", () => {
+    expect(decideType(undefined, fp, "cream")).toEqual({
+      category: "cream",
+      categorySource: "rules",
+      productType: null,
+      nonCosmetic: false,
+    });
+    expect(decideType(rec({ fingerprint: "0".repeat(40) }), fp, "cream")).toEqual({
+      category: "cream",
+      categorySource: "rules",
+      productType: null,
+      nonCosmetic: false,
+    });
+  });
+
+  it("не-косметика с confidence ≥ 0.6 → nonCosmetic, типа нет, категория other", () => {
+    expect(decideType(rec({ type: NON_COSMETIC_TYPE, category: "other" }), fp, "other")).toEqual({
+      category: "other",
+      categorySource: "ai",
+      productType: null,
+      nonCosmetic: true,
+    });
+  });
+
+  it("не-косметика с confidence 0.5 остаётся видимой: nonCosmetic = false", () => {
+    const d = decideType(rec({ type: NON_COSMETIC_TYPE, category: "other", confidence: 0.5 }), fp, "other");
+    expect(d.nonCosmetic).toBe(false);
+    expect(d.productType).toBeNull();
+    expect(d.category).toBe("other");
   });
 });

@@ -23,7 +23,7 @@ import { normalizeInci } from "../lib/ingredients/normalize";
 import { matchTokens } from "../lib/ingredients/match";
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import { dupKey, resolveVariants, type VariantRow } from "../lib/products/goldapple-dedupe";
-import { typeFingerprint, type TypeProductInput } from "../lib/products/product-type";
+import { typeFingerprint, decideType, type TypeCacheRow, type TypeDecision, type TypeProductInput } from "../lib/products/product-type";
 import { TYPE_PROMPT_VERSION } from "../lib/products/product-type-prompt";
 import { PRODUCT_CATEGORY_LABEL } from "../lib/seo/labels";
 
@@ -36,18 +36,6 @@ const CSV_PATH = process.env.GOLDAPPLE_CSV ?? "data/goldapple/goldapple_products
 const TYPES_FILE = process.env.TYPES_FILE ?? "data/goldapple/product-types.jsonl";
 const DRY_RUN = process.env.DRY_RUN !== "0";
 const LOCK_PATH = "/tmp/import-goldapple.lock";
-
-/** Порог уверенности ИИ-классификатора: ниже — категория по правилам. */
-const TYPE_MIN_CONFIDENCE = 0.6;
-
-interface TypeCacheRow {
-  sku: string;
-  fingerprint: string;
-  promptVersion: number;
-  type: string;
-  category: string;
-  confidence: number;
-}
 
 /** Кэш типов из классификатора: последняя запись по каждому sku. Пустая Map, если файла нет. */
 function loadTypeCache(): Map<string, TypeCacheRow> {
@@ -64,37 +52,6 @@ function loadTypeCache(): Map<string, TypeCacheRow> {
     }
   }
   return map;
-}
-
-interface TypeDecision {
-  category: string;
-  categorySource: "ai" | "rules";
-  productType: string | null;
-}
-
-/**
- * Категория и тип продукта с учётом кэша классификатора:
- * - запись есть, confidence >= 0.6 и fingerprint совпадает → категория и тип из записи, source "ai";
- * - иначе → категория по правилам, source "rules"; тип сохраняем, только если
- *   категория из записи совпала с правилами (иначе типу нельзя верить), при
- *   расхождении fingerprint типа нет.
- */
-function decideType(
-  rec: TypeCacheRow | undefined,
-  fingerprint: string,
-  ruleCategory: string,
-): TypeDecision {
-  if (rec && rec.fingerprint === fingerprint) {
-    if (rec.confidence >= TYPE_MIN_CONFIDENCE) {
-      return { category: rec.category, categorySource: "ai", productType: rec.type };
-    }
-    return {
-      category: ruleCategory,
-      categorySource: "rules",
-      productType: rec.category === ruleCategory ? rec.type : null,
-    };
-  }
-  return { category: ruleCategory, categorySource: "rules", productType: null };
 }
 
 /** Блокировка от параллельных прогонов: два импорта одновременно уже клали

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { ingredientFiltersQuery } from "@/lib/ingredients/catalog-filters";
+import { displayBrand } from "@/lib/products/brand";
 import { productFiltersQuery } from "@/lib/products/catalog-filters";
 import { CATEGORY_PLURAL } from "@/lib/seo/ingredient-categories";
 import { LANDINGS } from "@/lib/seo/landings";
@@ -76,7 +77,6 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
     ...LANDINGS.map((l) => entry(`/sostav/${l.slug}`, 0.9, "monthly")),
     entry("/ingredients", 0.9, "weekly"),
     entry("/products", 0.9, "weekly"),
-    entry("/pricing", 0.5, "monthly"),
     entry("/for-brands", 0.4, "monthly"),
     entry("/privacy", 0.2, "yearly"),
   ];
@@ -87,7 +87,9 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
       prisma.ingredient.findMany({ select: { category: true }, distinct: ["category"] }),
       prisma.product.groupBy({ by: ["brand", "category"], where: { hidden: false } }),
     ]);
-    const brands = [...new Set(productPairs.map((p) => p.brand))];
+    // «Без бренда» — заглушка INCIDB, не бренд: посадочных под неё нет
+    const brandedPairs = productPairs.filter((p) => displayBrand(p.brand) !== null);
+    const brands = [...new Set(brandedPairs.map((p) => p.brand))];
     const productCategories = [...new Set(productPairs.map((p) => p.category))];
 
     entries.push(
@@ -100,7 +102,7 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
       ...productCategories.map((c) =>
         entry(`/products?${productFiltersQuery({ categories: [c] })}`, 0.7, "weekly")
       ),
-      ...productPairs.map((p) =>
+      ...productPairs.filter((p) => displayBrand(p.brand) !== null).map((p) =>
         entry(`/products?${productFiltersQuery({ brands: [p.brand], categories: [p.category] })}`, 0.6, "weekly")
       ),
       ...ingredients.map((i) => entry(`/ingredients/${i.slug}`, 0.8, "monthly")),

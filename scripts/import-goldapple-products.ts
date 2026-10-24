@@ -318,7 +318,8 @@ async function main() {
             rawIngredients: r.inci,
             ingredientsTotal: total,
             ingredientsRecognized: recognized,
-            hidden: false,
+            // уверенная ИИ-не-косметика — скрыта из каталога
+            hidden: decision.nonCosmetic,
           },
           create: {
             brand: r.brand,
@@ -333,7 +334,7 @@ async function main() {
             rawIngredients: r.inci,
             ingredientsTotal: total,
             ingredientsRecognized: recognized,
-            hidden: false,
+            hidden: decision.nonCosmetic,
           },
         });
         await prisma.productIngredient.deleteMany({ where: { productId: product.id } });

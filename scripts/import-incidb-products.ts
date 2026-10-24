@@ -14,12 +14,40 @@
  */
 
 import { PrismaClient } from "@prisma/client";
+import { existsSync, readFileSync } from "node:fs";
+
 import { INCIDB_PRODUCTS } from "../prisma/incidb-products.data";
+import { decideType, typeFingerprint, type TypeCacheRow, type TypeProductInput } from "../lib/products/product-type";
 
 const prisma = new PrismaClient();
 const BATCH = 500;
 
+const TYPES_FILE = process.env.TYPES_FILE ?? "data/incidb/product-types.jsonl";
+
+/** Кэш ИИ-классификатора: последняя запись по каждому slug. Пустая Map, если файла нет. */
+function loadTypeCache(): Map<string, TypeCacheRow> {
+  const map = new Map<string, TypeCacheRow>();
+  if (!existsSync(TYPES_FILE)) return map;
+  for (const line of readFileSync(TYPES_FILE, "utf8").split("\n")) {
+    const t = line.trim();
+    if (!t) continue;
+    try {
+      const row = JSON.parse(t) as TypeCacheRow;
+      if (row.sku) map.set(row.sku, row);
+    } catch {
+      // битая строка — пропускаем
+    }
+  }
+  return map;
+}
+
 async function main() {
+  // Кэш ИИ-классификатора (ключ — slug): при наличии категория/тип/hidden
+  // берутся по общим правилам decideType — иначе форс-импорт вернул бы
+  // продукты из «Другого» и открыл бы скрытую не-косметику.
+  const typeCache = loadTypeCache();
+  console.log(`Кэш типов: ${typeCache.size} записей (${TYPES_FILE})`);
+
   // slug → id всех ингредиентов одним запросом
   const ingredients = await prisma.ingredient.findMany({ select: { id: true, slug: true } });
   const idBySlug = new Map(ingredients.map((i) => [i.slug, i.id]));
@@ -46,11 +74,27 @@ async function main() {
     const batch = INCIDB_PRODUCTS.slice(i, Math.min(i + BATCH, end));
     for (const p of batch) {
       const { ingredients: entries, ...data } = p;
+      const fp = typeFingerprint({
+        sku: p.slug,
+        brand: p.brand,
+        name: p.name,
+        inci: p.rawIngredients ?? "",
+      } satisfies TypeProductInput);
+      const d = decideType(typeCache.get(p.slug), fp, p.category);
+      const typed = {
+        ...data,
+        source: "incidb" as const,
+        category: d.category,
+        categorySource: d.categorySource,
+        productType: d.productType,
+        // уверенная не-косметика остаётся скрытой; остальные — в каталоге
+        hidden: d.nonCosmetic,
+      };
       const product = await prisma.product.upsert({
         where: { slug: p.slug },
         // продукт снова в каталоге — снимаем hidden, если он был скрыт ранее
-        update: { ...data, source: "incidb", hidden: false },
-        create: { ...data, source: "incidb" },
+        update: typed,
+        create: typed,
       });
       await prisma.productIngredient.deleteMany({ where: { productId: product.id } });
       await prisma.productIngredient.createMany({

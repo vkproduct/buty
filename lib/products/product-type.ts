@@ -8,6 +8,7 @@
 import { createHash } from "node:crypto";
 
 import { normalizeInci } from "@/lib/ingredients/normalize";
+import { NO_BRAND } from "@/lib/products/brand";
 import { PRODUCT_CATEGORY_ORDER } from "@/lib/seo/product-categories";
 
 /** Все значения PRODUCT_CATEGORY_ORDER — enum для схемы ответа модели. */
@@ -188,8 +189,9 @@ export function validateTypeResult(raw: unknown, brand: string): TypeResult | nu
   const type = r.type.trim().toLowerCase();
   if (type.length === 0 || type.length > MAX_TYPE_LEN) return null;
   if (/[a-z0-9"«»'’]/.test(type)) return null; // латиница, цифры, кавычки
+  // «бренд в типе» не проверяем для заглушки NO_BRAND — она не бренд.
   const brandLc = brand.trim().toLowerCase();
-  if (brandLc && type.includes(brandLc)) return null;
+  if (brandLc && brandLc !== NO_BRAND.toLowerCase() && type.includes(brandLc)) return null;
   if (BANNED_TYPE_WORDS.some((w) => type.includes(w))) return null;
 
   if (typeof r.confidence !== "number" || !Number.isFinite(r.confidence)) return null;

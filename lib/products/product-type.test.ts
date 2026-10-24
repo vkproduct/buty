@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { NO_BRAND } from "./brand";
 import {
   baseProductName,
   classifyInputLine,
@@ -250,5 +251,15 @@ describe("decideType", () => {
     expect(d.nonCosmetic).toBe(false);
     expect(d.productType).toBeNull();
     expect(d.category).toBe("other");
+  });
+});
+
+describe("validateTypeResult: NO_BRAND", () => {
+  it("не отклоняет тип по «бренду» для заглушки «Без бренда»", () => {
+    const r = validateTypeResult(
+      { sku: "s1", type: "средство без бренда", category: "hygiene", confidence: 0.9 },
+      NO_BRAND,
+    );
+    expect(r).not.toBeNull();
   });
 });

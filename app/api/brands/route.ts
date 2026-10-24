@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
+import { NO_BRAND } from "@/lib/products/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +24,8 @@ export async function GET(req: NextRequest) {
     where: {
       hidden: false,
       brand: { contains: q, mode: "insensitive" },
+      // «Без бренда» — заглушка INCIDB, не бренд: в подсказки не отдаём
+      NOT: { brand: NO_BRAND },
     },
     _count: { _all: true },
   });

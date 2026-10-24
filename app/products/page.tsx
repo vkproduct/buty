@@ -28,6 +28,7 @@ import {
   sortProductCategories,
 } from "@/lib/seo/product-categories";
 import { brandWithRu } from "@/lib/seo/brands";
+import { displayBrand, NO_BRAND } from "@/lib/products/brand";
 import { Container } from "@/components/ui/container";
 import { ChipRail } from "@/components/products/chip-rail";
 import { ProductFilterSheet } from "@/components/products/product-filters";
@@ -48,7 +49,10 @@ const loadCatalogMatrix = cache(async (): Promise<FacetRow[]> => {
 async function loadFilters(searchParams: SearchParams) {
   const matrix = await loadCatalogMatrix();
   const known = {
-    brands: [...new Set(matrix.map((r) => r.brand))].sort(compareNames),
+    // «Без бренда» — заглушка INCIDB, не бренд: в список фильтра не включаем
+    brands: [...new Set(matrix.map((r) => r.brand))]
+      .filter((b) => displayBrand(b) !== null)
+      .sort(compareNames),
     categories: sortProductCategories([...new Set(matrix.map((r) => r.category))]),
   };
   return { matrix, known, filters: parseProductFilters(searchParams, known) };
@@ -191,6 +195,13 @@ export default async function ProductsCatalogPage({
 }: {
   searchParams: SearchParams;
 }) {
+  // «Без бренда» — заглушка INCIDB, не бренд: посадочной ?brand=Без бренда нет.
+  const rawBrand = searchParams.brand;
+  const noBrandRequested = (Array.isArray(rawBrand) ? rawBrand : [rawBrand]).some(
+    (v): v is string => typeof v === "string" && v.trim().toLowerCase() === NO_BRAND.toLowerCase(),
+  );
+  if (noBrandRequested) notFound();
+
   const { matrix, known, filters } = await loadFilters(searchParams);
   const { q, brands, categories } = filters;
   const page = parsePage(searchParams.page);
@@ -444,7 +455,9 @@ export default async function ProductsCatalogPage({
                       <use href="#icon-arrow-up-right" />
                     </svg>
                   </div>
-                  <p className="product-card-brand">{product.brand}</p>
+                  {displayBrand(product.brand) && (
+                    <p className="product-card-brand">{product.brand}</p>
+                  )}
                   <h2 className="product-card-name">{product.name}</h2>
                   <p className="product-card-ingredients">
                     {product._count.ingredients}{" "}

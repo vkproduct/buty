@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ExternalLink, FlaskConical, ShieldAlert } from "lucide-react";
 
 import { prisma } from "@/lib/prisma";
+import { displayBrand } from "@/lib/products/brand";
 import {
   CATEGORY_LABEL,
   EVIDENCE_LABEL,
@@ -138,7 +139,8 @@ export async function generateMetadata({
   if (!product) return { title: "Продукт не найден", robots: { index: false } };
   // покрытие распознавания (0 = карточка вне INCIDB, состав курируемый — считаем полным)
   const coverage = product.ingredientsTotal > 0 ? product.ingredientsRecognized / product.ingredientsTotal : 1;
-  const full = `${product.brand} ${product.name}`;
+  const brand = displayBrand(product.brand);
+  const full = [brand, product.name].filter(Boolean).join(" ");
   const type = typeTitle(product);
   const fullWithType = type ? `${type} ${full}` : full;
   const title = `${fullWithType}: состав и разбор ингредиентов`;
@@ -148,7 +150,7 @@ export async function generateMetadata({
     .map((pi) => pi.ingredient.displayName.toLowerCase());
   const n = product.ingredients.length;
   const description = clampDescription(
-    `${type ? `${fullWithType}` : `Состав ${brandWithRu(product.brand)} ${product.name}`}: расшифровка ${n} ${pluralRu(
+    `${type ? `${fullWithType}` : `Состав ${brand ? `${brandWithRu(brand)} ` : ""}${product.name}`}: расшифровка ${n} ${pluralRu(
       n,
       "ингредиента",
       "ингредиентов",
@@ -163,8 +165,9 @@ export async function generateMetadata({
     description,
     alternates: { canonical: path },
     openGraph: { title, description, type: "article", url: path },
-    // состав распознан меньше чем наполовину — страница не для индексации
-    ...(coverage < 0.5 ? { robots: { index: false, follow: true } } : {}),
+    // скрытые из каталога (не-косметика) и состав, распознанный меньше чем
+    // наполовину, — не для индексации; страница остаётся доступной (не 404)
+    ...(product.hidden || coverage < 0.5 ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -182,7 +185,8 @@ export default async function ProductPage({
     getSimilarProducts(product.id, ingredientIds),
   ]);
 
-  const full = `${product.brand} ${product.name}`;
+  const brand = displayBrand(product.brand);
+  const full = [brand, product.name].filter(Boolean).join(" ");
   const type = typeTitle(product);
   const fullWithType = type ? `${type} ${full}` : full;
   const path = `/products/${product.slug}`;
@@ -203,7 +207,7 @@ export default async function ProductPage({
   const coverage = coverageKnown ? product.ingredientsRecognized / product.ingredientsTotal : 1;
   const incomplete = coverage < 0.8; // порог баннера из аудита импорта INCIDB
   const partialNote = " в распознанной части состава";
-  const brandHref = `/products?${productFiltersQuery({ brands: [product.brand] })}`;
+  const brandHref = brand ? `/products?${productFiltersQuery({ brands: [brand] })}` : null;
   const categoryHref = `/products?${productFiltersQuery({ categories: [product.category] })}`;
 
   const summary: { label: string; value: string; tone: "ok" | "warn" | "neutral" }[] = [
@@ -293,7 +297,7 @@ export default async function ProductPage({
 
   const crumbs = [
     { name: "Продукты", path: "/products" },
-    { name: product.brand, path: brandHref },
+    ...(brand && brandHref ? [{ name: brand, path: brandHref }] : []),
     { name: product.name, path },
   ];
 
@@ -302,7 +306,8 @@ export default async function ProductPage({
     "@type": "Product",
     name: full,
     alternateName: ru ? `${ru} ${product.name}` : undefined,
-    brand: { "@type": "Brand", name: product.brand },
+    // заглушка «Без бренда» — не бренд: поле brand не выводим
+    ...(brand ? { brand: { "@type": "Brand", name: brand } } : {}),
     category: PRODUCT_CATEGORY_LABEL[product.category] ?? product.category,
     url: absoluteUrl(path),
     description: product.productType
@@ -320,24 +325,30 @@ export default async function ProductPage({
           <Link href="/products" className="hover:text-brand">
             Продукты
           </Link>
-          <span className="mx-2">/</span>
-          <Link href={brandHref} className="hover:text-brand">
-            {product.brand}
-          </Link>
+          {brand && brandHref && (
+            <>
+              <span className="mx-2">/</span>
+              <Link href={brandHref} className="hover:text-brand">
+                {brand}
+              </Link>
+            </>
+          )}
           <span className="mx-2">/</span>
           <span>{product.name}</span>
         </nav>
 
         <GlassCard className="space-y-4 p-8">
           <div className="flex flex-wrap items-center gap-2">
-            <Link
-              href={`/products?${new URLSearchParams({ brand: product.brand })}`}
-              title={`Все средства ${product.brand}`}
-            >
-              <Badge variant="default" className="transition-colors hover:bg-ink-hair">
-                {product.brand}
-              </Badge>
-            </Link>
+            {brand && (
+              <Link
+                href={`/products?${new URLSearchParams({ brand })}`}
+                title={`Все средства ${brand}`}
+              >
+                <Badge variant="default" className="transition-colors hover:bg-ink-hair">
+                  {brand}
+                </Badge>
+              </Link>
+            )}
             <Link href={categoryHref} title={productCategoryPlural(product.category)}>
               <Badge variant="outline" className="transition-colors hover:bg-ink-hair">
                 {PRODUCT_CATEGORY_LABEL[product.category] ?? product.category}
@@ -353,7 +364,7 @@ export default async function ProductPage({
             <span className="text-ink-muted">Состав:</span> {fullWithType}
           </h1>
           <p className="max-w-3xl text-muted-foreground">
-            Разбор состава {brandWithRu(product.brand)} {product.name}: распознанные
+            Разбор состава {brand ? `${brandWithRu(brand)} ` : ""}{product.name}: распознанные
             ингредиенты в порядке INCI-списка — от самых высоких концентраций к самым
             низким. Для каждого компонента указаны функция и уровень доказательности.
           </p>
@@ -523,20 +534,23 @@ export default async function ProductPage({
           <GlassCard className="space-y-4 p-8">
             <h2 className="font-display text-2xl font-bold">Похожие по составу средства</h2>
             <ul className="grid gap-3 sm:grid-cols-2">
-              {similar.map((p) => (
-                <li key={p.id}>
-                  <Link
-                    href={`/products/${p.slug}`}
-                    className="block rounded-2xl bg-white p-4 transition-shadow hover:shadow-glass"
-                  >
-                    <span className="text-sm text-muted-foreground">{p.brand}</span>
-                    <span className="block font-semibold text-brand">{p.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      Общих ингредиентов: {p.common}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+              {similar.map((p) => {
+                const pb = displayBrand(p.brand);
+                return (
+                  <li key={p.id}>
+                    <Link
+                      href={`/products/${p.slug}`}
+                      className="block rounded-2xl bg-white p-4 transition-shadow hover:shadow-glass"
+                    >
+                      {pb && <span className="text-sm text-muted-foreground">{pb}</span>}
+                      <span className="block font-semibold text-brand">{p.name}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Общих ингредиентов: {p.common}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </GlassCard>
         )}

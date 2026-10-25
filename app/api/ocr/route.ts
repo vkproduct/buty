@@ -3,13 +3,20 @@ import { NextResponse } from "next/server";
 import { OcrNotReadyError } from "@/lib/ocr";
 import { extractInci } from "@/lib/ocr/extract-inci";
 import { OcrProviderError } from "@/lib/ocr/google";
-import { MAX_IMAGE_BYTES, takeOcrQuota } from "@/lib/ocr/rate-limit";
+import {
+  MAX_IMAGE_BYTES,
+  ocrDayRetryAfter,
+  ocrHourRetryAfter,
+  takeOcrQuota,
+} from "@/lib/ocr/rate-limit";
 import { getServerOcrProvider } from "@/lib/ocr/server";
 
 export const dynamic = "force-dynamic";
 
-function fail(error: string, status: number) {
-  return NextResponse.json({ error }, { status });
+function fail(error: string, status: number, retryAfter?: number) {
+  const headers: Record<string, string> = {};
+  if (retryAfter) headers["Retry-After"] = String(retryAfter);
+  return NextResponse.json({ error }, { status, headers });
 }
 
 /** POST /api/ocr (multipart/form-data, поле image) → { text } — распознанный состав. */
@@ -36,8 +43,20 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
     "unknown";
-  if (!takeOcrQuota(ip)) {
-    return fail("Слишком много фото подряд — попробуйте через час или вставьте состав текстом", 429);
+  const quota = takeOcrQuota(ip);
+  if (quota === "hour") {
+    return fail(
+      "Слишком много фото подряд — попробуйте через час или вставьте состав текстом",
+      429,
+      ocrHourRetryAfter(ip),
+    );
+  }
+  if (quota === "day") {
+    return fail(
+      "Распознавание фото на сегодня закончилось — вставьте состав текстом, разбор работает как обычно",
+      429,
+      ocrDayRetryAfter(),
+    );
   }
 
   try {

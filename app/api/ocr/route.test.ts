@@ -95,12 +95,15 @@ describe("POST /api/ocr", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("лимит по IP — 429 после исчерпания, другой IP проходит", async () => {
+  it("часовой лимит IP — 429 с текстом про час и Retry-After, другой IP проходит", async () => {
     fetchMock.mockImplementation(async () => visionOk("Aqua"));
     for (let i = 0; i < OCR_LIMIT_PER_HOUR; i++) {
       expect((await post(jpeg(), "2.2.2.2")).status).toBe(200);
     }
-    expect((await post(jpeg(), "2.2.2.2")).status).toBe(429);
+    const res = await post(jpeg(), "2.2.2.2");
+    expect(res.status).toBe(429);
+    expect((await res.json()).error).toMatch(/через час/);
+    expect(Number(res.headers.get("Retry-After"))).toBeGreaterThan(0);
     expect((await post(jpeg(), "3.3.3.3")).status).toBe(200);
   });
 });

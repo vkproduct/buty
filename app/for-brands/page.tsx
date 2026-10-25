@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
-import Link from "next/link";
 import {
+  AlertCircle,
+  ArrowRight,
   BarChart3,
+  Building2,
   Check,
+  CircleCheck,
   Images,
   Link2,
   Megaphone,
   Minus,
-  Search,
+  ReceiptText,
   ShieldCheck,
+  ShoppingBag,
   TicketPercent,
-  X,
 } from "lucide-react";
 
 import { BrandCardPreview } from "@/components/brands/brand-card-preview";
 import { BrandPricing } from "@/components/brands/brand-pricing";
+import { BrandRoiCard } from "@/components/brands/brand-roi-card";
 import { BrandLeadForm } from "@/components/brand-lead-form";
 import { JsonLd } from "@/components/seo/json-ld";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { EXTRA_PRODUCTS_PACK, FOUNDING_OFFER, formatRub } from "@/lib/brands/tariffs";
 import { prisma } from "@/lib/prisma";
 import { NO_BRAND } from "@/lib/products/brand";
@@ -30,7 +32,7 @@ import { cn, pluralRu } from "@/lib/utils";
 
 const TITLE = "Buty для брендов: ссылки на покупку, промокоды и аналитика";
 const DESCRIPTION =
-  "Разместите на карточках своих средств в Buty ссылки на официальный магазин или маркетплейс, фото бренда, промокоды и рекламное описание. Тарифы от 9 900 ₽ в месяц, бренд-аккаунт бесплатно.";
+  "Разместите на карточках своих средств в Buty ссылки на официальный магазин или маркетплейс, фото бренда, промокоды и рекламное описание. Бренд-аккаунт бесплатно, тарифы от 9 900 ₽ в месяц, без комиссии с продаж.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -45,21 +47,19 @@ export const dynamic = "force-dynamic";
 interface CatalogStats {
   products: number;
   brands: number;
-  ingredients: number;
 }
 
 const getCatalogStats = unstable_cache(
   async (): Promise<CatalogStats | null> => {
     try {
-      const [products, brandRows, ingredients] = await Promise.all([
+      const [products, brandRows] = await Promise.all([
         prisma.product.count({ where: { hidden: false } }),
         prisma.product.groupBy({
           by: ["brand"],
           where: { hidden: false, brand: { notIn: [NO_BRAND, ""] } },
         }),
-        prisma.ingredient.count(),
       ]);
-      return products > 0 ? { products, brands: brandRows.length, ingredients } : null;
+      return products > 0 ? { products, brands: brandRows.length } : null;
     } catch {
       return null;
     }
@@ -68,57 +68,83 @@ const getCatalogStats = unstable_cache(
   { revalidate: 3600 },
 );
 
-/* ── Что получает бренд ── */
+/* ── 2. Знакомо? ── */
+const PAINS = [
+  {
+    title: "Дорогой клик",
+    text: "Ставки на маркетплейсах растут, а покупатель всё равно уходит к соседней карточке с похожим составом.",
+  },
+  {
+    title: "Вопросы о составе",
+    text: "Покупатели проверяют INCI, спрашивают про комедогенность и отдушки — и ищут ответы не у вас.",
+  },
+  {
+    title: "Промокоды утекают",
+    text: "Код для блогера через день оказывается в агрегаторах промокодов и съедает маржу.",
+  },
+  {
+    title: "Спрос не виден",
+    text: "Непонятно, с какими средствами сравнивают ваши и почему в итоге выбирают другие.",
+  },
+];
+
+/* ── 3. Три шага ── */
+const STEPS = [
+  {
+    icon: Building2,
+    title: "1. Подключите бренд",
+    text: "Оставьте заявку — проверим, какие ваши средства уже в каталоге, и добавим недостающие.",
+    tag: "Бесплатно",
+  },
+  {
+    icon: ShoppingBag,
+    title: "2. Добавьте ссылки и промо",
+    text: "Ссылки на магазин или маркетплейс, фото, промокоды и описание появятся в карточках после модерации.",
+    tag: "Без программиста",
+  },
+  {
+    icon: BarChart3,
+    title: "3. Получайте покупателей",
+    text: "Покупательница изучает состав, видит вашу ссылку и промокод и идёт покупать. Вы видите каждый переход.",
+    tag: "Без комиссии",
+  },
+];
+
+/* ── 4. Как выглядит в карточке ── */
 const FEATURES = [
-  {
-    icon: Link2,
-    title: "Ссылки на покупку",
-    text: "Ведите покупательницу сразу в карточку товара: на официальный сайт бренда или на маркетплейс.",
-    points: [
-      "До 3 ссылок на средство",
-      "UTM-метки добавляем сами",
-      "Проверяем, что ссылки открываются",
-    ],
-  },
-  {
-    icon: Images,
-    title: "Фото бренда",
-    text: "Ваши фотографии продукта вместо пустой карточки: упаковка, текстура, способ применения.",
-    points: ["До 6 фото на карточку", "Модерация перед публикацией", "Без «до/после» и обещаний на фото"],
-  },
+  { icon: Link2, title: "Ссылки на покупку", text: "До 3 на средство: официальный сайт или маркетплейс, UTM-метки добавляем сами." },
+  { icon: Images, title: "Фото бренда", text: "До 6 фото на карточку: упаковка, текстура, применение. С модерацией." },
   {
     icon: TicketPercent,
-    title: "Промокоды в карточке",
-    text: "Скидка на покупку по вашей ссылке или в любом магазине. Код скрыт, пока покупательница не нажмёт «Показать промокод».",
-    points: [
-      "Кода нет в HTML страницы — парсеры и агрегаторы промокодов его не соберут",
-      "Срок действия: после даты код скроется сам",
-      "Видно, сколько раз код раскрыли и скопировали",
-    ],
+    title: "Промокоды, скрытые до клика",
+    text: "Кода нет в HTML страницы — парсеры и агрегаторы промокодов его не соберут. Истёк срок — код скрывается сам.",
   },
   {
     icon: Megaphone,
-    title: "Рекламное описание",
-    text: "Расскажите о продукте своими словами в блоке «От бренда». Он стоит под нашим разбором и помечен «Реклама».",
-    points: ["До 600 знаков", "Модерация: без медицинских обещаний", "Маркировку рекламы (erid) делаем мы"],
+    title: "Описание «От бренда»",
+    text: "До 600 знаков под нашим разбором, с пометкой «Реклама». Маркировку (erid) делаем мы.",
+  },
+  {
+    icon: BarChart3,
+    title: "Аналитика в кабинете",
+    text: "Разборы, просмотры, переходы по каждой ссылке, раскрытия промокодов. На Бренд Про — обезличенная аналитика полки.",
   },
 ];
 
-/* ── Что видно в кабинете ── */
-const ANALYTICS: { title: string; tier: string }[] = [
-  { title: "Сколько раз разобрали состав ваших средств", tier: "Бесплатно" },
-  { title: "Просмотры карточек средств", tier: "Базовый" },
-  { title: "Переходы по каждой ссылке: магазин, маркетплейс", tier: "Базовый" },
-  { title: "Раскрытия и копирования промокодов", tier: "Витрина" },
-  { title: "Сколько людей держат средство на полке и используют", tier: "Бренд Про" },
-  { title: "С чем сочетают ваше средство и на что меняют", tier: "Бренд Про" },
-  { title: "Реакции кожи — агрегатом, от 10 человек в выборке", tier: "Бренд Про" },
+/* ── 5. Сравнение с рекламой ── */
+const VERSUS: { label: string; buty: [string, string]; ads: [string, string] }[] = [
+  { label: "Стоимость", buty: ["от 9 900 ₽", "фикс в месяц"], ads: ["Ставка за клик", "растёт с конкуренцией"] },
+  { label: "Аудитория", buty: ["Изучает состав", "момент выбора"], ads: ["Листает выдачу", "сравнивает цены"] },
+  { label: "Что рядом", buty: ["Независимый разбор", "оценки не продаются"], ads: ["Карточки конкурентов", "в той же выдаче"] },
+  { label: "Поиск", buty: ["Страницы средств", "в Яндексе и Google"], ads: ["Нет", "платите за каждый показ"] },
+  { label: "Промокод", buty: ["Скрыт до клика", "не утекает"], ads: ["Публичный", "попадает в агрегаторы"] },
 ];
 
-/* ── Таблица сравнения ── */
+/* ── Таблица всех тарифов ── */
 type Cell = boolean | string;
 const COMPARE_HEAD = ["Бренд-аккаунт", "Базовый", "Витрина", "Бренд Про", "Сеть"];
 const COMPARE: { label: string; cells: Cell[] }[] = [
+  { label: "Цена в месяц", cells: ["0 ₽", "9 900 ₽", "19 900 ₽", "39 900 ₽", "от 79 900 ₽"] },
   { label: "Средств в тарифе", cells: ["все", "до 30", "до 60", "до 200", "без лимита"] },
   { label: "Профиль бренда, исправление составов", cells: [true, true, true, true, true] },
   { label: "Ссылки на покупку (до 3 на средство)", cells: [false, true, true, true, true] },
@@ -126,31 +152,9 @@ const COMPARE: { label: string; cells: Cell[] }[] = [
   { label: "Фото бренда (до 6 на карточку)", cells: [false, false, true, true, true] },
   { label: "Промокоды, скрытые до клика", cells: [false, false, "1 на средство", "несколько", "несколько"] },
   { label: "Рекламное описание «От бренда»", cells: [false, false, true, true, true] },
-  { label: "Аналитика промокодов", cells: [false, false, true, true, true] },
   { label: "Промо по расписанию", cells: [false, false, false, true, true] },
   { label: "Аналитика полки (обезличенно)", cells: [false, false, false, true, true] },
-  { label: "Ежемесячный отчёт", cells: [false, false, false, true, true] },
   { label: "Несколько брендов, выгрузки, менеджер", cells: [false, false, false, false, true] },
-];
-
-const CAN = [
-  "Поставить ссылки на свой магазин и маркетплейсы",
-  "Добавить фото, промокоды и описание в блоке «От бренда»",
-  "Исправить ошибку в составе — по фото упаковки",
-  "Видеть обезличенную статистику по своим средствам",
-];
-const CANNOT = [
-  "Изменить оценку, вердикт или флаги разбора",
-  "Скрыть ингредиенты, аллергены или конфликты активов",
-  "Поднять своё средство в разборе или в «похожих по составу»",
-  "Получить email, анкеты и полки конкретных людей",
-];
-
-const STEPS = [
-  { title: "Заявка", text: "Расскажите о бренде и выберите тариф — или оставьте выбор нам." },
-  { title: "Созвон на 20 минут", text: "Проверим, какие ваши средства уже есть в каталоге, и добавим недостающие." },
-  { title: "Договор и счёт", text: "Работаем по договору, оплата по счёту — помесячно или за год." },
-  { title: "Запуск", text: "Вы загружаете ссылки, фото и промокоды. После модерации они появляются в карточках." },
 ];
 
 const FAQ: { q: string; a: string }[] = [
@@ -159,27 +163,27 @@ const FAQ: { q: string; a: string }[] = [
     a: "Нет. Разбор, вердикт и флаги считаются одинаково для всех средств, платит бренд или нет. Бренд платит за ссылки, фото, промокоды, описание и аналитику. Рекламные материалы стоят под разбором и помечены «Реклама».",
   },
   {
+    q: "Зачем платить, если мы уже продаёмся на маркетплейсах?",
+    a: "Buty не заменяет маркетплейс, а ведёт на него. Ссылка может вести прямо в вашу карточку на маркетплейсе. Разница в моменте: у нас покупательница уже изучает состав конкретного средства, а не листает выдачу с конкурентами.",
+  },
+  {
+    q: "Вы берёте комиссию с продаж?",
+    a: "Нет. Только фиксированная цена тарифа. Все продажи по вашим ссылкам — ваши.",
+  },
+  {
     q: "Зачем скрывать промокод?",
-    a: "Код не попадает в HTML страницы и загружается только после нажатия «Показать промокод». Так его не соберут парсеры конкурентов и агрегаторы промокодов, а вы видите, сколько людей действительно заинтересовались скидкой.",
+    a: "Код не попадает в HTML страницы и загружается только после нажатия «Показать промокод». Так его не соберут парсеры и агрегаторы промокодов, а вы видите, сколько людей действительно заинтересовались скидкой.",
   },
   {
     q: "Это реклама? Нужна ли маркировка?",
     a: "Да, блок «От бренда» и промокоды — это реклама. Мы помечаем их «Реклама», получаем токен erid через оператора рекламных данных и отчитываемся в ЕРИР. От бренда нужны только реквизиты рекламодателя.",
   },
   {
-    q: "Какие ссылки можно ставить?",
-    a: "На официальный сайт бренда (домен подтверждаем при подключении) и на карточки товара на маркетплейсах и в сетях косметики. До трёх ссылок на средство. UTM-метки добавляем автоматически.",
+    q: "Моего средства нет в каталоге или в составе ошибка.",
+    a: "Пришлите фото упаковки с составом — добавим или исправим бесплатно, на любом тарифе, включая бесплатный бренд-аккаунт.",
   },
   {
-    q: "Моего средства нет в каталоге. Что делать?",
-    a: "Пришлите фото упаковки с составом — добавим средство в каталог бесплатно, на любом тарифе.",
-  },
-  {
-    q: "В составе моего средства ошибка.",
-    a: "Исправим бесплатно, в том числе в бесплатном бренд-аккаунте. Нужно фото упаковки с актуальным составом.",
-  },
-  {
-    q: "Можно ли добавить больше средств, чем в тарифе?",
+    q: "Можно ли больше средств, чем в тарифе?",
     a: `Да: +${EXTRA_PRODUCTS_PACK.count} средств — ${formatRub(EXTRA_PRODUCTS_PACK.monthly)} в месяц к любому платному тарифу.`,
   },
   {
@@ -194,14 +198,6 @@ function CompareCell({ value }: { value: Cell }) {
   return <span className="text-sm font-medium">{value}</span>;
 }
 
-function Divider() {
-  return (
-    <Container>
-      <hr className="border-ink-hair" />
-    </Container>
-  );
-}
-
 export default async function ForBrandsPage() {
   const stats = await getCatalogStats();
 
@@ -209,292 +205,233 @@ export default async function ForBrandsPage() {
     <main>
       <JsonLd data={faqJsonLd(FAQ)} />
 
-      {/* ═══ 1. HERO ═══ */}
-      <section>
-        <Container className="grid items-start gap-10 pb-14 pt-10 lg:grid-cols-12 lg:gap-14 lg:pb-20 lg:pt-16">
-          <div className="lg:col-span-7 lg:pt-6">
-            <Badge variant="outline" className="mb-5">
-              Для брендов и дистрибьюторов
-            </Badge>
-            <h1 className="text-[32px] font-semibold leading-[1.08] sm:text-[44px] lg:text-[52px]">
-              Покажите формулу тем, кто читает состав перед покупкой
+      {/* ═══ 1. HERO: тёмный фон, справа карточка «Начните бесплатно» ═══ */}
+      <section className="relative overflow-hidden bg-[#1B1316] text-white">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(circle at 12% 18%, rgba(227,28,95,0.35), transparent 42%), radial-gradient(circle at 85% 90%, rgba(0,166,153,0.18), transparent 40%), radial-gradient(circle at 60% 10%, rgba(255,90,119,0.12), transparent 35%)",
+          }}
+        />
+        <Container className="relative grid items-center gap-10 py-14 lg:grid-cols-12 lg:gap-14 lg:py-24">
+          <div className="lg:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-400/50 bg-brand/20 px-3 py-1 text-sm font-semibold text-brand-100">
+              <TicketPercent className="h-4 w-4" aria-hidden />
+              Первым {FOUNDING_OFFER.brands} брендам −{FOUNDING_OFFER.discountPercent}% на полгода
+            </span>
+            <h1 className="mt-6 text-[34px] font-semibold leading-[1.08] tracking-tight sm:text-[48px] lg:text-[58px]">
+              Продавайте тем, кто <span className="text-brand-400">читает состав</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-              Buty разбирает составы косметики по научным данным. На карточке вашего
-              средства покупательница видит разбор, а рядом — ваши ссылки на покупку,
-              фото и промокод.
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
+              Ваши ссылки на покупку, фото и промокоды — прямо в карточке средства, рядом с
+              независимым разбором состава. Без комиссии и дорогих кликов.
             </p>
-            <ul className="check-list mt-6">
-              <li>Ссылки на ваш магазин или карточку на маркетплейсе</li>
-              <li>Промокод, который видит только тот, кто нажал «Показать»</li>
-              <li>Аналитика: разборы, переходы, раскрытия промокодов</li>
+            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85">
+              {["Бренд-аккаунт бесплатно", "Без комиссии с продаж", "Оценки не продаются"].map((t) => (
+                <li key={t} className="flex items-center gap-2">
+                  <CircleCheck className="h-4 w-4 text-brand-400" aria-hidden />
+                  {t}
+                </li>
+              ))}
             </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="w-full sm:w-auto">
-                <a href="#zayavka">Оставить заявку</a>
-              </Button>
-              <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
-                <a href="#tarify">Смотреть тарифы</a>
-              </Button>
-            </div>
-            <p className="mt-4 text-sm text-ink-muted">
-              Бренд-аккаунт бесплатно. Платные тарифы — от {formatRub(9900)} в месяц.
+          </div>
+
+          <div className="rounded-3xl bg-white p-7 text-center text-foreground shadow-pop sm:p-9 lg:col-span-5">
+            <h2 className="text-[22px] font-semibold">Начните бесплатно</h2>
+            <p className="mx-auto mt-2 max-w-sm text-[15px] leading-relaxed text-ink-muted">
+              {stats
+                ? `В каталоге уже ${stats.brands.toLocaleString("ru-RU")} ${pluralRu(stats.brands, "бренд", "бренда", "брендов")} и ${stats.products.toLocaleString("ru-RU")} ${pluralRu(stats.products, "средство", "средства", "средств")} — скорее всего, и ваши.`
+                : "Скорее всего, ваши средства уже есть в нашем каталоге."}{" "}
+              Заявка занимает пару минут.
             </p>
-          </div>
-          <div className="min-w-0 lg:col-span-5">
-            <BrandCardPreview />
-          </div>
-        </Container>
-      </section>
-
-      {/* ═══ 2. КАТАЛОГ: ваш бренд, скорее всего, уже здесь ═══ */}
-      <section className="pb-14 lg:pb-20">
-        <Container>
-          <div className="grid gap-6 rounded-2xl border border-ink-line p-6 sm:p-8 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-5">
-              <h2 className="text-[22px] font-semibold leading-snug">
-                Ваши средства, скорее всего, уже в каталоге
-              </h2>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">
-                Найдите свой бренд и посмотрите, как выглядит разбор ваших составов.
-              </p>
-              <form action="/products" method="get" className="mt-4 flex gap-2">
-                <label htmlFor="brand-search" className="sr-only">
-                  Название бренда
-                </label>
-                <input
-                  id="brand-search"
-                  name="q"
-                  placeholder="Название бренда"
-                  className="h-12 min-w-0 flex-1 rounded-lg border border-input bg-white px-4 text-base placeholder:text-ink-muted focus-visible:border-foreground focus-visible:shadow-[0_0_0_1px_#222] focus-visible:outline-none"
-                />
-                <Button type="submit" variant="warm" className="shrink-0" aria-label="Найти">
-                  <Search className="h-4 w-4" aria-hidden />
-                  <span className="hidden sm:inline">Найти</span>
-                </Button>
-              </form>
+            <Button asChild size="lg" className="mt-6 w-full">
+              <a href="#zayavka">
+                Подключить бренд <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
+            </Button>
+            <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-ink-muted">
+              <span className="flex items-center gap-1">
+                <ShieldCheck className="h-3.5 w-3.5" aria-hidden /> Данные покупателей не передаём
+              </span>
+              <span className="flex items-center gap-1">
+                <ReceiptText className="h-3.5 w-3.5" aria-hidden /> Без скрытых платежей
+              </span>
             </div>
-            {stats ? (
-              <div className="grid grid-cols-3 lg:col-span-7">
-                {[
-                  {
-                    num: stats.products,
-                    txt: pluralRu(stats.products, "средство с разбором", "средства с разбором", "средств с разбором"),
-                  },
-                  {
-                    num: stats.brands,
-                    txt: pluralRu(stats.brands, "бренд в каталоге", "бренда в каталоге", "брендов в каталоге"),
-                  },
-                  {
-                    num: stats.ingredients,
-                    txt: pluralRu(stats.ingredients, "ингредиент в базе", "ингредиента в базе", "ингредиентов в базе"),
-                  },
-                ].map((s, i) => (
-                  <div key={s.txt} className={cn("px-2 py-2 text-center sm:px-4", i > 0 && "border-l border-ink-line")}>
-                    <div className="text-[22px] font-semibold leading-none tracking-tight sm:text-[28px]">
-                      {s.num.toLocaleString("ru-RU")}
-                    </div>
-                    <div className="mx-auto mt-2 max-w-[160px] text-xs leading-snug text-ink-muted sm:text-sm">
-                      {s.txt}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : null}
           </div>
         </Container>
       </section>
 
-      <Divider />
-
-      {/* ═══ 3. ВОЗМОЖНОСТИ ═══ */}
-      <section id="vozmozhnosti" className="scroll-mt-20 py-14 lg:py-20">
-        <Container>
-          <SectionHeading
-            eyebrow="Возможности"
-            title="Всё, что нужно карточке, чтобы из неё покупали"
-            lead="Покупательница уже изучает состав вашего средства. Осталось дать ей, где купить и почему сейчас."
-          />
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {FEATURES.map(({ icon: Icon, title, text, points }) => (
-              <div key={title} className="rounded-2xl bg-ink-wash p-7">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-glass">
-                  <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} aria-hidden />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{text}</p>
-                <ul className="check-list mt-3">
-                  {points.map((p) => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ═══ 4. АНАЛИТИКА ═══ */}
+      {/* ═══ 2. ЗНАКОМО? ═══ */}
       <section className="bg-ink-wash py-14 lg:py-20">
-        <Container className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              eyebrow="Аналитика"
-              title="Видно, за что вы платите"
-              lead="В кабинете бренда — цифры по каждому средству. Только обезличенные данные: мы не передаём брендам email, анкеты кожи и полки конкретных людей."
-            />
-            <div className="mt-6 flex items-center gap-3 text-sm text-ink-muted">
-              <BarChart3 className="h-5 w-5 shrink-0 text-foreground" aria-hidden />
-              Реакции и анкеты кожи показываем только агрегатом от 10 человек.
-            </div>
+        <Container>
+          <div className="text-center">
+            <h2 className="text-[26px] font-semibold sm:text-[34px]">Знакомо?</h2>
+            <p className="mt-2 text-base text-ink-muted">Типичные задачи косметических брендов в онлайне.</p>
           </div>
-          <ul className="divide-y divide-ink-hair rounded-2xl bg-white px-6 shadow-glass lg:col-span-7">
-            {ANALYTICS.map((a) => (
-              <li key={a.title} className="flex items-center justify-between gap-4 py-4">
-                <span className="text-[15px] leading-snug">{a.title}</span>
-                <Badge variant={a.tier === "Бесплатно" ? "success" : a.tier === "Бренд Про" ? "teal" : "default"} className="shrink-0">
-                  {a.tier}
-                </Badge>
-              </li>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {PAINS.map((p) => (
+              <div key={p.title} className="rounded-2xl bg-white p-6 shadow-glass">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50">
+                  <AlertCircle className="h-5 w-5 text-brand" aria-hidden />
+                </span>
+                <h3 className="mt-4 text-base font-semibold">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{p.text}</p>
+              </div>
             ))}
-          </ul>
+          </div>
         </Container>
       </section>
 
-      {/* ═══ 5. ДОВЕРИЕ ═══ */}
+      {/* ═══ 3. ТРИ ШАГА ═══ */}
       <section className="py-14 lg:py-20">
         <Container>
-          <SectionHeading
-            eyebrow="Правило Buty"
-            title="Оценки не продаются"
-            lead="Наша аудитория доверяет разбору, потому что он одинаковый для всех. Это доверие и делает ваши ссылки и промокоды рабочими."
-          />
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            <div className="rounded-2xl border border-ink-hair p-7">
-              <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <ShieldCheck className="h-5 w-5 text-success" aria-hidden /> Бренд может
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {CAN.map((t) => (
-                  <li key={t} className="flex gap-2.5 text-[15px] leading-snug">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-ink-hair p-7">
-              <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <X className="h-5 w-5 text-coral-600" aria-hidden /> Бренд не может ни на каком тарифе
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {CANNOT.map((t) => (
-                  <li key={t} className="flex gap-2.5 text-[15px] leading-snug">
-                    <X className="mt-0.5 h-4 w-4 shrink-0 text-coral-600" aria-hidden />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <Divider />
-
-      {/* ═══ 6. ТАРИФЫ ═══ */}
-      <section id="tarify" className="scroll-mt-20 py-14 lg:py-20">
-        <Container>
-          <SectionHeading
-            eyebrow="Тарифы"
-            title="Начните бесплатно, платите за то, что работает"
-            lead={`Все цены в месяц. К любому платному тарифу можно добавить +${EXTRA_PRODUCTS_PACK.count} средств за ${formatRub(EXTRA_PRODUCTS_PACK.monthly)} в месяц.`}
-          />
-
-          <div className="mt-8 rounded-2xl bg-brand-50 p-5 sm:p-6">
-            <p className="text-base font-semibold text-brand-800">
-              Брендам-основателям: −{FOUNDING_OFFER.discountPercent}% на {FOUNDING_OFFER.months}{" "}
-              {pluralRu(FOUNDING_OFFER.months, "месяц", "месяца", "месяцев")}
-            </p>
-            <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-              Первые {FOUNDING_OFFER.brands} брендов, которые подключатся к платному тарифу,
-              получают скидку {FOUNDING_OFFER.discountPercent}%. Например, Витрина — {formatRub(9950)} в месяц вместо {formatRub(19900)}.
-            </p>
-          </div>
-
-          <div className="mt-8">
-            <BrandPricing />
-          </div>
-
-          {/* Сравнение */}
-          <h3 className="mt-14 text-[22px] font-semibold">Сравнение тарифов</h3>
-          <div className="mt-5 overflow-x-auto rounded-2xl border border-ink-hair">
-            <table className="w-full min-w-[720px] border-collapse text-left">
-              <thead>
-                <tr className="bg-ink-wash">
-                  <th scope="col" className="px-4 py-3 text-sm font-semibold">
-                    Возможность
-                  </th>
-                  {COMPARE_HEAD.map((h) => (
-                    <th
-                      key={h}
-                      scope="col"
-                      className={cn("px-3 py-3 text-center text-sm font-semibold", h === "Витрина" && "text-brand-700")}
-                    >
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARE.map((row) => (
-                  <tr key={row.label} className="border-t border-ink-hair">
-                    <th scope="row" className="px-4 py-3 text-sm font-normal text-ink-soft">
-                      {row.label}
-                    </th>
-                    {row.cells.map((c, i) => (
-                      <td key={COMPARE_HEAD[i]} className="px-3 py-3 text-center">
-                        <CompareCell value={c} />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Container>
-      </section>
-
-      {/* ═══ 7. КАК ПОДКЛЮЧИТЬСЯ ═══ */}
-      <section className="bg-ink-wash py-14 lg:py-20">
-        <Container>
-          <SectionHeading eyebrow="Как подключиться" title="Четыре шага до первых переходов" />
-          <ol className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s, i) => (
-              <li key={s.title} className="rounded-2xl bg-white p-7 shadow-glass">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-sm font-semibold text-white">
-                  {i + 1}
+          <h2 className="text-center text-[26px] font-semibold sm:text-[34px]">Три шага до новых покупателей</h2>
+          <ol className="mt-12 grid gap-10 md:grid-cols-3">
+            {STEPS.map(({ icon: Icon, title, text, tag }) => (
+              <li key={title} className="text-center">
+                <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-ink-wash">
+                  <Icon className="h-8 w-8 text-brand" strokeWidth={1.5} aria-hidden />
                 </span>
-                <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{s.text}</p>
+                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                <p className="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-ink-muted">{text}</p>
+                <span className="mt-3 inline-block rounded-md bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-700">
+                  {tag}
+                </span>
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      {/* ═══ 8. FAQ ═══ */}
-      <section className="py-14 lg:py-20">
-        <Container className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-4">
-            <SectionHeading eyebrow="Вопросы" title="Частые вопросы брендов" />
-            <p className="mt-4 text-[15px] leading-relaxed text-ink-muted">
-              Не нашли ответ? Напишите в заявке — ответим по email.
+      {/* ═══ 4. КАК ЭТО ВЫГЛЯДИТ ═══ */}
+      <section className="border-t border-ink-hair py-14 lg:py-20">
+        <Container className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-6">
+            <h2 className="text-[26px] font-semibold leading-tight sm:text-[34px]">Как это выглядит в карточке средства</h2>
+            <p className="mt-3 text-base leading-relaxed text-ink-muted">
+              Нажмите «Показать промокод» в примере — так его видит покупательница.
+            </p>
+            <ul className="mt-8 divide-y divide-ink-hair">
+              {FEATURES.map(({ icon: Icon, title, text }) => (
+                <li key={title} className="flex gap-4 py-4 first:pt-0">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50">
+                    <Icon className="h-5 w-5 text-brand" strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <div>
+                    <h3 className="text-base font-semibold">{title}</h3>
+                    <p className="mt-1 text-[15px] leading-relaxed text-ink-muted">{text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="min-w-0 lg:col-span-6">
+            <BrandCardPreview />
+          </div>
+        </Container>
+      </section>
+
+      {/* ═══ 5. ПОЧЕМУ BUTY, А НЕ ТОЛЬКО РЕКЛАМА ═══ */}
+      <section className="border-t border-ink-hair py-14 lg:py-20">
+        <Container>
+          <div className="text-center">
+            <h2 className="text-[26px] font-semibold sm:text-[34px]">Почему Buty, а не только реклама на маркетплейсе?</h2>
+            <p className="mx-auto mt-2 max-w-2xl text-base text-ink-muted">
+              Разница между карточкой рядом с разбором состава и ещё одним рекламным местом в выдаче.
             </p>
           </div>
-          <div className="divide-y divide-ink-hair border-y border-ink-hair lg:col-span-8">
+          <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-12">
+            <div className="overflow-hidden rounded-3xl border border-ink-hair bg-white shadow-glass lg:col-span-8">
+              <div className="grid grid-cols-[1fr_1.2fr_1.2fr] bg-foreground text-sm font-semibold text-white">
+                <div className="px-4 py-4 sm:px-5">Что сравниваем</div>
+                <div className="flex items-center justify-center gap-1.5 px-2 py-4 text-center text-brand-300">
+                  <CircleCheck className="hidden h-4 w-4 sm:block" aria-hidden /> Buty
+                </div>
+                <div className="px-2 py-4 text-center text-white/60">Реклама на маркетплейсе</div>
+              </div>
+              {VERSUS.map((r, i) => (
+                <div
+                  key={r.label}
+                  className={cn("grid grid-cols-[1fr_1.2fr_1.2fr] items-center border-t border-ink-hair", i % 2 === 1 && "bg-ink-wash/60")}
+                >
+                  <div className="px-4 py-5 text-sm font-semibold sm:px-5">{r.label}</div>
+                  <div className="px-2 py-5 text-center">
+                    <div className="text-[15px] font-semibold text-brand-700 sm:text-base">{r.buty[0]}</div>
+                    <span className="mt-1 inline-block rounded-md bg-success-50 px-1.5 py-0.5 text-[11px] font-semibold text-success-700">
+                      {r.buty[1]}
+                    </span>
+                  </div>
+                  <div className="px-2 py-5 text-center">
+                    <div className="text-[15px] text-ink-soft sm:text-base">{r.ads[0]}</div>
+                    <div className="mt-1 text-[11px] text-ink-muted">{r.ads[1]}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="lg:col-span-4">
+              <BrandRoiCard />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ═══ 6. ЦЕНЫ ═══ */}
+      <section id="tarify" className="scroll-mt-20 bg-ink-wash py-14 lg:py-20">
+        <Container>
+          <BrandPricing />
+
+          <details className="group mt-10 rounded-2xl border border-ink-hair bg-white shadow-glass">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-base font-semibold [&::-webkit-details-marker]:hidden">
+              Сравнить все тарифы
+              <span className="text-sm font-medium text-ink-muted group-open:hidden">Показать</span>
+              <span className="hidden text-sm font-medium text-ink-muted group-open:inline">Скрыть</span>
+            </summary>
+            <div className="overflow-x-auto border-t border-ink-hair">
+              <table className="w-full min-w-[720px] border-collapse text-left">
+                <thead>
+                  <tr className="bg-ink-wash">
+                    <th scope="col" className="px-4 py-3 text-sm font-semibold">
+                      Возможность
+                    </th>
+                    {COMPARE_HEAD.map((h) => (
+                      <th key={h} scope="col" className="px-3 py-3 text-center text-sm font-semibold">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARE.map((row) => (
+                    <tr key={row.label} className="border-t border-ink-hair">
+                      <th scope="row" className="px-4 py-3 text-sm font-normal text-ink-soft">
+                        {row.label}
+                      </th>
+                      {row.cells.map((c, i) => (
+                        <td key={COMPARE_HEAD[i]} className="px-3 py-3 text-center">
+                          <CompareCell value={c} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="px-4 py-3 text-xs text-ink-muted">
+                +{EXTRA_PRODUCTS_PACK.count} средств к любому платному тарифу — {formatRub(EXTRA_PRODUCTS_PACK.monthly)} в месяц.
+              </p>
+            </div>
+          </details>
+        </Container>
+      </section>
+
+      {/* ═══ 7. FAQ ═══ */}
+      <section className="py-14 lg:py-20">
+        <Container className="max-w-3xl">
+          <h2 className="text-center text-[26px] font-semibold sm:text-[34px]">Частые вопросы</h2>
+          <div className="mt-10 space-y-3">
             {FAQ.map((f) => (
-              <details key={f.q} className="accordion-item">
+              <details key={f.q} className="accordion-item rounded-xl border border-ink-hair bg-ink-wash px-5">
                 <summary>{f.q}</summary>
                 <p className="pb-5 text-[15px] leading-relaxed text-ink-muted">{f.a}</p>
               </details>
@@ -503,28 +440,18 @@ export default async function ForBrandsPage() {
         </Container>
       </section>
 
-      {/* ═══ 9. ЗАЯВКА ═══ */}
-      <section id="zayavka" className="scroll-mt-20 bg-brand-50 py-14 lg:py-20">
-        <Container className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              eyebrow="Заявка"
-              title="Подключите бренд к Buty"
-              lead="Расскажите о бренде — вернёмся в течение пары рабочих дней с условиями и списком ваших средств в каталоге."
-            />
-            <ul className="check-list mt-6">
-              <li>Бренд-аккаунт — бесплатно</li>
-              <li>Договор и оплата по счёту</li>
-              <li>Без минимального срока на помесячных тарифах</li>
-            </ul>
-            <p className="mt-6 text-sm text-ink-muted">
-              Хотите сначала посмотреть каталог?{" "}
-              <Link href="/products" className="font-semibold underline underline-offset-4 hover:text-brand-700">
-                Перейти к средствам
-              </Link>
+      {/* ═══ 8. ФИНАЛЬНЫЙ CTA + ЗАЯВКА ═══ */}
+      <section id="zayavka" className="scroll-mt-20 bg-gradient-to-r from-[#FB4D6D] to-[#D70466] py-14 lg:py-20">
+        <Container className="max-w-3xl">
+          <div className="text-center text-white">
+            <h2 className="text-[28px] font-semibold leading-tight sm:text-[40px]">
+              Подключите бренд к Buty
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-base text-white/85 sm:text-lg">
+              Вернёмся в течение пары рабочих дней с условиями и списком ваших средств в каталоге.
             </p>
           </div>
-          <div className="rounded-3xl bg-white p-6 shadow-pop sm:p-8 lg:col-span-7">
+          <div className="mt-8 rounded-3xl bg-white p-6 shadow-pop sm:p-8">
             <BrandLeadForm />
           </div>
         </Container>

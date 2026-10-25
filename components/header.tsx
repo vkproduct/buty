@@ -14,7 +14,6 @@ const NAV = [
   { href: "/analyze", label: "Разбор" },
   { href: "/ingredients", label: "Ингредиенты" },
   { href: "/products", label: "Продукты" },
-  { href: "/pricing", label: "Тарифы" },
 ];
 
 /** Шапка сайта: навигация + состояние входа/выхода (клиентская сессия). */

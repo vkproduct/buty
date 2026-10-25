@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 import { getSession } from "@/lib/auth";
 import { analyzeText } from "@/lib/analysis/analyze";
-import { getUserPlan } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import { buildRoutine } from "@/lib/shelf/compatibility";
 import { loadShelfProducts } from "@/lib/shelf/data";
@@ -16,14 +15,11 @@ export const dynamic = "force-dynamic";
 
 /**
  * /shelf/export — печатная версия полки для сохранения в PDF.
- * Только Pro: free-пользователи отправляются на /pricing.
+ * Доступна любому вошедшему пользователю (все функции бесплатны с 24.10.2026).
  */
 export default async function ShelfExportPage() {
   const session = await getSession();
   if (!session?.user) redirect("/auth/signin");
-
-  const plan = await getUserPlan(session.user.id);
-  if (!plan.isPro) redirect("/pricing");
 
   const profile = await prisma.skinProfile.findUnique({
     where: { userId: session.user.id },

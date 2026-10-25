@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
@@ -70,11 +69,9 @@ interface Props {
   routine: Routine;
   reactions: ReactionView[];
   reminders: ReminderView[];
-  isPro: boolean;
-  reactionsLimited: boolean;
 }
 
-/** Вкладки «Моей полки»: средства + Pro-логика части 6 (гейтится по тарифу). */
+/** Вкладки «Моей полки»: все функции бесплатны (с 24.10.2026). */
 export function ShelfTabs(props: Props) {
   const [tab, setTab] = useState<TabId>("items");
   return (
@@ -93,9 +90,6 @@ export function ShelfTabs(props: Props) {
             )}
           >
             <Icon className="h-4 w-4" /> {label}
-            {!props.isPro && id === "routine" ? (
-              <Sparkles className="h-3 w-3 text-amber" />
-            ) : null}
           </button>
         ))}
       </div>
@@ -116,21 +110,13 @@ export function ShelfTabs(props: Props) {
           <CompatibilityTab
             pairs={props.pairs}
             duplicates={props.duplicates}
-            isPro={props.isPro}
           />
         ) : null}
-        {tab === "routine" ? (
-          props.isPro ? (
-            <RoutineTab routine={props.routine} />
-          ) : (
-            <LockedTab text="Персональный режим утро/вечер с порядком нанесения доступен в Pro." />
-          )
-        ) : null}
+        {tab === "routine" ? <RoutineTab routine={props.routine} /> : null}
         {tab === "reactions" ? (
           <ReactionsTab
             items={props.items}
             reactions={props.reactions}
-            limited={props.reactionsLimited}
           />
         ) : null}
         {tab === "reminders" ? (
@@ -138,19 +124,6 @@ export function ShelfTabs(props: Props) {
         ) : null}
       </div>
     </div>
-  );
-}
-
-/** Заглушка Pro-вкладки для бесплатного тарифа. */
-function LockedTab({ text }: { text: string }) {
-  return (
-    <GlassCard className="flex flex-col items-center gap-4 p-10 text-center">
-      <Sparkles className="h-8 w-8 text-amber" />
-      <p className="max-w-md text-sm text-muted-foreground">{text}</p>
-      <Button asChild size="sm">
-        <Link href="/pricing">Перейти на Pro</Link>
-      </Button>
-    </GlassCard>
   );
 }
 
@@ -208,11 +181,9 @@ function CompatibilitySummary({
 function CompatibilityTab({
   pairs,
   duplicates,
-  isPro,
 }: {
   pairs: PairResult[];
   duplicates: DuplicateGroup[];
-  isPro: boolean;
 }) {
   return (
     <div className="space-y-6">
@@ -276,19 +247,6 @@ function CompatibilityTab({
           </div>
         </div>
       ) : null}
-
-      {!isPro ? (
-        <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-4">
-          <p className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Sparkles className="h-4 w-4 shrink-0 text-amber" />
-            На бесплатном тарифе проверяется совместимость средств на полке.
-            Pro снимает лимит полки и добавляет поиск дублей и режим утро/вечер.
-          </p>
-          <Button asChild size="sm" variant="secondary">
-            <Link href="/pricing">Подробнее о Pro</Link>
-          </Button>
-        </GlassCard>
-      ) : null}
     </div>
   );
 }
@@ -351,11 +309,9 @@ function RoutineTab({ routine }: { routine: Routine }) {
 function ReactionsTab({
   items,
   reactions,
-  limited,
 }: {
   items: ShelfItemView[];
   reactions: ReactionView[];
-  limited: boolean;
 }) {
   const router = useRouter();
   const [itemId, setItemId] = useState("");
@@ -467,16 +423,6 @@ function ReactionsTab({
               ) : null}
             </GlassCard>
           ))}
-          {limited ? (
-            <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-4">
-              <p className="text-xs text-muted-foreground">
-                Показаны последние реакции. Полная история без лимита — в Pro.
-              </p>
-              <Button asChild size="sm" variant="secondary">
-                <Link href="/pricing">Открыть историю</Link>
-              </Button>
-            </GlassCard>
-          ) : null}
         </div>
       )}
     </div>

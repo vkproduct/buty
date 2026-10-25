@@ -21,8 +21,10 @@ export const GOALS = {
   signupComplete: "signup_complete",
   skinProfileComplete: "skin_profile_complete",
   shelfAdd: "shelf_add",
+  /** Не используется с 24.10.2026: лимита полки больше нет, все функции бесплатны. */
   shelfLimit: "shelf_limit",
   whereToBuy: "where_to_buy",
+  /** Не используются с 24.10.2026: подписки Pro сняты, оплата отключена (B2B-монетизация). */
   paymentStart: "payment_start",
   paymentSuccess: "payment_success",
   brandLead: "brand_lead",

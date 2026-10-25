@@ -90,12 +90,15 @@ export function errorMessage(error: unknown): string {
 }
 
 /**
- * Текст ошибки добавления на полку. Лимит бесплатного тарифа объясняем
- * без призыва купить: оплата в приложении не предусмотрена (правила App Store 3.1.1).
+ * Текст ошибки добавления на полку. Лимита полки нет (все функции бесплатны
+ * с 24.10.2026), PAYWALL сервер больше не возвращает — ветка оставлена
+ * для старых версий сервера.
  */
-export function shelfAddErrorMessage(error: unknown, freeLimit = 2): string {
+export function shelfAddErrorMessage(error: unknown, freeLimit: number | null = null): string {
   if (error instanceof ApiError && error.code === 'PAYWALL') {
-    return `На бесплатном тарифе на полке до ${freeLimit} средств. Уберите одно из них, чтобы добавить новое.`;
+    return freeLimit
+      ? `На бесплатном тарифе на полке до ${freeLimit} средств. Уберите одно из них, чтобы добавить новое.`
+      : 'Полка переполнена. Уберите одно из средств, чтобы добавить новое.';
   }
   return errorMessage(error);
 }

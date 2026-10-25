@@ -10,7 +10,6 @@ const COLUMNS = [
     links: [
       { href: "/analyze", label: "Разбор состава" },
       { href: "/shelf", label: "Моя полка" },
-      { href: "/pricing", label: "Тарифы" },
       { href: "/for-brands", label: "Брендам" },
     ],
   },

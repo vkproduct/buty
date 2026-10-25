@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
-import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT } from "@/lib/billing";
 import { jsonError } from "@/lib/mobile/http";
 import { prisma } from "@/lib/prisma";
 import { loadShelfView } from "@/lib/shelf/view";
@@ -10,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * GET /api/mobile/shelf — вся «Моя полка» одним запросом: средства,
- * совместимость, дубли и режим (Pro), реакции, напоминания.
+ * совместимость, дубли и режим, реакции, напоминания.
  * Без профиля кожи — 409 NEED_PROFILE (приложение откроет анкету).
  */
 export async function GET() {
@@ -27,6 +26,8 @@ export async function GET() {
       isPro: view.plan.isPro,
       currentPeriodEnd: view.plan.currentPeriodEnd?.toISOString() ?? null,
     },
-    limits: { freeShelf: FREE_SHELF_LIMIT, freeReactions: FREE_REACTIONS_LIMIT },
+    // Лимитов нет (все функции бесплатны с 24.10.2026); поле оставлено
+    // для совместимости со старыми версиями приложения — null вместо чисел.
+    limits: { freeShelf: null, freeReactions: null },
   });
 }

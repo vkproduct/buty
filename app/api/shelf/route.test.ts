@@ -32,26 +32,24 @@ function post(body: unknown) {
   );
 }
 
-describe("POST /api/shelf — лимит free-тарифа", () => {
+describe("POST /api/shelf — без лимита (все функции бесплатны)", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     getSession.mockResolvedValue({ user: USER });
     productFindUnique.mockResolvedValue({ id: "p1" } as never);
     create.mockResolvedValue({ id: "item1" } as never);
-    subFindUnique.mockResolvedValue(null); // free
+    subFindUnique.mockResolvedValue(null); // подписки нет
   });
 
-  it("free с 2 средствами получает 402 PAYWALL", async () => {
+  it("третье средство добавляется на полку без подписки (201)", async () => {
     count.mockResolvedValue(2);
     const res = await post({ productId: "p1" });
-    expect(res.status).toBe(402);
-    const data = await res.json();
-    expect(data.code).toBe("PAYWALL");
-    expect(create).not.toHaveBeenCalled();
+    expect(res.status).toBe(201);
+    expect(create).toHaveBeenCalledOnce();
   });
 
-  it("free с 1 средством добавляет", async () => {
-    count.mockResolvedValue(1);
+  it("десятое средство добавляется на полку без подписки (201)", async () => {
+    count.mockResolvedValue(9);
     const res = await post({ productId: "p1" });
     expect(res.status).toBe(201);
     expect(create).toHaveBeenCalledOnce();

@@ -98,9 +98,9 @@ These are the Mixpanel events currently tracked in this project. **All new Mixpa
 | `sign_up_completed` | Mobile app: first successful `verify-code` for a new email | `sign_up_method` (`"email_code"`), `platform` (`"mobile_app"`) | `app/api/mobile/auth/verify-code/route.ts` (server) |
 | `composition_analyzed` | `/api/analyze` returned a successful analysis (Value Moment) | `input_method` (`"text"`/`"photo"`), `recognized`, `total`, `actives`, `fragrances`, `alcohols`, `spf_filters`, `conflicts` (numbers), + super property `platform: "web"` | `components/analyze-view.tsx` (`runAnalysis`, client) |
 | `partner_link_clicked` | Click on a `/go/[productId]` partner link («Где купить») | `product_id`, `source` (query param, default `"direct"`), + super property `platform: "web"` | `components/analytics/mixpanel-tracker.tsx` (delegated click, client) |
-| `payment_started` | Click «Оплатить» on /pricing (start of checkout) | `period` (`"month"`/`"year"`), `price` (number, ₽) | `components/pricing-client.tsx` (`pay`, client) |
-| `payment_completed` | Payment callback confirmed and Pro granted | `period` (`"month"`/`"year"`), `plan` (`"pro"`), `platform` (auto) | `app/api/payments/callback/route.ts` (server) |
-| `product_added_to_shelf` | `POST /api/shelf` created an item (201) | `add_method` (`"product"`/`"custom"`), `is_pro` (boolean), `shelf_count` (number), `has_inci` (boolean, custom only), `product_id` (product method only), `platform` (auto) | `app/api/shelf/route.ts` (server) |
+| ~~`payment_started`~~ | Не используется с 24.10.2026: подписки Pro сняты, `components/pricing-client.tsx` удалён вместе с /pricing | — | — |
+| `payment_completed` | Payment callback confirmed and Pro granted (код отключён флагом `USER_FEATURES_FREE`, но колбэк живёт для будущего B2B) | `period` (`"month"`/`"year"`), `plan` (`"pro"`), `platform` (auto) | `app/api/payments/callback/route.ts` (server) |
+| `product_added_to_shelf` | `POST /api/shelf` created an item (201) | `add_method` (`"product"`/`"custom"`), `shelf_count` (number), `has_inci` (boolean, custom only), `product_id` (product method only), `platform` (auto) | `app/api/shelf/route.ts` (server) |
 
 ### Super properties
 

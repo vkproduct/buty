@@ -1,12 +1,13 @@
 /**
  * Полная модель «Моей полки» для отображения: средства, совместимость,
- * дубли и режим (Pro), реакции и напоминания с учётом тарифа.
+ * дубли и режим, реакции и напоминания. Все функции бесплатны
+ * (с 24.10.2026), лимитов тарифа нет.
  * Общая для страницы /shelf и мобильного API /api/mobile/shelf.
  */
 import type { SkinProfile } from "@prisma/client";
 
 import { analyzeText } from "@/lib/analysis/analyze";
-import { FREE_REACTIONS_LIMIT, getUserPlan, type PlanInfo } from "@/lib/billing";
+import { getUserPlan, type PlanInfo } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import {
   buildCompatibilityMatrix,
@@ -48,7 +49,7 @@ export interface ShelfItemData {
   unrecognizedCount: number;
   /** Активные (ещё не сработавшие) напоминания */
   reminders: ShelfReminderBrief[];
-  /** Реакции на средство (на free — в пределах видимой истории) */
+  /** Реакции на средство */
   reactions: ShelfReactionBrief[];
 }
 
@@ -78,8 +79,6 @@ export interface ShelfView {
   duplicates: DuplicateGroup[];
   routine: Routine;
   reactions: ShelfReactionData[];
-  /** На free скрыта часть истории реакций */
-  reactionsLimited: boolean;
   reminders: ShelfReminderData[];
 }
 
@@ -152,29 +151,22 @@ export async function loadShelfView(userId: string, profile: SkinProfile): Promi
 
   const plan = await getUserPlan(userId);
 
-  // Совместимость считается для всех: на free полка ограничена
-  // FREE_SHELF_LIMIT средствами, Pro — вся полка без лимита.
-  // Поиск дублей и режим утро/вечер — только Pro.
+  // Совместимость, поиск дублей и режим считаются всегда: лимита полки нет,
+  // все функции бесплатны (с 24.10.2026).
   const products = await loadShelfProducts(userId, true);
   const ingredientIds = [...new Set(products.flatMap((p) => p.actives.map((a) => a.id)))];
   const edges = await loadConflictEdges(ingredientIds);
   const pairs = buildCompatibilityMatrix(products, edges);
-  let duplicates: DuplicateGroup[] = [];
-  let routine: Routine = { morning: [], evening: [], notes: [] };
-  if (plan.isPro) {
-    duplicates = findDuplicates(products);
-    routine = buildRoutine(products, profile);
-  }
+  const duplicates = findDuplicates(products);
+  const routine = buildRoutine(products, profile);
 
-  // История реакций: free — последние FREE_REACTIONS_LIMIT, Pro — без лимита
+  // История реакций без лимита.
   const reactionRows = await prisma.skinReaction.findMany({
     where: { userId },
     include: { shelfItem: { include: { product: { select: { name: true } } } } },
     orderBy: { occurredAt: "desc" },
-    ...(plan.isPro ? {} : { take: FREE_REACTIONS_LIMIT + 1 }),
   });
-  const reactionsLimited = !plan.isPro && reactionRows.length > FREE_REACTIONS_LIMIT;
-  const visibleReactions = plan.isPro ? reactionRows : reactionRows.slice(0, FREE_REACTIONS_LIMIT);
+  const visibleReactions = reactionRows;
   const suspectIds = [
     ...new Set(visibleReactions.flatMap((r) => JSON.parse(r.suspectIngredientIds) as string[])),
   ];
@@ -243,7 +235,6 @@ export async function loadShelfView(userId: string, profile: SkinProfile): Promi
     duplicates,
     routine,
     reactions,
-    reactionsLimited,
     reminders,
   };
 }

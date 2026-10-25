@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BellRing, ChevronRight, FlaskConical, Plus, Search } from "lucide-react";
 
@@ -77,7 +76,7 @@ interface ProductHit {
   category: string;
 }
 
-/** Прочитать текст ошибки API (в т.ч. paywall 402 с лимитом полки). */
+/** Прочитать текст ошибки API. */
 async function readError(res: Response): Promise<string> {
   try {
     const data = (await res.json()) as { error?: string };
@@ -250,7 +249,6 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
       onAdded();
       return;
     }
-    if (res.status === 402) trackGoal(GOALS.shelfLimit); // лимит FREE_SHELF_LIMIT из /api/shelf
     setError(await readError(res));
   }
 
@@ -284,7 +282,6 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
       onAdded();
       return;
     }
-    if (res.status === 402) trackGoal(GOALS.shelfLimit); // лимит FREE_SHELF_LIMIT из /api/shelf
     setError(await readError(res));
   }
 
@@ -338,14 +335,7 @@ function AddItemForm({ onAdded }: { onAdded: () => void }) {
               </li>
             ) : null}
           </ul>
-          {error ? (
-            <p className="text-sm text-destructive">
-              {error}{" "}
-              <Link href="/pricing" className="font-medium text-brand hover:underline">
-                Тарифы
-              </Link>
-            </p>
-          ) : null}
+          {error ? <p className="text-sm text-destructive">{error}</p> : null}
         </div>
       ) : (
         <div className="space-y-3">

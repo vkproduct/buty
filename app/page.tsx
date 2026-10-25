@@ -9,7 +9,6 @@ import {
   FlaskConical,
   LayoutGrid,
   ListOrdered,
-  Minus,
   Sun,
 } from "lucide-react";
 
@@ -21,8 +20,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT } from "@/lib/billing";
-import { PLAN_PRICES } from "@/lib/payments/provider";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -44,11 +41,6 @@ export const metadata: Metadata = {
 // иначе сборка зависит от доступности БД и может не уложиться в лимит Vercel).
 export const dynamic = "force-dynamic";
 
-const rub = (n: number) => `${n.toLocaleString("ru-RU")} ₽`;
-const MONTH = PLAN_PRICES.month;
-const YEAR = PLAN_PRICES.year;
-const YEAR_PER_MONTH = Math.floor(YEAR / 12);
-const YEAR_PER_DAY = Math.round(YEAR / 365);
 /** Русское склонение после числа: 1 средство, 2 средства, 5 средств. */
 function plural(n: number, one: string, few: string, many: string): string {
   const n10 = n % 10;
@@ -57,8 +49,6 @@ function plural(n: number, one: string, few: string, many: string): string {
   if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return few;
   return many;
 }
-const pluralItems = (n: number) => `${n} ${plural(n, "средство", "средства", "средств")}`;
-const FREE_ITEMS = pluralItems(FREE_SHELF_LIMIT);
 const SIGNUP = "/auth/signin";
 
 interface Stats {
@@ -111,13 +101,11 @@ const SHELF_FEATURES = [
     icon: FlaskConical,
     title: "Проверка совместимости",
     text: "Для каждой пары средств — вердикт: «конфликт», «разнести по времени» или «можно вместе». Плюс поиск дублей.",
-    pro: true,
   },
   {
     icon: Sun,
     title: "Режим утро / вечер",
     text: "Готовый порядок нанесения с учётом конфликтов и чередования активов.",
-    pro: true,
   },
   {
     icon: AlertTriangle,
@@ -128,77 +116,6 @@ const SHELF_FEATURES = [
     icon: Bell,
     title: "Напоминания",
     text: "Напомним оценить новое средство через 28 дней и докупить привычное — через 90.",
-  },
-];
-
-/* ── Тарифы ── */
-type Feature = { text: string; on: boolean };
-const PLANS: {
-  id: string;
-  name: string;
-  price: string;
-  per: string;
-  note: string;
-  flag?: string;
-  highlight?: boolean;
-  cta: string;
-  href: string;
-  features: Feature[];
-}[] = [
-  {
-    id: "free",
-    name: "Free",
-    price: "0 ₽",
-    per: "",
-    note: "Без оплаты и привязки карты",
-    cta: "Начать бесплатно",
-    href: SIGNUP,
-    features: [
-      { text: "Разбор составов — всегда бесплатно", on: true },
-      { text: `Полка: ${FREE_ITEMS}`, on: true },
-      { text: `Реакции: последние ${FREE_REACTIONS_LIMIT}`, on: true },
-      { text: "Совместимость средств на полке", on: true },
-      { text: "Напоминания", on: true },
-      { text: "Поиск дублей", on: false },
-      { text: "Режим утро / вечер", on: false },
-      { text: "Экспорт полки в PDF", on: false },
-    ],
-  },
-  {
-    id: "year",
-    name: "Pro — год",
-    price: rub(YEAR),
-    per: "/год",
-    note: `≈ ${rub(YEAR_PER_MONTH)} в месяц · 2 месяца в подарок`,
-    flag: "Выгоднее",
-    highlight: true,
-    cta: "Оформить Pro на год",
-    href: "/pricing",
-    features: [
-      { text: "Всё из Free", on: true },
-      { text: "Полка без лимита средств", on: true },
-      { text: "Совместимость всей полки и поиск дублей", on: true },
-      { text: "Режим утро / вечер", on: true },
-      { text: "Вся история реакций", on: true },
-      { text: "Экспорт полки в PDF", on: true },
-    ],
-  },
-  {
-    id: "month",
-    name: "Pro — месяц",
-    price: rub(MONTH),
-    per: "/мес",
-    note: "Ежемесячная подписка",
-    cta: "Оформить Pro на месяц",
-    href: "/pricing",
-    features: [
-      { text: "Всё из Free", on: true },
-      { text: "Полка без лимита средств", on: true },
-      { text: "Совместимость всей полки и поиск дублей", on: true },
-      { text: "Режим утро / вечер", on: true },
-      { text: "Вся история реакций", on: true },
-      { text: "Экспорт полки в PDF", on: true },
-    ],
   },
 ];
 
@@ -227,20 +144,20 @@ const FAQ: { q: string; a: string }[] = [
     a: "Личный кабинет с вашими средствами ухода. Вы добавляете то, чем пользуетесь, а сервис проверяет, как средства сочетаются между собой, собирает порядок нанесения утром и вечером, находит дубли, ведёт дневник реакций кожи и напоминает оценить новое средство или докупить привычное.",
   },
   {
-    q: "Зачем Pro, если разбор состава бесплатный?",
-    a: "Разбор отвечает на вопрос, что внутри одного средства. Pro — на вопрос, как все ваши средства работают вместе: совместимость всей полки без лимита, поиск дублей, готовый режим утро/вечер, полная история реакций и экспорт полки в PDF.",
+    q: "Почему Buty бесплатный?",
+    a: "Мы зарабатываем на B2B: бренды и дистрибьюторы платят за обезличенную аналитику рынка и за ссылки на покупку своих средств. Ваши данные мы брендам не передаём, а оценки составов не продаются.",
+  },
+  {
+    q: "Есть ли лимит на полке?",
+    a: "Нет. Добавляйте сколько угодно средств, все функции полки бесплатны.",
   },
   {
     q: "Нужна ли регистрация?",
-    a: `Для разбора состава — нет. Для «Моей полки» нужен вход по email: пришлём ссылку, пароль не нужен. На бесплатном тарифе на полку можно добавить ${FREE_ITEMS}.`,
+    a: "Для разбора состава — нет. Для «Моей полки» нужен вход по email: пришлём ссылку, пароль не нужен.",
   },
   {
     q: "Как добавить средство, которого нет в каталоге?",
     a: "Добавьте его как «своё средство»: укажите название и вставьте состав (INCI-список). Активы из состава будут учтены в проверке совместимости и в режиме.",
-  },
-  {
-    q: `Что будет, когда на бесплатной полке уже ${FREE_ITEMS}?`,
-    a: "Добавленные средства останутся на полке, реакции и напоминания продолжат работать. Чтобы добавить следующее средство, понадобится Pro — в нём лимита нет.",
   },
   {
     q: "Почему в разборе нет точной концентрации ингредиента?",
@@ -430,13 +347,12 @@ export default async function HomePage() {
           <div className="mt-10 grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="min-w-0 lg:col-span-5">
               <ul className="divide-y divide-ink-hair">
-                {SHELF_FEATURES.map(({ icon: Icon, title, text, pro }) => (
+                {SHELF_FEATURES.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex gap-4 py-5 first:pt-0">
                     <Icon className="mt-0.5 h-6 w-6 shrink-0 text-foreground" strokeWidth={1.5} aria-hidden />
                     <div>
                       <h3 className="flex items-center gap-2 text-base font-semibold">
                         {title}
-                        {pro ? <Badge variant="brand">Pro</Badge> : null}
                       </h3>
                       <p className="mt-1 text-[15px] leading-relaxed text-ink-muted">{text}</p>
                     </div>
@@ -448,7 +364,7 @@ export default async function HomePage() {
                   <Link href={SIGNUP}>Собрать полку бесплатно</Link>
                 </Button>
                 <span className="text-sm leading-snug text-ink-muted">
-                  {FREE_ITEMS} — бесплатно,
+                  Всё бесплатно,
                   <br />
                   без карты
                 </span>
@@ -461,7 +377,7 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* ═══ 5. ПУТЬ: от разбора до Pro ═══ */}
+      {/* ═══ 5. ПУТЬ: от разбора до полки ═══ */}
       <section className="bg-ink-wash py-14 lg:py-20">
         <Container>
           <SectionHeading eyebrow="Как начать" title="Три шага к уходу, в котором всё сочетается" />
@@ -470,17 +386,14 @@ export default async function HomePage() {
               {
                 title: "Разберите состав",
                 text: "Бесплатно и без регистрации: функции, концентрации, доказательная база, конфликты.",
-                tag: "Free",
               },
               {
                 title: "Добавьте средства на полку",
-                text: `Вход по email без пароля. ${FREE_ITEMS} — бесплатно, с дневником реакций и напоминаниями.`,
-                tag: "Free",
+                text: "Вход по email без пароля. Полка без лимита, с дневником реакций и напоминаниями.",
               },
               {
-                title: "Подключите Pro",
-                text: `Совместимость всей полки, режим утро / вечер, поиск дублей и экспорт в PDF — от ${rub(YEAR_PER_MONTH)} в месяц.`,
-                tag: "Pro",
+                title: "Соберите режим",
+                text: "Совместимость всей полки, поиск дублей и готовый порядок нанесения утром и вечером.",
               },
             ].map((s, i) => (
               <li key={s.title} className="rounded-2xl bg-white p-7 shadow-glass">
@@ -488,7 +401,6 @@ export default async function HomePage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-base font-semibold text-white">
                     {i + 1}
                   </span>
-                  <Badge variant={s.tag === "Pro" ? "brand" : "outline"}>{s.tag}</Badge>
                 </div>
                 <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{s.text}</p>
@@ -498,69 +410,52 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* ═══ 6. ТАРИФЫ ═══ */}
+      {/* ═══ 6. ВСЁ БЕСПЛАТНО ═══ */}
       <section id="tarify" className="scroll-mt-20 py-14 lg:py-20">
         <Container>
           <SectionHeading
             center
             eyebrow="Стоимость"
-            title="Начните бесплатно — подключите Pro, когда полка вырастет"
-            lead={`Разбор составов бесплатный всегда. Pro на год — около ${YEAR_PER_DAY} ₽ в день: дешевле, чем одно средство, купленное зря или отложенное из-за раздражения.`}
+            title="Всё бесплатно — начните с разбора состава"
+            lead="Разбор составов и вся «Моя полка» бесплатны: без подписки, без карты, без лимитов."
           />
-          <div className="mx-auto mt-12 grid max-w-[1060px] items-stretch gap-6 md:grid-cols-3">
-            {PLANS.map((p) => (
-              <div
-                key={p.id}
-                className={cn(
-                  "relative flex flex-col rounded-2xl bg-white",
-                  p.highlight
-                    ? "border-2 border-foreground shadow-glass-lg"
-                    : "border border-ink-line",
-                )}
-              >
-                {p.flag ? (
-                  <span className="absolute -top-3.5 left-6 rounded-full bg-gradient-cta px-3 py-1.5 text-xs font-semibold leading-none text-white">
-                    {p.flag}
-                  </span>
-                ) : null}
-                <div className="mx-6 border-b border-ink-hair pb-5 pt-7">
-                  <h3 className="text-lg font-semibold">{p.name}</h3>
-                  <div className="mt-3 flex items-baseline gap-1.5">
-                    <span className="text-[32px] font-semibold leading-none tracking-tight">{p.price}</span>
-                    <span className="text-base text-ink-muted">{p.per}</span>
-                  </div>
-                  <p className="mt-2 text-sm leading-normal text-ink-muted">{p.note}</p>
+          <div className="mx-auto mt-12 max-w-[640px]">
+            <div className="relative flex flex-col rounded-2xl border-2 border-foreground bg-white shadow-glass-lg">
+              <div className="mx-6 border-b border-ink-hair pb-5 pt-7">
+                <h3 className="text-lg font-semibold">Бесплатно. Полностью.</h3>
+                <div className="mt-3 flex items-baseline gap-1.5">
+                  <span className="text-[32px] font-semibold leading-none tracking-tight">0 ₽</span>
                 </div>
-                <ul className="flex-grow px-6 py-5">
-                  {p.features.map((f) => (
-                    <li
-                      key={f.text}
-                      className={cn(
-                        "flex items-start gap-3 py-2 text-sm leading-normal",
-                        f.on ? "text-ink-soft" : "text-ink-faint line-through decoration-ink-line",
-                      )}
-                    >
-                      {f.on ? (
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" strokeWidth={2.5} aria-hidden />
-                      ) : (
-                        <Minus className="mt-0.5 h-4 w-4 shrink-0 text-ink-line" aria-hidden />
-                      )}
-                      {f.text}
-                    </li>
-                  ))}
-                </ul>
-                <div className="px-6 pb-6">
-                  <Button asChild variant={p.highlight ? "default" : "secondary"} className="w-full">
-                    <Link href={p.href}>{p.cta}</Link>
-                  </Button>
-                </div>
+                <p className="mt-2 text-sm leading-normal text-ink-muted">Без оплаты и привязки карты</p>
               </div>
-            ))}
+              <ul className="flex-grow px-6 py-5">
+                {[
+                  "Разбор составов текстом и по фото",
+                  "Полка без лимита",
+                  "Совместимость всех средств",
+                  "Режим утро / вечер",
+                  "Поиск дублей",
+                  "Дневник реакций и напоминания",
+                  "Экспорт полки в PDF",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-3 py-2 text-sm leading-normal text-ink-soft">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" strokeWidth={2.5} aria-hidden />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="px-6 pb-6">
+                <Button asChild className="w-full">
+                  <Link href={SIGNUP}>Собрать полку</Link>
+                </Button>
+              </div>
+            </div>
           </div>
-          <p className="mt-8 text-center text-sm text-ink-muted">
-            Подробности и оплата — на странице{" "}
-            <Link href="/pricing" className="font-semibold text-foreground underline underline-offset-4">
-              «Тарифы»
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-ink-muted">
+            Buty зарабатывает на аналитике для брендов, а не на вас. Оценки составов бренды не
+            покупают и не влияют на них.{" "}
+            <Link href="/for-brands" className="font-semibold text-foreground underline underline-offset-4">
+              Брендам
             </Link>
           </p>
         </Container>
@@ -659,7 +554,7 @@ export default async function HomePage() {
               </h2>
               <p className="mb-6 mt-2 text-[15px] leading-relaxed text-ink-muted">
                 Пришлём ссылку для входа на email — пароль не нужен.{" "}
-                {FREE_ITEMS} на полке, реакции и напоминания — бесплатно.
+                Вся полка, реакции и напоминания — бесплатно.
               </p>
               <SignInForm cta="Собрать полку бесплатно" />
             </div>
@@ -687,7 +582,7 @@ export default async function HomePage() {
             : "Проверка совместимости · поиск дублей · режим утро / вечер"
         }
         price="0 ₽"
-        priceNote={`${FREE_ITEMS} на полке`}
+        priceNote="вся полка бесплатно"
         href={SIGNUP}
         cta="Собрать полку"
       />

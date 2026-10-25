@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
-import { canAddShelfItem, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
 import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
 import { prisma } from "@/lib/prisma";
 
@@ -49,20 +48,10 @@ export async function POST(request: Request) {
     customInci?: unknown;
   };
 
-  // Лимит бесплатного тарифа: не больше FREE_SHELF_LIMIT средств на полке
-  const plan = await getUserPlan(session.user.id);
+  // Лимита полки нет: с 24.10.2026 все функции для пользователей бесплатны.
   const count = await prisma.shelfItem.count({
     where: { userId: session.user.id },
   });
-  if (!canAddShelfItem(plan.isPro, count)) {
-    return NextResponse.json(
-      {
-        error: `Бесплатный тариф — до ${FREE_SHELF_LIMIT} средств на полке. Перейдите на Pro, чтобы добавлять без ограничений.`,
-        code: "PAYWALL",
-      },
-      { status: 402 },
-    );
-  }
 
   if (typeof productId === "string" && productId) {
     const product = await prisma.product.findUnique({ where: { id: productId } });
@@ -75,7 +64,6 @@ export async function POST(request: Request) {
     trackServerEvent(session.user.id, "product_added_to_shelf", {
       add_method: "product",
       product_id: productId,
-      is_pro: plan.isPro,
       shelf_count: count + 1,
     });
     return NextResponse.json({ item }, { status: 201 });
@@ -101,7 +89,6 @@ export async function POST(request: Request) {
     trackServerEvent(session.user.id, "product_added_to_shelf", {
       add_method: "custom",
       has_inci: typeof customInci === "string" && customInci.length > 0,
-      is_pro: plan.isPro,
       shelf_count: count + 1,
     });
     return NextResponse.json({ item }, { status: 201 });

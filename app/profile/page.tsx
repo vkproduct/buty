@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { MousePointerClick, Sparkles } from "lucide-react";
+import { MousePointerClick } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
-import { getUserPlan } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -16,13 +14,12 @@ import { labelFor, migrateLegacy } from "@/lib/skin-profile/options";
 export const metadata: Metadata = { title: "Профиль" };
 export const dynamic = "force-dynamic";
 
-/** Профиль: тариф, косметический профиль и история партнёрских кликов. */
+/** Профиль: косметический профиль и история партнёрских кликов. */
 export default async function ProfilePage() {
   const session = await getSession();
   if (!session?.user) redirect("/auth/signin");
 
-  const [plan, profile, clicks] = await Promise.all([
-    getUserPlan(session.user.id),
+  const [profile, clicks] = await Promise.all([
     prisma.skinProfile.findUnique({ where: { userId: session.user.id } }),
     prisma.partnerClick.findMany({
       where: { userId: session.user.id },
@@ -40,25 +37,10 @@ export default async function ProfilePage() {
         <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-6">
           <div>
             <p className="text-sm text-muted-foreground">{session.user.email}</p>
-            <p className="mt-1 flex items-center gap-2 font-semibold">
-              Тариф:{" "}
-              {plan.isPro ? (
-                <Badge>
-                  <Sparkles className="mr-1 h-3 w-3" /> Pro
-                  {plan.currentPeriodEnd
-                    ? ` до ${plan.currentPeriodEnd.toLocaleDateString("ru-RU")}`
-                    : ""}
-                </Badge>
-              ) : (
-                <Badge variant="outline">Free</Badge>
-              )}
+            <p className="mt-1 text-sm text-muted-foreground">
+              Все функции Buty бесплатны.
             </p>
           </div>
-          {!plan.isPro ? (
-            <Button asChild size="sm">
-              <Link href="/pricing">Перейти на Pro</Link>
-            </Button>
-          ) : null}
         </GlassCard>
 
         {profile ? (

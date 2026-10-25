@@ -71,7 +71,7 @@ export interface SkinProfile {
 export interface Me {
   user: { id: string; email: string | null };
   plan: PlanInfo;
-  limits: { freeShelf: number; freeReactions: number };
+  limits: { freeShelf: number | null; freeReactions: number | null };
   shelfCount: number;
   profile: SkinProfile | null;
 }
@@ -213,7 +213,7 @@ export interface ShelfReminder {
 
 export interface ShelfView {
   plan: PlanInfo;
-  limits: { freeShelf: number; freeReactions: number };
+  limits: { freeShelf: number | null; freeReactions: number | null };
   items: ShelfItem[];
   pairs: PairResult[];
   duplicates: DuplicateGroup[];
@@ -252,6 +252,6 @@ export interface Dictionaries {
     allergenGroups: { title: string; options: AllergenOption[] }[];
     maxCustomLength: number;
   };
-  limits: { freeShelf: number; freeReactions: number };
+  limits: { freeShelf: number | null; freeReactions: number | null };
   links: { site: string; privacy: string; support: string };
 }

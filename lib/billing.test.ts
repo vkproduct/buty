@@ -5,12 +5,7 @@ vi.mock("@/lib/prisma", () => ({
 }));
 
 import { prisma } from "@/lib/prisma";
-import {
-  canAddShelfItem,
-  FREE_SHELF_LIMIT,
-  getUserPlan,
-  isProActive,
-} from "./billing";
+import { getUserPlan, isProActive, USER_FEATURES_FREE } from "./billing";
 
 const findUnique = vi.mocked(prisma.subscription.findUnique);
 
@@ -38,34 +33,11 @@ describe("isProActive", () => {
   });
 });
 
-describe("canAddShelfItem (paywall: лимит free)", () => {
-  it(`free упирается в лимит ${FREE_SHELF_LIMIT} средств`, () => {
-    expect(canAddShelfItem(false, 0)).toBe(true);
-    expect(canAddShelfItem(false, FREE_SHELF_LIMIT - 1)).toBe(true);
-    expect(canAddShelfItem(false, FREE_SHELF_LIMIT)).toBe(false);
-    expect(canAddShelfItem(false, FREE_SHELF_LIMIT + 5)).toBe(false);
-  });
-
-  it("pro добавляет без лимита", () => {
-    expect(canAddShelfItem(true, 0)).toBe(true);
-    expect(canAddShelfItem(true, 100)).toBe(true);
-  });
-});
-
-describe("getUserPlan", () => {
-  it("без подписки → free", async () => {
-    findUnique.mockResolvedValue(null);
+describe("getUserPlan при USER_FEATURES_FREE", () => {
+  it("возвращает полный доступ (isPro: true) всем, без запроса в БД", async () => {
+    expect(USER_FEATURES_FREE).toBe(true);
     const plan = await getUserPlan("u1");
-    expect(plan).toMatchObject({ plan: "free", isPro: false });
-  });
-
-  it("активная pro-подписка → pro", async () => {
-    findUnique.mockResolvedValue({
-      plan: "pro",
-      status: "active",
-      currentPeriodEnd: future,
-    } as never);
-    const plan = await getUserPlan("u1");
-    expect(plan).toMatchObject({ plan: "pro", isPro: true });
+    expect(plan).toEqual({ plan: "free", isPro: true, currentPeriodEnd: null });
+    expect(findUnique).not.toHaveBeenCalled();
   });
 });

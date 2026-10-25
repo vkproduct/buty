@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
-import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT, getUserPlan } from "@/lib/billing";
+import { getUserPlan } from "@/lib/billing";
 import { jsonError } from "@/lib/mobile/http";
 import { prisma } from "@/lib/prisma";
 
@@ -21,7 +21,9 @@ export async function GET() {
   return NextResponse.json({
     user: { id: session.user.id, email: session.user.email },
     plan: { isPro: plan.isPro, currentPeriodEnd: plan.currentPeriodEnd?.toISOString() ?? null },
-    limits: { freeShelf: FREE_SHELF_LIMIT, freeReactions: FREE_REACTIONS_LIMIT },
+    // Лимитов нет (все функции бесплатны с 24.10.2026); поле оставлено
+    // для совместимости со старыми версиями приложения — null вместо чисел.
+    limits: { freeShelf: null, freeReactions: null },
     shelfCount,
     profile,
   });

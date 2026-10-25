@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 
 type TabId = "items" | "compatibility" | "routine" | "reactions" | "reminders";
 
-const TABS: { id: TabId; label: string; icon: typeof LayoutGrid; pro?: boolean; hint: string }[] = [
+const TABS: { id: TabId; label: string; icon: typeof LayoutGrid; hint: string }[] = [
   {
     id: "items",
     label: "Средства",
@@ -30,14 +30,12 @@ const TABS: { id: TabId; label: string; icon: typeof LayoutGrid; pro?: boolean; 
     id: "compatibility",
     label: "Совместимость",
     icon: FlaskConical,
-    pro: true,
     hint: "Каждая пара средств проверяется на конфликты активов. Плюс поиск дублей — средств с одинаковыми активами.",
   },
   {
     id: "routine",
     label: "Мой режим",
     icon: Sun,
-    pro: true,
     hint: "Порядок нанесения утром и вечером — с учётом конфликтов и того, какие активы лучше работают ночью.",
   },
   {
@@ -89,14 +87,6 @@ const PAIR_STYLE = {
   ok: { label: "ОК", cls: "bg-success-50 text-success-700" },
 };
 
-function ProTag() {
-  return (
-    <span className="absolute -right-7 -top-1 rounded-full bg-gradient-cta px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
-      Pro
-    </span>
-  );
-}
-
 export function ShelfShowcase() {
   const [tab, setTab] = useState<TabId>("compatibility");
   const current = TABS.find((t) => t.id === tab)!;
@@ -109,7 +99,7 @@ export function ShelfShowcase() {
         aria-label="Разделы «Моей полки»"
         className="flex gap-2 overflow-x-auto border-b border-ink-hair px-3 sm:gap-4 sm:px-5"
       >
-        {TABS.map(({ id, label, icon: Icon, pro }) => (
+        {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             type="button"
@@ -131,7 +121,6 @@ export function ShelfShowcase() {
                 strokeWidth={1.5}
                 aria-hidden
               />
-              {pro ? <ProTag /> : null}
             </span>
             {label}
           </button>
@@ -243,9 +232,6 @@ export function ShelfShowcase() {
                 <p className="text-sm text-ink-muted">{r.note}</p>
               </li>
             ))}
-            <li className="text-sm text-ink-muted">
-              Free — последние 5 реакций, Pro — вся история.
-            </li>
           </ul>
         ) : null}
 

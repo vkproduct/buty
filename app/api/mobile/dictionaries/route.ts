@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 
-import { FREE_REACTIONS_LIMIT, FREE_SHELF_LIMIT } from "@/lib/billing";
 import { FLAG_META } from "@/lib/ingredients/flags";
 import { REMINDER_COPY, REMINDER_DELAYS_DAYS } from "@/lib/reminders/constants";
 import {
@@ -61,7 +60,9 @@ export async function GET() {
       allergenGroups: ALLERGEN_GROUPS,
       maxCustomLength: MAX_CUSTOM_LENGTH,
     },
-    limits: { freeShelf: FREE_SHELF_LIMIT, freeReactions: FREE_REACTIONS_LIMIT },
+    // Лимитов нет (все функции бесплатны с 24.10.2026); поле оставлено
+    // для совместимости со старыми версиями приложения — null вместо чисел.
+    limits: { freeShelf: null, freeReactions: null },
     links: {
       site: process.env.NEXT_PUBLIC_SITE_URL ?? "https://buty.app",
       privacy: "/privacy",

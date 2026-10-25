@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { NO_BRAND } from "./brand";
 import {
+  parseTypeCache,
   baseProductName,
   classifyInputLine,
   decideType,
@@ -261,5 +262,59 @@ describe("validateTypeResult: NO_BRAND", () => {
       NO_BRAND,
     );
     expect(r).not.toBeNull();
+  });
+});
+
+describe("parseTypeCache: приоритет ручных записей", () => {
+  const ai = (sku: string, type: string, over: Record<string, unknown> = {}) =>
+    JSON.stringify({ sku, fingerprint: "f", promptVersion: 4, model: "gemini-3.5-flash-lite", type, category: "other", confidence: 0.9, ...over });
+
+  it("manual побеждает ИИ-запись независимо от порядка строк", () => {
+    const manual = JSON.stringify({ sku: "s1", fingerprint: "f", promptVersion: 4, model: "manual", type: "освежитель для полости рта", category: "hygiene", confidence: 1 });
+    // manual ПОСЛЕ ИИ
+    const after = parseTypeCache([ai("s1", "не косметика"), manual].join("\n"));
+    expect(after.get("s1")?.model).toBe("manual");
+    // manual ДО ИИ
+    const before = parseTypeCache([manual, ai("s1", "не косметика")].join("\n"));
+    expect(before.get("s1")?.model).toBe("manual");
+    expect(before.get("s1")?.type).toBe("освежитель для полости рта");
+  });
+
+  it("среди ИИ-записей побеждает последняя, битые строки пропускаются", () => {
+    const cache = parseTypeCache([ai("s1", "шампунь"), "{бито", ai("s1", "гель для душа")].join("\n"));
+    expect(cache.get("s1")?.type).toBe("гель для душа");
+  });
+});
+
+describe("decideType: ручная запись (model manual)", () => {
+  it("применяется без порога, categorySource = manual", () => {
+    const fp = "f".repeat(40);
+    const d = decideType(
+      { sku: "s1", fingerprint: fp, promptVersion: 4, model: "manual", type: "средство для отбеливания зубов", category: "hygiene", confidence: 1 },
+      fp,
+      "other",
+    );
+    expect(d).toEqual({ category: "hygiene", categorySource: "manual", productType: "средство для отбеливания зубов", nonCosmetic: false });
+  });
+
+  it("ручная запись «не косметика» скрывает продукт", () => {
+    const fp = "f".repeat(40);
+    const d = decideType(
+      { sku: "s1", fingerprint: fp, promptVersion: 4, model: "manual", type: NON_COSMETIC_TYPE, category: "other", confidence: 1 },
+      fp,
+      "other",
+    );
+    expect(d.nonCosmetic).toBe(true);
+    expect(d.productType).toBeNull();
+    expect(d.category).toBe("other");
+  });
+
+  it("ручная запись с несовпавшим fingerprint игнорируется", () => {
+    const d = decideType(
+      { sku: "s1", fingerprint: "0".repeat(40), promptVersion: 4, model: "manual", type: "шампунь", category: "hair", confidence: 1 },
+      "f".repeat(40),
+      "other",
+    );
+    expect(d).toEqual({ category: "other", categorySource: "rules", productType: null, nonCosmetic: false });
   });
 });

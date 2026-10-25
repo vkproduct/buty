@@ -53,10 +53,12 @@ import {
   classifyInputLine,
   NON_COSMETIC_TYPE,
   normalizeTypeResult,
+  parseTypeCache,
   typeFingerprint,
   validateTypeResult,
   type TypeProductInput,
   type TypeResult,
+  type TypeCacheRow,
 } from "../lib/products/product-type";
 import { TYPE_PROMPT_VERSION, TYPE_RESPONSE_SCHEMA, TYPE_SYSTEM_PROMPT } from "../lib/products/product-type-prompt";
 
@@ -79,15 +81,9 @@ const CLASSIFY_MAX_REQUESTS = Number(process.env.CLASSIFY_MAX_REQUESTS ?? 800);
 
 const RETRY_DELAYS_MS = [5_000, 15_000, 45_000];
 
-interface CacheRow {
-  sku: string;
-  fingerprint: string;
-  promptVersion: number;
-  model: string;
-  type: string;
-  category: string;
-  confidence: number;
-  at: string;
+/** Строка кэша: общий TypeCacheRow + метка времени записи. */
+interface CacheRow extends TypeCacheRow {
+  at?: string;
 }
 
 /** Блокировка от параллельных прогонов — как в импорте. */
@@ -119,19 +115,13 @@ function releaseLock(): void {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/** Чтение кэша: последняя запись по каждому ключу (sku / slug). */
+/** Чтение кэша: последняя запись по каждому ключу; ручные (model "manual")
+ *  побеждают любые ИИ-записи независимо от порядка строк. */
 function loadCache(): Map<string, CacheRow> {
   const map = new Map<string, CacheRow>();
   if (!existsSync(TYPES_FILE)) return map;
-  for (const line of readFileSync(TYPES_FILE, "utf8").split("\n")) {
-    const t = line.trim();
-    if (!t) continue;
-    try {
-      const row = JSON.parse(t) as CacheRow;
-      if (row.sku) map.set(row.sku, row);
-    } catch {
-      // битая строка — пропускаем
-    }
+  for (const [key, row] of parseTypeCache(readFileSync(TYPES_FILE, "utf8"))) {
+    map.set(key, row as CacheRow);
   }
   return map;
 }
@@ -298,6 +288,7 @@ async function main() {
     const inputs: TypeProductInput[] = [];
     const metaByKey = new Map<string, { brand: string; name: string; slug: string; category: string; fingerprint: string }>();
     let cached = 0;
+    let manualSkipped = 0;
     for (const p of products) {
       const key = keyOf(p);
       if (!key) continue;
@@ -309,6 +300,12 @@ async function main() {
       };
       const fingerprint = typeFingerprint(input);
       const hit = cache.get(key);
+      // ручная запись (model "manual") не переклассифицируется никогда —
+      // ниже новой версии промпта, ни по CLASSIFY_SKUS_FILE / CLASSIFY_ALL
+      if (hit && hit.model === "manual") {
+        manualSkipped++;
+        continue;
+      }
       if (hit && hit.fingerprint === fingerprint && hit.promptVersion >= CLASSIFY_MIN_PROMPT_VERSION) {
         cached++;
         continue;
@@ -316,7 +313,7 @@ async function main() {
       inputs.push(input);
       metaByKey.set(key, { brand: p.brand, name: p.name, slug: p.slug, category: p.category, fingerprint });
     }
-    console.log(`К обработке: ${inputs.length} (уже в кэше: ${cached})`);
+    console.log(`К обработке: ${inputs.length} (уже в кэше: ${cached}, пропущено ручных: ${manualSkipped})`);
 
     mkdirSync(path.dirname(TYPES_FILE), { recursive: true });
 
@@ -397,6 +394,7 @@ async function main() {
       source: SOURCE,
       processed,
       cached,
+      manualSkipped,
       requests,
       rejected,
       failedBatches,

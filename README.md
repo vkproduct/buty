@@ -110,6 +110,22 @@ docker compose -f docker-compose.prod.yml exec -d app sh -c "CLASSIFY_SAMPLE=1 C
 переживают пересборку контейнера. Скачивайте их с сервера как актив
 (бэкапятся ежесуточным архивом `data-<дата>.tar.gz`).
 
+**Ручная правка типа продукта.** Записи с `model:"manual"` в
+`data/<источник>/product-types.jsonl` — приоритетнее ИИ-записей
+(независимо от порядка строк) и никогда не переклассифицируются:
+`pnpm db:classify-types` их пропускает (в логе «пропущено ручных: N»).
+Строку добавляют в конец файла на сервере (volume `./data`), поля —
+те же, что у ИИ-записи, но `model:"manual"` и `confidence:1`:
+
+```json
+{"sku":"<slug>","fingerprint":"<sha1>","promptVersion":4,"model":"manual","confidence":1,"type":"<тип>","category":"hygiene"}
+```
+
+Fingerprint считается от `sku|brand|name|rawIngredients` тем же
+`typeFingerprint`, что и классификатор (поля в БД на момент добавления).
+После правки применить: `TYPES_SOURCE=<источник> DRY_RUN=1 pnpm db:apply-types`
+(проверить), затем `DRY_RUN=0`.
+
 Импорт ЗЯ на проде — только в фоне, с пониженным приоритетом и не в рабочее
 время (полный прогон грузит VPS на несколько минут; параллельный запуск
 блокируется lock-файлом `/tmp/import-goldapple.lock` в контейнере):

@@ -17,28 +17,18 @@ import { PrismaClient } from "@prisma/client";
 import { existsSync, readFileSync } from "node:fs";
 
 import { INCIDB_PRODUCTS } from "../prisma/incidb-products.data";
-import { decideType, typeFingerprint, type TypeCacheRow, type TypeProductInput } from "../lib/products/product-type";
+import { decideType, parseTypeCache, typeFingerprint, type TypeCacheRow, type TypeProductInput } from "../lib/products/product-type";
 
 const prisma = new PrismaClient();
 const BATCH = 500;
 
 const TYPES_FILE = process.env.TYPES_FILE ?? "data/incidb/product-types.jsonl";
 
-/** Кэш ИИ-классификатора: последняя запись по каждому slug. Пустая Map, если файла нет. */
+/** Кэш ИИ-классификатора: последняя запись по каждому slug; ручные
+ *  (model "manual") побеждают любые ИИ-записи независимо от порядка строк. */
 function loadTypeCache(): Map<string, TypeCacheRow> {
-  const map = new Map<string, TypeCacheRow>();
-  if (!existsSync(TYPES_FILE)) return map;
-  for (const line of readFileSync(TYPES_FILE, "utf8").split("\n")) {
-    const t = line.trim();
-    if (!t) continue;
-    try {
-      const row = JSON.parse(t) as TypeCacheRow;
-      if (row.sku) map.set(row.sku, row);
-    } catch {
-      // битая строка — пропускаем
-    }
-  }
-  return map;
+  if (!existsSync(TYPES_FILE)) return new Map();
+  return parseTypeCache(readFileSync(TYPES_FILE, "utf8"));
 }
 
 async function main() {

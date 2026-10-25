@@ -23,7 +23,7 @@ import { normalizeInci } from "../lib/ingredients/normalize";
 import { matchTokens } from "../lib/ingredients/match";
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import { dupKey, resolveVariants, type VariantRow } from "../lib/products/goldapple-dedupe";
-import { typeFingerprint, decideType, type TypeCacheRow, type TypeDecision, type TypeProductInput } from "../lib/products/product-type";
+import { typeFingerprint, decideType, parseTypeCache, type TypeCacheRow, type TypeDecision, type TypeProductInput } from "../lib/products/product-type";
 import { TYPE_PROMPT_VERSION } from "../lib/products/product-type-prompt";
 import { PRODUCT_CATEGORY_LABEL } from "../lib/seo/labels";
 
@@ -37,21 +37,11 @@ const TYPES_FILE = process.env.TYPES_FILE ?? "data/goldapple/product-types.jsonl
 const DRY_RUN = process.env.DRY_RUN !== "0";
 const LOCK_PATH = "/tmp/import-goldapple.lock";
 
-/** Кэш типов из классификатора: последняя запись по каждому sku. Пустая Map, если файла нет. */
+/** Кэш типов из классификатора: последняя запись по каждому sku; ручные
+ *  (model "manual") побеждают любые ИИ-записи независимо от порядка строк. */
 function loadTypeCache(): Map<string, TypeCacheRow> {
-  const map = new Map<string, TypeCacheRow>();
-  if (!existsSync(TYPES_FILE)) return map;
-  for (const line of readFileSync(TYPES_FILE, "utf8").split("\n")) {
-    const t = line.trim();
-    if (!t) continue;
-    try {
-      const row = JSON.parse(t) as TypeCacheRow;
-      if (row.sku) map.set(row.sku, row);
-    } catch {
-      // битая строка — пропускаем
-    }
-  }
-  return map;
+  if (!existsSync(TYPES_FILE)) return new Map();
+  return parseTypeCache(readFileSync(TYPES_FILE, "utf8"));
 }
 
 /** Блокировка от параллельных прогонов: два импорта одновременно уже клали

@@ -43,13 +43,16 @@ export interface TypeCacheRow {
   type: string;
   category: string;
   confidence: number;
+  /** "manual" — ручная правка владельца: приоритетна над любыми ИИ-записями
+   *  и не переклассифицируется классификатором. */
+  model?: string;
 }
 
 export interface TypeDecision {
   category: string;
-  categorySource: "ai" | "rules";
+  categorySource: "ai" | "rules" | "manual";
   productType: string | null;
-  /** true — ИИ уверенно (confidence ≥ 0.6) определил, что это не косметика. */
+  /** true — уверенно (ИИ ≥0.6 или ручная запись) определено, что не косметика. */
   nonCosmetic: boolean;
 }
 
@@ -63,6 +66,8 @@ export interface TypeDecision {
  *   записи совпала с правилами (иначе типу нельзя верить); тип «не косметика»
  *   при низком confidence не доверяем — продукт остаётся видимым;
  * - записи нет или fingerprint другой → правила, типа нет;
+ * - запись ручная (model: "manual") → категория и тип из записи без порога,
+ *   categorySource "manual";
  * - если итоговый тип — «не косметика» → nonCosmetic, типа в title нет,
  *   категория "other".
  */
@@ -72,10 +77,15 @@ export function decideType(
   ruleCategory: string,
 ): TypeDecision {
   let category = ruleCategory;
-  let categorySource: "ai" | "rules" = "rules";
+  let categorySource: TypeDecision["categorySource"] = "rules";
   let productType: string | null = null;
   if (rec && rec.fingerprint === fingerprint) {
-    if (rec.confidence >= TYPE_MIN_CONFIDENCE) {
+    if (rec.model === "manual") {
+      // ручная правка владельца — авторитетна: без порога и без «ai»
+      category = rec.category;
+      categorySource = "manual";
+      productType = rec.type;
+    } else if (rec.confidence >= TYPE_MIN_CONFIDENCE) {
       category = rec.category;
       categorySource = "ai";
       productType = rec.type;
@@ -89,6 +99,31 @@ export function decideType(
     category = "other";
   }
   return { category, categorySource, productType, nonCosmetic };
+}
+
+/**
+ * Парсинг кэша product-types.jsonl (одна JSON-строка на ключ).
+ * Приоритет: запись с `model: "manual"` побеждает любую ИИ-запись
+ * независимо от порядка строк в файле; среди ИИ-записей побеждает последняя.
+ * Битые строки пропускаются.
+ */
+export function parseTypeCache(text: string): Map<string, TypeCacheRow> {
+  const map = new Map<string, TypeCacheRow>();
+  for (const line of text.split("\n")) {
+    const t = line.trim();
+    if (!t) continue;
+    try {
+      const row = JSON.parse(t) as TypeCacheRow;
+      if (!row.sku) continue;
+      const existing = map.get(row.sku);
+      if (row.model === "manual" || !existing || existing.model !== "manual") {
+        map.set(row.sku, row);
+      }
+    } catch {
+      // битая строка — пропускаем
+    }
+  }
+  return map;
 }
 
 /** Слова-обещания эффекта, запрещённые в типе средства. */

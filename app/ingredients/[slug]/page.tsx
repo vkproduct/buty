@@ -25,6 +25,7 @@ import {
   inciTitle,
   lowerFirst,
   type FaqItem,
+  withFreeNote,
 } from "@/lib/seo/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Button } from "@/components/ui/button";
@@ -152,9 +153,11 @@ export async function generateMetadata({
     ? `${ingredient.displayName} в составе косметики: что это, свойства и действие`
     : `${ingredient.displayName} (${inci}) в составе косметики: что это и как действует`;
   const description = clampDescription(
-    `${ingredient.displayName} (${inci}) — ${lowerFirst(ingredient.function)}. Как обозначается в составе, рабочая концентрация${
-      ingredient.typicalConc ? ` ${ingredient.typicalConc}` : ""
-    }, комедогенность, с чем сочетать и с чем нельзя.`
+    withFreeNote(
+      `${ingredient.displayName} (${inci}) — ${lowerFirst(ingredient.function)}. Как обозначается в составе, рабочая концентрация${
+        ingredient.typicalConc ? ` ${ingredient.typicalConc}` : ""
+      }, комедогенность, с чем сочетать и с чем нельзя.`
+    )
   );
   const path = `/ingredients/${ingredient.slug}`;
   return {

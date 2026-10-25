@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AnalyzeView } from "@/components/analyze-view";
+import { JsonLd } from "@/components/seo/json-ld";
 import { RelatedLandings } from "@/components/seo/landing-blocks";
 import { Container } from "@/components/ui/container";
-import { SITE_NAME } from "@/lib/seo/site";
+import { SITE_NAME, webApplicationJsonLd } from "@/lib/seo/site";
 
-const TITLE = "Разбор состава косметики онлайн: расшифровка ингредиентов на русском";
+const TITLE = "Бесплатный разбор состава косметики онлайн на русском";
 const DESCRIPTION =
-  "Разбор и анализ состава косметики онлайн: вставьте INCI-список — покажем функцию каждого ингредиента на русском, рабочую концентрацию, комедогенность, отдушки и конфликты активов. Бесплатно.";
+  "Бесплатный разбор состава косметики онлайн: вставьте INCI-список или фото — покажем функцию каждого ингредиента, комедогенность, отдушки и конфликты активов.";
 
 export function generateMetadata({
   searchParams,
@@ -37,6 +38,7 @@ export default function AnalyzePage({
   const fromPhoto = searchParams.photo === "1";
   return (
     <>
+      <JsonLd data={webApplicationJsonLd()} />
       <AnalyzeView initialText={initialText} fromPhoto={fromPhoto} />
       <section className="border-t border-ink-hair bg-white py-12">
         <Container className="space-y-5">

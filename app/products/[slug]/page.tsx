@@ -27,6 +27,7 @@ import {
   faqJsonLd,
   inciTitle,
   type FaqItem,
+  withFreeNote,
 } from "@/lib/seo/site";
 import { pluralRu } from "@/lib/utils";
 
@@ -150,14 +151,16 @@ export async function generateMetadata({
     .map((pi) => pi.ingredient.displayName.toLowerCase());
   const n = product.ingredients.length;
   const description = clampDescription(
-    `${type ? `${fullWithType}` : `Состав ${brand ? `${brandWithRu(brand)} ` : ""}${product.name}`}: расшифровка ${n} ${pluralRu(
-      n,
-      "ингредиента",
-      "ингредиентов",
-      "ингредиентов"
-    )} на русском${
-      actives.length ? `, ключевые активы — ${actives.join(", ")}` : ""
-    }. Комедогенные компоненты, отдушки, конфликты и аналоги по составу.`
+    withFreeNote(
+      `${type ? `${fullWithType}` : `Состав ${brand ? `${brandWithRu(brand)} ` : ""}${product.name}`}: расшифровка ${n} ${pluralRu(
+        n,
+        "ингредиента",
+        "ингредиентов",
+        "ингредиентов"
+      )} на русском${
+        actives.length ? `, ключевые активы — ${actives.join(", ")}` : ""
+      }. Комедогенные компоненты, отдушки, конфликты и аналоги по составу.`
+    )
   );
   const path = `/products/${product.slug}`;
   return {

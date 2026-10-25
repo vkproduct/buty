@@ -24,11 +24,11 @@ import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/json-ld";
 import { RelatedLandings } from "@/components/seo/landing-blocks";
-import { absoluteUrl, faqJsonLd, SITE_NAME } from "@/lib/seo/site";
+import { absoluteUrl, faqJsonLd, SITE_NAME, webApplicationJsonLd } from "@/lib/seo/site";
 
 const HOME_TITLE = "Проверить состав косметики онлайн бесплатно — разбор и расшифровка на русском";
 const HOME_DESCRIPTION =
-  "Проверка состава косметики онлайн: вставьте INCI-список — расшифруем каждый ингредиент на русском, покажем комедогенные компоненты, отдушки-аллергены и конфликты активов. Бесплатно, без регистрации.";
+  "Бесплатная проверка состава косметики онлайн: вставьте INCI-список — расшифруем каждый ингредиент на русском, покажем комедогенность, отдушки и конфликты активов.";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -191,6 +191,7 @@ export default async function HomePage() {
     name: SITE_NAME,
     url: absoluteUrl("/"),
     inLanguage: "ru",
+    isAccessibleForFree: true,
     description: HOME_DESCRIPTION,
     potentialAction: {
       "@type": "SearchAction",
@@ -202,6 +203,7 @@ export default async function HomePage() {
   return (
     <main>
       <JsonLd data={webSite} />
+      <JsonLd data={webApplicationJsonLd()} />
       <JsonLd data={faqJsonLd(FAQ)} />
       {/* ═══ 1. HERO: бесплатный разбор как вход в воронку ═══ */}
       <section id="hero">
@@ -231,7 +233,7 @@ export default async function HomePage() {
               </Button>
             </div>
             <p className="mt-4 text-sm text-ink-muted">
-              Разбор — без регистрации. Полка — вход по email, без пароля.
+              Всё бесплатно. Разбор — без регистрации, полка — вход по email без пароля.
             </p>
           </div>
 

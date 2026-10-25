@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 /** Единый OG-шаблон сайта (наследуется всеми страницами без своей OG-картинки). */
 
-export const alt = "Buty.app — научный разбор составов косметики";
+export const alt = "Buty.app — бесплатный научный разбор составов косметики";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -42,6 +42,21 @@ export default function OpengraphImage() {
             }}
           />
           Buty.app
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            marginTop: 28,
+            padding: "8px 20px",
+            borderRadius: 999,
+            background: "#FFF0F3",
+            color: "#FF385C",
+            fontSize: 28,
+            fontWeight: 700,
+          }}
+        >
+          Бесплатно · без регистрации
         </div>
         <div style={{ fontSize: 72, fontWeight: 600, letterSpacing: -2, lineHeight: 1.15, marginTop: 24 }}>
           Научный разбор составов косметики

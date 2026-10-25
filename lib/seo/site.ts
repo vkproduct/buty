@@ -74,3 +74,50 @@ export function inciTitle(inci: string): string {
     .toLowerCase()
     .replace(/[a-z]+/g, (w) => (KEEP_UPPER.test(w.toUpperCase()) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)));
 }
+
+/** С 24.10.2026 все функции для пользователей бесплатны — сообщаем это в сниппетах. */
+export const FREE_NOTE = " Бесплатно, без регистрации.";
+const FREE_NOTE_SHORT = " Бесплатно.";
+
+/**
+ * Дописывает к description пометку «Бесплатно», только если она помещается в лимит
+ * сниппета. Иначе возвращает текст без изменений (дальше его обрежет clampDescription).
+ */
+export function withFreeNote(text: string, max = 170): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (/бесплатн/i.test(clean)) return clean;
+  if (clean.length + FREE_NOTE.length <= max) return `${clean}${FREE_NOTE}`;
+  if (clean.length + FREE_NOTE_SHORT.length <= max) return `${clean}${FREE_NOTE_SHORT}`;
+  return clean;
+}
+
+/** schema.org WebApplication: сервис бесплатный (offers.price = 0). Рейтинги не выдумываем. */
+export function webApplicationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: SITE_NAME,
+    url: absoluteUrl("/"),
+    inLanguage: "ru",
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "Any",
+    browserRequirements: "Requires JavaScript",
+    isAccessibleForFree: true,
+    description:
+      "Бесплатная проверка и разбор состава косметики онлайн: расшифровка ингредиентов на русском, комедогенность, отдушки и конфликты активов.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "RUB",
+      availability: "https://schema.org/InStock",
+    },
+    featureList: [
+      "Разбор состава косметики текстом и по фото",
+      "Расшифровка ингредиентов на русском",
+      "Проверка на комедогенность",
+      "Конфликты активов",
+      "Полка без лимита и проверка совместимости",
+      "Режим утро / вечер",
+    ],
+  };
+}

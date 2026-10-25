@@ -28,6 +28,7 @@ import {
   sortProductCategories,
 } from "@/lib/seo/product-categories";
 import { brandWithRu } from "@/lib/seo/brands";
+import { clampDescription, withFreeNote } from "@/lib/seo/site";
 import { displayBrand, NO_BRAND } from "@/lib/products/brand";
 import { Container } from "@/components/ui/container";
 import { ChipRail } from "@/components/products/chip-rail";
@@ -104,14 +105,18 @@ export async function generateMetadata({
   if (landing) {
     return {
       title: `${landing}${pageSuffix}`,
-      description: `${landing}. Полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`,
+      description: clampDescription(
+        withFreeNote(
+          `${landing}. Полный INCI-состав каждого средства с расшифровкой на русском — активы, комедогенные компоненты, отдушки, конфликты и аналоги по составу.`
+        )
+      ),
       alternates: { canonical },
     };
   }
   return {
     title: `Составы косметики: разбор средств по брендам${pageSuffix}`,
     description:
-      "Разобранные составы популярной косметики: кремы, сыворотки, тоники, средства для умывания и SPF. Расшифровка каждого ингредиента, комедогенность, конфликты активов и аналоги по составу.",
+      "Бесплатный разбор составов популярной косметики: кремы, сыворотки, тоники, умывание и SPF. Расшифровка ингредиентов, комедогенность, конфликты и аналоги.",
     alternates: { canonical },
   };
 }

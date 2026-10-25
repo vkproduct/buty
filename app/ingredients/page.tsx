@@ -6,7 +6,7 @@ import type { Ingredient, Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { CATEGORY_LABEL, EVIDENCE_LABEL, EVIDENCE_META, EVIDENCE_ORDER } from "@/lib/seo/labels";
-import { inciTitle } from "@/lib/seo/site";
+import { clampDescription, inciTitle, withFreeNote } from "@/lib/seo/site";
 import {
   CATEGORY_GROUPS,
   CATEGORY_PLURAL,
@@ -113,14 +113,18 @@ export async function generateMetadata({
   if (landing) {
     return {
       title: `${landing}: список и расшифровка`,
-      description: `${landing}: как обозначаются в составе, зачем нужны в формуле, рабочие концентрации, комедогенность, доказательная база и конфликты — дерматологический разбор каждого ингредиента.`,
+      description: clampDescription(
+        withFreeNote(
+          `${landing}: как обозначаются в составе, зачем нужны в формуле, рабочие концентрации, комедогенность, доказательная база и конфликты — дерматологический разбор каждого ингредиента.`
+        )
+      ),
       alternates: { canonical: ingredientFiltersHref(filters, {}, { anchor: false }) },
     };
   }
   return {
     title: "Ингредиенты косметики: расшифровка составов на русском",
     description:
-      "Справочник компонентов косметики: как ингредиент обозначается в составе, что он делает, рабочая концентрация, комедогенность, доказательная база и конфликты активов.",
+      "Бесплатный справочник компонентов косметики: как ингредиент обозначается в составе, что делает, рабочая концентрация, комедогенность и конфликты активов.",
     alternates: { canonical: "/ingredients" },
   };
 }

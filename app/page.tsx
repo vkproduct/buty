@@ -220,7 +220,7 @@ export default async function HomePage() {
       <JsonLd data={faqJsonLd(FAQ)} />
 
       {/* ═══ 1. HERO: градиентная карточка с бесплатным разбором ═══ */}
-      <section id="hero" className="bg-portal pb-12 pt-8 sm:pt-12 lg:pb-16">
+      <section id="hero" className="bg-portal pb-12 pt-8 sm:pt-12 lg:pb-16 lg:pt-[clamp(24px,3vh,48px)]">
         <Container>
           <div className="relative overflow-hidden rounded-3xl bg-gradient-spotlight shadow-sm">
             {/* Декоративные кольца — «молекулы» на фоне, без смысловой нагрузки */}
@@ -237,24 +237,24 @@ export default async function HomePage() {
               className="pointer-events-none absolute -bottom-32 left-1/3 h-[360px] w-[360px] rounded-full bg-white/5"
             />
 
-            <div className="relative grid items-center gap-10 p-5 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:p-16">
+            <div className="relative grid items-center gap-10 p-5 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:px-16 lg:py-[clamp(32px,5vh,64px)]">
               <div className="text-white lg:col-span-7">
-                <Badge variant="glass" className="mb-6 px-3.5 py-1.5 text-[13px]">
+                <Badge variant="glass" className="mb-6 px-3.5 lg:mb-4 py-1.5 text-[13px]">
                   Доказательный уход, а не маркетинг
                 </Badge>
-                <h1 className="text-[29px] font-bold leading-[1.1] min-[400px]:text-[32px] sm:text-[48px] lg:text-[58px]">
+                <h1 className="text-[29px] font-bold leading-[1.1] min-[400px]:text-[32px] sm:text-[48px] lg:text-[clamp(40px,5.5vh,58px)]">
                   Проверьте состав косметики онлайн и&nbsp;узнайте, как она работает
                 </h1>
-                <p className="mt-5 max-w-xl text-lg font-medium leading-relaxed text-white/90">
+                <p className="mt-5 max-w-xl text-lg lg:mt-4 font-medium leading-relaxed text-white/90">
                   Разбираем составы по научным данным, а «Моя полка» проверяет,
                   сочетаются ли ваши средства, и собирает режим утро / вечер.
                 </p>
-                <ul className="check-list mt-6 [&>li::before]:border-white [&>li]:text-white/90">
+                <ul className="check-list mt-6 lg:mt-4 [&>li::before]:border-white [&>li]:text-white/90">
                   <li>Функция, рабочая концентрация и уровень доказательности каждого ингредиента</li>
                   <li>Конфликты активов — в одном средстве и между средствами</li>
                   <li>Готовый порядок нанесения для вашей полки</li>
                 </ul>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-6">
                   <Button asChild variant="white" size="lg" className="px-8">
                     <Link href="#razbor">Разобрать состав бесплатно</Link>
                   </Button>
@@ -262,7 +262,7 @@ export default async function HomePage() {
                     <Link href="#polka">Что такое «Моя полка»</Link>
                   </Button>
                 </div>
-                <p className="mt-4 text-sm text-white/75">
+                <p className="mt-4 text-sm text-white/75 lg:mt-3">
                   Всё бесплатно. Разбор — без регистрации, полка — вход по email без пароля.
                 </p>
               </div>

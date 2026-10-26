@@ -23,6 +23,7 @@
     },
     "production": {
       "autoIncrement": true,
+      "credentialsSource": "local",
       "android": {
         "buildType": "app-bundle"
       },
@@ -30,6 +31,7 @@
     },
     "rustore": {
       "extends": "production",
+      "credentialsSource": "local",
       "android": {
         "buildType": "apk"
       }

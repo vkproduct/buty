@@ -66,7 +66,12 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiUrl": "https://buty.app"
-    }
+      "apiUrl": "https://buty.app",
+      "router": {},
+      "eas": {
+        "projectId": "9e6450a7-5698-485f-bc8a-566337a82fe6"
+      }
+    },
+    "owner": "mrkuznetsov"
   }
 }

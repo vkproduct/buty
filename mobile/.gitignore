@@ -48,3 +48,6 @@ example
 
 # Ключ сервисного аккаунта Google Play (для eas submit) — секрет, в git не кладём
 google-play-service-account.json
+
+# Локальные credentials EAS (keystore подписи) — секрет, в git не кладём
+credentials.json

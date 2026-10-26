@@ -30,7 +30,6 @@ export default function OpengraphImage() {
             fontSize: 28,
             letterSpacing: -0.5,
             fontWeight: 700,
-            color: "#FF385C",
           }}
         >
           <span
@@ -38,10 +37,12 @@ export default function OpengraphImage() {
               width: 18,
               height: 18,
               borderRadius: 9,
-              background: "#FF385C",
+              background: "#FF395C",
             }}
           />
-          Buty.app
+          <span style={{ display: "flex", color: "#5D192E" }}>
+            Buty<span style={{ color: "#FF395C" }}>.app</span>
+          </span>
         </div>
         <div
           style={{

@@ -122,3 +122,21 @@ export function annualMonthly(monthly: number): number {
 export function formatRub(n: number): string {
   return `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
 }
+
+/** Лимит средств со ссылками по тарифу (null — без лимита). Должно совпадать с /for-brands. */
+export const PRODUCT_LIMIT: Record<TariffId, number | null> = {
+  free: 0,
+  basic: 30,
+  vitrina: 60,
+  pro: 200,
+  network: null,
+};
+
+/** Максимум ссылок на покупку на одно средство. */
+export const MAX_LINKS_PER_PRODUCT = 3;
+
+/** Дней после paidUntil, пока ссылки ещё показываются (отсрочка оплаты). */
+export const PAID_GRACE_DAYS = 3;
+
+/** Дата запуска этапа 1 — статистика кабинета собирается с неё. */
+export const BRAND_STATS_SINCE = "26.10.2026";

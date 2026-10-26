@@ -88,6 +88,8 @@ model Product {
   ingredients  ProductIngredient[]
   shelfItems   ShelfItem[]
   partnerClicks PartnerClick[]
+  links        ProductLink[]
+  dailyStats   ProductDailyStat[]
 
   @@index([brand])
   @@unique([source, externalId])
@@ -174,6 +176,7 @@ model User {
   partnerClicks PartnerClick[]
   mobileSessions MobileSession[]
   pushTokens    PushToken[]
+  brandMemberships BrandMember[]
 }
 
 enum ShelfStatus {
@@ -298,12 +301,16 @@ model PartnerClick {
   userId    String? // null — незалогиненный пользователь
   productId String
   source    String // откуда клик: product_page, shelf и т.д.
+  linkId    String? // ссылка бренда (null — старый механизм partnerUrl/wbSearch)
+  store     String? // код магазина (wildberries, ozon, brand_site…); null — старый путь
   createdAt DateTime @default(now())
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  link      ProductLink? @relation(fields: [linkId], references: [id], onDelete: SetNull)
 
   @@index([productId, createdAt])
   @@index([userId])
+  @@index([linkId])
 }
 
 // Заявка бренда со страницы /for-brands
@@ -378,4 +385,86 @@ model AiSummary {
   lastUsedAt    DateTime @default(now())
 
   @@index([createdAt])
+}
+
+// --- Кабинет бренда, этап 1: ссылки на покупку (тариф «Базовый») ---
+
+enum BrandTariff {
+  free
+  basic
+  vitrina
+  pro
+  network
+}
+
+enum BrandRole {
+  owner
+  editor
+}
+
+// Бренд-клиент (не путать с Product.brand — это просто строка из каталога)
+model Brand {
+  id              String        @id @default(cuid())
+  name            String // как показываем в кабинете: «La Roche-Posay»
+  slug            String        @unique
+  catalogBrands   String[] // значения Product.brand этого бренда (варианты написания), сравнение без учёта регистра
+  verifiedDomains String[] // домены официального сайта без www: ["brand.ru", "shop.brand.ru"]
+  tariff          BrandTariff   @default(free)
+  productLimit    Int? // ручное переопределение лимита средств; null — по тарифу
+  paidUntil       DateTime? // до какой даты оплачено; null — не оплачено
+  adLabel         String? // строка маркировки под ссылками (заполняет только админ)
+  notes           String? // заметки админа (договор, контакт)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  members         BrandMember[]
+  links           ProductLink[]
+}
+
+model BrandMember {
+  id        String    @id @default(cuid())
+  brandId   String
+  userId    String
+  role      BrandRole @default(editor)
+  createdAt DateTime  @default(now())
+  brand     Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, userId])
+  @@index([userId])
+}
+
+// Ссылка на покупку конкретного средства
+model ProductLink {
+  id            String    @id @default(cuid())
+  productId     String
+  brandId       String
+  store         String // brand_site | wildberries | ozon | goldapple | letual | yandex_market | megamarket
+  url           String // как ввёл бренд, без наших UTM
+  addUtm        Boolean   @default(true)
+  position      Int       @default(0) // 0 — главная кнопка
+  active        Boolean   @default(true) // бренд выключил / админ выключил
+  broken        Boolean   @default(false) // проверка: 2 раза подряд 404/410/5xx — скрываем с сайта
+  failCount     Int       @default(0)
+  lastStatus    Int?
+  lastCheckedAt DateTime?
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  brand         Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  clicks        PartnerClick[]
+
+  @@index([productId])
+  @@index([brandId])
+}
+
+// Просмотры карточек средств по дням (без персональных данных)
+model ProductDailyStat {
+  productId String
+  day       DateTime @db.Date // день по МСК
+  views     Int      @default(0)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, day])
 }

@@ -6,6 +6,7 @@ import { ExternalLink, FlaskConical, ShieldAlert } from "lucide-react";
 
 import { prisma } from "@/lib/prisma";
 import { displayBrand } from "@/lib/products/brand";
+import { getVisibleProductLinks, DEFAULT_LINKS_NOTE } from "@/lib/brands/product-links";
 import {
   CATEGORY_LABEL,
   EVIDENCE_LABEL,
@@ -17,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 import { JsonLd } from "@/components/seo/json-ld";
+import { ViewBeacon } from "@/components/products/view-beacon";
 import { brandRu, brandWithRu } from "@/lib/seo/brands";
 import { productCategoryPlural } from "@/lib/seo/product-categories";
 import { productFiltersQuery } from "@/lib/products/catalog-filters";
@@ -183,9 +185,10 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const ingredientIds = product.ingredients.map((pi) => pi.ingredientId);
-  const [conflicts, similar] = await Promise.all([
+  const [conflicts, similar, buyLinks] = await Promise.all([
     getInternalConflicts(ingredientIds),
     getSimilarProducts(product.id, ingredientIds),
+    getVisibleProductLinks(product.id),
   ]);
 
   const brand = displayBrand(product.brand);
@@ -323,6 +326,7 @@ export default async function ProductPage({
       <JsonLd data={jsonLd} />
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <JsonLd data={faqJsonLd(faq)} />
+      <ViewBeacon productId={product.id} />
       <Container className="space-y-8">
         <nav aria-label="Хлебные крошки" className="text-sm text-muted-foreground">
           <Link href="/products" className="hover:text-brand">
@@ -372,12 +376,30 @@ export default async function ProductPage({
             низким. Для каждого компонента указаны функция и уровень доказательности.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild>
-              <a href={`/go/${product.id}?source=product_page`} data-ym-goal="where_to_buy">
-                Где купить
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+            {buyLinks.length > 0 ? (
+              <>
+                {buyLinks.map((link, i) => (
+                  <Button key={link.id} asChild variant={i === 0 ? undefined : "outline"}>
+                    <a
+                      href={`/go/${product.id}?link=${link.id}&source=product_page`}
+                      data-ym-goal="where_to_buy"
+                      data-store={link.store}
+                      rel="nofollow sponsored"
+                    >
+                      {link.label}
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                ))}
+              </>
+            ) : (
+              <Button asChild>
+                <a href={`/go/${product.id}?source=product_page`} data-ym-goal="where_to_buy">
+                  Где купить
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
             {product.sourceUrl && (
               <Button asChild variant="outline">
                 <a href={product.sourceUrl} target="_blank" rel="noopener">
@@ -386,6 +408,11 @@ export default async function ProductPage({
               </Button>
             )}
           </div>
+          {buyLinks.length > 0 && (
+            <p className="text-xs text-muted-foreground">
+              {buyLinks[0].adLabel ?? DEFAULT_LINKS_NOTE}
+            </p>
+          )}
           {coverageKnown && (
             <p className="text-sm text-muted-foreground">
               Распознано {product.ingredientsRecognized} из {product.ingredientsTotal}{" "}

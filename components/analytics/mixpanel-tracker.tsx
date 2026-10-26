@@ -73,9 +73,13 @@ export function MixpanelTracker() {
       const url = new URL(el.href, window.location.origin);
       const productId = /^\/go\/([^/?]+)/.exec(url.pathname)?.[1];
       if (!productId) return;
+      const linkId = url.searchParams.get("link");
+      const store = el.dataset.store;
       trackEvent("partner_link_clicked", {
         product_id: productId,
         source: url.searchParams.get("source") ?? "direct",
+        ...(linkId ? { link_id: linkId } : {}),
+        ...(store ? { store } : {}),
       });
     }
     document.addEventListener("click", onClick, { capture: true });

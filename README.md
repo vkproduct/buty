@@ -137,6 +137,8 @@ docker compose -f docker-compose.prod.yml exec app tail -f /tmp/import-goldapple
 
 **Бэкапы.** Ежедневно в `/opt/buty-backups` (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`): дамп Postgres `buty-<дата>.sql.gz` + архив данных `data-<дата>.tar.gz` (CSV каталога ЗЯ, кэш ИИ-типов; `.env` не бэкапится). Локальная ротация 14 дней. Если в `/opt/buty/.env` заданы `BACKUP_S3_ENDPOINT`/`BACKUP_S3_BUCKET`/`BACKUP_S3_KEY`/`BACKUP_S3_SECRET`, свежие файлы дополнительно уходят в объектное хранилище через образ `rclone/rclone` (хранение 30 дней); без ключей — только локальный бэкап, скрипт не падает.
 
+**Cron на хосте.** Напоминания полки: `*/15 * * * * /opt/buty/scripts/cron-reminders.sh`. Проверка ссылок брендов (2 раза подряд 404/410/5xx → ссылка скрывается с карточки): `40 4 * * * /opt/buty/scripts/cron-brand-links.sh` — после бэкапа в 03:17. Оба скрипта берут `DOMAIN` и `CRON_SECRET` из окружения.
+
 Восстановление из бэкапа:
 
 ```bash

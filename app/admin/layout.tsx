@@ -12,6 +12,7 @@ const NAV = [
   { href: "/admin/products", label: "Продукты" },
   { href: "/admin/ingredients", label: "Ингредиенты" },
   { href: "/admin/leads", label: "Заявки брендов" },
+  { href: "/admin/brands", label: "Бренды" },
   { href: "/admin/feedback", label: "Словарь" },
   { href: "/admin/analytics", label: "Аналитика" },
 ];

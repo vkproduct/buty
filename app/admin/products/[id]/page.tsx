@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { updateProduct } from "@/app/admin/actions";
+import { setProductLinkActive } from "@/app/admin/brands/actions";
+import { STORES } from "@/lib/brands/links";
 import { prisma } from "@/lib/prisma";
 import { PRODUCT_CATEGORY_LABEL } from "@/lib/seo/labels";
 import { Button } from "@/components/ui/button";
@@ -62,6 +64,51 @@ export default async function AdminProductEdit({
           Сохранить
         </Button>
       </form>
+
+      <BrandLinksBlock productId={product.id} />
     </GlassCard>
+  );
+}
+
+/** Ссылки брендов на это средство (только просмотр + выключение). */
+async function BrandLinksBlock({ productId }: { productId: string }) {
+  const links = await prisma.productLink.findMany({
+    where: { productId },
+    include: { brand: { select: { name: true, slug: true } } },
+    orderBy: { position: "asc" },
+  });
+  if (links.length === 0) return null;
+  return (
+    <div className="space-y-2 border-t border-ink-hair pt-4">
+      <h3 className="font-display text-lg font-semibold">Ссылки бренда</h3>
+      {links.map((l) => (
+        <div key={l.id} className="space-y-1 rounded-xl bg-white p-3 text-sm">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">{l.brand.name}</span>
+            <span className="text-muted-foreground">
+              {STORES[l.store]?.label ?? l.store}
+            </span>
+            <span className={l.active && !l.broken ? "text-success-700" : "text-coral-700"}>
+              {l.broken ? "битая" : l.active ? "активна" : "выключена"}
+            </span>
+            <form action={setProductLinkActive} className="ml-auto">
+              <input type="hidden" name="id" value={l.id} />
+              <input type="hidden" name="active" value={l.active ? "0" : "1"} />
+              <Button type="submit" size="sm" variant="outline">
+                {l.active ? "Выключить" : "Включить"}
+              </Button>
+            </form>
+          </div>
+          <a
+            href={l.url}
+            target="_blank"
+            rel="noopener"
+            className="block truncate text-xs text-brand hover:underline"
+          >
+            {l.url}
+          </a>
+        </div>
+      ))}
+    </div>
   );
 }

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { MousePointerClick } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
+import { getBrandsForUser } from "@/lib/brands/access";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -19,7 +20,7 @@ export default async function ProfilePage() {
   const session = await getSession();
   if (!session?.user) redirect("/auth/signin");
 
-  const [profile, clicks] = await Promise.all([
+  const [profile, clicks, brands] = await Promise.all([
     prisma.skinProfile.findUnique({ where: { userId: session.user.id } }),
     prisma.partnerClick.findMany({
       where: { userId: session.user.id },
@@ -27,6 +28,7 @@ export default async function ProfilePage() {
       orderBy: { createdAt: "desc" },
       take: 50,
     }),
+    getBrandsForUser(session.user.id),
   ]);
 
   return (
@@ -108,6 +110,20 @@ export default async function ProfilePage() {
             </div>
             <Button asChild size="sm">
               <Link href="/onboarding">Заполнить за минуту</Link>
+            </Button>
+          </GlassCard>
+        )}
+
+        {brands.length > 0 && (
+          <GlassCard className="flex flex-wrap items-center justify-between gap-3 p-6">
+            <div>
+              <h2 className="font-display text-lg font-semibold">Кабинет бренда</h2>
+              <p className="mt-1 text-sm text-ink-muted">
+                {brands.map((b) => b.name).join(", ")} — ссылки на покупку и статистика.
+              </p>
+            </div>
+            <Button asChild size="sm">
+              <Link href="/brand">Открыть кабинет</Link>
             </Button>
           </GlassCard>
         )}

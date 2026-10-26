@@ -5,6 +5,7 @@
 import type { EvidenceLevel, Prisma } from "@prisma/client";
 
 import { analyzeMatched } from "@/lib/analysis/analyze";
+import { getVisibleProductLinks } from "@/lib/brands/product-links";
 import { prisma } from "@/lib/prisma";
 import { absoluteUrl } from "@/lib/seo/site";
 
@@ -229,6 +230,11 @@ export async function getProductCard(slug: string) {
   });
   if (!product) return null;
 
+  const buyLinks = (await getVisibleProductLinks(product.id)).map((l) => ({
+    label: l.label,
+    url: absoluteUrl(`/go/${product.id}?link=${l.id}&source=app`),
+  }));
+
   const matched = product.ingredients.map((pi) => ({
     id: pi.ingredient.id,
     matchedVia: pi.ingredient.inciName,
@@ -249,6 +255,7 @@ export async function getProductCard(slug: string) {
     coverage,
     analysis,
     buyUrl: absoluteUrl(`/go/${product.id}?source=app`),
+    buyLinks,
     webUrl: absoluteUrl(`/products/${product.slug}`),
   };
 }

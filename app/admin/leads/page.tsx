@@ -23,7 +23,13 @@ export default async function AdminLeads() {
             <span className="text-muted-foreground">
               {lead.contact} · {lead.email}
             </span>
-            <span className="ml-auto text-xs text-muted-foreground">
+            <a
+              href={`/admin/brands/new?name=${encodeURIComponent(lead.brandName)}`}
+              className="ml-auto rounded-full bg-white px-3 py-1 text-xs text-brand transition-shadow hover:shadow-glass"
+            >
+              Создать бренд из заявки
+            </a>
+            <span className="text-xs text-muted-foreground">
               {lead.createdAt.toLocaleDateString("ru-RU")}
             </span>
           </div>

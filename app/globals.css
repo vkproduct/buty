@@ -38,10 +38,10 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";
   }
+  /* Заголовки: обычный трекинг, как у референса; лёгкое сжатие только у крупных. */
   h1,
-  h2,
-  h3 {
-    letter-spacing: -0.02em;
+  h2 {
+    letter-spacing: -0.01em;
   }
   ::selection {
     @apply bg-brand-100 text-brand-800;
@@ -83,7 +83,7 @@
      на странице, каждый повтор длинных utility-списков весил ~1.8 КБ в HTML
      и столько же в RSC-полезной нагрузке. */
   .product-card {
-    @apply flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-line hover:shadow-glass-lg;
+    @apply flex h-full flex-col rounded-2xl border border-ink-hair bg-white p-5 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:shadow-float;
   }
   .product-card-top {
     @apply flex items-center justify-between gap-3;
@@ -161,9 +161,19 @@
 }
 
 @layer utilities {
-  /* Базовая поверхность карточки: белая, граница + мягкая тень */
+  /* Базовая поверхность карточки: белая, без видимой рамки, мягкая тень (белое на сером) */
   .glass {
-    @apply border border-ink-hair bg-white shadow-glass;
+    @apply border border-transparent bg-white shadow-soft;
+  }
+  /* Карточка-инструмент: при наведении поднимается тень, круг с иконкой заливается брендом */
+  .tool-card {
+    @apply rounded-2xl border border-transparent bg-white p-7 shadow-soft transition-all duration-300 hover:border-ink-hair hover:shadow-float sm:p-8;
+  }
+  .tool-icon {
+    @apply mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-portal text-brand-500 transition-colors;
+  }
+  .tool-card:hover .tool-icon {
+    @apply bg-brand-500 text-white;
   }
 }
 

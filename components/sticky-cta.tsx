@@ -61,7 +61,7 @@ export function StickyCta({ afterId, hideFromId, title, subtitle, price, priceNo
           <Link
             href={href}
             tabIndex={visible ? 0 : -1}
-            className="whitespace-nowrap rounded-lg bg-gradient-cta px-6 py-3.5 text-base font-semibold text-white transition hover:brightness-95 active:scale-[0.98]"
+            className="whitespace-nowrap rounded-full bg-brand-500 px-7 py-3.5 text-base font-bold text-white shadow-sm transition hover:bg-brand-600 active:scale-[0.98]"
           >
             {cta}
           </Link>

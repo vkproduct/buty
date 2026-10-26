@@ -15,6 +15,8 @@ const badgeVariants = cva(
         coral: "border-transparent bg-coral-50 text-coral-700",
         amber: "border-transparent bg-amber-50 text-amber-800",
         outline: "border-ink-line bg-white text-foreground",
+        /** Полупрозрачная пилюля на цветном или тёмном фоне. */
+        glass: "border-white/30 bg-white/15 text-white backdrop-blur-md",
       },
     },
     defaultVariants: {

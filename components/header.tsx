@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { UserRound } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/logo";
 import { SignOutButton } from "@/components/sign-out-button";
@@ -16,7 +16,15 @@ const NAV = [
   { href: "/products", label: "Продукты" },
 ];
 
-/** Шапка сайта: навигация + состояние входа/выхода (клиентская сессия). */
+/** Пилюля навигации: серый текст, при наведении — серая подложка и тёмный текст. */
+const NAV_LINK =
+  "rounded-full px-4 py-2 text-sm font-medium text-ink-subtle transition-all hover:bg-ink-hair/70 hover:text-foreground";
+
+/** Пилюля действия справа: тонкая рамка, при наведении — серая подложка. */
+const ACTION_PILL =
+  "inline-flex h-10 items-center gap-2 rounded-full border border-ink-line bg-white px-4 text-sm font-medium text-foreground transition-all hover:bg-ink-wash hover:shadow-soft";
+
+/** Шапка сайта: логотип слева, навигация по центру, вход / полка справа. */
 export function Header() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
@@ -24,48 +32,53 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink-hair bg-white/95 backdrop-blur print:hidden">
       <Container className="flex h-[72px] items-center justify-between gap-4 sm:h-20">
-        <Logo />
-        <nav className="flex items-center gap-1 sm:gap-2">
+        <div className="flex flex-1 items-center">
+          <Logo />
+        </div>
+
+        <nav aria-label="Основная навигация" className="hidden items-center gap-2 md:flex">
           {NAV.map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
-              <Button
+              <Link
                 key={item.href}
-                asChild
-                variant="ghost"
-                size="sm"
-                className={cn(
-                  "hidden px-4 text-sm md:inline-flex",
-                  active && "bg-ink-wash font-semibold",
-                )}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(NAV_LINK, active && "bg-ink-wash font-semibold text-foreground")}
               >
-                <Link href={item.href} aria-current={active ? "page" : undefined}>
-                  {item.label}
-                </Link>
-              </Button>
+                {item.label}
+              </Link>
             );
           })}
+        </nav>
+
+        <div className="flex flex-1 items-center justify-end gap-2">
           {status === "loading" ? null : session?.user ? (
             <>
-              <Button asChild variant="ghost" size="sm" className="hidden px-4 text-sm sm:inline-flex">
-                <Link href="/profile">Профиль</Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="rounded-full">
-                <Link href="/shelf">Моя полка</Link>
-              </Button>
+              <Link href="/shelf" className={ACTION_PILL}>
+                Моя полка
+              </Link>
+              <Link href="/profile" className={cn(ACTION_PILL, "hidden px-1.5 sm:inline-flex")} aria-label="Профиль">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink-subtle text-white">
+                  <UserRound className="h-4 w-4" aria-hidden />
+                </span>
+              </Link>
               <SignOutButton />
             </>
           ) : (
             <>
-              <Button asChild variant="ghost" size="sm" className="px-4 text-sm md:hidden">
-                <Link href="/analyze">Разбор</Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="rounded-full hover:shadow-glass-lg">
-                <Link href="/auth/signin">Войти</Link>
-              </Button>
+              <Link href="/analyze" className={cn(NAV_LINK, "md:hidden")}>
+                Разбор
+              </Link>
+              <Link href="/auth/signin" className={cn(ACTION_PILL, "pl-1.5 pr-4")}>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink-subtle text-white">
+                  <UserRound className="h-4 w-4" aria-hidden />
+                </span>
+                Войти
+              </Link>
             </>
           )}
-        </nav>
+        </div>
       </Container>
     </header>
   );

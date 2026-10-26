@@ -40,7 +40,7 @@ const COLUMNS = [
 /** Подвал сайта: навигация + дисклеймер. */
 export function SiteFooter() {
   return (
-    <footer className="border-t border-ink-line bg-ink-wash print:hidden">
+    <footer className="border-t border-ink-line bg-portal print:hidden">
       <Container className="grid gap-10 py-12 md:grid-cols-12">
         <div className="md:col-span-4">
           <Logo />
@@ -51,11 +51,11 @@ export function SiteFooter() {
         </div>
         {COLUMNS.map((col) => (
           <div key={col.title} className="md:col-span-2">
-            <h3 className="text-sm font-semibold text-foreground">{col.title}</h3>
+            <h3 className="text-sm font-bold text-foreground">{col.title}</h3>
             <ul className="mt-4 space-y-3">
               {col.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-ink-soft hover:underline">
+                  <Link href={l.href} className="text-sm font-light text-foreground hover:underline">
                     {l.label}
                   </Link>
                 </li>

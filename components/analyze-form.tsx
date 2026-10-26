@@ -48,7 +48,7 @@ export function AnalyzeForm({ id = "inci", rows = 5 }: AnalyzeFormProps) {
         onChange={(e) => setText(e.target.value)}
         rows={rows}
         placeholder="Вставьте состав сюда. Например: Aqua, Niacinamide, Glycerin, Panthenol…"
-        className="w-full resize-none rounded-xl border border-input bg-white px-4 py-3.5 text-[15px] leading-relaxed text-foreground transition-shadow placeholder:text-ink-muted focus-visible:border-foreground focus-visible:shadow-[0_0_0_1px_#222] focus-visible:outline-none"
+        className="w-full resize-none rounded-xl border border-ink-line bg-ink-wash/60 px-4 py-3.5 text-[15px] leading-relaxed text-foreground transition-shadow placeholder:text-ink-muted focus-visible:border-foreground focus-visible:bg-white focus-visible:shadow-[0_0_0_1px_#222] focus-visible:outline-none"
       />
       <Button type="submit" size="lg" className="w-full">
         Разобрать состав

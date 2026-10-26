@@ -3,13 +3,16 @@ import Link from "next/link";
 import {
   AlertTriangle,
   ArrowRight,
+  BarChart3,
   Bell,
   Check,
   Copy,
   FlaskConical,
   LayoutGrid,
+  Link2,
   ListOrdered,
   Sun,
+  Ticket,
 } from "lucide-react";
 
 import { AnalyzeForm } from "@/components/analyze-form";
@@ -173,14 +176,24 @@ const FAQ: { q: string; a: string }[] = [
   },
 ];
 
-/** Разделитель секций — тонкая линия внутри контейнера. */
-function Divider() {
-  return (
-    <Container>
-      <hr className="border-ink-hair" />
-    </Container>
-  );
-}
+/* ── Что получают бренды (тёмный B2B-блок) ── */
+const BRAND_PERKS = [
+  {
+    icon: Link2,
+    title: "Ссылка «Где купить»",
+    text: "На официальный магазин или карточку на маркетплейсе — прямо в карточке средства.",
+  },
+  {
+    icon: Ticket,
+    title: "Промокод в карточке",
+    text: "Открывается по клику покупателя, поэтому конкуренты не соберут его парсером.",
+  },
+  {
+    icon: BarChart3,
+    title: "Аналитика спроса",
+    text: "Просмотры карточек и переходы — обезличенно, без персональных данных пользователей.",
+  },
+];
 
 export default async function HomePage() {
   const stats = await getStats();
@@ -205,60 +218,75 @@ export default async function HomePage() {
       <JsonLd data={webSite} />
       <JsonLd data={webApplicationJsonLd()} />
       <JsonLd data={faqJsonLd(FAQ)} />
-      {/* ═══ 1. HERO: бесплатный разбор как вход в воронку ═══ */}
-      <section id="hero">
-        <Container className="grid items-center gap-10 pb-14 pt-10 lg:grid-cols-12 lg:gap-14 lg:pb-20 lg:pt-16">
-          <div className="lg:col-span-7">
-            <Badge variant="outline" className="mb-5">
-              Доказательный уход, а не маркетинг
-            </Badge>
-            <h1 className="text-[32px] font-semibold leading-[1.08] sm:text-[48px] lg:text-[56px]">
-              Проверьте состав косметики онлайн и&nbsp;узнайте, как она работает
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-              Разбираем составы по научным данным, а «Моя полка» проверяет,
-              сочетаются ли ваши средства, и собирает режим утро / вечер.
-            </p>
-            <ul className="check-list mt-6">
-              <li>Функция, рабочая концентрация и уровень доказательности каждого ингредиента</li>
-              <li>Конфликты активов — в одном средстве и между средствами</li>
-              <li>Готовый порядок нанесения для вашей полки</li>
-            </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href="#razbor">Разобрать состав бесплатно</Link>
-              </Button>
-              <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
-                <Link href="#polka">Что такое «Моя полка»</Link>
-              </Button>
+
+      {/* ═══ 1. HERO: градиентная карточка с бесплатным разбором ═══ */}
+      <section id="hero" className="bg-portal pb-12 pt-8 sm:pt-12 lg:pb-16">
+        <Container>
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-spotlight shadow-sm">
+            {/* Декоративные кольца — «молекулы» на фоне, без смысловой нагрузки */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full border border-white/15"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-8 top-16 h-[260px] w-[260px] rounded-full border border-white/10"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-32 left-1/3 h-[360px] w-[360px] rounded-full bg-white/5"
+            />
+
+            <div className="relative grid items-center gap-10 p-5 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:p-16">
+              <div className="text-white lg:col-span-7">
+                <Badge variant="glass" className="mb-6 px-3.5 py-1.5 text-[13px]">
+                  Доказательный уход, а не маркетинг
+                </Badge>
+                <h1 className="text-[29px] font-bold leading-[1.1] min-[400px]:text-[32px] sm:text-[48px] lg:text-[58px]">
+                  Проверьте состав косметики онлайн и&nbsp;узнайте, как она работает
+                </h1>
+                <p className="mt-5 max-w-xl text-lg font-medium leading-relaxed text-white/90">
+                  Разбираем составы по научным данным, а «Моя полка» проверяет,
+                  сочетаются ли ваши средства, и собирает режим утро / вечер.
+                </p>
+                <ul className="check-list mt-6 [&>li::before]:border-white [&>li]:text-white/90">
+                  <li>Функция, рабочая концентрация и уровень доказательности каждого ингредиента</li>
+                  <li>Конфликты активов — в одном средстве и между средствами</li>
+                  <li>Готовый порядок нанесения для вашей полки</li>
+                </ul>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Button asChild variant="white" size="lg" className="px-8">
+                    <Link href="#razbor">Разобрать состав бесплатно</Link>
+                  </Button>
+                  <Button asChild variant="glass" size="lg" className="px-8">
+                    <Link href="#polka">Что такое «Моя полка»</Link>
+                  </Button>
+                </div>
+                <p className="mt-4 text-sm text-white/75">
+                  Всё бесплатно. Разбор — без регистрации, полка — вход по email без пароля.
+                </p>
+              </div>
+
+              <div
+                id="razbor"
+                className="scroll-mt-28 rounded-2xl bg-white p-6 text-foreground shadow-pop sm:p-8 lg:col-span-5"
+              >
+                <h2 className="text-[22px] font-bold">Разбор состава</h2>
+                <p className="mb-5 mt-1.5 text-[15px] leading-relaxed text-ink-muted">
+                  Вставьте INCI-список с карточки товара или загрузите фото состава
+                  с упаковки — разберём каждый ингредиент за несколько секунд.
+                </p>
+                <AnalyzeForm id="inci-hero" />
+                <p className="mt-4 text-center text-sm text-ink-muted">
+                  Бесплатно и без регистрации
+                </p>
+              </div>
             </div>
-            <p className="mt-4 text-sm text-ink-muted">
-              Всё бесплатно. Разбор — без регистрации, полка — вход по email без пароля.
-            </p>
           </div>
 
-          <div
-            id="razbor"
-            className="scroll-mt-28 rounded-3xl border border-ink-hair bg-white p-6 shadow-pop sm:p-8 lg:col-span-5"
-          >
-            <h2 className="text-[22px] font-semibold">Разбор состава</h2>
-            <p className="mb-5 mt-1.5 text-[15px] leading-relaxed text-ink-muted">
-              Вставьте INCI-список с карточки товара или загрузите фото состава
-              с упаковки — разберём каждый ингредиент за несколько секунд.
-            </p>
-            <AnalyzeForm id="inci-hero" />
-            <p className="mt-4 text-center text-sm text-ink-muted">
-              Бесплатно и без регистрации
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      {/* ═══ 2. ДОВЕРИЕ: размер базы ═══ */}
-      {stats ? (
-        <section className="pb-14 lg:pb-20">
-          <Container>
-            <div className="grid grid-cols-2 rounded-2xl border border-ink-line lg:grid-cols-4">
+          {/* ═══ 2. ДОВЕРИЕ: размер базы ═══ */}
+          {stats ? (
+            <div className="mt-8 grid grid-cols-2 rounded-2xl bg-white shadow-soft lg:grid-cols-4">
               {[
                 {
                   num: stats.ingredients,
@@ -288,12 +316,12 @@ export default async function HomePage() {
                   key={s.txt}
                   className={cn(
                     "px-5 py-6 text-center",
-                    i % 2 === 1 && "border-l border-ink-line",
-                    i >= 2 && "border-t border-ink-line lg:border-t-0",
+                    i % 2 === 1 && "border-l border-ink-hair",
+                    i >= 2 && "border-t border-ink-hair lg:border-t-0",
                     i === 2 && "lg:border-l",
                   )}
                 >
-                  <div className="text-[28px] font-semibold leading-none tracking-tight">
+                  <div className="text-[28px] font-bold leading-none tracking-tight">
                     {s.num.toLocaleString("ru-RU")}
                   </div>
                   <div className="mx-auto mt-2 max-w-[200px] text-sm leading-snug text-ink-muted">
@@ -302,11 +330,9 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
-          </Container>
-        </section>
-      ) : null}
-
-      <Divider />
+          ) : null}
+        </Container>
+      </section>
 
       {/* ═══ 3. ПРОБЛЕМА: одного разбора мало ═══ */}
       <section className="py-14 lg:py-20">
@@ -318,11 +344,11 @@ export default async function HomePage() {
           />
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {PAINS.map(({ icon: Icon, title, text }) => (
-              <div key={title} className="rounded-2xl bg-ink-wash p-7">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-glass">
-                  <Icon className="h-5 w-5 text-coral-600" strokeWidth={1.75} aria-hidden />
+              <div key={title} className="rounded-2xl bg-portal p-7 sm:p-8">
+                <span className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-soft">
+                  <Icon className="h-6 w-6 text-coral-600" strokeWidth={1.75} aria-hidden />
                 </span>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                <h3 className="text-lg font-bold leading-snug">{title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{text}</p>
               </div>
             ))}
@@ -336,84 +362,88 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <Divider />
-
-      {/* ═══ 4. МОЯ ПОЛКА ═══ */}
-      <section id="polka" className="scroll-mt-20 py-14 lg:py-20">
+      {/* ═══ 4. МОЯ ПОЛКА: карточки-инструменты + промо-карточка ═══ */}
+      <section id="polka" className="scroll-mt-20 border-t border-ink-hair bg-portal py-16 lg:py-24">
         <Container>
           <SectionHeading
+            center
             eyebrow="Моя полка"
             title="Ваш уход в одном месте — с проверкой совместимости"
-            lead="«Моя полка» — личный кабинет с вашими средствами. Добавьте то, чем пользуетесь, и сервис покажет, что с чем нельзя сочетать, что дублируется и в каком порядке всё наносить."
+            lead="Добавьте то, чем пользуетесь, и сервис покажет, что с чем нельзя сочетать, что дублируется и в каком порядке всё наносить."
           />
-          <div className="mt-10 grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
-            <div className="min-w-0 lg:col-span-5">
-              <ul className="divide-y divide-ink-hair">
-                {SHELF_FEATURES.map(({ icon: Icon, title, text }) => (
-                  <li key={title} className="flex gap-4 py-5 first:pt-0">
-                    <Icon className="mt-0.5 h-6 w-6 shrink-0 text-foreground" strokeWidth={1.5} aria-hidden />
-                    <div>
-                      <h3 className="flex items-center gap-2 text-base font-semibold">
-                        {title}
-                      </h3>
-                      <p className="mt-1 text-[15px] leading-relaxed text-ink-muted">{text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-                <Button asChild size="lg">
-                  <Link href={SIGNUP}>Собрать полку бесплатно</Link>
-                </Button>
-                <span className="text-sm leading-snug text-ink-muted">
-                  Всё бесплатно,
-                  <br />
-                  без карты
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {SHELF_FEATURES.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="tool-card">
+                <span className="tool-icon">
+                  <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
                 </span>
+                <h3 className="text-xl font-bold leading-snug">{title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">{text}</p>
               </div>
-            </div>
-            <div className="min-w-0 lg:col-span-7">
-              <ShelfShowcase />
+            ))}
+            <div className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-promo p-7 text-white shadow-float sm:p-8">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full bg-white/10"
+              />
+              <div className="relative">
+                <h3 className="text-2xl font-bold leading-tight">Соберите полку</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-white/90">
+                  Вход по email без пароля. Полка без лимита — всё бесплатно, без карты.
+                </p>
+              </div>
+              <div className="relative mt-8">
+                <Button asChild variant="white" className="px-6">
+                  <Link href={SIGNUP}>
+                    Собрать полку бесплатно <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ═══ 5. ПУТЬ: от разбора до полки ═══ */}
-      <section className="bg-ink-wash py-14 lg:py-20">
-        <Container>
-          <SectionHeading eyebrow="Как начать" title="Три шага к уходу, в котором всё сочетается" />
-          <ol className="mt-10 grid gap-5 md:grid-cols-3">
-            {[
-              {
-                title: "Разберите состав",
-                text: "Бесплатно и без регистрации: функции, концентрации, доказательная база, конфликты.",
-              },
-              {
-                title: "Добавьте средства на полку",
-                text: "Вход по email без пароля. Полка без лимита, с дневником реакций и напоминаниями.",
-              },
-              {
-                title: "Соберите режим",
-                text: "Совместимость всей полки, поиск дублей и готовый порядок нанесения утром и вечером.",
-              },
-            ].map((s, i) => (
-              <li key={s.title} className="rounded-2xl bg-white p-7 shadow-glass">
-                <div className="flex items-center justify-between">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-base font-semibold text-white">
+      {/* ═══ 5. ПУТЬ: от разбора до полки + демо полки ═══ */}
+      <section className="py-16 lg:py-24">
+        <Container className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="min-w-0 lg:col-span-5">
+            <SectionHeading eyebrow="Как начать" title="Три шага к уходу, в котором всё сочетается" />
+            <ol className="mt-8 space-y-4">
+              {[
+                {
+                  title: "Разберите состав",
+                  text: "Бесплатно и без регистрации: функции, концентрации, доказательная база, конфликты.",
+                },
+                {
+                  title: "Добавьте средства на полку",
+                  text: "Вход по email без пароля. Полка без лимита, с дневником реакций и напоминаниями.",
+                },
+                {
+                  title: "Соберите режим",
+                  text: "Совместимость всей полки, поиск дублей и готовый порядок нанесения утром и вечером.",
+                },
+              ].map((s, i) => (
+                <li key={s.title} className="flex gap-5 rounded-2xl bg-portal p-6">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-500 text-base font-bold text-white">
                     {i + 1}
                   </span>
-                </div>
-                <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">{s.text}</p>
-              </li>
-            ))}
-          </ol>
+                  <div>
+                    <h3 className="text-lg font-bold">{s.title}</h3>
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="min-w-0 lg:col-span-7">
+            <ShelfShowcase />
+          </div>
         </Container>
       </section>
 
       {/* ═══ 6. ВСЁ БЕСПЛАТНО ═══ */}
-      <section id="tarify" className="scroll-mt-20 py-14 lg:py-20">
+      <section id="tarify" className="scroll-mt-20 border-t border-ink-hair bg-portal py-16 lg:py-24">
         <Container>
           <SectionHeading
             center
@@ -422,15 +452,15 @@ export default async function HomePage() {
             lead="Разбор составов и вся «Моя полка» бесплатны: без подписки, без карты, без лимитов."
           />
           <div className="mx-auto mt-12 max-w-[640px]">
-            <div className="relative flex flex-col rounded-2xl border-2 border-foreground bg-white shadow-glass-lg">
-              <div className="mx-6 border-b border-ink-hair pb-5 pt-7">
-                <h3 className="text-lg font-semibold">Бесплатно. Полностью.</h3>
+            <div className="relative flex flex-col rounded-3xl bg-white shadow-float">
+              <div className="mx-6 border-b border-ink-hair pb-5 pt-7 sm:mx-8">
+                <h3 className="text-lg font-bold">Бесплатно. Полностью.</h3>
                 <div className="mt-3 flex items-baseline gap-1.5">
-                  <span className="text-[32px] font-semibold leading-none tracking-tight">0 ₽</span>
+                  <span className="text-[36px] font-bold leading-none tracking-tight">0 ₽</span>
                 </div>
                 <p className="mt-2 text-sm leading-normal text-ink-muted">Без оплаты и привязки карты</p>
               </div>
-              <ul className="flex-grow px-6 py-5">
+              <ul className="flex-grow px-6 py-5 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:px-8">
                 {[
                   "Разбор составов текстом и по фото",
                   "Полка без лимита",
@@ -441,35 +471,28 @@ export default async function HomePage() {
                   "Экспорт полки в PDF",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-3 py-2 text-sm leading-normal text-ink-soft">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" strokeWidth={2.5} aria-hidden />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} aria-hidden />
                     {f}
                   </li>
                 ))}
               </ul>
-              <div className="px-6 pb-6">
-                <Button asChild className="w-full">
+              <div className="px-6 pb-7 sm:px-8">
+                <Button asChild size="lg" className="w-full">
                   <Link href={SIGNUP}>Собрать полку</Link>
                 </Button>
               </div>
             </div>
           </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-ink-muted">
-            Buty зарабатывает на аналитике для брендов, а не на вас. Оценки составов бренды не
-            покупают и не влияют на них.{" "}
-            <Link href="/for-brands" className="font-semibold text-foreground underline underline-offset-4">
-              Брендам
-            </Link>
-          </p>
         </Container>
       </section>
 
       {/* ═══ 7. НАУКА, А НЕ МАРКЕТИНГ ═══ */}
-      <section className="pb-14 lg:pb-20">
+      <section className="py-16 lg:py-24">
         <Container>
-          <div className="grid overflow-hidden rounded-3xl bg-mist lg:grid-cols-2">
+          <div className="grid overflow-hidden rounded-3xl bg-portal lg:grid-cols-2">
             <div className="flex flex-col justify-center px-7 py-10 sm:px-12 sm:py-14">
-              <span className="eyebrow text-mist-700">Шкала доказательности</span>
-              <h2 className="text-[24px] font-semibold leading-tight sm:text-[32px]">
+              <span className="eyebrow">Шкала доказательности</span>
+              <h2 className="text-[26px] font-bold leading-tight sm:text-[30px]">
                 Наука, а не маркетинг
               </h2>
               <ul className="check-list mt-5">
@@ -478,13 +501,13 @@ export default async function HomePage() {
                 <li>Конфликты активов важнее, чем «натуральность» состава</li>
               </ul>
               <div className="mt-7">
-                <Button asChild variant="secondary">
+                <Button asChild variant="outline">
                   <Link href="/ingredients">Каталог ингредиентов</Link>
                 </Button>
               </div>
             </div>
             <div className="flex flex-col justify-center gap-5 px-7 pb-10 sm:px-12 lg:py-14">
-              <div className="rounded-2xl bg-white p-6 shadow-glass">
+              <div className="rounded-2xl bg-white p-6 shadow-soft">
                 {EVIDENCE_LADDER.map((lvl) => (
                   <div key={lvl.label} className="py-2.5">
                     <div className="flex items-baseline justify-between gap-3 text-sm">
@@ -502,10 +525,51 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <Divider />
+      {/* ═══ 8. ДЛЯ БРЕНДОВ: тёмный B2B-блок ═══ */}
+      <section className="bg-foreground py-16 text-white lg:py-20">
+        <Container className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-6">
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.12em] text-brand-400">
+              Для брендов и дистрибьюторов
+            </span>
+            <h2 className="text-[28px] font-bold leading-tight sm:text-[36px]">
+              Покажите свои средства тем, кто читает составы
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
+              Buty бесплатен для пользователей и зарабатывает на брендах. При этом оценки
+              составов не продаются: бренды не покупают и не меняют их.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button asChild variant="white" size="lg" className="px-8">
+                <Link href="/for-brands">Тарифы для брендов</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                className="border border-white/20 bg-white/5 px-8 font-bold text-white shadow-none hover:bg-white/10"
+              >
+                <Link href="/for-brands#zayavka">Оставить заявку</Link>
+              </Button>
+            </div>
+          </div>
+          <ul className="grid gap-4 lg:col-span-6">
+            {BRAND_PERKS.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-brand-300">
+                  <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <div>
+                  <h3 className="text-base font-bold">{title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-white/65">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
 
-      {/* ═══ 7б. РАЗБОРЫ СОСТАВОВ: перелинковка на посадочные ═══ */}
-      <section className="py-14 lg:py-20">
+      {/* ═══ 9. РАЗБОРЫ СОСТАВОВ: перелинковка на посадочные ═══ */}
+      <section className="py-16 lg:py-24">
         <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
             <SectionHeading
@@ -523,10 +587,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <Divider />
-
-      {/* ═══ 8. FAQ ═══ */}
-      <section className="py-14 lg:py-20">
+      {/* ═══ 10. FAQ ═══ */}
+      <section className="border-t border-ink-hair bg-portal py-16 lg:py-24">
         <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
             <SectionHeading eyebrow="Вопросы" title="Часто задаваемые вопросы" />
@@ -534,24 +596,26 @@ export default async function HomePage() {
               Не нашли ответ? Начните с бесплатного разбора — это займёт меньше минуты.
             </p>
           </div>
-          <div className="divide-y divide-ink-hair border-y border-ink-hair lg:col-span-8">
-            {FAQ.map((f, i) => (
-              <details key={f.q} open={i === 0} className="accordion-item">
-                <summary>{f.q}</summary>
-                <div className="pb-6 pr-10 text-[15px] leading-relaxed text-ink-muted">{f.a}</div>
-              </details>
-            ))}
+          <div className="rounded-2xl bg-white px-6 shadow-soft sm:px-8 lg:col-span-8">
+            <div className="divide-y divide-ink-hair">
+              {FAQ.map((f, i) => (
+                <details key={f.q} open={i === 0} className="accordion-item">
+                  <summary>{f.q}</summary>
+                  <div className="pb-6 pr-10 text-[15px] leading-relaxed text-ink-muted">{f.a}</div>
+                </details>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* ═══ 9. ФИНАЛЬНЫЙ CTA: два входа ═══ */}
-      <section id="start" className="pb-16 lg:pb-24">
+      {/* ═══ 11. ФИНАЛЬНЫЙ CTA: два входа ═══ */}
+      <section id="start" className="py-16 lg:py-24">
         <Container>
-          <div className="grid gap-5 rounded-3xl bg-ink-wash p-5 sm:p-8 lg:grid-cols-2 lg:gap-8 lg:p-12">
-            <div className="rounded-2xl bg-white p-6 shadow-glass sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-2xl border border-ink-hair bg-white p-6 shadow-soft sm:p-8">
               <span className="eyebrow">Моя полка</span>
-              <h2 className="text-[22px] font-semibold leading-tight sm:text-[26px]">
+              <h2 className="text-[22px] font-bold leading-tight sm:text-[26px]">
                 Соберите свою полку
               </h2>
               <p className="mb-6 mt-2 text-[15px] leading-relaxed text-ink-muted">
@@ -560,9 +624,9 @@ export default async function HomePage() {
               </p>
               <SignInForm cta="Собрать полку бесплатно" />
             </div>
-            <div className="rounded-2xl bg-white p-6 shadow-glass sm:p-8">
+            <div className="rounded-2xl border border-ink-hair bg-white p-6 shadow-soft sm:p-8">
               <span className="eyebrow">Разбор состава</span>
-              <h2 className="text-[22px] font-semibold leading-tight sm:text-[26px]">
+              <h2 className="text-[22px] font-bold leading-tight sm:text-[26px]">
                 Или начните с одного средства
               </h2>
               <p className="mb-6 mt-2 text-[15px] leading-relaxed text-ink-muted">

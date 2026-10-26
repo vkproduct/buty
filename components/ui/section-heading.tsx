@@ -25,8 +25,8 @@ export function SectionHeading({
       {eyebrow ? <span className="eyebrow">{eyebrow}</span> : null}
       <Tag
         className={cn(
-          "font-display font-semibold leading-[1.15] text-foreground",
-          Tag === "h1" ? "text-[28px] sm:text-[40px]" : "text-[24px] sm:text-[32px]"
+          "font-display font-bold leading-[1.15] text-foreground",
+          Tag === "h1" ? "text-[30px] sm:text-[44px]" : "text-[26px] sm:text-[30px]"
         )}
       >
         {title}

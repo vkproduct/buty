@@ -13,7 +13,7 @@ interface GradientSectionProps extends React.HTMLAttributes<HTMLElement> {
 
 const TONE: Record<Tone, string> = {
   white: "bg-white",
-  gray: "bg-ink-wash",
+  gray: "bg-portal",
   green: "bg-brand-100",
   sky: "bg-mist",
 };

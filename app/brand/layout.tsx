@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { requireBrandAccess } from "@/lib/brands/access";
-import { getSession } from "@/lib/auth";
 import { getBrandsForUser } from "@/lib/brands/access";
+import { getSession } from "@/lib/auth";
 import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
@@ -17,16 +16,12 @@ const NAV = [
   { href: "/brand/products", label: "Средства" },
 ];
 
-/** Лейаут кабинета бренда: доступ по членству (админ — к любому бренду). */
+/** Лейаут кабинета бренда: доступ проверяют страницы (requireBrandAccess). */
 export default async function BrandLayout({
   children,
-  searchParams,
 }: Readonly<{
   children: React.ReactNode;
-  searchParams?: { brand?: string };
 }>) {
-  const { brand } = await requireBrandAccess(searchParams?.brand);
-
   return (
     <main className="bg-gradient-hero min-h-screen py-10">
       <Container className="space-y-6">
@@ -44,7 +39,7 @@ export default async function BrandLayout({
             ))}
           </nav>
         </div>
-        <BrandSwitcher current={brand.slug} />
+        <BrandSwitcher />
         {children}
       </Container>
     </main>
@@ -52,7 +47,7 @@ export default async function BrandLayout({
 }
 
 /** Переключатель брендов (?brand=slug), если у пользователя их несколько. */
-async function BrandSwitcher({ current }: { current: string }) {
+async function BrandSwitcher() {
   const session = await getSession();
   if (!session?.user) return null;
   const brands = await getBrandsForUser(session.user.id);
@@ -66,11 +61,7 @@ async function BrandSwitcher({ current }: { current: string }) {
         <Link
           key={b.id}
           href={`/brand?brand=${b.slug}`}
-          className={
-            b.slug === current
-              ? "rounded-full bg-brand px-3 py-1 font-semibold text-white"
-              : "rounded-full bg-white px-3 py-1 text-brand transition-shadow hover:shadow-glass"
-          }
+          className="rounded-full bg-white px-3 py-1 text-brand transition-shadow hover:shadow-glass"
         >
           {b.name}
         </Link>

@@ -29,6 +29,8 @@ export function buildExpoMessages(tokens: string[], message: NotificationMessage
     title: message.title,
     body: message.text,
     sound: "default",
+    // Android: канал «Напоминания», который создаёт приложение (mobile/src/lib/push.ts)
+    channelId: "default",
     data: {
       reminderId: message.reminderId,
       shelfItemId: message.shelfItemId,

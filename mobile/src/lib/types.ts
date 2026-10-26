@@ -51,6 +51,11 @@ export interface AnalysisResult {
   advice: string[];
 }
 
+/**
+ * Сервер по-прежнему отдаёт plan/limits для совместимости со старыми сборками.
+ * С 24.10.2026 все функции бесплатны: isPro = true у всех, лимиты = null.
+ * Приложение эти поля не показывает.
+ */
 export interface PlanInfo {
   isPro: boolean;
   currentPeriodEnd: string | null;
@@ -219,7 +224,6 @@ export interface ShelfView {
   duplicates: DuplicateGroup[];
   routine: { morning: RoutineStep[]; evening: RoutineStep[]; notes: string[] };
   reactions: ShelfReaction[];
-  reactionsLimited: boolean;
   reminders: ShelfReminder[];
 }
 

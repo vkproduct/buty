@@ -39,6 +39,7 @@ describe("ExpoPushNotifier", () => {
     const [msg] = buildExpoMessages(["ExponentPushToken[a]"], MESSAGE);
     expect(msg.data.url).toBe("buty://shelf/s1");
     expect(msg.title).toBe("Оценить результат");
+    expect(msg.channelId).toBe("default");
   });
 
   it("без устройств — запасной канал", async () => {

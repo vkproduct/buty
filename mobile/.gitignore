@@ -45,3 +45,6 @@ example
 # Нативные проекты генерируются EAS (Continuous Native Generation)
 /ios
 /android
+
+# Ключ сервисного аккаунта Google Play (для eas submit) — секрет, в git не кладём
+google-play-service-account.json

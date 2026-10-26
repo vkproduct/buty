@@ -1,9 +1,8 @@
 import * as Haptics from 'expo-haptics';
 import { ActivityIndicator, Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
-import type { SymbolViewProps } from 'expo-symbols';
 
 import { radius, space, useColors } from '@/theme';
-import { Icon } from './icon';
+import { Icon, type IconName } from './icon';
 import { AppText } from './text';
 
 type Variant = 'primary' | 'secondary' | 'plain' | 'destructive';
@@ -12,7 +11,7 @@ interface Props {
   title: string;
   onPress?: () => void;
   variant?: Variant;
-  icon?: SymbolViewProps['name'];
+  icon?: IconName;
   loading?: boolean;
   disabled?: boolean;
   size?: 'large' | 'small';

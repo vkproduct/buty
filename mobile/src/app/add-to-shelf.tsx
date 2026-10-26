@@ -34,7 +34,7 @@ export default function AddToShelfScreen() {
     router.back();
     setTimeout(() => Alert.alert('На полке', `«${title}» добавлено.`), 300);
   };
-  const fail = (e: unknown) => Alert.alert('Не добавилось', shelfAddErrorMessage(e, dict?.limits.freeShelf));
+  const fail = (e: unknown) => Alert.alert('Не добавилось', shelfAddErrorMessage(e));
 
   return (
     <Screen>

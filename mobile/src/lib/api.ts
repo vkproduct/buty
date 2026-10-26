@@ -92,13 +92,11 @@ export function errorMessage(error: unknown): string {
 /**
  * Текст ошибки добавления на полку. Лимита полки нет (все функции бесплатны
  * с 24.10.2026), PAYWALL сервер больше не возвращает — ветка оставлена
- * для старых версий сервера.
+ * на случай старого сервера, без упоминания тарифов.
  */
-export function shelfAddErrorMessage(error: unknown, freeLimit: number | null = null): string {
+export function shelfAddErrorMessage(error: unknown): string {
   if (error instanceof ApiError && error.code === 'PAYWALL') {
-    return freeLimit
-      ? `На бесплатном тарифе на полке до ${freeLimit} средств. Уберите одно из них, чтобы добавить новое.`
-      : 'Полка переполнена. Уберите одно из средств, чтобы добавить новое.';
+    return 'Полка переполнена. Уберите одно из средств, чтобы добавить новое.';
   }
   return errorMessage(error);
 }

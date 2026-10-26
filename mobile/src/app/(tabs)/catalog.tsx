@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { IngredientRow } from '@/components/ingredient-row';
+import { useTabTopInset } from '@/components/screen';
 import { Chip } from '@/components/ui/chip';
 import { Icon } from '@/components/ui/icon';
 import { Segmented } from '@/components/ui/segmented';
@@ -48,6 +49,7 @@ function ProductRow({ item }: { item: ProductListItem }) {
 /** Вкладка «Каталог»: ингредиенты и средства с поиском и фильтром по категории. */
 export default function CatalogScreen() {
   const c = useColors();
+  const topInset = useTabTopInset();
   const dict = useDictionaries().data;
   const [mode, setMode] = useState<Mode>('ingredients');
   const [query, setQuery] = useState('');
@@ -119,6 +121,7 @@ export default function CatalogScreen() {
     <FlatList
       style={{ flex: 1, backgroundColor: c.grouped }}
       contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={topInset ? { paddingTop: topInset } : undefined}
       data={items}
       keyExtractor={(item) => item.slug}
       ListHeaderComponent={header}

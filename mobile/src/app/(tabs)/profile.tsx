@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react';
 import { Alert, Linking, View } from 'react-native';
 
 import { Screen } from '@/components/screen';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ListRow } from '@/components/ui/list-row';
 import { Section } from '@/components/ui/section';
@@ -124,24 +123,7 @@ export default function ProfileScreen() {
   return (
     <Screen tab title="Профиль" refreshing={me.isRefetching} onRefresh={() => me.refetch()}>
       <Section title="Аккаунт">
-        <ListRow title={data?.user.email ?? ''} icon="person.crop.circle" />
-        <ListRow
-          title="Тариф"
-          icon="star"
-          last
-          right={
-            data?.plan.isPro ? (
-              <Badge
-                tone="brand"
-                label={data.plan.currentPeriodEnd ? `Pro до ${formatDate(data.plan.currentPeriodEnd)}` : 'Pro'}
-              />
-            ) : (
-              <AppText variant="subhead" color="muted">
-                Бесплатный
-              </AppText>
-            )
-          }
-        />
+        <ListRow title={data?.user.email ?? ''} icon="person.crop.circle" last />
       </Section>
 
       <Section title="Профиль кожи">

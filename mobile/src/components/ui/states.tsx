@@ -1,9 +1,8 @@
-import type { SymbolViewProps } from 'expo-symbols';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { space, useColors } from '@/theme';
 import { Button } from './button';
-import { Icon } from './icon';
+import { Icon, type IconName } from './icon';
 import { AppText } from './text';
 
 export function Loading({ label }: { label?: string }) {
@@ -39,7 +38,7 @@ export function EmptyState({
   text,
   action,
 }: {
-  icon: SymbolViewProps['name'];
+  icon: IconName;
   title: string;
   text?: string;
   action?: { title: string; onPress: () => void };

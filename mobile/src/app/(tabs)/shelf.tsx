@@ -64,7 +64,7 @@ function Compat({ shelf }: { shelf: ShelfView }) {
       {pairs.map((p) => (
         <PairCard key={`${p.productAId}-${p.productBId}`} pair={p} />
       ))}
-      {shelf.plan.isPro && shelf.duplicates.length > 0 ? (
+      {shelf.duplicates.length > 0 ? (
         <>
           <AppText variant="title3" style={{ marginTop: space.md }}>
             Дубли
@@ -159,12 +159,6 @@ function Reactions({ shelf }: { shelf: ShelfView }) {
           </Card>
         ))
       )}
-      {shelf.reactionsLimited ? (
-        <AppText variant="footnote" color="muted" center>
-          Показаны последние {shelf.limits.freeReactions}{' '}
-          {pluralRu(shelf.limits.freeReactions, 'реакция', 'реакции', 'реакций')}.
-        </AppText>
-      ) : null}
     </View>
   );
 }
@@ -243,7 +237,7 @@ export default function ShelfScreen() {
   const tabs: { id: Tab; label: string }[] = [
     { id: 'items', label: 'Средства' },
     { id: 'compat', label: 'Совместимость' },
-    ...(data?.plan.isPro ? [{ id: 'routine' as const, label: 'Режим' }] : []),
+    { id: 'routine', label: 'Режим' },
     { id: 'reactions', label: 'Реакции' },
     { id: 'reminders', label: 'Напоминания' },
   ];
@@ -257,23 +251,16 @@ export default function ShelfScreen() {
       ) : (
         <>
           <View style={styles.row}>
-            {data.plan.isPro ? (
-              <Badge
-                tone="brand"
-                label={data.plan.currentPeriodEnd ? `Pro до ${formatDateShort(data.plan.currentPeriodEnd)}` : 'Pro'}
-              />
-            ) : (
-              <AppText variant="footnote" color="muted">
-                {data.items.length} из {data.limits.freeShelf} средств на бесплатном тарифе
-              </AppText>
-            )}
+            <AppText variant="footnote" color="muted">
+              {data.items.length} {pluralRu(data.items.length, 'средство', 'средства', 'средств')} на полке
+            </AppText>
             <Button title="Добавить" size="small" icon="plus" onPress={() => router.push('/add-to-shelf')} />
           </View>
           <Segmented scrollable options={tabs} value={tabs.some((t) => t.id === tab) ? tab : 'items'} onChange={setTab} />
           <View style={{ backgroundColor: c.grouped }}>
             {tab === 'items' && <Items shelf={data} />}
             {tab === 'compat' && <Compat shelf={data} />}
-            {tab === 'routine' && data.plan.isPro && <Routine shelf={data} />}
+            {tab === 'routine' && <Routine shelf={data} />}
             {tab === 'reactions' && <Reactions shelf={data} />}
             {tab === 'reminders' && <Reminders shelf={data} />}
           </View>

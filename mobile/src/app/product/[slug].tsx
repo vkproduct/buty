@@ -32,7 +32,7 @@ export default function ProductScreen() {
       {
         onSuccess: () =>
           Alert.alert('На полке', `«${p.name}» добавлено. Совместимость со средствами полки — во вкладке «Полка».`),
-        onError: (e) => Alert.alert('Не добавилось', shelfAddErrorMessage(e, dict?.limits.freeShelf)),
+        onError: (e) => Alert.alert('Не добавилось', shelfAddErrorMessage(e)),
       },
     );
   };

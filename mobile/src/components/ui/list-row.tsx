@@ -1,15 +1,14 @@
-import type { SymbolViewProps } from 'expo-symbols';
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { space, useColors } from '@/theme';
-import { Icon } from './icon';
+import { Icon, type IconName } from './icon';
 import { AppText } from './text';
 
 interface Props {
   title: string;
   subtitle?: string | null;
-  icon?: SymbolViewProps['name'];
+  icon?: IconName;
   iconColor?: string;
   right?: ReactNode;
   onPress?: () => void;

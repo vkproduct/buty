@@ -1,5 +1,6 @@
 import { forwardRef, type ReactNode } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
+import { Platform, RefreshControl, ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { space, useColors } from '@/theme';
 import { AppText } from './ui/text';
@@ -12,9 +13,19 @@ interface Props extends ScrollViewProps {
   onRefresh?: () => void;
   /**
    * Экран вкладки: свой крупный заголовок вместо навигационной шапки.
-   * Отступ под статус-бар и таб-бар добавляет iOS (contentInsetAdjustmentBehavior).
+   * Отступ под статус-бар: на iOS — contentInsetAdjustmentBehavior, на Android — useTabTopInset().
    */
   tab?: boolean;
+}
+
+/**
+ * Отступ сверху для экранов вкладок (у них нет навигационной шапки).
+ * iOS добавляет его сам через contentInsetAdjustmentBehavior, а на Android
+ * приложение рисуется под строкой состояния (edge-to-edge) — отступ нужен явно.
+ */
+export function useTabTopInset(): number {
+  const insets = useSafeAreaInsets();
+  return Platform.OS === 'android' ? insets.top : 0;
 }
 
 /** Прокручиваемый экран с крупным заголовком в стиле iOS. */
@@ -23,6 +34,7 @@ export const Screen = forwardRef<ScrollView, Props>(function Screen(
   ref,
 ) {
   const c = useColors();
+  const topInset = useTabTopInset();
   return (
     <ScrollView
       ref={ref}
@@ -33,7 +45,7 @@ export const Screen = forwardRef<ScrollView, Props>(function Screen(
       refreshControl={onRefresh ? <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} /> : undefined}
       contentContainerStyle={[
         styles.content,
-        tab && { paddingTop: space.sm },
+        tab && { paddingTop: space.sm + topInset },
         contentContainerStyle,
       ]}
       {...rest}>

@@ -1,12 +1,14 @@
-# Buty для iOS
+# Buty для iOS и Android
 
-Приложение Buty для iPhone: разбор состава текстом и по фото, каталоги ингредиентов и средств,
+Одно приложение для iPhone и Android-смартфонов (Google Play и RuStore): разбор состава текстом и по фото, каталоги ингредиентов и средств,
 «Моя полка» с совместимостью, реакциями и push-напоминаниями, профиль кожи.
 
 Стек: Expo SDK 57 (React Native 0.86, TypeScript), Expo Router, TanStack Query.
 Сервер — тот же Next.js в корне репозитория, API под `/api/mobile/*` и общие `/api/*`.
 
-Полная инструкция «от нуля до App Store» — в [`docs/ios.md`](../docs/ios.md).
+Инструкции по выпуску: iOS / App Store — [`docs/ios.md`](../docs/ios.md), Android / Google Play / RuStore — [`docs/android.md`](../docs/android.md).
+
+Все функции бесплатны (с 24.10.2026): в приложении нет тарифов, цен и покупок.
 
 ## Команды
 
@@ -17,6 +19,8 @@ npx expo start         # dev-сервер; приложение — в developme
 npm run check          # проверка типов + линтер (запускать перед коммитом)
 npx eas-cli@latest build --platform ios --profile production   # сборка для TestFlight/App Store
 npx eas-cli@latest submit --platform ios --latest              # отправка последней сборки в App Store Connect
+npx eas-cli@latest build --platform android --profile production  # AAB для Google Play
+npx eas-cli@latest build --platform android --profile rustore     # APK для RuStore и установки на телефон
 ```
 
 Сервер для разработки: `EXPO_PUBLIC_API_URL=http://<IP-компьютера>:3000 npx expo start`
@@ -36,6 +40,8 @@ npx eas-cli@latest submit --platform ios --latest              # отправк�
 | `src/lib/ocr.ts` | фото состава → сжатие → `/api/ocr` (Google Vision на сервере) |
 | `src/lib/types.ts` | контракт API (повторяет типы сервера — менять вместе) |
 | `src/theme.ts` | цвета (светлая/тёмная тема), типографика, отступы |
+| `src/components/ui/icon.tsx` | иконки: SF Symbols на iOS, Material Symbols на Android (пары имён) |
+| `app.config.js` | дополняет `app.json`: файл Firebase `google-services.json` для push на Android |
 
 ## Правила
 
@@ -43,5 +49,11 @@ npx eas-cli@latest submit --platform ios --latest              # отправк�
 - Новые пакеты Expo ставим версией под SDK 57: `npx expo install <пакет>`.
 - Подписи и справочники (категории, уровни доказательности, анкета кожи) приходят с сервера
   (`/api/mobile/dictionaries`) — правятся в коде сайта, без нового релиза приложения.
-- В приложении нет цен и кнопок оплаты Pro: оплата только на сайте (правило App Store 3.1.1,
-  к тому же Apple не принимает платежи в российском App Store с 1 апреля 2026).
+- В приложении нет цен, тарифов и кнопок оплаты: все функции бесплатны. Поля `plan`/`limits`
+  в ответах сервера остались для совместимости и в интерфейсе не показываются.
+- Новая иконка — только через пару в `src/components/ui/icon.tsx` (SF-имя → Material-имя),
+  иначе на Android она не отрисуется. TypeScript не даст использовать иконку без пары.
+- Экраны вкладок без шапки: отступ под строку состояния на Android — `useTabTopInset()`
+  (`src/components/screen.tsx`), на iOS его даёт система.
+- Пакет Android — `app.buty.android`, подпись — ключ из `android-keystore/` (загружен в EAS).
+  Сменить пакет или ключ нельзя: RuStore и Google Play не примут обновление.

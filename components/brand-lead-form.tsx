@@ -19,6 +19,8 @@ export function BrandLeadForm() {
   const [site, setSite] = useState("");
   const [tariff, setTariff] = useState<TariffId | "">("");
   const [message, setMessage] = useState("");
+  // Honeypot-поле: не выводим на экран, значение всегда пустое у людей.
+  const [website, setWebsite] = useState("");
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +53,8 @@ export function BrandLeadForm() {
         contact,
         email,
         message: `${header}\n\n${message.trim() || "—"}`,
+        // Honeypot: люди его не видят и не заполняют — сервер такие заявки отбрасывает.
+        website,
       }),
     });
     setPending(false);
@@ -135,6 +139,21 @@ export function BrandLeadForm() {
         maxLength={4500}
       />
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      {/* Ловушка для ботов: скрыто от людей (вне экрана, вне порядка табуляции,
+          без автозаполнения и aria), боты заполняют — сервер такие заявки молча отбрасывает. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden">
+        <label>
+          Не заполняйте это поле
+          <input
+            type="text"
+            name="website"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
+      </div>
       <Button type="submit" disabled={pending} className="w-full sm:w-auto">
         {pending ? "Отправляем…" : "Отправить заявку"}
       </Button>

@@ -19,6 +19,8 @@ export const GOALS = {
   analyzeSuccess: "analyze_success",
   signupSubmit: "signup_submit",
   signupComplete: "signup_complete",
+  /** Гость упёрся в стену разбора (ANALYZE_GATE). */
+  analyzeGate: "analyze_gate",
   skinProfileComplete: "skin_profile_complete",
   shelfAdd: "shelf_add",
   /** Не используется с 24.10.2026: лимита полки больше нет, все функции бесплатны. */

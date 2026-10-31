@@ -546,7 +546,10 @@ export default async function ProductPage({
           <h2 className="font-display text-2xl font-bold">Состав (INCI)</h2>
           <p className="max-w-3xl leading-relaxed text-muted-foreground">{inciList}</p>
           <Button asChild variant="outline">
-            <Link href={`/analyze?text=${encodeURIComponent(inciList)}`} rel="nofollow">
+            <Link
+              href={`/analyze?text=${encodeURIComponent(inciList)}&product=${product.id}`}
+              rel="nofollow"
+            >
               Открыть в разборе состава
             </Link>
           </Button>

@@ -23,6 +23,7 @@ import { cookies, headers } from "next/headers";
 import Mixpanel from "mixpanel";
 
 import { parseBearer } from "@/lib/mobile/crypto";
+import { requestPlatform } from "@/lib/platform";
 
 type Props = Record<string, string | number | boolean>;
 
@@ -85,15 +86,19 @@ export function hasServerAnalyticsConsent(): boolean {
 }
 
 /**
- * Платформа текущего запроса: Bearer bt_… — мобильное приложение, иначе сайт.
- * Вне HTTP-запроса headers() бросает — платформа неизвестна, свойство не добавляем.
+ * Платформа текущего запроса: Bearer bt_… — мобильное приложение, иначе сайт
+ * (общий хелпер lib/platform.ts). Вне HTTP-запроса headers() бросает — платформа
+ * неизвестна, свойство не добавляем (requestPlatform в этом случае вернёт "web",
+ * поэтому важен именно этот try/catch: вне запроса события не отправляются,
+ * hasServerAnalyticsConsent() отсекает раньше).
  */
 function detectPlatform(): "mobile_app" | "web" | undefined {
   try {
-    return parseBearer(headers().get("authorization")) ? "mobile_app" : "web";
+    headers();
   } catch {
     return undefined;
   }
+  return requestPlatform();
 }
 
 /** Трекинг события от имени пользователя. Без токена, без согласия или при ошибке — тихий no-op. */

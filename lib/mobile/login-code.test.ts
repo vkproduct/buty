@@ -26,6 +26,8 @@ describe("вход по коду из письма", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.NEXTAUTH_SECRET = "test-secret";
+    delete process.env.APP_REVIEW_EMAIL;
+    delete process.env.APP_REVIEW_CODE;
   });
 
   it("отправляет код письмом и хранит только хэш", async () => {
@@ -79,5 +81,32 @@ describe("вход по коду из письма", () => {
     codes.findFirst.mockResolvedValue(null);
     const res = await verifyLoginCode(EMAIL, "123456", NOW);
     expect(res.ok).toBe(false);
+  });
+
+  it("письмо для сайта (channel web) ссылается на buty.app, для приложения — на приложение", async () => {
+    codes.findMany.mockResolvedValue([]);
+    await requestLoginCode(EMAIL, NOW, "web");
+    expect(send.mock.calls[0][0].text).toContain("buty.app");
+    expect(send.mock.calls[0][0].text).not.toContain("приложение");
+
+    send.mockClear();
+    await requestLoginCode(EMAIL, NOW, "app");
+    expect(send.mock.calls[0][0].text).toContain("приложение Buty");
+  });
+
+  it("review-вход с сайта (allowReviewLogin: false) отклоняется", async () => {
+    process.env.APP_REVIEW_EMAIL = "review@buty.app";
+    process.env.APP_REVIEW_CODE = "999999";
+    codes.findFirst.mockResolvedValue(null);
+    const res = await verifyLoginCode("review@buty.app", "999999", NOW, { allowReviewLogin: false });
+    expect(res.ok).toBe(false);
+  });
+
+  it("review-вход в приложении (по умолчанию) работает", async () => {
+    process.env.APP_REVIEW_EMAIL = "review@buty.app";
+    process.env.APP_REVIEW_CODE = "999999";
+    const res = await verifyLoginCode("review@buty.app", "999999", NOW);
+    expect(res.ok).toBe(true);
+    expect(codes.findFirst).not.toHaveBeenCalled();
   });
 });

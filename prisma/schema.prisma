@@ -90,6 +90,7 @@ model Product {
   partnerClicks PartnerClick[]
   links        ProductLink[]
   dailyStats   ProductDailyStat[]
+  analyses     Analysis[]
 
   @@index([brand])
   @@unique([source, externalId])
@@ -117,6 +118,32 @@ model Feedback {
   createdAt DateTime @default(now())
 
   @@index([rawToken])
+}
+
+// Журнал разборов составов: история пользователя + сырьё для обезличенной B2B-аналитики.
+// Персональных данных в строке нет: только userId (или null у гостя), без IP, email, user-agent.
+model Analysis {
+  id            String   @id @default(cuid())
+  userId        String? // null — гость (status = "blocked" или "teaser")
+  status        String // "shown" — полный разбор показан | "teaser" — гостю показана сводка | "blocked" — гостю показана стена
+  inputMethod   String // "text" | "photo" | "product" (переход со страницы продукта)
+  platform      String // "web" | "mobile_app"
+  productId     String? // если пришли со страницы продукта (?product=<id>)
+  rawText       String // состав как прислали, обрезанный до 10 000 символов
+  textHash      String // sha256 от отсортированных id распознанных ингредиентов, через запятую (одинаковые составы — один хэш)
+  ingredientIds String[] // id распознанных ингредиентов в порядке состава
+  unmatched     String[] // нераспознанные токены (до 100 штук)
+  total         Int
+  recognized    Int
+  conflicts     Int
+  createdAt     DateTime @default(now())
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  product       Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@index([textHash])
+  @@index([productId])
 }
 
 // --- Часть 5: аутентификация и «Моя полка» ---
@@ -177,6 +204,7 @@ model User {
   mobileSessions MobileSession[]
   pushTokens    PushToken[]
   brandMemberships BrandMember[]
+  analyses      Analysis[]
 }
 
 enum ShelfStatus {

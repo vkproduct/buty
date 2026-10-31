@@ -20,7 +20,11 @@ export type RequestCodeResult =
   | { ok: false; status: 429; error: string; retryAfterSec: number };
 
 /** Отправляет новый код на email (предыдущие коды адреса перестают действовать). */
-export async function requestLoginCode(email: string, now = new Date()): Promise<RequestCodeResult> {
+export async function requestLoginCode(
+  email: string,
+  now = new Date(),
+  channel: "app" | "web" = "app",
+): Promise<RequestCodeResult> {
   const hourAgo = new Date(now.getTime() - 60 * 60 * 1000);
   const recent = await prisma.mobileLoginCode.findMany({
     where: { email, createdAt: { gt: hourAgo } },
@@ -53,11 +57,17 @@ export async function requestLoginCode(email: string, now = new Date()): Promise
   await prisma.mobileLoginCode.create({
     data: { email, codeHash: hashCode(email, code), expiresAt: new Date(now.getTime() + CODE_TTL_MS) },
   });
-  await getEmailProvider().send({
-    to: email,
-    subject: `${code} — код входа в Buty`,
-    text: `Ваш код для входа в приложение Buty: ${code}\n\nКод действует 10 минут. Если вы не запрашивали вход, просто проигнорируйте это письмо.`,
-  });
+  const letter =
+    channel === "web"
+      ? {
+          subject: `${code} — код входа в Buty`,
+          text: `Ваш код для входа на buty.app: ${code}\n\nКод действует 10 минут. Если вы не запрашивали вход, просто проигнорируйте это письмо.`,
+        }
+      : {
+          subject: `${code} — код входа в Buty`,
+          text: `Ваш код для входа в приложение Buty: ${code}\n\nКод действует 10 минут. Если вы не запрашивали вход, просто проигнорируйте это письмо.`,
+        };
+  await getEmailProvider().send({ to: email, ...letter });
   return { ok: true };
 }
 
@@ -70,8 +80,9 @@ export async function verifyLoginCode(
   email: string,
   code: string,
   now = new Date(),
+  { allowReviewLogin = true }: { allowReviewLogin?: boolean } = {},
 ): Promise<VerifyCodeResult> {
-  if (isReviewLogin(email, code)) return { ok: true };
+  if (allowReviewLogin && isReviewLogin(email, code)) return { ok: true };
 
   const row = await prisma.mobileLoginCode.findFirst({
     where: { email, expiresAt: { gt: now } },

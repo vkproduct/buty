@@ -16,6 +16,7 @@ const WINDOW_MS = 60 * 60 * 1000;
 export const OCR_LIMIT_PER_HOUR = 20;
 export const DEFAULT_OCR_DAILY_LIMIT = 150;
 export const DEFAULT_OCR_PER_IP_DAILY_LIMIT = 60;
+export const DEFAULT_OCR_PER_USER_DAILY_LIMIT = 40;
 export const MAX_IMAGE_BYTES = 7 * 1024 * 1024;
 
 /** Ключ общего суточного счётчика в lib/budget/daily-limit (админка читает по нему). */
@@ -31,6 +32,12 @@ export function ocrDailyLimit(): number {
 export function ocrPerIpDailyLimit(): number {
   const n = Number(process.env.OCR_PER_IP_DAILY_LIMIT);
   return Number.isFinite(n) && n > 0 ? n : DEFAULT_OCR_PER_IP_DAILY_LIMIT;
+}
+
+/** Суточный лимит фото на вошедшего пользователя (защита бюджета Vision). */
+export function ocrPerUserDailyLimit(): number {
+  const n = Number(process.env.OCR_PER_USER_DAILY_LIMIT);
+  return Number.isFinite(n) && n > 0 ? n : DEFAULT_OCR_PER_USER_DAILY_LIMIT;
 }
 
 export type OcrQuota = "ok" | "hour" | "day";

@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { loadShelfView } from "@/lib/shelf/view";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
-import { SignInForm } from "@/components/sign-in-form";
+import { SignInCta } from "@/components/sign-in-cta";
 import { ShelfTabs } from "@/components/shelf-tabs";
 
 export const metadata: Metadata = { title: "Моя полка" };
@@ -39,7 +39,7 @@ export default async function ShelfPage() {
               </li>
             </ul>
             <div className="mt-6">
-              <SignInForm cta="Собрать полку бесплатно" />
+              <SignInCta cta="Собрать полку бесплатно" />
             </div>
           </GlassCard>
         </Container>

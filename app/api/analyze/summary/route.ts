@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import { analyzeText } from "@/lib/analysis/analyze";
 import { getAiSummary } from "@/lib/ai-summary/service";
+import { getAnalyzeGate } from "@/lib/analysis/gate";
+import { getSession } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,7 @@ const MAX_TEXT_LENGTH = 10_000;
  * POST /api/analyze/summary { text } → краткое резюме состава от ИИ.
  * Состав заново разбирается по базе на сервере (это быстро и без ИИ), поэтому
  * клиент не может подсунуть в промпт свои данные.
+ * ИИ-резюме — только для вошедших (как сам разбор): гость получает 401.
  */
 export async function POST(request: Request) {
   let body: unknown;
@@ -26,6 +29,14 @@ export async function POST(request: Request) {
   }
   if (text.length > MAX_TEXT_LENGTH) {
     return NextResponse.json({ error: `Текст длиннее ${MAX_TEXT_LENGTH} символов` }, { status: 400 });
+  }
+
+  const session = await getSession();
+  if (!session?.user && getAnalyzeGate() !== "off") {
+    return NextResponse.json(
+      { error: "Войдите, чтобы получить резюме", code: "auth_required" },
+      { status: 401 },
+    );
   }
 
   const ip =

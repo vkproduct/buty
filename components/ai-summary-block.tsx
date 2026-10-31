@@ -11,7 +11,8 @@ import { GlassCard } from "@/components/ui/glass-card";
 type State =
   | { kind: "loading" }
   | { kind: "ok"; summary: AiSummaryContent }
-  | { kind: "fallback" };
+  | { kind: "fallback" }
+  | { kind: "hidden" };
 
 /** Префикс сообщения о неточности в /api/feedback — по нему такие сообщения видны в админке. */
 export const AI_SUMMARY_REPORT_PREFIX = "Резюме ИИ: ";
@@ -36,27 +37,42 @@ export function AiSummaryBlock({
   useEffect(() => {
     const controller = new AbortController();
     setState({ kind: "loading" });
-    fetch("/api/analyze/summary", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text }),
-      signal: controller.signal,
-    })
-      .then((res) => (res.ok ? (res.json() as Promise<AiSummaryResponse>) : null))
-      .then((data) => {
-        if (controller.signal.aborted) return;
-        if (data?.status === "ok") setState({ kind: "ok", summary: data.summary });
-        else setState({ kind: "fallback" });
-      })
-      .catch(() => {
+    (async () => {
+      let res: Response;
+      try {
+        res = await fetch("/api/analyze/summary", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ text }),
+          signal: controller.signal,
+        });
+      } catch {
         if (!controller.signal.aborted) setState({ kind: "fallback" });
-      });
+        return;
+      }
+      if (controller.signal.aborted) return;
+      // 401 — гость за стеной разбора: блок просто не показываем (без текста ошибки)
+      if (res.status === 401) {
+        setState({ kind: "hidden" });
+        return;
+      }
+      if (!res.ok) {
+        setState({ kind: "fallback" });
+        return;
+      }
+      const data = (await res.json()) as AiSummaryResponse;
+      if (controller.signal.aborted) return;
+      if (data?.status === "ok") setState({ kind: "ok", summary: data.summary });
+      else setState({ kind: "fallback" });
+    })();
     return () => controller.abort();
   }, [text]);
 
   const summary: AiSummaryContent | null =
     state.kind === "ok" ? state.summary : state.kind === "fallback" ? buildBasicSummary(result) : null;
   const isAi = state.kind === "ok";
+
+  if (state.kind === "hidden") return null;
 
   return (
     <GlassCard className="space-y-4 p-6 sm:p-8" aria-live="polite">

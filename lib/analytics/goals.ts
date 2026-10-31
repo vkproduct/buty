@@ -20,6 +20,7 @@ export const GA_GOAL_EVENTS: Record<Goal, string> = {
   analyze_success: "analyze_success",
   signup_submit: "sign_up",
   signup_complete: "sign_up_completed",
+  analyze_gate: "analyze_gate",
   skin_profile_complete: "skin_profile_completed",
   shelf_add: "shelf_add",
   shelf_limit: "shelf_limit_reached",

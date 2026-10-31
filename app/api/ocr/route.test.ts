@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+vi.mock("@/lib/auth", () => ({ getSession: vi.fn() }));
+
+import { getSession } from "@/lib/auth";
 import { OCR_LIMIT_PER_HOUR, resetOcrQuota } from "@/lib/ocr/rate-limit";
 import { POST } from "./route";
+
+const getSessionMock = vi.mocked(getSession);
 
 const fetchMock = vi.fn();
 
@@ -34,12 +39,23 @@ describe("POST /api/ocr", () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     process.env.GOOGLE_VISION_API_KEY = "test-key";
     delete process.env.GOOGLE_VISION_ENDPOINT;
+    delete process.env.ANALYZE_GATE;
+    // По умолчанию — вошедший пользователь
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
     delete process.env.GOOGLE_VISION_API_KEY;
+  });
+
+  it("гость получает 401 до проверки квот и вызова провайдера", async () => {
+    getSessionMock.mockResolvedValue(null);
+    const res = await post(jpeg());
+    expect(res.status).toBe(401);
+    expect((await res.json()).code).toBe("auth_required");
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("без ключа — 501 (mock), Google не вызывается", async () => {

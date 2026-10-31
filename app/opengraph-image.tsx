@@ -57,7 +57,7 @@ export default function OpengraphImage() {
             fontWeight: 700,
           }}
         >
-          Бесплатно · без регистрации
+          Бесплатно · вход по email без пароля
         </div>
         <div style={{ fontSize: 72, fontWeight: 600, letterSpacing: -2, lineHeight: 1.15, marginTop: 24 }}>
           Научный разбор составов косметики

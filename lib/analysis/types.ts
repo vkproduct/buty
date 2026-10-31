@@ -45,3 +45,15 @@ export interface AnalysisResult {
   conflicts: ConflictInfo[];
   advice: string[];
 }
+
+/** Урезанный ответ для гостя при ANALYZE_GATE=teaser: только сводка, без карточек и советов. */
+export interface AnalysisTeaser {
+  gate: "teaser";
+  summary: CompositionSummary;
+  conflictsCount: number;
+  ingredientsCount: number;
+  unmatchedCount: number;
+}
+
+/** Ответ POST /api/analyze: полный разбор (gate: "none") или гостевая сводка. */
+export type AnalyzeResponse = (AnalysisResult & { gate: "none"; hasSkinProfile?: boolean }) | AnalysisTeaser;

@@ -11,6 +11,7 @@ import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 import { DeleteSkinProfileButton } from "@/components/delete-skin-profile-button";
 import { DeleteAccountButton } from "@/components/delete-account-button";
+import { AnalysisHistory } from "@/components/analysis-history";
 import { labelFor, migrateLegacy } from "@/lib/skin-profile/options";
 
 export const metadata: Metadata = { title: "Профиль" };
@@ -133,8 +134,7 @@ export default async function ProfilePage() {
           <h2 className="font-display flex items-center gap-2 text-lg font-semibold">
             <MousePointerClick className="h-5 w-5 text-brand" />
             История переходов «Где купить»
-          </h2>
-          {clicks.length === 0 ? (
+          </h2>          {clicks.length === 0 ? (
             <p className="mt-3 text-sm text-muted-foreground">
               Пока пусто — переходы по кнопкам «Где купить» появятся здесь.
             </p>
@@ -159,6 +159,8 @@ export default async function ProfilePage() {
             </ul>
           )}
         </GlassCard>
+
+        <AnalysisHistory />
 
         <GlassCard className="p-6">
           <h2 className="font-display text-lg font-semibold">Аккаунт</h2>

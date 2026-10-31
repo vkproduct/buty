@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { GlassCard } from "@/components/ui/glass-card";
 import { Container } from "@/components/ui/container";
-import { SignInForm } from "@/components/sign-in-form";
+import { SignInClient } from "./signin-client";
 
 export const metadata: Metadata = { title: "Вход" };
 
@@ -13,10 +14,12 @@ export default function SignInPage() {
         <GlassCard className="w-full max-w-md p-8">
           <h1 className="font-display text-2xl font-bold">Вход в Buty.app</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Пришлём ссылку для входа на email — без пароля.
+            Пришлём 6-значный код на email — без пароля.
           </p>
           <div className="mt-6">
-            <SignInForm />
+            <Suspense>
+              <SignInClient />
+            </Suspense>
           </div>
         </GlassCard>
       </Container>

@@ -14,12 +14,14 @@ const DESCRIPTION =
 export function generateMetadata({
   searchParams,
 }: {
-  searchParams: { text?: string; photo?: string };
+  searchParams: { text?: string; photo?: string; product?: string };
 }): Metadata {
-  // Страница с конкретным составом в ?text= или служебным ?photo= — не индексируем, канонизируем на /analyze.
+  // Страница с конкретным составом в ?text= или служебным ?photo=/?product= — не индексируем,
+  // канонизируем на /analyze.
   const withText =
     (typeof searchParams.text === "string" && searchParams.text.length > 0) ||
-    typeof searchParams.photo === "string";
+    typeof searchParams.photo === "string" ||
+    typeof searchParams.product === "string";
   return {
     title: { absolute: `${TITLE} | ${SITE_NAME}` },
     description: DESCRIPTION,
@@ -32,14 +34,15 @@ export function generateMetadata({
 export default function AnalyzePage({
   searchParams,
 }: {
-  searchParams: { text?: string; photo?: string };
+  searchParams: { text?: string; photo?: string; product?: string };
 }) {
   const initialText = typeof searchParams.text === "string" ? searchParams.text : "";
   const fromPhoto = searchParams.photo === "1";
+  const productId = typeof searchParams.product === "string" ? searchParams.product : null;
   return (
     <>
       <JsonLd data={webApplicationJsonLd()} />
-      <AnalyzeView initialText={initialText} fromPhoto={fromPhoto} />
+      <AnalyzeView initialText={initialText} fromPhoto={fromPhoto} productId={productId} />
       <section className="border-t border-ink-hair bg-white py-12">
         <Container className="space-y-5">
           <h2 className="font-display text-[22px] font-semibold leading-tight">

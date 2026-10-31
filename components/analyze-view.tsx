@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   ArrowRight,
   Camera,
   FlaskConical,
   Loader2,
+  Lock,
   MessageSquarePlus,
   ShieldAlert,
   Sparkles,
@@ -14,7 +16,9 @@ import {
 
 import type {
   AnalysisResult,
+  AnalysisTeaser,
   AnalyzedIngredient,
+  CompositionSummary,
   ConflictInfo,
 } from "@/lib/analysis/types";
 import { getOcrProvider, OcrNotReadyError } from "@/lib/ocr";
@@ -23,6 +27,7 @@ import { trackEvent } from "@/lib/analytics/mixpanel";
 import { GOALS, trackGoal } from "@/lib/analytics/goals";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CodeSignIn } from "@/components/code-sign-in";
 import { Container } from "@/components/ui/container";
 import { IngredientFlags } from "@/components/ingredients/ingredient-flags";
 import {
@@ -70,57 +75,103 @@ const SEVERITY_STYLE: Record<string, { label: string; variant: "coral" | "amber"
   low: { label: "Низкий риск", variant: "outline" },
 };
 
-/** Страница разбора состава: форма ввода, результат анализа, заглушка OCR. */
+type InputMethod = "text" | "photo" | "product";
+
+/**
+ * Страница разбора состава: форма ввода, результат анализа, OCR.
+ * Разбор доступен только вошедшим (ANALYZE_GATE): гость упирается в окно входа
+ * на месте — введённый состав и выбранное фото не теряются.
+ */
 export function AnalyzeView({
   initialText,
   fromPhoto = false,
+  productId = null,
 }: {
   initialText: string;
   /** Переход с формы «Загрузить фото» (?photo=1) */
   fromPhoto?: boolean;
+  /** Переход со страницы продукта (?product=<id>) — inputMethod "product" */
+  productId?: string | null;
 }) {
+  const { status: sessionStatus } = useSession();
   const [text, setText] = useState(initialText);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  // Гостевая сводка (ANALYZE_GATE=teaser)
+  const [teaser, setTeaser] = useState<AnalysisTeaser | null>(null);
   // Текст, по которому построен текущий результат: по нему же запрашивается резюме ИИ
   const [analyzedText, setAnalyzedText] = useState("");
+  // Есть ли анкета кожи у вошедшего (поле hasSkinProfile ответа /api/analyze)
+  const [hasSkinProfile, setHasSkinProfile] = useState<boolean | null>(null);
   const [ocrNotice, setOcrNotice] = useState(false);
   const [ocrLoading, setOcrLoading] = useState(false);
   const [feedbackToken, setFeedbackToken] = useState<string | null>(null);
+  // Окно входа (стена разбора)
+  const [gateOpen, setGateOpen] = useState(false);
+  // Режим гейта "off" узнали из ответа API — гостю можно показывать разбор без входа
+  const [gateOff, setGateOff] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const photoButtonRef = useRef<HTMLButtonElement>(null);
   const autoRan = useRef(false);
   const photoRan = useRef(false);
   const [photoHint, setPhotoHint] = useState(false);
+  // Состав, ожидающий запуска после входа
+  const pendingAnalysisRef = useRef<{ text: string; method: InputMethod } | null>(null);
+  // Фото, ожидающее распознавания после входа
+  const pendingPhotoRef = useRef<File | null>(null);
+  // Вход только что прошёл в этом окне: useSession() ещё не успел обновиться
+  const authedJustNowRef = useRef(false);
 
-  async function runAnalysis(raw: string, inputMethod: "text" | "photo" = "text") {
+  async function runAnalysis(raw: string, inputMethod?: "text" | "photo") {
     if (!raw.trim() || loading) return;
+    const method: InputMethod = productId ? "product" : inputMethod ?? "text";
     setLoading(true);
     setError(null);
     try {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: raw }),
+        body: JSON.stringify({ text: raw, inputMethod: method, productId }),
       });
       const data = await res.json();
+      if (res.status === 401 && data?.code === "auth_required") {
+        // Не ошибка: сохраняем состав, открываем окно входа на месте
+        pendingAnalysisRef.current = { text: raw, method };
+        setGateOpen(true);
+        trackEvent("analysis_gate_shown", { gate_mode: "hard", input_method: method });
+        trackGoal(GOALS.analyzeGate, { input_method: method });
+        return;
+      }
       if (!res.ok) throw new Error(data?.error ?? "Ошибка анализа");
-      setResult(data as AnalysisResult);
+      if (data?.gate === "teaser") {
+        setTeaser(data as AnalysisTeaser);
+        setResult(null);
+        setHasSkinProfile(null);
+        trackEvent("analysis_gate_shown", { gate_mode: "teaser", input_method: method });
+        trackGoal(GOALS.analyzeGate, { input_method: method });
+        return;
+      }
+      const full = data as AnalysisResult & { hasSkinProfile?: boolean };
+      setResult(full);
       setAnalyzedText(raw);
-      // Value Moment: состав успешно разобран
-      const summary = (data as AnalysisResult).summary;
+      setTeaser(null);
+      setHasSkinProfile(full.hasSkinProfile ?? null);
+      // Гость при ANALYZE_GATE=off получил полный разбор — больше не показываем подсказку про вход
+      if (sessionStatus === "unauthenticated") setGateOff(true);
+      // Value Moment: состав успешно разобран (только полный разбор)
+      const summary = full.summary;
       trackEvent("composition_analyzed", {
-        input_method: inputMethod,
+        input_method: method,
         recognized: summary.recognized,
         total: summary.total,
         actives: summary.actives,
         fragrances: summary.fragrances,
         alcohols: summary.alcohols,
         spf_filters: summary.spfFilters,
-        conflicts: (data as AnalysisResult).conflicts.length,
+        conflicts: full.conflicts.length,
       });
-      trackGoal(GOALS.analyzeSuccess, { input_method: inputMethod });
+      trackGoal(GOALS.analyzeSuccess, { input_method: method });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось разобрать состав");
     } finally {
@@ -128,7 +179,7 @@ export function AnalyzeView({
     }
   }
 
-  // Авто-запуск при переходе с лендинга через ?text=
+  // Авто-запуск при переходе с лендинга через ?text= или со страницы продукта
   useEffect(() => {
     if (!autoRan.current && initialText.trim()) {
       autoRan.current = true;
@@ -154,11 +205,39 @@ export function AnalyzeView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /** Вход в окне гейта прошёл: продолжаем сценарий, который был до стены. */
+  function onGateSuccess() {
+    authedJustNowRef.current = true;
+    setGateOpen(false);
+    setGateOff(false);
+    const photo = pendingPhotoRef.current;
+    if (photo) {
+      pendingPhotoRef.current = null;
+      void handlePhoto(photo, { autoAnalyze: true });
+      return;
+    }
+    const pending = pendingAnalysisRef.current;
+    if (pending) {
+      pendingAnalysisRef.current = null;
+      void runAnalysis(pending.text, pending.method === "photo" ? "photo" : "text");
+    }
+  }
+
   /**
    * Распознать фото. autoAnalyze — сразу запустить разбор распознанного текста
    * (переход с главной/лендинга, где пользователь уже нажал «Загрузить фото»).
+   * У гостя сначала окно входа: файл держим в pendingPhotoRef и распознаём после входа.
    */
   async function handlePhoto(file: File, { autoAnalyze = false }: { autoAnalyze?: boolean } = {}) {
+    const guestBlocked =
+      sessionStatus === "unauthenticated" && !gateOff && !authedJustNowRef.current;
+    if (guestBlocked) {
+      pendingPhotoRef.current = file;
+      setGateOpen(true);
+      trackEvent("analysis_gate_shown", { gate_mode: "hard", input_method: "photo" });
+      trackGoal(GOALS.analyzeGate, { input_method: "photo" });
+      return;
+    }
     setPhotoHint(false);
     setError(null);
     setOcrLoading(true);
@@ -167,12 +246,23 @@ export function AnalyzeView({
       setText(extracted);
       if (autoAnalyze && extracted.trim()) void runAnalysis(extracted, "photo");
     } catch (e) {
-      if (e instanceof OcrNotReadyError) setOcrNotice(true);
-      else setError(e instanceof Error ? e.message : "Не удалось обработать фото");
+      if (e instanceof OcrNotReadyError) {
+        setOcrNotice(true);
+      } else if (e instanceof Error && /войдите/i.test(e.message)) {
+        // Сессия истекла посреди сценария — тот же путь, что у гостя
+        pendingPhotoRef.current = file;
+        setGateOpen(true);
+        trackEvent("analysis_gate_shown", { gate_mode: "hard", input_method: "photo" });
+        trackGoal(GOALS.analyzeGate, { input_method: "photo" });
+      } else {
+        setError(e instanceof Error ? e.message : "Не удалось обработать фото");
+      }
     } finally {
       setOcrLoading(false);
     }
   }
+
+  const guestHint = sessionStatus === "unauthenticated" && !gateOff;
 
   return (
     <main className="bg-gradient-hero min-h-screen py-16">
@@ -191,6 +281,11 @@ export function AnalyzeView({
         </div>
 
         <GlassCard className="space-y-4 p-6 sm:p-8">
+          {guestHint && (
+            <p className="text-xs text-muted-foreground">
+              Разбор бесплатный, нужен только вход по email
+            </p>
+          )}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -256,9 +351,31 @@ export function AnalyzeView({
           {error && <p className="text-sm text-coral-700">{error}</p>}
         </GlassCard>
 
+        {/* Постоянная подсказка гостю над результатом */}
+        {guestHint && !result && !teaser && (
+          <AnalyzeGateCard onSignIn={() => setGateOpen(true)} />
+        )}
+
+        {teaser && (
+          <>
+            <SummaryBlock summary={teaser.summary} />
+            <AnalyzeGateCard onSignIn={() => setGateOpen(true)} />
+          </>
+        )}
+
         {result && (
           <>
-            <SummaryBlock result={result} />
+            <SummaryBlock summary={result.summary} />
+            {hasSkinProfile === false && sessionStatus === "authenticated" && (
+              <GlassCard className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Расскажите о своей коже — подсветим, что вам подходит, а что лучше обойти.
+                </p>
+                <Button asChild variant="secondary" size="sm">
+                  <Link href="/onboarding">Заполнить анкету</Link>
+                </Button>
+              </GlassCard>
+            )}
             <AiSummaryBlock
               key={analyzedText}
               text={analyzedText}
@@ -291,6 +408,19 @@ export function AnalyzeView({
         )}
       </Container>
 
+      <Dialog open={gateOpen} onOpenChange={setGateOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Разбор готов — осталось войти</DialogTitle>
+            <DialogDescription>
+              Buty бесплатный. Вход нужен, чтобы сохранить историю разборов и подсказывать,
+              что подходит именно вашей коже. Только email, без пароля.
+            </DialogDescription>
+          </DialogHeader>
+          <CodeSignIn source="analyze_gate" cta="Получить код" onSuccess={onGateSuccess} />
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={ocrNotice} onOpenChange={setOcrNotice}>
         <DialogContent>
           <DialogHeader>
@@ -314,21 +444,37 @@ export function AnalyzeView({
   );
 }
 
-function SummaryBlock({ result }: { result: AnalysisResult }) {
+/** Карточка-стена для гостя: что внутри полного разбора и вход на месте. */
+function AnalyzeGateCard({ onSignIn }: { onSignIn: () => void }) {
+  return (
+    <GlassCard className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-start gap-3">
+        <Lock className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+        <p className="text-sm text-muted-foreground">
+          Полный разбор: функция каждого ингредиента, конфликты активов, советы и резюме ИИ.{" "}
+          <span className="font-medium text-foreground">Бесплатно после входа.</span>
+        </p>
+      </div>
+      <Button onClick={onSignIn}>Войти и посмотреть</Button>
+    </GlassCard>
+  );
+}
+
+function SummaryBlock({ summary }: { summary: CompositionSummary }) {
   const items = [
-    { label: "Распознано", value: `${result.summary.recognized} из ${result.summary.total}` },
-    { label: "Активы", value: result.summary.actives },
-    { label: "Отдушки", value: result.summary.fragrances },
-    { label: "Спирты", value: result.summary.alcohols },
-    { label: "SPF-фильтры", value: result.summary.spfFilters },
-    ...(result.summary.comedogenic > 0
-      ? [{ label: "Комедогенные", value: result.summary.comedogenic }]
+    { label: "Распознано", value: `${summary.recognized} из ${summary.total}` },
+    { label: "Активы", value: summary.actives },
+    { label: "Отдушки", value: summary.fragrances },
+    { label: "Спирты", value: summary.alcohols },
+    { label: "SPF-фильтры", value: summary.spfFilters },
+    ...(summary.comedogenic > 0
+      ? [{ label: "Комедогенные", value: summary.comedogenic }]
       : []),
-    ...(result.summary.malassezia > 0
-      ? [{ label: "Кормят малассезию", value: result.summary.malassezia }]
+    ...(summary.malassezia > 0
+      ? [{ label: "Кормят малассезию", value: summary.malassezia }]
       : []),
-    ...(result.summary.fragranceAllergens > 0
-      ? [{ label: "Аллергены-отдушки", value: result.summary.fragranceAllergens }]
+    ...(summary.fragranceAllergens > 0
+      ? [{ label: "Аллергены-отдушки", value: summary.fragranceAllergens }]
       : []),
   ];
   return (

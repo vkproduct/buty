@@ -17,7 +17,7 @@ import {
 
 import { AnalyzeForm } from "@/components/analyze-form";
 import { ShelfShowcase } from "@/components/shelf-showcase";
-import { SignInForm } from "@/components/sign-in-form";
+import { SignInCta } from "@/components/sign-in-cta";
 import { StickyCta } from "@/components/sticky-cta";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -132,7 +132,7 @@ const EVIDENCE_LADDER = [
 const FAQ: { q: string; a: string }[] = [
   {
     q: "Как проверить состав косметики онлайн бесплатно?",
-    a: "Скопируйте INCI-список с упаковки или из карточки товара на маркетплейсе и вставьте в форму разбора. Сервис распознает каждый ингредиент, переведёт название на русский, покажет функцию, рабочую концентрацию, уровень доказательной базы и конфликты активов. Бесплатно и без регистрации.",
+    a: "Скопируйте INCI-список с упаковки или из карточки товара на маркетплейсе и вставьте в форму разбора. Сервис распознает каждый ингредиент, переведёт название на русский, покажет функцию, рабочую концентрацию, уровень доказательной базы и конфликты активов. Бесплатно — понадобится только быстрый вход по email.",
   },
   {
     q: "Можно ли проверить состав косметики на комедогенность?",
@@ -156,7 +156,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Нужна ли регистрация?",
-    a: "Для разбора состава — нет. Для «Моей полки» нужен вход по email: пришлём ссылку, пароль не нужен.",
+    a: "Да, но это бесплатно и быстро: только email, пришлём 6-значный код, пароль не нужен. Вход нужен, чтобы сохранить историю разборов и вашу полку, а мы видели, какие составы интересны людям, — без передачи ваших данных брендам.",
   },
   {
     q: "Как добавить средство, которого нет в каталоге?",
@@ -263,7 +263,7 @@ export default async function HomePage() {
                   </Button>
                 </div>
                 <p className="mt-4 text-sm text-white/75 lg:mt-3">
-                  Всё бесплатно. Разбор — без регистрации, полка — вход по email без пароля.
+                  Всё бесплатно. Разбор и полка — вход по email, без пароля.
                 </p>
               </div>
 
@@ -278,7 +278,7 @@ export default async function HomePage() {
                 </p>
                 <AnalyzeForm id="inci-hero" />
                 <p className="mt-4 text-center text-sm text-ink-muted">
-                  Бесплатно и без регистрации
+                  Бесплатно · нужен только вход по email
                 </p>
               </div>
             </div>
@@ -413,7 +413,7 @@ export default async function HomePage() {
               {[
                 {
                   title: "Разберите состав",
-                  text: "Бесплатно и без регистрации: функции, концентрации, доказательная база, конфликты.",
+                  text: "Бесплатно после входа по email: функции, концентрации, доказательная база, конфликты.",
                 },
                 {
                   title: "Добавьте средства на полку",
@@ -622,7 +622,7 @@ export default async function HomePage() {
                 Пришлём ссылку для входа на email — пароль не нужен.{" "}
                 Вся полка, реакции и напоминания — бесплатно.
               </p>
-              <SignInForm cta="Собрать полку бесплатно" />
+              <SignInCta cta="Собрать полку бесплатно" />
             </div>
             <div className="rounded-2xl border border-ink-hair bg-white p-6 shadow-soft sm:p-8">
               <span className="eyebrow">Разбор состава</span>

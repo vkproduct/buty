@@ -5,15 +5,23 @@ vi.mock("@/lib/prisma", () => ({
     ingredient: { findMany: vi.fn() },
     synonym: { findMany: vi.fn() },
     ingredientConflict: { findMany: vi.fn() },
+    product: { findUnique: vi.fn() },
+    skinProfile: { findUnique: vi.fn() },
+    analysis: { create: vi.fn() },
   },
 }));
 
+vi.mock("@/lib/auth", () => ({ getSession: vi.fn() }));
+
 import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
 import { POST } from "./route";
 
 const findMany = vi.mocked(prisma.ingredient.findMany);
 const synonymFindMany = vi.mocked(prisma.synonym.findMany);
 const conflictFindMany = vi.mocked(prisma.ingredientConflict.findMany);
+const analysisCreate = vi.mocked(prisma.analysis.create);
+const getSessionMock = vi.mocked(getSession);
 
 function row(overrides: Partial<Record<string, unknown>> & { id: string; inciName: string; slug: string }) {
   return {
@@ -65,19 +73,25 @@ function post(body: unknown) {
 describe("POST /api/analyze", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.ANALYZE_GATE;
     synonymFindMany.mockResolvedValue([]);
     // Для словаря и для загрузки деталей возвращаем одни и те же строки
     findMany.mockResolvedValue(DICTIONARY as never);
     conflictFindMany.mockResolvedValue([CONFLICT] as never);
+    vi.mocked(prisma.product.findUnique).mockResolvedValue(null);
+    vi.mocked(prisma.skinProfile.findUnique).mockResolvedValue(null);
+    analysisCreate.mockResolvedValue({} as never);
   });
 
   it("разбирает состав из 6 ингредиентов с 1 конфликтом", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
     const res = await post({
       text: "Aqua, Niacinamide, Glycerin, Panthenol, Retinol, Glycolic Acid",
     });
     expect(res.status).toBe(200);
     const data = await res.json();
 
+    expect(data.gate).toBe("none");
     expect(data.ingredients).toHaveLength(6);
     expect(data.unmatched).toHaveLength(0);
     expect(data.summary).toMatchObject({
@@ -107,9 +121,15 @@ describe("POST /api/analyze", () => {
       evidenceLevel: "STRONG",
       matchedVia: "niacinamide",
     });
+
+    // Журнал: полный разбор вошедшему
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ userId: "u1", status: "shown" }) }),
+    );
   });
 
   it("возвращает нераспознанные токены отдельно", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
     const res = await post({ text: "Aqua, Somethingunknown, Glycerin" });
     const data = await res.json();
     expect(res.status).toBe(200);
@@ -118,6 +138,7 @@ describe("POST /api/analyze", () => {
   });
 
   it("возвращает флаги безопасности и считает их в сводке и советах", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
     findMany.mockResolvedValue([
       ...DICTIONARY,
       row({
@@ -161,5 +182,85 @@ describe("POST /api/analyze", () => {
     expect((await post({})).status).toBe(400);
     expect((await post({ text: "   " })).status).toBe(400);
     expect((await post({ text: 42 })).status).toBe(400);
+  });
+
+  it("гость при hard получает 401 auth_required, журнал пишет blocked", async () => {
+    getSessionMock.mockResolvedValue(null);
+    const res = await post({ text: "Aqua, Glycerin" });
+    expect(res.status).toBe(401);
+    const data = await res.json();
+    expect(data).toMatchObject({ code: "auth_required", gate: "hard" });
+    expect(data.ingredients).toBeUndefined();
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ userId: null, status: "blocked" }),
+      }),
+    );
+  });
+
+  it("гость при teaser получает только сводку, журнал пишет teaser", async () => {
+    process.env.ANALYZE_GATE = "teaser";
+    getSessionMock.mockResolvedValue(null);
+    const res = await post({ text: "Aqua, Retinol, Glycolic Acid" });
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.gate).toBe("teaser");
+    expect(data.summary.recognized).toBe(3);
+    expect(data.conflictsCount).toBe(1);
+    expect(data.ingredients).toBeUndefined();
+    expect(data.advice).toBeUndefined();
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ status: "teaser" }) }),
+    );
+  });
+
+  it("гость при off получает полный разбор (аварийный откат), журнал пишет shown без userId", async () => {
+    process.env.ANALYZE_GATE = "off";
+    getSessionMock.mockResolvedValue(null);
+    const res = await post({ text: "Aqua, Glycerin" });
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.gate).toBe("none");
+    expect(data.ingredients).toHaveLength(2);
+    expect(data.hasSkinProfile).toBeUndefined();
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ userId: null, status: "shown" }),
+      }),
+    );
+  });
+
+  it("неизвестный productId игнорируется", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
+    vi.mocked(prisma.product.findUnique).mockResolvedValue(null);
+    await post({ text: "Aqua", productId: "no-such-product" });
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ productId: null }) }),
+    );
+  });
+
+  it("известный productId попадает в журнал", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
+    vi.mocked(prisma.product.findUnique).mockResolvedValue({ id: "p1" } as never);
+    await post({ text: "Aqua", productId: "p1", inputMethod: "product" });
+    expect(analysisCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ productId: "p1", inputMethod: "product" }) }),
+    );
+  });
+
+  it("ошибка записи в журнал не ломает ответ", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
+    analysisCreate.mockRejectedValue(new Error("db down"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const res = await post({ text: "Aqua, Glycerin" });
+    expect(res.status).toBe(200);
+    vi.restoreAllMocks();
+  });
+
+  it("у вошедшего без анкеты hasSkinProfile: false", async () => {
+    getSessionMock.mockResolvedValue({ user: { id: "u1" } } as never);
+    vi.mocked(prisma.skinProfile.findUnique).mockResolvedValue(null);
+    const res = await post({ text: "Aqua" });
+    expect((await res.json()).hasSkinProfile).toBe(false);
   });
 });

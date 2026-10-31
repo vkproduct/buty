@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import { CONSENT_EVENT, readConsent, type Consent } from "@/lib/analytics/consent";
@@ -9,8 +10,11 @@ import {
   disableMixpanel,
   identifyUser,
   initMixpanel,
+  isReplaySensitivePath,
   resetIfIdentified,
   resetUser,
+  startSessionRecording,
+  stopSessionRecording,
   trackEvent,
 } from "@/lib/analytics/mixpanel";
 
@@ -29,6 +33,7 @@ export function MixpanelTracker() {
   const [enabled, setEnabled] = useState(false);
   const { data: session, status } = useSession();
   const prevUserId = useRef<string | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!MIXPANEL_TOKEN) return;
@@ -62,6 +67,19 @@ export function MixpanelTracker() {
     }
     prevUserId.current = userId;
   }, [enabled, session, status]);
+
+  // Session Replay: на страницах с данными о здоровье (полка, анкета, профиль,
+  // кабинет бренда, админка) запись глушится, на остальных — возобновляется.
+  // Старт реально начинает запись, только если сессия попала в выборку
+  // (record_sessions_percent) и дано согласие (enabled).
+  useEffect(() => {
+    if (!enabled || !pathname) return;
+    if (isReplaySensitivePath(pathname)) {
+      stopSessionRecording();
+    } else {
+      startSessionRecording();
+    }
+  }, [enabled, pathname]);
 
   // Клик по партнёрской ссылке «Где купить» (/go/[productId]) — цель where_to_buy.
   // Делегировано, как цели Метрики: ссылки рендерятся в серверных компонентах.

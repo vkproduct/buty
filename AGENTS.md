@@ -34,7 +34,7 @@ Wrong assumptions about platform, identity, or consent will produce broken Mixpa
 | **Consent required** | yes — client SDK init is gated behind cookie consent `"all"`; server events (`trackServerEvent`) check the same cookie `buty_cookie_consent=all` for web requests, are allowed for mobile Bearer requests, and are dropped outside a request context |
 | **Mixpanel project token location** | `.env.local` → `NEXT_PUBLIC_MIXPANEL_TOKEN` (declared in `.env.example`; never commit the value). Production: the same variable in `/opt/buty/.env` on the server (must be present at build time — it is a `NEXT_PUBLIC_` var) |
 | **Data residency** | **EU** — проект с EU Data Residency, endpoint `NEXT_PUBLIC_MIXPANEL_API_HOST="https://api-eu.mixpanel.com"` (обязателен и на клиенте, и на сервере; без него события уходят в US и не попадают в проект) |
-| **Session Replay** | включён: `record_sessions_percent` = `NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT` (по умолчанию 100). Работает независимо от `autocapture: false`; запись стартует только после init, т.е. после согласия. В реплеях по умолчанию замаскированы весь текст и инпуты |
+| **Session Replay** | включён: `record_sessions_percent` = `NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT` (по умолчанию 20). Работает независимо от `autocapture: false`; запись стартует только после init, т.е. после согласия. На путях `/shelf*`, `/profile*`, `/onboarding*`, `/brand*`, `/admin*` запись глушится (`stop_session_recording`), на остальных — возобновляется. В реплеях по умолчанию замаскированы весь текст и инпуты |
 
 ---
 

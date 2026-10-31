@@ -281,3 +281,9 @@
 - **Причина:** бренды платят за эту аналитику, а цифры легко накручивались (до 60 просмотров в минуту с одного IP на один товар).
 - **Затронутые части:** `app/api/products/[id]/view/route.ts`, `lib/products/views.ts` (+ тест, новое).
 - **Проверено:** vitest (378 тестов), `tsc`, `eslint`.
+
+## 2026-10-31 — Session Replay: 20% сессий, без чувствительных страниц
+- **Решение:** значение по умолчанию `NEXT_PUBLIC_MIXPANEL_REPLAY_PERCENT` — 20 (было 100): `lib/analytics/mixpanel.ts`, `.env.example`, `docker-compose.prod.yml`. Трекер при смене маршрута на путях `/shelf*`, `/profile*`, `/onboarding*`, `/brand*`, `/admin*` вызывает `mixpanel.stop_session_recording()`, на остальных — `start_session_recording()` (реально стартует, только если сессия в выборке и есть согласие). Методы подтверждены в типах mixpanel-browser 2.84.0. `AGENTS.md` обновлён. Проверка путей — чистая функция `isReplaySensitivePath` (+17 тестов).
+- **Причина:** 152-ФЗ: полка, анкета кожи и реакции — данные о здоровье, их нельзя записывать в реплеи; 100% записей в EU — избыточный объём.
+- **Затронутые части:** `lib/analytics/mixpanel.ts` (+ тест), `components/analytics/mixpanel-tracker.tsx`, `.env.example`, `docker-compose.prod.yml`, `AGENTS.md`.
+- **Проверено:** vitest (395 тестов), `tsc`, `eslint`; ручная — после деплоя в Mixpanel убедиться, что реплеев ~20% и нет путей /shelf и /profile.

@@ -1,6 +1,8 @@
 /**
  * Переходник Buty → Google (Cloud Run functions, регион в Европе).
- * Сервер в РФ шлёт сюда запросы с ?key=<PROXY_SECRET>; переходник сверяет секрет
+ * Сервер в РФ шлёт сюда запросы с секретом в заголовке x-proxy-key
+ * (на переходный период ещё принимаем ?key=<PROXY_SECRET> — уберём, когда
+ * сайт перестанет слать его в адресе); переходник сверяет секрет
  * и пересылает запрос в Google с настоящим ключом. Настоящие ключи хранятся только
  * здесь, в переменных окружения функции.
  *
@@ -46,7 +48,10 @@ functions.http("ocrProxy", async (req, res) => {
   if (!secret) return fail(res, 500, "proxy is not configured");
   if (req.method === "GET") return res.status(200).json({ ok: true });
   if (req.method !== "POST") return fail(res, 405, "POST only");
-  if (!sameSecret(req.query.key, secret)) return fail(res, 403, "forbidden");
+  // Секрет — из заголовка (адреса с ?key= попадают в логи Cloud Run);
+  // ?key= пока принимаем для старых версий сайта, уберём после перевода.
+  const given = req.get("x-proxy-key") ?? req.query.key;
+  if (!sameSecret(given, secret)) return fail(res, 403, "forbidden");
 
   if (req.query.target === "gemini") {
     const geminiKey = process.env.GEMINI_API_KEY;

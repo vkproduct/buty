@@ -80,8 +80,8 @@ describe("generateJson", () => {
     expect(r).toEqual({ text: "{}", inputTokens: 100, outputTokens: 60 });
 
     const [url, init] = fetchMock.mock.calls[0];
-    expect(url).toBe("https://proxy.example?key=secret&target=gemini");
-    expect(init.headers["x-goog-api-key"]).toBeUndefined();
+    expect(url).toBe("https://proxy.example?target=gemini");
+    expect(init.headers["x-proxy-key"]).toBe("secret");
     const body = JSON.parse(init.body);
     expect(body).toMatchObject({
       model: "gemini-test",

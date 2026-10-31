@@ -2,7 +2,8 @@
  * Клиент Gemini (Interactions API) для резюме состава.
  *
  * Сервер Buty стоит в РФ, поэтому в продакшене запрос идёт через переходник в Европе
- * (infra/ocr-proxy, тот же, что для Google Vision): POST <GEMINI_ENDPOINT>?key=<секрет>&target=gemini.
+ * (infra/ocr-proxy, тот же, что для Google Vision): POST <GEMINI_ENDPOINT>?target=gemini
+ * с секретом переходника в заголовке x-proxy-key.
  * Настоящий ключ Gemini хранится только в переменных переходника.
  * Без GEMINI_ENDPOINT запрос идёт напрямую в Google (для локальной разработки вне РФ).
  */
@@ -116,11 +117,12 @@ function usageOf(data: unknown): { inputTokens: number; outputTokens: number } {
 /** Один запрос к Gemini со структурированным JSON-ответом. */
 export async function generateJson(cfg: GeminiConfig, req: GeminiJsonRequest): Promise<GeminiResult> {
   const viaProxy = cfg.endpoint !== null;
-  const url = viaProxy
-    ? `${cfg.endpoint}?key=${encodeURIComponent(cfg.apiKey)}&target=gemini`
-    : GEMINI_DIRECT_ENDPOINT;
+  // Через переходник секрет идёт в заголовке x-proxy-key — адрес с ?key=
+  // попадает в логи Cloud Run. Напрямую в Gemini ключ — x-goog-api-key.
+  const url = viaProxy ? `${cfg.endpoint}?target=gemini` : GEMINI_DIRECT_ENDPOINT;
   const headers: Record<string, string> = { "content-type": "application/json" };
-  if (!viaProxy) headers["x-goog-api-key"] = cfg.apiKey;
+  if (viaProxy) headers["x-proxy-key"] = cfg.apiKey;
+  else headers["x-goog-api-key"] = cfg.apiKey;
 
   let res: Response;
   try {

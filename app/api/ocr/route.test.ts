@@ -66,7 +66,9 @@ describe("POST /api/ocr", () => {
     process.env.GOOGLE_VISION_ENDPOINT = "https://proxy.example.eu/annotate";
     fetchMock.mockResolvedValueOnce(visionOk("Aqua"));
     await post(jpeg());
-    expect(fetchMock.mock.calls[0][0]).toBe("https://proxy.example.eu/annotate?key=test-key");
+    const [proxyUrl, proxyInit] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(proxyUrl).toBe("https://proxy.example.eu/annotate");
+    expect((proxyInit.headers as Record<string, string>)["x-proxy-key"]).toBe("test-key");
   });
 
   it("ошибка Google — 502 с понятным текстом", async () => {

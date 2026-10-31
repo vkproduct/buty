@@ -33,10 +33,19 @@ export class GoogleVisionOcrProvider implements OcrProvider {
     const raw = Buffer.from(await image.arrayBuffer());
     const content = (await toVisionCompatibleJpeg(raw)).toString("base64");
     let res: Response;
+    // Через переходник (кастомный endpoint) секрет идёт в заголовке — адрес
+    // с ?key= попадает в логи Cloud Run. Напрямую в Vision ключ остаётся в адресе.
+    const viaProxy = this.endpoint !== GOOGLE_VISION_ENDPOINT;
+    const url = viaProxy
+      ? this.endpoint
+      : `${this.endpoint}?key=${encodeURIComponent(this.apiKey)}`;
     try {
-      res = await fetch(`${this.endpoint}?key=${encodeURIComponent(this.apiKey)}`, {
+      res = await fetch(url, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          ...(viaProxy ? { "x-proxy-key": this.apiKey } : {}),
+        },
         body: JSON.stringify({
           requests: [
             {

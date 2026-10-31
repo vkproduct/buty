@@ -3,6 +3,20 @@
 
 {$DOMAIN} {
 	encode gzip
+
+	# Защитные заголовки. X-Frame-Options НЕ ставим — он сломает Вебвизор
+	# Яндекс Метрики (там iframe с metrika.yandex.ru): защита от встраивания
+	# дана через CSP frame-ancestors с перечнем доменов Метрики/Вебвизора.
+	# Полную CSP для скриптов пока не включать (Метрика/GA4/Mixpanel/свой JS).
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()"
+		Content-Security-Policy "frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://webvisor.com https://*.webvisor.com"
+		-Server
+	}
+
 	reverse_proxy app:3000
 }
 

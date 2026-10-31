@@ -257,3 +257,9 @@
 - **Причина:** колбэк по-прежнему выдавал Pro по самодельному paymentId — уязвимость после отмены подписок.
 - **Затронутые части:** `app/api/payments/callback/route.ts` (+ тест).
 - **Проверено:** vitest (367 тестов, +2: 410 с валидным mock-paymentId и без сессии).
+
+## 2026-10-31 — Защитные заголовки в Caddy
+- **Решение:** в `Caddyfile` в блок `{$DOMAIN}` добавлены: HSTS (`max-age=31536000; includeSubDomains`), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (камера — self, микрофон/геолокация/платежи — выкл.), `Content-Security-Policy: frame-ancestors` со списком доменов Яндекс Метрики/Вебвизора, `-Server`. `X-Frame-Options` намеренно НЕ ставим — он сломает Вебвизор (там iframe с metrika.yandex.ru). Полную CSP для скриптов не включали. Применение без пересоздания контейнера — `caddy reload` (добавлен в CI и scripts/deploy.sh на этапе 1).
+- **Причина:** не хватало базовых защитных заголовков и защиты от встраивания сайта в чужие iframe.
+- **Затронутые части:** `Caddyfile`.
+- **Проверено:** синтаксис по документации Caddy (header block, `-Server`); после деплоя — `curl -I https://buty.app` (заголовки на месте) и свежая сессия в Вебвизоре + работа Mixpanel/GA4/OCR/входа.

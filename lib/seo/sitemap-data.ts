@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { ingredientFiltersQuery } from "@/lib/ingredients/catalog-filters";
+import { EMPTY_FILTERS, ingredientFiltersQuery } from "@/lib/ingredients/catalog-filters";
+import { letterOf, sortLetters } from "@/lib/ingredients/catalog-alphabet";
+import { catalogPageHref, defaultLetter } from "@/lib/ingredients/catalog-pages";
 import { displayBrand } from "@/lib/products/brand";
 import { productFiltersQuery } from "@/lib/products/catalog-filters";
 import { CATEGORY_PLURAL } from "@/lib/seo/ingredient-categories";
@@ -83,7 +85,7 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
 
   try {
     const [ingredients, ingredientCategories, productPairs] = await Promise.all([
-      prisma.ingredient.findMany({ select: { slug: true } }),
+      prisma.ingredient.findMany({ select: { slug: true, inciName: true, displayName: true } }),
       prisma.ingredient.findMany({ select: { category: true }, distinct: ["category"] }),
       prisma.product.groupBy({ by: ["brand", "category"], where: { hidden: false } }),
     ]);
@@ -91,12 +93,31 @@ export async function staticEntries(): Promise<SitemapEntry[]> {
     const brandedPairs = productPairs.filter((p) => displayBrand(p.brand) !== null);
     const brands = [...new Set(brandedPairs.map((p) => p.brand))];
     const productCategories = [...new Set(productPairs.map((p) => p.category))];
+    // Буквы каталога ингредиентов (первая страница каждой; буква по умолчанию —
+    // это сам /ingredients). Адрес строится так же, как canonical страницы.
+    const ingredientLetters = sortLetters(
+      new Set(
+        ingredients.flatMap((i) =>
+          [i.inciName, i.displayName].filter((name) => name?.trim()).map(letterOf)
+        )
+      )
+    );
+    const fallbackLetter = defaultLetter(ingredientLetters);
 
     entries.push(
       ...ingredientCategories
         .filter((c) => CATEGORY_PLURAL[c.category])
         .map((c) =>
           entry(`/ingredients?${ingredientFiltersQuery({ categories: [c.category] })}`, 0.8, "weekly")
+        ),
+      ...ingredientLetters
+        .filter((letter) => letter !== fallbackLetter)
+        .map((letter) =>
+          entry(
+            catalogPageHref(EMPTY_FILTERS, { letter }, { defaultLetter: fallbackLetter, anchor: false }),
+            0.6,
+            "weekly"
+          )
         ),
       ...brands.map((b) => entry(`/products?${productFiltersQuery({ brands: [b] })}`, 0.8, "weekly")),
       ...productCategories.map((c) =>

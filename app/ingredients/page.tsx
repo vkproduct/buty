@@ -1,8 +1,8 @@
 import { cache } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Search, SearchX, X } from "lucide-react";
-import type { Ingredient, Prisma } from "@prisma/client";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Search, SearchX, X } from "lucide-react";
+import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { CATEGORY_LABEL, EVIDENCE_LABEL, EVIDENCE_META, EVIDENCE_ORDER } from "@/lib/seo/labels";
@@ -15,6 +15,7 @@ import {
 import { FLAG_META } from "@/lib/ingredients/flags";
 import {
   activeFilterCount,
+  countMatching,
   ingredientFiltersHref,
   isIndexableFilterPage,
   parseIngredientFilters,
@@ -33,6 +34,16 @@ import {
   sortLetters,
   type CatalogEntry,
 } from "@/lib/ingredients/catalog-alphabet";
+import {
+  CATALOG_PAGE_SIZE,
+  catalogPageHref,
+  defaultLetter,
+  LETTER_PAGING_THRESHOLD,
+  letterPhrase,
+  pageWindow,
+  parseLetterParam,
+  parsePageParam,
+} from "@/lib/ingredients/catalog-pages";
 import { Container } from "@/components/ui/container";
 import { EvidenceMeter } from "@/components/ingredients/evidence-meter";
 import {
@@ -80,10 +91,104 @@ async function loadFacetRows(q: string): Promise<IngredientFacetRow[]> {
 /** Полная матрица (без поиска) — справочник категорий и статистика; один запрос на рендер. */
 const loadCatalogMatrix = cache(() => loadFacetRows(""));
 
+/** Матрица с учётом поиска — для фасетных счётчиков и размера выдачи. */
+const loadSearchFacets = cache((q: string) => (q ? loadFacetRows(q) : loadCatalogMatrix()));
+
 async function loadFilters(searchParams: SearchParams) {
   const matrix = await loadCatalogMatrix();
   const categories = [...new Set(matrix.map((r) => r.category))];
   return { matrix, categories, filters: parseIngredientFilters(searchParams, { categories }) };
+}
+
+/** Условие выборки по фильтрам каталога. */
+function catalogWhere({ q, categories, evidence, flags }: IngredientFilters): Prisma.IngredientWhereInput {
+  return {
+    AND: [
+      searchWhere(q),
+      categories.length ? { category: { in: categories } } : {},
+      evidence.length ? { evidenceLevel: { in: evidence } } : {},
+      flags.length ? { OR: flags.map((f) => ({ [f]: true })) } : {},
+    ],
+  };
+}
+
+/** Только поля, которые рисует карточка: длинные тексты (description, risks…) не тянем. */
+const CARD_SELECT = {
+  id: true,
+  slug: true,
+  inciName: true,
+  displayName: true,
+  category: true,
+  function: true,
+  evidenceLevel: true,
+  typicalConc: true,
+  comedogenic: true,
+  feedsMalassezia: true,
+  fragranceAllergen: true,
+} satisfies Prisma.IngredientSelect;
+
+type CatalogIngredient = Prisma.IngredientGetPayload<{ select: typeof CARD_SELECT }>;
+type NameRow = { id: string; inciName: string; displayName: string };
+
+interface LetterIndex {
+  groups: Map<string, CatalogEntry<NameRow>[]>;
+  letters: string[];
+  fallback?: string;
+}
+
+/**
+ * Алфавитный указатель длинной выдачи: по всем подходящим ингредиентам берём
+ * только id и два названия, карточки грузим потом — для одной страницы буквы.
+ * Ключ — нормализованные фильтры в JSON (cache сравнивает аргументы по значению
+ * только для примитивов), так что metadata и страница делят один запрос.
+ */
+const loadLetterIndex = cache(async (filtersKey: string): Promise<LetterIndex> => {
+  const filters = JSON.parse(filtersKey) as IngredientFilters;
+  const names = await prisma.ingredient.findMany({
+    where: catalogWhere(filters),
+    select: { id: true, inciName: true, displayName: true },
+  });
+  const groups = groupByLetter(catalogEntries(names));
+  const letters = sortLetters(groups.keys());
+  return { groups, letters, fallback: defaultLetter(letters) };
+});
+
+interface Pagination {
+  index: LetterIndex;
+  letter: string;
+  page: number;
+  pageCount: number;
+  /** Сколько карточек под текущей буквой (на всех её страницах). */
+  letterSize: number;
+}
+
+/**
+ * Разбивка по буквам и страницам — только для длинной выдачи. Неизвестная
+ * буква или страница за пределами диапазона приводятся к ближайшей настоящей
+ * (canonical укажет на неё же).
+ */
+async function loadPagination(
+  filters: IngredientFilters,
+  facets: IngredientFacetRow[],
+  searchParams: SearchParams
+): Promise<Pagination | null> {
+  if (countMatching(facets, filters) <= LETTER_PAGING_THRESHOLD) return null;
+  const index = await loadLetterIndex(JSON.stringify(filters));
+  if (!index.fallback) return null;
+  const requested = parseLetterParam(searchParams.letter);
+  const letter = requested && index.groups.has(requested) ? requested : index.fallback;
+  const letterSize = index.groups.get(letter)?.length ?? 0;
+  const pageCount = Math.max(1, Math.ceil(letterSize / CATALOG_PAGE_SIZE));
+  const page = Math.min(parsePageParam(searchParams.page), pageCount);
+  return { index, letter, page, pageCount, letterSize };
+}
+
+/** Подпись позиции для title: пусто на первой странице буквы по умолчанию. */
+function positionPhrase(pagination: Pagination | null): string {
+  if (!pagination) return "";
+  const { letter, page, index } = pagination;
+  if (letter === index.fallback && page === 1) return "";
+  return `${letterPhrase(letter)}${page > 1 ? ` — страница ${page}` : ""}`;
 }
 
 /** Заголовок посадочной «одна категория»: «Увлажнители в косметике». */
@@ -109,23 +214,45 @@ export async function generateMetadata({
       robots: { index: false, follow: true },
     };
   }
+  // Буква и страница — у каждой свой адрес и заголовок; первая страница
+  // буквы по умолчанию совпадает с адресом без параметров.
+  const pagination = await loadPagination(filters, await loadSearchFacets(filters.q), searchParams);
+  const position = positionPhrase(pagination);
+  const canonical = catalogPageHref(
+    filters,
+    pagination ? { letter: pagination.letter, page: pagination.page } : {},
+    { defaultLetter: pagination?.index.fallback, anchor: false }
+  );
+
   const landing = landingTitle(filters);
   if (landing) {
+    const heading = position ? `${landing} ${position}` : landing;
     return {
-      title: `${landing}: список и расшифровка`,
+      title: `${heading}: список и расшифровка`,
       description: clampDescription(
         withFreeNote(
-          `${landing}: как обозначаются в составе, зачем нужны в формуле, рабочие концентрации, комедогенность, доказательная база и конфликты — дерматологический разбор каждого ингредиента.`
+          `${heading}: как обозначаются в составе, зачем нужны в формуле, рабочие концентрации, комедогенность, доказательная база и конфликты — дерматологический разбор каждого ингредиента.`
         )
       ),
-      alternates: { canonical: ingredientFiltersHref(filters, {}, { anchor: false }) },
+      alternates: { canonical },
+    };
+  }
+  if (position) {
+    return {
+      title: `Ингредиенты косметики ${position}: расшифровка составов`,
+      description: clampDescription(
+        withFreeNote(
+          `Ингредиенты косметики ${position}: как обозначаются в составе, что делают, рабочая концентрация, комедогенность и конфликты активов.`
+        )
+      ),
+      alternates: { canonical },
     };
   }
   return {
     title: "Ингредиенты косметики: расшифровка составов на русском",
     description:
       "Бесплатный справочник компонентов косметики: как ингредиент обозначается в составе, что делает, рабочая концентрация, комедогенность и конфликты активов.",
-    alternates: { canonical: "/ingredients" },
+    alternates: { canonical },
   };
 }
 
@@ -167,21 +294,14 @@ export default async function IngredientsCatalogPage({
   const { matrix, categories: allCategories, filters } = await loadFilters(searchParams);
   const { q, categories, evidence, flags } = filters;
 
-  const where: Prisma.IngredientWhereInput = {
-    AND: [
-      searchWhere(q),
-      categories.length ? { category: { in: categories } } : {},
-      evidence.length ? { evidenceLevel: { in: evidence } } : {},
-      flags.length ? { OR: flags.map((f) => ({ [f]: true })) } : {},
-    ],
-  };
-
-  const [ingredients, searchFacets, conflictCount] = await Promise.all([
-    prisma.ingredient.findMany({ where, orderBy: { displayName: "asc" } }),
+  const [searchFacets, conflictCount] = await Promise.all([
     // Матрица с учётом поиска — для фасетных и живых счётчиков панели фильтров.
-    q ? loadFacetRows(q) : Promise.resolve(matrix),
+    loadSearchFacets(q),
     prisma.ingredientConflict.count(),
   ]);
+  // Размер выдачи считаем по матрице — без отдельного count-запроса.
+  const matchCount = countMatching(searchFacets, filters);
+  const pagination = await loadPagination(filters, searchFacets, searchParams);
 
   const totalCount = matrix.reduce((sum, r) => sum + r.count, 0);
   const strongCount = matrix
@@ -207,23 +327,67 @@ export default async function IngredientsCatalogPage({
   const panelKey = JSON.stringify(filters);
   const panelProps = { applied: filters, facets: searchFacets, categoryGroups };
 
-  // Алфавитные группы — для длинной выдачи без поиска.
-  const useGrouping = !q && ingredients.length > GROUPING_THRESHOLD;
-  const rows: CatalogEntry<Ingredient>[] = useGrouping
-    ? catalogEntries(ingredients)
-    : ingredients.map((ingredient) => ({
-        ingredient,
-        // Заголовок — INCI, русское название — вторым.
-        title: ingredient.inciName || ingredient.displayName,
-        subtitle:
-          ingredient.inciName && ingredient.displayName !== ingredient.inciName
-            ? ingredient.displayName
-            : "",
-        letter: "all",
-        sortKey: ingredient.displayName,
-      }));
+  let rows: CatalogEntry<CatalogIngredient>[];
+  let useGrouping: boolean;
+  if (pagination) {
+    // Длинная выдача: одна буква, одна страница — карточки только для неё.
+    const group = pagination.index.groups.get(pagination.letter) ?? [];
+    const start = (pagination.page - 1) * CATALOG_PAGE_SIZE;
+    const slice = group.slice(start, start + CATALOG_PAGE_SIZE);
+    const cards = await prisma.ingredient.findMany({
+      where: { id: { in: slice.map((entry) => entry.ingredient.id) } },
+      select: CARD_SELECT,
+    });
+    const byId = new Map(cards.map((card) => [card.id, card]));
+    rows = slice.flatMap((entry) => {
+      const ingredient = byId.get(entry.ingredient.id);
+      return ingredient ? [{ ...entry, ingredient }] : [];
+    });
+    useGrouping = true;
+  } else {
+    const ingredients = await prisma.ingredient.findMany({
+      where: catalogWhere(filters),
+      select: CARD_SELECT,
+      orderBy: { displayName: "asc" },
+    });
+    // Алфавитные группы — для выдачи средней длины без поиска.
+    useGrouping = !q && ingredients.length > GROUPING_THRESHOLD;
+    rows = useGrouping
+      ? catalogEntries(ingredients)
+      : ingredients.map((ingredient) => ({
+          ingredient,
+          // Заголовок — INCI, русское название — вторым.
+          title: ingredient.inciName || ingredient.displayName,
+          subtitle:
+            ingredient.inciName && ingredient.displayName !== ingredient.inciName
+              ? ingredient.displayName
+              : "",
+          letter: "all",
+          sortKey: ingredient.displayName,
+        }));
+  }
   const letterGroups = groupByLetter(rows);
   const letters = sortLetters(letterGroups.keys());
+
+  // Указатель: в постраничном режиме — по всей выдаче (буквы ведут на свои
+  // страницы), иначе — по карточкам на странице (буквы — якоря).
+  const navGroups: ReadonlyMap<string, unknown[]> = pagination ? pagination.index.groups : letterGroups;
+  const showLetterNav = pagination !== null || (useGrouping && letters.length > 1);
+  const extraKeys = [...navGroups.keys()].filter(
+    (key) => key !== DIGITS_KEY && !RU_ALPHABET.includes(key) && !EN_ALPHABET.includes(key)
+  );
+  const letterHref = (key: string) =>
+    pagination
+      ? catalogPageHref(filters, { letter: key }, { defaultLetter: pagination.index.fallback })
+      : `#${letterAnchor(key)}`;
+  const pageHref = (page: number) =>
+    pagination
+      ? catalogPageHref(
+          filters,
+          { letter: pagination.letter, page },
+          { defaultLetter: pagination.index.fallback }
+        )
+      : "#catalog";
 
   const stats = [
     { value: totalCount, label: pluralRu(totalCount, "ингредиент", "ингредиента", "ингредиентов") },
@@ -353,8 +517,8 @@ export default async function IngredientsCatalogPage({
       <Container className="pt-8">
         <div className="mb-6 flex flex-wrap items-center gap-2">
           <p className="mr-2 text-sm text-ink-muted" aria-live="polite">
-            <span className="text-base font-semibold text-foreground">{ingredients.length}</span>{" "}
-            {pluralRu(ingredients.length, "ингредиент", "ингредиента", "ингредиентов")}
+            <span className="text-base font-semibold text-foreground">{matchCount}</span>{" "}
+            {pluralRu(matchCount, "ингредиент", "ингредиента", "ингредиентов")}
             {hasActiveFilters && ` из ${totalCount}`}
           </p>
           {q && (
@@ -396,11 +560,16 @@ export default async function IngredientsCatalogPage({
         </div>
 
         {/* Алфавитный указатель: кириллица первой строкой, латиница — второй.
-            Буквы без ингредиентов в текущей выдаче показаны приглушёнными. */}
-        {useGrouping && letters.length > 1 && (
+            Буквы без ингредиентов в текущей выдаче показаны приглушёнными.
+            В постраничном режиме буква — ссылка на свою страницу, текущая выделена. */}
+        {showLetterNav && (
           <nav aria-label="Алфавитный указатель" className="mb-8 space-y-1">
             {[
-              { id: "ru", label: "Кириллица", keys: [...(letterGroups.has(DIGITS_KEY) ? [DIGITS_KEY] : []), ...RU_ALPHABET] },
+              {
+                id: "ru",
+                label: "Кириллица",
+                keys: [...(navGroups.has(DIGITS_KEY) ? [DIGITS_KEY] : []), ...RU_ALPHABET, ...extraKeys],
+              },
               { id: "en", label: "Латиница", keys: EN_ALPHABET },
             ].map((row) => (
               <ul
@@ -413,16 +582,40 @@ export default async function IngredientsCatalogPage({
                     "grid h-9 min-w-8 shrink-0 place-items-center rounded-lg px-1.5 text-sm font-semibold";
                   return (
                     <li key={key} className="shrink-0">
-                      {letterGroups.has(key) ? (
-                        <a
-                          href={`#${letterAnchor(key)}`}
-                          className={cn(
-                            cls,
-                            "text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
-                          )}
+                      {pagination && key === pagination.letter ? (
+                        <span
+                          aria-current="page"
+                          className={cn(cls, "bg-foreground text-white")}
                         >
                           {key}
-                        </a>
+                        </span>
+                      ) : navGroups.has(key) ? (
+                        pagination ? (
+                          <Link
+                            href={letterHref(key)}
+                            prefetch={false}
+                            title={(() => {
+                              const n = navGroups.get(key)?.length ?? 0;
+                              return `${n} ${pluralRu(n, "ингредиент", "ингредиента", "ингредиентов")}`;
+                            })()}
+                            className={cn(
+                              cls,
+                              "text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
+                            )}
+                          >
+                            {key}
+                          </Link>
+                        ) : (
+                          <a
+                            href={letterHref(key)}
+                            className={cn(
+                              cls,
+                              "text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
+                            )}
+                          >
+                            {key}
+                          </a>
+                        )
                       ) : (
                         <span className={cn(cls, "cursor-default text-ink-line")} aria-hidden>
                           {key}
@@ -436,7 +629,8 @@ export default async function IngredientsCatalogPage({
           </nav>
         )}
 
-        {ingredients.length > 0 ? (
+        {rows.length > 0 ? (
+          <>
           <div className="space-y-10">
             {letters.map((letter) => {
               const items = letterGroups.get(letter) ?? [];
@@ -450,7 +644,11 @@ export default async function IngredientsCatalogPage({
                   {useGrouping && (
                     <div className="mb-4 flex items-baseline gap-3">
                       <h2 className="font-display text-2xl font-semibold">{letter}</h2>
-                      <span className="text-sm text-ink-muted">{items.length}</span>
+                      <span className="text-sm text-ink-muted">
+                        {pagination ? pagination.letterSize : items.length}
+                        {pagination && pagination.pageCount > 1 &&
+                          ` · страница ${pagination.page} из ${pagination.pageCount}`}
+                      </span>
                       <span className="h-px flex-1 self-center bg-ink-hair" />
                     </div>
                   )}
@@ -518,6 +716,60 @@ export default async function IngredientsCatalogPage({
               );
             })}
           </div>
+
+          {/* Страницы внутри буквы */}
+          {pagination && pagination.pageCount > 1 && (
+            <nav
+              aria-label="Страницы"
+              className="mt-12 flex flex-wrap items-center justify-center gap-1.5"
+            >
+              {pagination.page > 1 && (
+                <Link
+                  href={pageHref(pagination.page - 1)}
+                  rel="prev"
+                  className="inline-flex h-10 items-center gap-1.5 rounded-full border border-ink-line px-4 text-sm font-semibold transition-colors hover:bg-ink-wash"
+                >
+                  <ArrowLeft className="h-4 w-4" aria-hidden />
+                  Назад
+                </Link>
+              )}
+              {pageWindow(pagination.page, pagination.pageCount).map((item, i) =>
+                item === "gap" ? (
+                  <span key={`gap-${i}`} className="px-1 text-sm text-ink-muted" aria-hidden>
+                    …
+                  </span>
+                ) : item === pagination.page ? (
+                  <span
+                    key={item}
+                    aria-current="page"
+                    className="grid h-10 min-w-10 place-items-center rounded-full bg-foreground px-3 text-sm font-semibold text-white"
+                  >
+                    {item}
+                  </span>
+                ) : (
+                  <Link
+                    key={item}
+                    href={pageHref(item)}
+                    aria-label={`Страница ${item}`}
+                    className="grid h-10 min-w-10 place-items-center rounded-full px-3 text-sm font-semibold text-ink-soft transition-colors hover:bg-ink-wash hover:text-foreground"
+                  >
+                    {item}
+                  </Link>
+                )
+              )}
+              {pagination.page < pagination.pageCount && (
+                <Link
+                  href={pageHref(pagination.page + 1)}
+                  rel="next"
+                  className="inline-flex h-10 items-center gap-1.5 rounded-full border border-ink-line px-4 text-sm font-semibold transition-colors hover:bg-ink-wash"
+                >
+                  Далее
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              )}
+            </nav>
+          )}
+          </>
         ) : (
           <div className="flex flex-col items-center rounded-3xl border border-dashed border-ink-line px-6 py-16 text-center">
             <span className="grid h-14 w-14 place-items-center rounded-full bg-ink-wash">

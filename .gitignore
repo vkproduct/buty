@@ -61,3 +61,8 @@ ocr-proxy-screenshot*.png
 
 # готовые APK/AAB сборки — не коммитим
 builds/
+
+# рабочие заметки и парсер ЗЯ — не коммитим
+/Obsidian Buty/
+/Роль senior data.txt
+/scripts/za-composition-scrape/

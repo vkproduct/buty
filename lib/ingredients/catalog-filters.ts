@@ -24,6 +24,10 @@ export interface RawIngredientSearchParams {
   flag?: RawParam;
   /** устаревший формат: ключи через запятую */
   flags?: RawParam;
+  /** буква алфавитной выдачи — см. catalog-pages.ts */
+  letter?: RawParam;
+  /** страница внутри буквы — см. catalog-pages.ts */
+  page?: RawParam;
 }
 
 /** Безопасностные флаги — в порядке показа в фильтре. */

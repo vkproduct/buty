@@ -86,6 +86,9 @@ export function catalogEntries<T extends AlphabetIngredient>(
   return entries;
 }
 
+/** Один коллатор на модуль: localeCompare(…, "ru") на тысячах строк создаёт его заново на каждое сравнение. */
+const RU_COLLATOR = new Intl.Collator("ru");
+
 /** Группировка карточек по буквам: внутри группы — по названию, давшему букву. */
 export function groupByLetter<T extends AlphabetIngredient>(
   entries: readonly CatalogEntry<T>[]
@@ -97,12 +100,12 @@ export function groupByLetter<T extends AlphabetIngredient>(
     else groups.set(entry.letter, [entry]);
   }
   for (const bucket of groups.values()) {
-    bucket.sort((a, b) => a.sortKey.localeCompare(b.sortKey, "ru"));
+    bucket.sort((a, b) => RU_COLLATOR.compare(a.sortKey, b.sortKey));
   }
   return groups;
 }
 
 /** Порядок букв в выдаче и указателе. */
 export function sortLetters(keys: Iterable<string>): string[] {
-  return [...keys].sort((a, b) => letterRank(a) - letterRank(b) || a.localeCompare(b, "ru"));
+  return [...keys].sort((a, b) => letterRank(a) - letterRank(b) || RU_COLLATOR.compare(a, b));
 }

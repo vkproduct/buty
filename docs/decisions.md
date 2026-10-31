@@ -251,3 +251,9 @@
 - **Причина:** magic-link позволял бомбить любой адрес письмами от buty.app и сжечь квоту Resend; у мобильного входа лимиты уже были, на сайте — нет.
 - **Затронутые части:** `lib/auth.ts`, `lib/auth/login-email-quota.ts` (+ тесты, новое), `lib/rate-limit.ts` (+ тесты, новое), `app/api/auth/[...nextauth]/route.ts`, `components/sign-in-form.tsx`, `app/api/mobile/auth/request-code/route.ts`, `lib/mobile/rate-limit.ts` (удалён).
 - **Проверено:** `tsc --noEmit`, `eslint`, vitest (369 тестов, +11: квота писем — cooldown/часовой/границы, общий rate-limit — окно/независимость ключей/clientIp). Ручная проверка после деплоя: 6 запросов ссылки подряд → текст про «несколько минут».
+
+## 2026-10-31 — Колбэк оплаты закрыт (mock-выдача Pro невозможна)
+- **Решение:** `POST /api/payments/callback` с `USER_FEATURES_FREE` отвечает 410 `{ error: "Все функции Buty бесплатны" }` — как `POST /api/payments`. Самодельный mock-paymentId больше не выдаёт Pro. B2B-оплата брендов будет отдельным путём с проверкой подписи провайдера (эта реализация вне этой задачи).
+- **Причина:** колбэк по-прежнему выдавал Pro по самодельному paymentId — уязвимость после отмены подписок.
+- **Затронутые части:** `app/api/payments/callback/route.ts` (+ тест).
+- **Проверено:** vitest (367 тестов, +2: 410 с валидным mock-paymentId и без сессии).

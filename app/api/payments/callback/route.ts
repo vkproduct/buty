@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth";
 import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
+import { USER_FEATURES_FREE } from "@/lib/billing";
 import { decodeMockPaymentId } from "@/lib/payments";
 import { grantPro } from "@/lib/payments/grant";
 
@@ -9,11 +10,19 @@ export const dynamic = "force-dynamic";
 
 /**
  * POST /api/payments/callback — коллбэк оплаты: { paymentId, status }.
- * В mock-режиме paymentId валидируется по формату MockPaymentProvider
- * и должен принадлежать текущему пользователю. Реальный провайдер (ЮKassa)
- * будет присылать подписанный webhook за тем же интерфейсом.
+ * С 24.10.2026 все функции для пользователей бесплатны (USER_FEATURES_FREE):
+ * колбэк закрыт, 410 Gone — иначе любой мог выдать себе Pro самодельным
+ * mock-paymentId. B2B-оплата брендов будет отдельным путём с проверкой
+ * подписи провайдера.
  */
 export async function POST(request: Request) {
+  if (USER_FEATURES_FREE) {
+    return NextResponse.json(
+      { error: "Все функции Buty бесплатны" },
+      { status: 410 },
+    );
+  }
+
   const session = await getSession();
   if (!session?.user) {
     return NextResponse.json({ error: "Требуется вход" }, { status: 401 });

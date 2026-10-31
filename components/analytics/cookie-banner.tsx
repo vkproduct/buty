@@ -39,9 +39,7 @@ export function CookieBanner() {
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
         <p className="text-sm leading-relaxed text-ink-soft">
-          Мы используем cookie: необходимые — чтобы работал вход и «Моя полка»,
-          аналитические (Яндекс Метрика) — чтобы понимать, как улучшить сервис.
-          Нажимая «Принять», вы соглашаетесь на обработку данных Яндекс Метрикой.{" "}
+          Мы используем cookie для работы сайта и аналитики.{" "}
           <Link href="/cookies" className="font-medium text-foreground underline">
             Подробнее
           </Link>

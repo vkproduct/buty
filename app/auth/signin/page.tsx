@@ -1,13 +1,30 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { GlassCard } from "@/components/ui/glass-card";
 import { Container } from "@/components/ui/container";
+import { getSession } from "@/lib/auth";
 import { SignInClient } from "./signin-client";
 
 export const metadata: Metadata = { title: "Вход" };
+export const dynamic = "force-dynamic";
 
-export default function SignInPage() {
+/** Безопасный относительный путь для редиректа (открытый редирект запрещён). */
+function safeCallback(raw: string | string[] | undefined): string {
+  const value = typeof raw === "string" ? raw : null;
+  return value && value.startsWith("/") && !value.startsWith("//") ? value : "/shelf";
+}
+
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: { callbackUrl?: string | string[] };
+}) {
+  // Уже вошёл (например, только что кодом в окне разбора) — форма входа не нужна
+  const session = await getSession();
+  if (session?.user) redirect(safeCallback(searchParams.callbackUrl));
+
   return (
     <main className="bg-gradient-hero min-h-screen">
       <Container className="flex min-h-screen items-center justify-center py-20">

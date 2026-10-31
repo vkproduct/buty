@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GOALS, trackGoal } from "@/lib/analytics/goals";
+import { refreshClientSession } from "@/lib/auth/refresh-client-session";
 
 export interface CodeSignInSuccess {
   isNewUser: boolean;
@@ -25,10 +25,9 @@ const RESEND_COOLDOWN_SEC = 60;
 
 /**
  * Вход по коду из письма, без ухода со страницы: email → код (6 цифр, автоотправка
- * при вводе). После успеха обновляет сессию next-auth и зовёт onSuccess.
+ * при вводе). После успеха обновляет сессию next-auth во всех вкладках и зовёт onSuccess.
  */
 export function CodeSignIn({ source, onSuccess, cta = "Получить код" }: CodeSignInProps) {
-  const { update } = useSession();
   const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -84,7 +83,8 @@ export function CodeSignIn({ source, onSuccess, cta = "Получить код" 
         throw new Error(data?.error ?? "Не удалось войти. Попробуйте ещё раз.");
       }
       trackGoal(GOALS.signupComplete);
-      await update();
+      // Шапка («Моя полка» вместо «Войти»), Mixpanel identify и все useSession() на странице
+      refreshClientSession();
       onSuccess({ isNewUser: Boolean(data?.isNewUser), hasSkinProfile: Boolean(data?.hasSkinProfile) });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось войти");

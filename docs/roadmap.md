@@ -2,7 +2,7 @@
 
 HANDOFF-блоки вставляются сюда по мере завершения частей (под соответствующим пунктом).
 
-- [ ] **Часть 0/8 — Подготовка окружения и сверка архитектуры** (этот чат)
+- [x] **Часть 0/8 — Подготовка окружения и сверка архитектуры** (этот чат)
   HANDOFF: см. финальный ответ чата + [cross-check.md](./cross-check.md)
 - [x] **Часть 1/8 — Скелет проекта, дизайн-система, лендинг**
   HANDOFF: см. финальный ответ чата части 1
@@ -24,7 +24,7 @@ HANDOFF-блоки вставляются сюда по мере заверше�
   HANDOFF: см. финальный ответ чата части 9 (/api/health, vercel.json с buildCommand миграции+сид и cron ежедневно 03:17 UTC, cron-роут принимает GET + Bearer, directUrl в schema.prisma для Supabase, README: деплой на Vercel + VPS-вариант в details, Docker-инфраструктура сохранена как альтернатива). Прод: https://buty-ecru.vercel.app, БД Supabase (пулер 6543 для app, 5432 для миграций), репо github.com/vkproduct/buty, автодеплой из main.
 - [x] **Фича A — флаги: комедогенность, Malassezia, аллергены-отдушки** (бриф в buty-ru-dev-briefs.md)
   HANDOFF: три Boolean-поля в `Ingredient` (миграция `20260928215124_ingredient_safety_flags`), словарь `prisma/flags.data.ts` (22 ингредиента, мерж по slug в сиде, неизвестный slug → падение сида), флаги в DTO разбора / сводке / советах / страницах ингредиентов / фильтрах каталога (`?flags=` мультивыбор), компонент `IngredientFlags`, метаданные в `lib/ingredients/flags.ts`. Критерии честнее конкурента: комедогенность только с опубликованными данными, спорная малассезия без флага.
-- [ ] **Фича B — разбор по фото: Yandex Vision OCR + лимиты** (бриф в buty-ru-dev-briefs.md)
+- [x] **Разбор по фото: OCR + лимиты** — сделан: Google Cloud Vision через серверный роут и переходник в Европе (не Yandex Vision). HANDOFF: `lib/ocr/*` (`GoogleVisionOcrProvider`, `HttpOcrProvider`), `POST /api/ocr`, лимиты 20/час и 60+150/сутки на IP/всего (`lib/budget/daily-limit.ts`), `extractInci` после «Ingredients:/Состав:»; детали — docs/decisions.md, 2026-09-30 и 2026-10-25 (суточные лимиты).
 - [x] **Фильтр каталога продуктов — бренды и категории (мобайл + десктоп)**
   HANDOFF: `lib/products/catalog-filters.ts` (+ тесты), `components/products/product-filters.tsx` (нижний лист / выпадающая панель), `components/products/chip-rail.tsx`, `lib/seo/product-categories.ts`, переписан `app/products/page.tsx`; URL `?q=&brand=…&brand=…&category=…`; детали — docs/decisions.md, запись 2026-09-29.
 - [x] **Фильтр каталога ингредиентов — вёрстка и удобство (мобайл + десктоп)**
@@ -36,3 +36,5 @@ HANDOFF-блоки вставляются сюда по мере заверше�
 - [x] **Android на Expo (Google Play + RuStore) вместо TWA** — код готов, публикация по docs/android.md
   HANDOFF: тот же `mobile/`, пакет `app.buty.android` и прежний ключ подписи; профили EAS `production` (AAB) и `rustore` (APK); push через FCM (`GOOGLE_SERVICES_JSON` в EAS, `channelId: "default"`); иконки SF→Material в `components/ui/icon.tsx`. Детали — docs/decisions.md, 2026-10-25. Дальше: аккаунты Expo/Google Play, Firebase, сборка, тест на телефоне, RuStore, закрытый тест Google Play (12 тестировщиков × 14 дней).
 - [ ] **RuStore Push SDK** — push на телефонах без сервисов Google (второй этап, после первых пользователей из RuStore)
+- [x] **Ревью 29.10.2026 — исправления безопасности и качества**
+  HANDOFF: деплой только после зелёных тестов (job deploy в test.yml, caddy reload после сборки); постраничный каталог ингредиентов (letter+page, проверено с БД); лимиты писем входа (5/час и 1/мин на email, 20/час с IP) и форм (brand-leads 5/час, feedback 30/час, honeypot); mock-оплата закрыта полностью (колбэк 410); защитные заголовки в Caddy (без X-Frame-Options — Вебвизор); Next.js 14.2.35; просмотры карточек 1/(IP+продукт)/сутки; Session Replay 20% без /shelf /profile /onboarding /brand /admin; напоминания по почте (EmailReminderNotifier); удаление аккаунта на сайте; vercel.json удалён. Детали — docs/decisions.md, записи 2026-10-31.

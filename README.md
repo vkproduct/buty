@@ -66,17 +66,17 @@ pnpm dev                    # http://localhost:3000
 
 **Платежи (`/lib/payments`).** По умолчанию `PAYMENTS_PROVIDER=mock` — MockPaymentProvider имитирует оплату Pro. Реальный провайдер — ЮKassa: создать платёж через API, вернуть `confirmation_url`, принимать webhook на `/api/payments/callback` с проверкой подписи; ключи `YUKASSA_SHOP_ID` и `YUKASSA_SECRET_KEY`, переключение — `PAYMENTS_PROVIDER=yukassa`.
 
-**Email (`/lib/email`).** В dev — MockEmailProvider (magic-link печатается в консоль). В проде — Resend: провайдер `ResendEmailProvider` уже реализует интерфейс `EmailProvider`. Подключение: 1) в dashboard Resend (resend.com) добавить домен `buty.app` и прописать у регистратора выданные DNS-записи (SPF/DKIM: TXT + CNAME); 2) создать API-ключ → переменная `RESEND_API_KEY` в Vercel; 3) `EMAIL_FROM="Buty.app <noreply@buty.app>"`. До верификации домена Resend пускает отправку только с тестового адреса `onboarding@resend.dev` (для `EMAIL_FROM`).
+**Email (`/lib/email`).** В dev — MockEmailProvider (magic-link печатается в консоль). В проде — Resend: провайдер `ResendEmailProvider` уже реализует интерфейс `EmailProvider`. Подключение: 1) в dashboard Resend (resend.com) добавить домен `buty.app` и прописать у регистратора выданные DNS-записи (SPF/DKIM: TXT + CNAME); 2) создать API-ключ → переменная `RESEND_API_KEY` в `/opt/buty/.env` на сервере; 3) `EMAIL_FROM="Buty.app <noreply@buty.app>"`. До верификации домена Resend пускает отправку только с тестового адреса `onboarding@resend.dev` (для `EMAIL_FROM`).
 
 ## Админка
 
-Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: пользователи и подписки, заявки брендов, нераспознанные токены, добавление/правка продуктов и ингредиентов, базовая аналитика для брендов.
+Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: обзор базы, пользователи, заявки брендов, нераспознанные токены (словарь), CRUD продуктов и ингредиентов, бренды и ссылки, аналитика для брендов, карточка «Бюджет ИИ сегодня».
 
 ## Деплой (прод: Beget VPS)
 
 Прод живёт на VPS Beget: **62.217.180.33**, Ubuntu 24.04, `/opt/buty`, пользователь `deploy`. Стек `docker-compose.prod.yml`: `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (HTTPS Let's Encrypt, редирект www → bare, gzip). Docker Hub в РФ недоступен — в `/etc/docker/daemon.json` на сервере прописаны зеркала `dockerhub1.beget.com` и `mirror.gcr.io`.
 
-**Схема CI/CD (уже работает):** push в `main` → GitHub Action `.github/workflows/deploy.yml` → SSH на сервер → `git pull --ff-only` → `docker compose -f docker-compose.prod.yml up -d --build` → prune образов. При старте контейнера entrypoint идемпотентно накатывает `prisma migrate deploy` + `db:seed`; импорт каталога INCIDB (~17k продуктов) выполняется только если в БД меньше 17 000 продуктов (рестарты быстрые). В репозитории заданы: переменные `SERVER_HOST=62.217.180.33`, `SERVER_USER=deploy` и секрет `SERVER_SSH_KEY` (отдельный deploy-ключ `github-actions-deploy@buty`; отзыв — удалить строку из `~deploy/.ssh/authorized_keys` на сервере).
+**Схема CI/CD (уже работает):** push в `main` → GitHub Action `.github/workflows/test.yml` (typecheck + lint + vitest) → только после зелёных тестов job `deploy` → SSH на сервер → `git pull --ff-only` → `docker compose -f docker-compose.prod.yml up -d --build` → перезагрузка конфига Caddy (`caddy reload`) → prune образов. Раньше деплей жил в отдельном `deploy.yml` и запускался параллельно с тестами — сломанная сборка могла уехать на прод; теперь деплой невозможен без зелёных тестов. При старте контейнера entrypoint идемпотентно накатывает `prisma migrate deploy` + `db:seed`; импорт каталога INCIDB (~17k продуктов) выполняется только если в БД меньше 17 000 продуктов (рестарты быстрые). В репозитории заданы: переменные `SERVER_HOST=62.217.180.33`, `SERVER_USER=deploy` и секрет `SERVER_SSH_KEY` (отдельный deploy-ключ `github-actions-deploy@buty`; отзыв — удалить строку из `~deploy/.ssh/authorized_keys` на сервере).
 
 **Ручной деплой:** `./scripts/deploy.sh` (или `ssh deploy@62.217.180.33` и команды из таблицы ниже).
 

@@ -16,17 +16,19 @@
 ## Что сделано в коде (коммиты c94f3b3 и 6d2a28a в main)
 1. docker-compose.prod.yml: добавлен DIRECT_URL (без него падал prisma migrate deploy, потому что directUrl есть в schema.prisma); NEXT_PUBLIC_SITE_URL передаётся в сборку build-arg'ом.
 2. Dockerfile: ARG/ENV NEXT_PUBLIC_SITE_URL в стадии build.
-3. .github/workflows/deploy.yml: автодеплой по ssh при push в main. Сейчас ВЫКЛЮЧЕН: срабатывает, только если в репозитории задана переменная Actions SERVER_HOST.
+3. .github/workflows/test.yml: автодеплой по ssh при push в main, отдельной job deploy ПОСЛЕ зелёных тестов (бывший deploy.yml удалён — он запускался параллельно с тестами и мог выкатить сломанную сборку). Включён: срабатывает при заданной переменной Actions SERVER_HOST.
 4. OCR через Google Cloud Vision: lib/ocr/{index,google,server,extract-inci,rate-limit}.ts, роут POST /api/ocr, тесты. Браузер шлёт фото на /api/ocr, сервер ходит в Google со своим ключом. Без GOOGLE_VISION_API_KEY отвечает 501, и UI показывает «OCR скоро». Лимиты: фото до 7 МБ, 20 запросов в час на IP. GOOGLE_VISION_ENDPOINT позволяет пустить запросы через переходник в Европе, если Google не принимает запросы из РФ.
 5. README и docs/decisions.md обновлены. В рабочей папке есть незакоммиченная правка docs/decisions.md (Timeweb → Beget): закоммить её со следующим изменением.
 
 ## Как теперь выкатывать изменения
 1. Работаешь как обычно, проверяешь: pnpm typecheck && pnpm test.
 2. Коммитишь только нужные файлы (git add по именам) и пушишь в main: git push.
-3. Деплоишь на сервер одной командой с Mac:
-   ssh deploy@62.217.180.33 'cd /opt/buty && git pull --ff-only && docker compose -f docker-compose.prod.yml up -d --build && docker image prune -f && docker compose -f docker-compose.prod.yml ps'
+3. GitHub Action сам прогоняет тесты и, только если они зелёные, деплоит:
+   git pull --ff-only → docker compose up -d --build → caddy reload → prune.
    Сборка идёт 5–15 минут, простой сайта — около минуты при перезапуске контейнера.
-   Запасной вариант той же операции: ./scripts/deploy.sh deploy@62.217.180.33 (он не чистит старые образы, раз в пару недель выполняй docker image prune -f).
+   Ручной деплой (если CI недоступен): одна команда с Mac —
+   ssh deploy@62.217.180.33 'cd /opt/buty && git pull --ff-only && docker compose -f docker-compose.prod.yml up -d --build && docker compose -f docker-compose.prod.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile && docker image prune -f && docker compose -f docker-compose.prod.yml ps'
+   Запасной вариант: ./scripts/deploy.sh deploy@62.217.180.33 (он не чистит старые образы, раз в пару недель выполняй docker image prune -f).
 4. Проверка после деплоя:
    curl -fsS https://buty.app/api/health   → {"ok":true,"db":"up"}
    Плюс открыть buty.app в браузере.
@@ -50,10 +52,11 @@
   docker compose -f docker-compose.prod.yml logs app | grep -o "https://buty.app/api/auth/callback[^ ]*" | tail -1
 
 ## Что ещё не сделано
-1. Resend: зарегистрироваться, верифицировать домен buty.app (DNS в Porkbun), положить RESEND_API_KEY в .env на сервере. До этого посетители не могут войти по почте.
-2. Google Vision: создать ключ, положить GOOGLE_VISION_API_KEY в .env и проверить, что Google принимает запросы с сервера в РФ. Если нет — переходник + GOOGLE_VISION_ENDPOINT.
-3. Cron (напоминания каждые 15 мин + ежедневный бэкап) в crontab пользователя deploy, если ещё не добавлен:
+1. Resend: проверить, что RESEND_API_KEY в /opt/buty/.env и домен buty.app верифицирован (DNS в Porkbun). Без ключа вход по почте на проде не работает.
+2. Cron в crontab пользователя deploy (напоминания каждые 15 мин + ежедневный бэкап 03:17), если ещё не добавлен:
    (crontab -l 2>/dev/null; echo "*/15 * * * * cd /opt/buty && set -a && . ./.env && set +a && bash scripts/cron-reminders.sh >/dev/null 2>&1"; echo "17 3 * * * bash /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1") | crontab -
-4. Перенос данных из Supabase, если там есть пользователи или правки из админки.
-5. Отключить автодеплой в Vercel: Settings → Git → Disconnect. Пока не отключён, Vercel пересобирает старый сайт на каждый push, на прод это не влияет.
-6. Необязательно: включить GitHub Actions автодеплой (переменные SERVER_HOST=62.217.180.33, SERVER_USER=deploy и секрет SERVER_SSH_KEY с отдельным ключом, публичная часть которого добавлена в /home/deploy/.ssh/authorized_keys).
+3. Бэкапы: задать BACKUP_S3_* в /opt/buty/.env, чтобы копии уходили в объектное хранилище вне сервера (проверка — этап 14 ревью).
+4. Отключить автодеплой в Vercel: Settings → Git → Disconnect. Пока не отключён, Vercel пересобирает старый сайт на каждый push, на прод это не влияет.
+5. Перенос данных из Supabase, если там есть пользователи или правки из админки.
+
+Сделано с момента передачи дел: автодеплой GitHub Actions включён и идёт после тестов; OCR живёт через переходник в Европе (infra/ocr-proxy, GOOGLE_VISION_ENDPOINT); ревью 29.10.2026 (docs/decisions.md, записи 2026-10-31): лимиты входа и форм, защитные заголовки Caddy, закрыта mock-оплата, Next.js 14.2.35, честные просмотры, Session Replay 20% без чувствительных страниц, напоминания по почте, удаление аккаунта на сайте, vercel.json удалён.

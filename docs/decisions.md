@@ -337,3 +337,4 @@
 - **Откат:** `ANALYZE_GATE=off` в `/opt/buty/.env` + `docker compose -f docker-compose.prod.yml up -d` (переменная серверная, читается в рантайме — пересборка не нужна).
 - **Проверено:** vitest (425 тестов, +22: гейты /api/analyze, журнал, вход кодом, review-запрет, текст web-письма, хэш состава), `tsc`, `eslint`.
 - **Правка 2026-11-01:** после входа кодом шапка оставалась в состоянии гостя — update() next-auth v4 не работает без сессии; заменён на refreshClientSession() (storage-событие nextauth.message). /auth/signin для вошедшего редиректит на /shelf.
+- **Правка 2026-11-01 (2):** «Выйти» и запрос ссылки входа отдавали 500 с коммита 2d59c6a — обёртка POST в роуте NextAuth не передавала context, next-auth v4 уходил в обработчик Pages Router. Исправлено, добавлен тест.

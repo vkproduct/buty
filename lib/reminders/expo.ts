@@ -5,7 +5,7 @@
  * Документация: https://docs.expo.dev/push-notifications/sending-notifications/
  */
 import { prisma } from "@/lib/prisma";
-import { MockNotifier } from "./mock";
+import { EmailReminderNotifier } from "./email";
 import type { NotificationMessage, Notifier } from "./notifier";
 
 const EXPO_PUSH_URL = "https://exp.host/--/api/v2/push/send";
@@ -41,13 +41,14 @@ export function buildExpoMessages(tokens: string[], message: NotificationMessage
 
 /**
  * Push, если у пользователя есть устройства с приложением;
- * иначе — запасной канал (сейчас MockNotifier: запись в NotificationLog).
+ * иначе — запасной канал (email; lib/reminders/email.ts). Если Expo
+ * недоступен или push не доставлен ни на одно устройство — тоже email.
  */
 export class ExpoPushNotifier implements Notifier {
   readonly channel = "push";
 
   constructor(
-    private readonly fallback: Notifier = new MockNotifier(),
+    private readonly fallback: Notifier = new EmailReminderNotifier(),
     private readonly fetchImpl: typeof fetch = fetch,
   ) {}
 
@@ -98,5 +99,9 @@ export class ExpoPushNotifier implements Notifier {
         message: `Push на ${delivered} из ${tokens.length} устройств: ${message.text}`,
       },
     });
+    // Не доставлен ни на одно устройство — дублируем письмом
+    if (delivered === 0) {
+      await this.fallback.send(message);
+    }
   }
 }

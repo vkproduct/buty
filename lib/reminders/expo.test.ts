@@ -80,4 +80,15 @@ describe("ExpoPushNotifier", () => {
     await new ExpoPushNotifier(fallback, fetchImpl as never).send(MESSAGE);
     expect(fallback.send).toHaveBeenCalledWith(MESSAGE);
   });
+
+  it("push не доставлен ни на одно устройство — запасной канал", async () => {
+    vi.mocked(prisma.pushToken.findMany).mockResolvedValue([{ token: "ExponentPushToken[a]" }] as never);
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: [{ status: "error", details: { error: "DeviceNotRegistered" } }] }),
+    });
+    const fallback = fallbackSpy();
+    await new ExpoPushNotifier(fallback, fetchImpl as never).send(MESSAGE);
+    expect(fallback.send).toHaveBeenCalledWith(MESSAGE);
+  });
 });

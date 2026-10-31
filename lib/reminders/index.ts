@@ -9,7 +9,8 @@ export type { NotificationMessage, Notifier } from "./notifier";
 
 /**
  * Фабрика уведомителя: push в приложение (Expo), если у пользователя есть
- * устройство с приложением; иначе — MockNotifier (запись в NotificationLog).
+ * устройство с приложением; иначе — письмо на email (EmailReminderNotifier).
+ * Push не доставлен — тоже письмо.
  */
 export function getNotifier(): Notifier {
   return new ExpoPushNotifier();

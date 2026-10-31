@@ -238,3 +238,9 @@
 - **Причина:** в базе ~5 530 ингредиентов, в алфавитной раскладке каждый попадает под две буквы — страница отдавала ~11 000 карточек целиком; переход из меню шапки «зависал», пока сервер рендерил весь каталог, а браузер затем замирал на вставке и гидратации тысяч ссылок. Крупнейшая буква — «Э» (~1 300 экстрактов), поэтому одной разбивки по буквам мало — нужны страницы.
 - **Затронутые части:** `app/ingredients/page.tsx`, `lib/ingredients/catalog-pages.ts` (+ тест, новое), `lib/ingredients/catalog-filters.ts` (типы `letter`/`page`), `lib/ingredients/catalog-alphabet.ts` (коллатор), `lib/seo/sitemap-data.ts`.
 - **Проверено:** `tsc --noEmit`, `eslint`, vitest (`lib/ingredients`, 37 тестов). Рендер с БД не проверялся — нужен `pnpm dev` с локальной базой.
+
+## 2026-10-31 — Деплой только после зелёных тестов
+- **Решение:** `.github/workflows/deploy.yml` удалён, деплой перенесён в `.github/workflows/test.yml` отдельной job `deploy` с `needs: test`. Job запускается только при успешных тестах и если `vars.SERVER_HOST != ''`, на push в `main` или вручную (`workflow_dispatch` — тоже через тесты). В скрипт деплоя после `up -d --build` добавлена перезагрузка конфига Caddy (`docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile`) — там же, в `scripts/deploy.sh`. Job `deploy` имеет `concurrency: deploy-prod` (не прерывает идущий деплой).
+- **Причина:** deploy.yml и test.yml запускались от одного push независимо — сломанная сборка уезжала на прод раньше, чем падали тесты. Перезагрузка Caddy нужна, чтобы изменения Caddyfile применялись без пересоздания контейнера (этап защитных заголовков).
+- **Затронутые части:** CI (`.github/workflows/test.yml`, deploy.yml удалён), `scripts/deploy.sh`.
+- **Проверено:** YAML валиден, job-условия по документации GitHub Actions; полный прогон — после push (job `deploy` должен появиться в run'е test.yml только при зелёных тестах).

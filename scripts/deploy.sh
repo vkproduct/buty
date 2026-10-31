@@ -12,5 +12,6 @@ cd $APP_DIR
 git pull --ff-only
 docker compose -f docker-compose.prod.yml build
 docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile
 docker compose -f docker-compose.prod.yml ps
 EOF

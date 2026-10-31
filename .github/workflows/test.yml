@@ -44,3 +44,31 @@ jobs:
 
       - name: Unit tests (vitest)
         run: pnpm test
+
+  # Деплой на прод только после зелёных тестов (был отдельный deploy.yml —
+  # он запускался параллельно и мог выкатить сломанную сборку).
+  deploy:
+    name: Deploy to production
+    needs: test
+    if: ${{ needs.test.result == 'success' && vars.SERVER_HOST != '' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: deploy-prod
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          username: ${{ vars.SERVER_USER || 'deploy' }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          command_timeout: 25m
+          script: |
+            set -e
+            cd /opt/buty
+            git pull --ff-only
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker compose -f docker-compose.prod.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile
+            docker image prune -f
+            docker compose -f docker-compose.prod.yml ps

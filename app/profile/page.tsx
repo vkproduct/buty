@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { GlassCard } from "@/components/ui/glass-card";
 import { DeleteSkinProfileButton } from "@/components/delete-skin-profile-button";
+import { DeleteAccountButton } from "@/components/delete-account-button";
 import { labelFor, migrateLegacy } from "@/lib/skin-profile/options";
 
 export const metadata: Metadata = { title: "Профиль" };
@@ -157,6 +158,16 @@ export default async function ProfilePage() {
               ))}
             </ul>
           )}
+        </GlassCard>
+
+        <GlassCard className="p-6">
+          <h2 className="font-display text-lg font-semibold">Аккаунт</h2>
+          <p className="mt-1 text-sm text-ink-muted">
+            Удаление аккаунта и всех данных — как обещано в политике конфиденциальности.
+          </p>
+          <div className="mt-3 border-t border-ink-hair pt-3">
+            <DeleteAccountButton />
+          </div>
         </GlassCard>
       </Container>
     </main>

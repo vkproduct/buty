@@ -210,10 +210,11 @@ export default function PrivacyPage() {
         <Section id="delete" title="Как удалить данные и аккаунт">
           <ul className="list-disc space-y-2 pl-5 text-ink-soft">
             <li>
-              <strong className="font-medium text-foreground">Аккаунт целиком</strong> — в приложении:{" "}
-              <strong className="font-medium text-foreground">Профиль → Удалить аккаунт</strong>.
+              <strong className="font-medium text-foreground">Аккаунт целиком</strong> —{" "}
+              <strong className="font-medium text-foreground">Профиль → Удалить аккаунт</strong>{" "}
+              на сайте и в приложении.
               Сразу и без возможности восстановления удаляются email, полка, анкета кожи,
-              реакции, напоминания, входы и push-токены. Если вы пользуетесь только сайтом,
+              реакции, напоминания, входы и push-токены. Если не получается удалить самостоятельно,
               напишите нам с адреса аккаунта на {mail} — удалим в течение 10 рабочих дней.
             </li>
             <li>

@@ -29,7 +29,11 @@ export function SignInForm({ cta = "Получить ссылку для вхо�
     });
     setPending(false);
     if (res?.error) {
-      setError("Не удалось отправить ссылку. Проверьте email и попробуйте ещё раз.");
+      setError(
+        res.error === "RateLimited" || res.error === "EmailSignin"
+          ? "Слишком много запросов. Попробуйте через несколько минут."
+          : "Не удалось отправить ссылку. Проверьте email и попробуйте ещё раз.",
+      );
       return;
     }
     trackGoal(GOALS.signupSubmit);

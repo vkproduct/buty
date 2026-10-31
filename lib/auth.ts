@@ -9,6 +9,11 @@ import { parseBearer } from "@/lib/mobile/crypto";
 import { getMobileSession } from "@/lib/mobile/session";
 import { prisma } from "@/lib/prisma";
 import { trackServerEvent } from "@/lib/analytics/mixpanel-server";
+import {
+  checkLoginEmailQuota,
+  LOGIN_EMAIL_COOLDOWN_MS,
+  LOGIN_EMAIL_TOKEN_MAX_AGE_MS,
+} from "@/lib/auth/login-email-quota";
 
 /** Конфиг NextAuth: email magic-link + Prisma-сессии в БД. */
 export const authOptions: NextAuthOptions = {
@@ -22,7 +27,27 @@ export const authOptions: NextAuthOptions = {
   providers: [
     EmailProvider({
       from: process.env.EMAIL_FROM ?? "Buty.app <noreply@buty.app>",
+      // Срок жизни токена — в одну константу с лимитом писем (login-email-quota).
+      maxAge: LOGIN_EMAIL_TOKEN_MAX_AGE_MS / 1000,
       async sendVerificationRequest({ identifier, url }) {
+        // Лимит писем на адрес: ≤ 5 в час и не чаще раза в минуту (иначе бомбёжка
+        // чужого ящика и сгоревшая квота Resend). Дата создания токена =
+        // expires − срок жизни. Превышение → ошибка → NextAuth вернёт error=EmailSignin.
+        const now = new Date();
+        const tokens = await prisma.verificationToken.findMany({
+          where: {
+            identifier,
+            expires: { gt: new Date(now.getTime() - LOGIN_EMAIL_COOLDOWN_MS - LOGIN_EMAIL_TOKEN_MAX_AGE_MS) },
+          },
+          select: { expires: true },
+        });
+        const quota = checkLoginEmailQuota(
+          tokens.map((t) => t.expires),
+          now,
+        );
+        if (!quota.ok) {
+          throw new Error(`Login email rate limit (${quota.reason})`);
+        }
         await getEmailProvider().send({
           to: identifier,
           subject: "Вход в Buty.app",

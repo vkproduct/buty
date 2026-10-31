@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { isValidEmail, normalizeEmail } from "@/lib/mobile/crypto";
 import { jsonError, readJsonObject } from "@/lib/mobile/http";
 import { requestLoginCode } from "@/lib/mobile/login-code";
-import { clientIp, takeQuota } from "@/lib/mobile/rate-limit";
+import { clientIp, takeQuota } from "@/lib/rate-limit";
 
 /** Кодов в час с одного IP (на разные адреса). */
 const CODES_PER_IP_PER_HOUR = 20;

@@ -46,6 +46,7 @@ import {
 
 const APPLY = process.argv.includes("--apply");
 const CHECK = process.argv.includes("--check");
+const GEN_REDIRECTS = process.argv.includes("--gen-redirects");
 const FROM_FILE = argValue("--from-file");
 const DRY_RUN = !APPLY && !CHECK;
 
@@ -216,6 +217,34 @@ ${lines.join("\n")}
   writeFileSync(REDIRECTS_TS, content);
 }
 
+/**
+ * Записи brandKey → canonical: группы с ≥ 2 вариантами или сработавшим алиасом,
+ * плюс все бренды с ≥ MIN_BRAND_PRODUCTS средств. Существующий файл (старые
+ * URL в индексе) только дополняем.
+ */
+function redirectsFromGroups(
+  groups: readonly CanonicalGroup[],
+  totals: ReadonlyMap<string, BrandTotals>
+): { redirects: Record<string, string>; added: number } {
+  const redirects = readExistingRedirects();
+  delete redirects[""]; // защита от мусорных записей прошлых прогонов
+  let added = 0;
+  const put = (key: string, canonical: string) => {
+    if (redirects[key] !== canonical) {
+      redirects[key] = canonical;
+      added++;
+    }
+  };
+  for (const g of groups) {
+    if (!g.key) continue; // мусорный бренд без букв/цифр — не редиректим
+    const hasAlias = g.variants.some((v) => aliasCanonical(v.name) !== null);
+    if (g.variants.length > 1 || hasAlias) put(g.key, g.canonical);
+    const t = totals.get(g.canonical);
+    if ((t?.products ?? g.products) >= MIN_BRAND_PRODUCTS) put(g.key, g.canonical);
+  }
+  return { redirects, added };
+}
+
 async function main(): Promise<void> {
   if (CHECK) {
     await check();
@@ -230,6 +259,19 @@ async function main(): Promise<void> {
   );
   const brandToCanonical = new Map<string, string>();
   for (const g of groups) for (const v of g.variants) brandToCanonical.set(v.name, g.canonical);
+
+  // --gen-redirects: только перегенерировать lib/products/brand-redirects.data.ts
+  // из выгруженных строк (офлайн, без доступа к БД; файл дополняется).
+  if (GEN_REDIRECTS) {
+    if (!FROM_FILE) {
+      console.error("--gen-redirects требует --from-file <rows.json> (офлайн-режим).");
+      process.exit(1);
+    }
+    const { redirects, added } = redirectsFromGroups(groups, totals);
+    writeRedirects(redirects);
+    console.log(`brand-redirects.data.ts: записей ${Object.keys(redirects).length} (новых ${added})`);
+    return;
+  }
 
   if (DRY_RUN) {
     const { renamedVariants, affectedProducts } = writeReportCsv(groups, totals);
@@ -360,20 +402,7 @@ async function apply(
 
   // 5. brand-redirects.data.ts: группы с дублями/алиасами + бренды ≥ порога.
   //    Существующий файл читаем и только дополняем.
-  const redirects = readExistingRedirects();
-  let added = 0;
-  const put = (key: string, canonical: string) => {
-    if (redirects[key] !== canonical) {
-      redirects[key] = canonical;
-      added++;
-    }
-  };
-  for (const g of groups) {
-    const hasAlias = g.variants.some((v) => aliasCanonical(v.name) !== null);
-    if (g.variants.length > 1 || hasAlias) put(g.key, g.canonical);
-    const t = totals.get(g.canonical);
-    if ((t?.products ?? g.products) >= MIN_BRAND_PRODUCTS) put(g.key, g.canonical);
-  }
+  const { redirects, added } = redirectsFromGroups(groups, totals);
   writeRedirects(redirects);
   console.log(`brand-redirects.data.ts: записей ${Object.keys(redirects).length} (новых ${added})`);
 

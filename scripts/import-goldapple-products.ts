@@ -21,6 +21,8 @@ import path from "node:path";
 import { slugify } from "../lib/admin";
 import { normalizeInci } from "../lib/ingredients/normalize";
 import { matchTokens } from "../lib/ingredients/match";
+import { canonicalBrand } from "../lib/products/brand-canonical";
+import { knownBrandsByKey } from "../lib/products/brand-db";
 import { categorizeGoldapple } from "../lib/products/goldapple-categorize";
 import { dupKey, resolveVariants, type VariantRow } from "../lib/products/goldapple-dedupe";
 import { typeFingerprint, decideType, parseTypeCache, type TypeCacheRow, type TypeDecision, type TypeProductInput } from "../lib/products/product-type";
@@ -175,6 +177,17 @@ async function main() {
 
   const filtered = rows.filter((r) => r.readyForImport === "yes" && r.isFamilyPrimary === "yes");
   console.log(`Строк в CSV: ${rows.length}, после фильтра (ready_for_import=yes, primary): ${filtered.length}`);
+
+  // Новые данные приходят нормализованными: бренд — каноническое имя по
+  // правилам brand-canonical и словарю текущей БД (VICHY → Vichy и т.п.).
+  const knownByKey = await knownBrandsByKey();
+  let normalizedBrands = 0;
+  for (const r of filtered) {
+    const canonical = canonicalBrand(r.brand, knownByKey);
+    if (canonical !== r.brand) normalizedBrands++;
+    r.brand = canonical;
+  }
+  if (normalizedBrands) console.log(`Бренд нормализован у ${normalizedBrands} строк (по knownByKey)`);
 
   const offset = Number(process.env.IMPORT_OFFSET ?? 0);
   const limit = Number(process.env.IMPORT_LIMIT ?? filtered.length);

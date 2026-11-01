@@ -1,7 +1,10 @@
 /**
- * Русские написания брендов — так их ищут в Яндексе («миксит состав», «виши состав»).
- * Ключ — название бренда в нижнем регистре, как в базе.
+ * «Бренды» — так их ищут в Яндексе («миксит состав», «виши состав»).
+ * Ключи словаря сравниваются через brandKey: «l'oreal paris» и «L'Oréal Paris» —
+ * один ключ. Кириллические бренды не переводим.
  */
+import { brandKey } from "@/lib/products/brand-canonical";
+
 const BRAND_RU: Record<string, string> = {
   "the ordinary": "Зе Ординари",
   cerave: "Цераве",
@@ -48,9 +51,21 @@ const BRAND_RU: Record<string, string> = {
   "levrana": "Леврана",
 };
 
+// brandKey(BRAND_RU key) → русское написание. Дубли ключей («avene»/«avène»)
+// схлопываются: побеждает первая запись.
+const BRAND_RU_BY_KEY = new Map<string, string>();
+for (const [brand, ru] of Object.entries(BRAND_RU)) {
+  const key = brandKey(brand);
+  if (!BRAND_RU_BY_KEY.has(key)) BRAND_RU_BY_KEY.set(key, ru);
+}
+
+const HAS_CYRILLIC = /[а-яё]/i;
+
 /** Русское написание бренда или null, если оно совпадает с оригиналом / неизвестно. */
 export function brandRu(brand: string): string | null {
-  const ru = BRAND_RU[brand.trim().toLowerCase()];
+  // Кириллические бренды не переводим.
+  if (HAS_CYRILLIC.test(brand)) return null;
+  const ru = BRAND_RU_BY_KEY.get(brandKey(brand));
   return ru && ru.toLowerCase() !== brand.toLowerCase() ? ru : null;
 }
 

@@ -4,6 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { isAdmin, slugify } from "@/lib/admin";
+import { canonicalBrandForDb } from "@/lib/products/brand-db";
 import { prisma } from "@/lib/prisma";
 
 /** Серверные экшены мини-админки: CRUD продуктов и ингредиентов. */
@@ -26,7 +27,7 @@ function strOrNull(formData: FormData, key: string): string | null {
 export async function createProduct(formData: FormData) {
   await requireAdmin();
   const name = str(formData, "name");
-  const brand = str(formData, "brand");
+  const brand = await canonicalBrandForDb(str(formData, "brand"));
   if (!name || !brand) throw new Error("Заполните бренд и название");
   const slug = str(formData, "slug") || slugify(`${brand}-${name}`);
   await prisma.product.create({
@@ -53,7 +54,7 @@ export async function updateProduct(formData: FormData) {
   const product = await prisma.product.update({
     where: { id },
     data: {
-      brand: str(formData, "brand"),
+      brand: await canonicalBrandForDb(str(formData, "brand")),
       name: str(formData, "name"),
       category: str(formData, "category"),
       sourceUrl: strOrNull(formData, "sourceUrl"),

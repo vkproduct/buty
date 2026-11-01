@@ -17,6 +17,8 @@ import { PrismaClient } from "@prisma/client";
 import { existsSync, readFileSync } from "node:fs";
 
 import { INCIDB_PRODUCTS } from "../prisma/incidb-products.data";
+import { canonicalBrand } from "../lib/products/brand-canonical";
+import { knownBrandsByKey } from "../lib/products/brand-db";
 import { decideType, parseTypeCache, typeFingerprint, type TypeCacheRow, type TypeProductInput } from "../lib/products/product-type";
 
 const prisma = new PrismaClient();
@@ -56,6 +58,9 @@ async function main() {
 
   let done = 0;
   let linked = 0;
+  // Новые данные приходят нормализованными: бренд из сгенерированного файла
+  // прогоняем через canonicalBrand со словарём текущей БД.
+  const knownByKey = await knownBrandsByKey();
   const offset = Number(process.env.IMPORT_OFFSET ?? 0);
   const limit = Number(process.env.IMPORT_LIMIT ?? INCIDB_PRODUCTS.length);
   const end = Math.min(INCIDB_PRODUCTS.length, offset + limit);
@@ -73,6 +78,7 @@ async function main() {
       const d = decideType(typeCache.get(p.slug), fp, p.category);
       const typed = {
         ...data,
+        brand: canonicalBrand(p.brand, knownByKey),
         source: "incidb" as const,
         category: d.category,
         categorySource: d.categorySource,

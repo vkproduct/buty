@@ -11,13 +11,18 @@
  * Проверка дублей против INCIDB остаётся по паре бренд+название (в скрипте).
  */
 
+import { brandKey } from "./brand-canonical";
+
 /** Порог сходства составов: >= — тот же продукт (переформулировка/опечатки). */
 export const DUP_SIMILARITY = 0.8;
 
-/** Нормализация для сравнения бренд+название при поиске дублей. */
+/**
+ * Нормализация для сравнения бренд+название при поиске дублей.
+ * Бренд считаем через brandKey: «VICHY|x» и «Vichy|x» — один ключ.
+ */
 export function dupKey(brand: string, name: string): string {
   const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
-  return `${norm(brand)}|${norm(name)}`;
+  return `${brandKey(brand)}|${norm(name)}`;
 }
 
 /** Коэффициент Жаккара по множествам токенов: |A∩B| / |A∪B|, пустые → 1. */

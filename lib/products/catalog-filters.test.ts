@@ -44,6 +44,22 @@ describe("parseProductFilters", () => {
   it("обрезает поиск и берёт первое значение", () => {
     expect(parseProductFilters({ q: ["  крем  ", "x"] }, known).q).toBe("крем");
   });
+
+  it("сверяет бренды по brandKey: регистр, дефисы, диакритика не важны", () => {
+    const f = parseProductFilters(
+      { brand: ["VICHY", "la roche posay", "L’Oréal paris"] },
+      { brands: ["Vichy", "La Roche-Posay", "L'Oréal Paris", "Avène"], categories: [] }
+    );
+    expect(f.brands).toEqual(["L'Oréal Paris", "La Roche-Posay", "Vichy"]);
+  });
+
+  it("варианты одного бренда схлопываются в одно значение", () => {
+    const f = parseProductFilters(
+      { brand: ["Vichy", "VICHY"] },
+      { brands: ["Vichy"], categories: [] }
+    );
+    expect(f.brands).toEqual(["Vichy"]);
+  });
 });
 
 describe("productFiltersHref", () => {

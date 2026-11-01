@@ -11,6 +11,8 @@
 
 export type RawParam = string | string[] | undefined;
 
+import { brandKey } from "./brand-canonical";
+
 export interface RawProductSearchParams {
   q?: RawParam;
   brand?: RawParam;
@@ -64,18 +66,19 @@ export function compareNames(a: string, b: string): number {
 /**
  * Нормализует параметры: убирает пустые и неизвестные значения, дубли,
  * сортирует — одинаковый набор фильтров всегда даёт одинаковый URL.
- * Бренды сверяются без учёта регистра и возвращаются в каноничном написании.
+ * Бренды сверяются по brandKey (регистр/дефисы/диакритика не важны) и
+ * возвращаются в каноничном написании из известных брендов.
  */
 export function parseProductFilters(
   raw: RawProductSearchParams,
   known: { brands: readonly string[]; categories: readonly string[] }
 ): ProductFilters {
-  const brandByLower = new Map(known.brands.map((b) => [b.toLowerCase(), b]));
+  const brandByKey = new Map(known.brands.map((b) => [brandKey(b), b]));
   const categorySet = new Set(known.categories);
 
   const brands = new Set<string>();
   for (const value of toArray(raw.brand)) {
-    const canonical = brandByLower.get(value.trim().toLowerCase());
+    const canonical = brandByKey.get(brandKey(value));
     if (canonical) brands.add(canonical);
   }
   const categories = new Set<string>();

@@ -1,0 +1,6 @@
+{
+  "name": "brand-site-scrape",
+  "private": true,
+  "type": "module",
+  "description": "Скрейпер составов с официальных сайтов брендов и маркетплейсов (образец: ../za-composition-scrape)"
+}

@@ -6,6 +6,11 @@ import type { FaqItem } from "@/lib/seo/site";
  * Текст — статичный и доказательный; ингредиенты и продукты подтягиваются из БД.
  */
 
+/** Дата последнего изменения контента посадочных и хаба /sostav.
+ *  Руками обновляется при правке текстов; из неё строится lastmod в sitemap
+ *  (Яндекс перестаёт доверять lastmod, если он всегда «сейчас»). */
+export const CONTENT_UPDATED_AT = new Date("2026-10-31T00:00:00.000Z");
+
 export interface LandingSection {
   h2: string;
   paras?: string[];

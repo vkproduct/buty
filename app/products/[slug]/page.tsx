@@ -33,23 +33,29 @@ import {
 } from "@/lib/seo/site";
 import { pluralRu } from "@/lib/utils";
 
-// ISR: страница кэшируется на 1 час и рендерится по запросу (без пререндера
+// ISR: страница кэшируется на сутки и рендерится по запросу (без пререндера
 // на сборке — иначе next build прогоняет сотни страниц через БД и упирается
-// в 45-минутный лимит Vercel)
+// в 45-минутный лимит Vercel). Данные карточки — отдельный кэш с тегом
+// product-<slug>: инвалидация при правке в админке, у импортов — естественный
+// срок жизни 24 ч (импорты идут своим процессом и не видят кэш next).
 export const dynamicParams = true;
-export const revalidate = 3600;
+export const revalidate = 86400;
 
-async function getProduct(slug: string) {
-  return prisma.product.findUnique({
-    where: { slug },
-    include: {
-      ingredients: {
-        include: { ingredient: true },
-        orderBy: { position: "asc" },
-      },
-    },
-  });
-}
+const getProduct = (slug: string) =>
+  unstable_cache(
+    () =>
+      prisma.product.findUnique({
+        where: { slug },
+        include: {
+          ingredients: {
+            include: { ingredient: true },
+            orderBy: { position: "asc" },
+          },
+        },
+      }),
+    ["product", slug],
+    { revalidate: 86_400, tags: [`product-${slug}`] }
+  )();
 
 /** Конфликты активов внутри состава продукта. */
 async function getInternalConflicts(ingredientIds: string[]) {
@@ -130,15 +136,9 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
-    include: {
-      ingredients: {
-        include: { ingredient: { select: { displayName: true, category: true } } },
-        orderBy: { position: "asc" },
-      },
-    },
-  });
+  // Тот же кэш с тегом product-<slug>, что и у страницы: робот не должен
+  // дожидаться двух запросов к БД (метаданные + тело) на холодный кэш.
+  const product = await getProduct(params.slug);
   if (!product) return { title: "Продукт не найден", robots: { index: false } };
   // покрытие распознавания (0 = карточка вне INCIDB, состав курируемый — считаем полным)
   const coverage = product.ingredientsTotal > 0 ? product.ingredientsRecognized / product.ingredientsTotal : 1;

@@ -15,7 +15,8 @@
     "db:import-goldapple": "tsx scripts/import-goldapple-products.ts",
     "db:classify-types": "tsx scripts/classify-product-types.ts",
     "db:apply-types": "tsx scripts/apply-product-types.ts",
-    "db:verify-incidb": "tsx scripts/verify-incidb-db.ts"
+    "db:verify-incidb": "tsx scripts/verify-incidb-db.ts",
+    "indexnow:submit": "tsx scripts/indexnow-submit.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

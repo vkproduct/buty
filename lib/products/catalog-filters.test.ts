@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   ALL_BRANDS,
+  brandCategoryKey,
   countMatching,
   facetCounts,
   isIndexableFilterPage,
@@ -147,11 +148,40 @@ describe("countMatching / facetCounts на сокращённом наборе (
 });
 
 describe("isIndexableFilterPage", () => {
-  it("индексируем бренд, категорию и их пару", () => {
-    expect(isIndexableFilterPage({ q: "", brands: ["CeraVe"], categories: ["serum"] })).toBe(true);
+  // Счётчики: CeraVe — 14 продуктов (cream 9, serum 5), The Ordinary — 4,
+  // пары: CeraVe+cream 9 (≥ 8), CeraVe+serum 5, The Ordinary+serum 4.
+  const counts = {
+    byBrand: new Map([
+      ["CeraVe", 14],
+      ["The Ordinary", 4],
+    ]),
+    byBrandCategory: new Map([
+      [brandCategoryKey("CeraVe", "cream"), 9],
+      [brandCategoryKey("CeraVe", "serum"), 5],
+      [brandCategoryKey("The Ordinary", "serum"), 4],
+    ]),
+  };
+  const f = (brands: string[], categories: string[]) => ({ q: "", brands, categories });
+
+  it("индексируем бренд ≥ 5, категорию без порога и их пару ≥ 8", () => {
+    expect(isIndexableFilterPage(f(["CeraVe"], []), counts)).toBe(true);
+    expect(isIndexableFilterPage(f([], ["cream"]), counts)).toBe(true);
+    expect(isIndexableFilterPage(f(["CeraVe"], ["cream"]), counts)).toBe(true); // 9 ≥ 8
   });
+
+  it("тонкий бренд (< 5) и тонкая пара (< 8) — noindex", () => {
+    expect(isIndexableFilterPage(f(["The Ordinary"], []), counts)).toBe(false); // 4 < 5
+    expect(isIndexableFilterPage(f(["The Ordinary"], ["serum"]), counts)).toBe(false); // 4 < 8
+    expect(isIndexableFilterPage(f(["CeraVe"], ["serum"]), counts)).toBe(false); // 5 < 8
+  });
+
   it("мультивыбор и поиск — noindex", () => {
-    expect(isIndexableFilterPage({ q: "", brands: ["a", "b"], categories: [] })).toBe(false);
-    expect(isIndexableFilterPage({ q: "крем", brands: [], categories: [] })).toBe(false);
+    expect(isIndexableFilterPage(f(["CeraVe", "The Ordinary"], []), counts)).toBe(false);
+    expect(isIndexableFilterPage({ q: "крем", brands: [], categories: [] }, counts)).toBe(false);
+  });
+
+  it("каталог без фильтров — индексируем", () => {
+    expect(isIndexableFilterPage(f([], []), counts)).toBe(true);
   });
 });
+

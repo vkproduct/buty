@@ -1,6 +1,7 @@
 # Продовый стек: app + postgres + caddy. Запуск: docker compose -f docker-compose.prod.yml up -d --build
 # Секреты — в .env рядом с этим файлом на сервере (не в репозитории): DOMAIN, POSTGRES_PASSWORD,
 # NEXT_PUBLIC_SITE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, CRON_SECRET, ADMIN_EMAILS, RESEND_API_KEY, EMAIL_FROM.
+# INDEXNOW_KEY — там же (не секрет: файл public/<ключ>.txt открыт; скрипт cron-indexnow.sh).
 services:
   db:
     image: postgres:16-alpine

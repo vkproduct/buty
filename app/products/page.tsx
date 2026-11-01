@@ -30,6 +30,7 @@ import {
 import { brandWithRu } from "@/lib/seo/brands";
 import { clampDescription, withFreeNote } from "@/lib/seo/site";
 import { displayBrand, NO_BRAND } from "@/lib/products/brand";
+import { indexableFacetRows, toIndexableCounts } from "@/lib/seo/sitemap-data";
 import { Container } from "@/components/ui/container";
 import { ChipRail } from "@/components/products/chip-rail";
 import { ProductFilterSheet } from "@/components/products/product-filters";
@@ -46,6 +47,10 @@ const loadCatalogMatrix = cache(async (): Promise<FacetRow[]> => {
   });
   return rows.map((r) => ({ brand: r.brand, category: r.category, count: r._count._all }));
 });
+
+/** Счётчики индексируемых продуктов (правило той же выборки, что и sitemap):
+ *  пороги «бренд ≥ 5, пара ≥ 8» для индексации фильтр-страниц. */
+const loadIndexableCounts = cache(async () => toIndexableCounts(await indexableFacetRows()));
 
 async function loadFilters(searchParams: SearchParams) {
   const matrix = await loadCatalogMatrix();
@@ -90,12 +95,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { filters } = await loadFilters(searchParams);
   const page = parsePage(searchParams.page);
-  const landing = isIndexableFilterPage(filters) ? landingTitle(filters) : null;
+  const counts = await loadIndexableCounts();
+  const indexable = isIndexableFilterPage(filters, counts);
+  const landing = indexable ? landingTitle(filters) : null;
   const pageSuffix = page > 1 ? ` — страница ${page}` : "";
   const canonical = productFiltersHref(filters, {}, { anchor: false, page });
 
-  if (!isIndexableFilterPage(filters)) {
-    // Мультивыбор и поиск — служебные состояния: не индексируем, но ходим по ссылкам.
+  if (!indexable) {
+    // Мультивыбор, поиск и тонкие фильтры (бренд < 5, пара < 8) — служебные
+    // состояния: не индексируем, но ходим по ссылкам.
     return {
       title: `Составы косметики: разбор средств по брендам${pageSuffix}`,
       alternates: { canonical },

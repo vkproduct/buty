@@ -194,12 +194,48 @@ export function facetCounts(
 }
 
 /**
- * Индексировать ли страницу с фильтрами. Индексируем посадочные «бренд»,
- * «категория» и «бренд + категория» — под них есть поисковый спрос.
- * Мультивыбор и поиск — noindex (дубли и бесконечные комбинации).
+ * Индексировать ли страницу с фильтрами. Индексируем посадочные «категория»,
+ * «бренд» и «бренд + категория» — под них есть поисковый спрос. Мультивыбор
+ * и поиск — noindex (дубли и бесконечные комбинации).
+ *
+ * Пороги против тонких страниц (аудит индексации Яндекса 31.10.2026): бренд —
+ * только если у него ≥ MIN_BRAND_PRODUCTS индексируемых видимых продуктов;
+ * пара бренд+категория — ≥ MIN_BRAND_CATEGORY_PRODUCTS. Страницы ниже порога
+ * — noindex, follow и без sitemap: иначе десятки тысяч дублей съедают
+ * краулинговый бюджет молодого сайта.
  */
-export function isIndexableFilterPage(filters: ProductFilters): boolean {
-  return !filters.q && filters.brands.length <= 1 && filters.categories.length <= 1;
+export const MIN_BRAND_PRODUCTS = 5;
+export const MIN_BRAND_CATEGORY_PRODUCTS = 8;
+
+/** Счётчики индексируемых продуктов (правило INDEXABLE_PRODUCT_WHERE) для
+ *  порогов: бренд → число продуктов; пара → число продуктов в паре. */
+export interface IndexableFilterCounts {
+  byBrand: ReadonlyMap<string, number>;
+  byBrandCategory: ReadonlyMap<string, number>;
+}
+
+/** Ключ пары бренд+категория в byBrandCategory. */
+export function brandCategoryKey(brand: string, category: string): string {
+  return `${brand}${category}`;
+}
+
+export function isIndexableFilterPage(
+  filters: ProductFilters,
+  counts: IndexableFilterCounts
+): boolean {
+  if (filters.q || filters.brands.length > 1 || filters.categories.length > 1) return false;
+  const brand = filters.brands[0];
+  const category = filters.categories[0];
+  if (brand && category) {
+    return (
+      (counts.byBrandCategory.get(brandCategoryKey(brand, category)) ?? 0) >=
+      MIN_BRAND_CATEGORY_PRODUCTS
+    );
+  }
+  if (brand) {
+    return (counts.byBrand.get(brand) ?? 0) >= MIN_BRAND_PRODUCTS;
+  }
+  return true; // каталог без фильтров и «только категория» — как раньше
 }
 
 /** Сколько фильтров активно — для бейджа на кнопке «Фильтры». */

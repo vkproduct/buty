@@ -41,6 +41,7 @@ model Ingredient {
   conflictsFrom IngredientConflict[] @relation("ConflictFrom")
   conflictsTo   IngredientConflict[] @relation("ConflictTo")
   products      ProductIngredient[]
+  updatedAt    DateTime @updatedAt @default(now()) // честный lastmod в sitemap
 
   @@index([category])
 }
@@ -91,6 +92,7 @@ model Product {
   links        ProductLink[]
   dailyStats   ProductDailyStat[]
   analyses     Analysis[]
+  updatedAt    DateTime @updatedAt @default(now()) // честный lastmod в sitemap
 
   @@index([brand])
   @@unique([source, externalId])

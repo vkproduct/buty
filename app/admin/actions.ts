@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { isAdmin, slugify } from "@/lib/admin";
@@ -39,6 +39,7 @@ export async function createProduct(formData: FormData) {
       partnerUrl: strOrNull(formData, "partnerUrl"),
     },
   });
+  revalidatePath(`/products/${slug}`);
   revalidatePath("/admin/products");
   revalidatePath("/products");
   redirect("/admin/products");
@@ -49,7 +50,7 @@ export async function updateProduct(formData: FormData) {
   await requireAdmin();
   const id = str(formData, "id");
   if (!id) throw new Error("Нет id продукта");
-  await prisma.product.update({
+  const product = await prisma.product.update({
     where: { id },
     data: {
       brand: str(formData, "brand"),
@@ -59,6 +60,9 @@ export async function updateProduct(formData: FormData) {
       partnerUrl: strOrNull(formData, "partnerUrl"),
     },
   });
+  // Карточка кэшируется на сутки (ISR + тег product-<slug>) — сбрасываем оба.
+  revalidateTag(`product-${product.slug}`);
+  revalidatePath(`/products/${product.slug}`);
   revalidatePath("/admin/products");
   revalidatePath("/products");
   redirect("/admin/products");

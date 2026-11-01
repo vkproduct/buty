@@ -35,7 +35,7 @@ export const SKIN_TYPE_QUIZ: { answer: string; type: SkinTypeValue }[] = [
 
 export const CONCERN_GROUPS: { title: string; note?: string; options: Option[] }[] = [
   {
-    title: "Что хочется улучшить",
+    title: "Частые проблемы",
     options: [
       { id: "acne", label: "Высыпания и акне" },
       { id: "post-acne", label: "Постакне: пятна и рубцы" },

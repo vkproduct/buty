@@ -66,3 +66,8 @@
 - `robots.txt` — route handler `app/robots.txt/route.ts` с блоком `User-agent: Yandex` и `Clean-param` (UTM/yclid/gclid/from); `app/robots.ts` удалён.
 - Карточки продуктов: ISR 24 ч + данные в `unstable_cache` с тегом `product-<slug>`; правка в админке сбрасывает тег и путь. Импорты (отдельный процесс) — естественное устаревание до 24 ч.
 - Не тронуто: `INDEXABLE_PRODUCT_WHERE`, slug-и, canonical карточек.
+
+## Google Search Console и GA4 (01.11.2026)
+- Аккаунт Google: kuznetsovecommerce@gmail.com. Search Console — ресурс «Домен» `sc-domain:buty.app`, подтверждён через DNS (Porkbun). Sitemap `https://buty.app/sitemap.xml` — Success. Метатег `GOOGLE_SITE_VERIFICATION` не нужен.
+- Индекс Google на 01.11: главная в индексе; `/sostav`, `/sostav/*`, `/ingredients` — «Crawled – currently not indexed»; `/analyze` неизвестна. Отправлены на индексацию: /analyze, /sostav, /sostav/na-komedogennost, /sostav/krem, /ingredients.
+- GA4 G-BDBSNMGYRS (property 558765023): связан с Search Console; хранение событий 14 мес.; выключены page_view по истории браузера (код шлёт page_view сам — без этого были дубли); маскировка URL-параметров token/email/code; нежелательные рефералы yookassa.ru, yoomoney.ru, mail.yandex.ru, e.mail.ru, mail.google.com; ключевые события + analyze_success, sign_up_completed.

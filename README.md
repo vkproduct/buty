@@ -86,13 +86,13 @@ pnpm dev                    # http://localhost:3000
 
 Доступ к `/admin` — по списку email в `ADMIN_EMAILS` (через запятую). Внутри: обзор базы, пользователи, заявки брендов, нераспознанные токены (словарь), CRUD продуктов и ингредиентов, бренды и ссылки, аналитика для брендов, карточка «Бюджет ИИ сегодня».
 
-## Деплой (прод: Beget VPS)
+## Деплой (прод: AdminVPS)
 
-Прод живёт на VPS Beget: **62.217.180.33**, Ubuntu 24.04, `/opt/buty`, пользователь `deploy`. Стек `docker-compose.prod.yml`: `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (HTTPS Let's Encrypt, редирект www → bare, gzip). Docker Hub в РФ недоступен — в `/etc/docker/daemon.json` на сервере прописаны зеркала `dockerhub1.beget.com` и `mirror.gcr.io`.
+Прод живёт на VPS AdminVPS: **157.22.173.84**, Ubuntu 24.04, 4 vCPU / 8 ГБ, swap 4 ГБ, `/opt/buty`, пользователь `deploy` (sudo без пароля). Стек `docker-compose.prod.yml`: `app` (сборка из репозитория), `db` (Postgres, volume, не торчит наружу), `caddy` (HTTPS Let's Encrypt, редирект www → bare, gzip). Docker Hub доступен напрямую — зеркала не нужны. SSH: только ключи, вход root и по паролю запрещены; fail2ban (свои IP добавляйте в `ignoreip` в `/etc/fail2ban/jail.d/99-buty.conf`).
 
-**Схема CI/CD (уже работает):** push в `main` → GitHub Action `.github/workflows/test.yml` (typecheck + lint + vitest) → только после зелёных тестов job `deploy` → SSH на сервер → `git pull --ff-only` → `docker compose -f docker-compose.prod.yml up -d --build` → перезагрузка конфига Caddy (`caddy reload`) → prune образов. Раньше деплей жил в отдельном `deploy.yml` и запускался параллельно с тестами — сломанная сборка могла уехать на прод; теперь деплой невозможен без зелёных тестов. При старте контейнера entrypoint идемпотентно накатывает `prisma migrate deploy` + `db:seed`; импорт каталога INCIDB (~17k продуктов) выполняется только если в БД меньше 17 000 продуктов (рестарты быстрые). В репозитории заданы: переменные `SERVER_HOST=62.217.180.33`, `SERVER_USER=deploy` и секрет `SERVER_SSH_KEY` (отдельный deploy-ключ `github-actions-deploy@buty`; отзыв — удалить строку из `~deploy/.ssh/authorized_keys` на сервере).
+**Схема CI/CD (уже работает):** push в `main` → GitHub Action `.github/workflows/test.yml` (typecheck + lint + vitest) → только после зелёных тестов job `deploy` → SSH на сервер → `git pull --ff-only` → `docker compose -f docker-compose.prod.yml up -d --build` → перезагрузка конфига Caddy (`caddy reload`) → prune образов. Раньше деплей жил в отдельном `deploy.yml` и запускался параллельно с тестами — сломанная сборка могла уехать на прод; теперь деплой невозможен без зелёных тестов. При старте контейнера entrypoint идемпотентно накатывает `prisma migrate deploy` + `db:seed`; импорт каталога INCIDB (~17k продуктов) выполняется только если в БД меньше 17 000 продуктов (рестарты быстрые). В репозитории заданы: переменные `SERVER_HOST=157.22.173.84`, `SERVER_USER=deploy` и секрет `SERVER_SSH_KEY` (отдельный deploy-ключ `github-actions-deploy@buty-adminvps`; отзыв — удалить строку из `~deploy/.ssh/authorized_keys` на сервере).
 
-**Ручной деплой:** `./scripts/deploy.sh` (или `ssh deploy@62.217.180.33` и команды из таблицы ниже).
+**Ручной деплой:** `./scripts/deploy.sh` (или `ssh deploy@157.22.173.84` и команды из таблицы ниже).
 
 **Проверки после деплоя:** `curl https://buty.app/api/health` → `{"ok":true,"db":"up"}`; `curl -I https://buty.app`; `docker compose -f docker-compose.prod.yml ps` — все контейнеры healthy.
 
@@ -149,9 +149,9 @@ docker compose -f docker-compose.prod.yml exec -d app sh -c "nice -n 19 pnpm db:
 docker compose -f docker-compose.prod.yml exec app tail -f /tmp/import-goldapple.log  # прогресс
 ```
 
-**Бэкапы.** Ежедневно в `/opt/buty-backups` (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`): дамп Postgres `buty-<дата>.sql.gz` + архив данных `data-<дата>.tar.gz` (CSV каталога ЗЯ, кэш ИИ-типов; `.env` не бэкапится). Локальная ротация 14 дней. Если в `/opt/buty/.env` заданы `BACKUP_S3_ENDPOINT`/`BACKUP_S3_BUCKET`/`BACKUP_S3_KEY`/`BACKUP_S3_SECRET`, свежие файлы дополнительно уходят в объектное хранилище через образ `rclone/rclone` (хранение 30 дней); без ключей — только локальный бэкап, скрипт не падает.
+**Бэкапы.** Ежедневно в `/opt/buty-backups` (cron `deploy`: `17 3 * * * /opt/buty/scripts/backup.sh >> /opt/buty-backups/backup.log 2>&1`): дамп Postgres `buty-<дата>.sql.gz` + архив данных `data-<дата>.tar.gz` (CSV каталога ЗЯ, кэш ИИ-типов; `.env` не бэкапится). Локальная ротация 14 дней. Если в `/opt/buty/.env` заданы `BACKUP_S3_ENDPOINT`/`BACKUP_S3_BUCKET`/`BACKUP_S3_KEY`/`BACKUP_S3_SECRET`, свежие файлы дополнительно уходят в Yandex Object Storage (обязательно у другого провайдера, чем сервер) через образ `rclone/rclone` (хранение 30 дней); без ключей — только локальный бэкап, скрипт не падает. `BACKUP_S3_REGION` — регион бакета (по умолчанию `ru-central1`; у Yandex подпись считается с регионом, без неё rclone получает 403 SignatureDoesNotMatch).
 
-**Cron на хосте.** Напоминания полки: `*/15 * * * * /opt/buty/scripts/cron-reminders.sh`. Проверка ссылок брендов (2 раза подряд 404/410/5xx → ссылка скрывается с карточки): `40 4 * * * /opt/buty/scripts/cron-brand-links.sh` — после бэкапа в 03:17. Оба скрипта берут `DOMAIN` и `CRON_SECRET` из окружения.
+**Cron на хосте.** Напоминания полки: `*/15 * * * * set -a; . /opt/buty/.env; set +a; /opt/buty/scripts/cron-reminders.sh`. Проверка ссылок брендов (2 раза подряд 404/410/5xx → ссылка скрывается с карточки): `40 4 * * * set -a; . /opt/buty/.env; set +a; /opt/buty/scripts/cron-brand-links.sh` — после бэкапа в 03:17. Оба скрипта берут `DOMAIN` и `CRON_SECRET` из окружения, а у cron его нет — поэтому запуск через `set -a; . /opt/buty/.env; set +a;`.
 
 Восстановление из бэкапа:
 

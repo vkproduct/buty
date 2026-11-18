@@ -4,7 +4,10 @@
 # Локальная ротация — 14 дней.
 #
 # Если в /opt/buty/.env заданы BACKUP_S3_ENDPOINT/BACKUP_S3_BUCKET/BACKUP_S3_KEY/
-# BACKUP_S3_SECRET — свежие файлы дополнительно копируются в бакет через образ
+# BACKUP_S3_SECRET — свежие файлы дополнительно копируются в бакет через образ.
+# BACKUP_S3_REGION: у Yandex Object Storage подпись считается с регионом бакета
+# (по умолчанию ru-central1) — без этого rclone подписывает запросы как us-east-1
+# и бакет отвечает 403 SignatureDoesNotMatch.
 # rclone/rclone (без установки пакетов на хост), хранение в бакете — 30 дней
 # (rclone delete --min-age 30d). Без ключей — только локальный бэкап, не падаем.
 #
@@ -47,6 +50,7 @@ if [ "${BACKUP_S3_ENDPOINT:-}" ] && [ "${BACKUP_S3_BUCKET:-}" ] && [ "${BACKUP_S
     -e "RCLONE_CONFIG_B_ACCESS_KEY_ID=$BACKUP_S3_KEY"
     -e "RCLONE_CONFIG_B_SECRET_ACCESS_KEY=$BACKUP_S3_SECRET"
     -e "RCLONE_CONFIG_B_ENDPOINT=$BACKUP_S3_ENDPOINT"
+    -e "RCLONE_CONFIG_B_REGION=${BACKUP_S3_REGION:-ru-central1}"
     -e "RCLONE_CONFIG_B_ACL=private"
   )
   for f in "$BACKUP_DIR/buty-$STAMP.sql.gz" "$BACKUP_DIR/data-$STAMP.tar.gz"; do

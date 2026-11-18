@@ -1,0 +1,50 @@
+# Buty — передача дел: прод на собственном сервере (AdminVPS)
+
+## Что изменилось
+02.11.2026 облако Beget взломали: VPS и S3 уничтожены, старый сервер (62.217.180.33) не вернётся.
+Все секреты старого прода считаются украденными — при переезде на AdminVPS всё сгенерировано заново.
+Прод переехал на VPS AdminVPS (не в РФ — Docker Hub и внешние API доступны напрямую).
+
+- Сервер: AdminVPS, Ubuntu 24.04, 4 vCPU / 8 ГБ, swap 4 ГБ, IP 157.22.173.84
+- Домен: buty.app (регистратор Porkbun). A-записи @ и www → 157.22.173.84. TXT/MX-записи не трогать.
+- Стек на сервере: docker-compose.prod.yml = app (Next.js) + db (Postgres 16, volume db-data, наружу не открыт) + caddy (автоматический HTTPS Let's Encrypt, редирект www → bare).
+- Код: /opt/buty (git clone репозитория github.com/vkproduct/buty, ветка main). Для git pull на сервере свой deploy-ключ (read-only, «buty-adminvps»).
+- Секреты: /opt/buty/.env ТОЛЬКО на сервере, в git его нет и не будет. Пароли (POSTGRES_PASSWORD, NEXTAUTH_SECRET, CRON_SECRET, PROXY_SECRET) сгенерированы при переезде; RESEND_API_KEY, ADMIN_EMAILS, BACKUP_S3_* — от владельца.
+- Доступ: ssh deploy@157.22.173.84 только по ключу ~/.ssh/id_ed25519 с Mac владельца (deploy есть sudo без пароля). Вход под root и по паролю отключён (scripts/server-setup.sh). fail2ban: свои IP добавляйте в ignoreip (/etc/fail2ban/jail.d/99-buty.conf) — иначе бан за неудачные попытки входа.
+- Docker Hub доступен напрямую, зеркала не нужны.
+- При каждом старте контейнера app entrypoint сам выполняет prisma migrate deploy и db seed (идемпотентно). Отдельно запускать миграции на сервере не нужно.
+
+## Как выкатывать изменения
+1. Работаешь как обычно, проверяешь: pnpm typecheck && pnpm lint && pnpm test.
+2. Коммитишь только нужные файлы (git add по именам) и пушишь в main: git push.
+3. GitHub Action сам прогоняет тесты и, только если они зелёные, деплоит:
+   git pull --ff-only → docker compose up -d --build → caddy reload → prune.
+   Сборка идёт 5–15 минут, простой сайта — около минуты при перезапуске контейнера.
+   Ручной деплой (если CI недоступен):
+   ssh deploy@157.22.173.84 'cd /opt/buty && git pull --ff-only && docker compose -f docker-compose.prod.yml up -d --build && docker compose -f docker-compose.prod.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile && docker image prune -f && docker compose -f docker-compose.prod.yml ps'
+   Запасной вариант: ./scripts/deploy.sh deploy@157.22.173.84 (он не чистит старые образы, раз в пару недель выполняй docker image prune -f).
+4. Проверка после деплоя:
+   curl -fsS https://buty.app/api/health   → {"ok":true,"db":"up"}
+   Плюс открыть buty.app в браузере.
+
+## Правила
+- Никогда не делать git push --force в main: сервер делает git pull --ff-only, переписанная история сломает деплой.
+- Никогда не коммитить .env и не перезаписывать /opt/buty/.env на сервере. Новую переменную добавлять так:
+  ssh deploy@157.22.173.84 'cd /opt/buty && echo "ИМЯ=значение" >> .env && docker compose -f docker-compose.prod.yml up -d --force-recreate app'
+- Новая переменная NEXT_PUBLIC_* вшивается при сборке: её нужно добавить и в .env, и в build.args в docker-compose.prod.yml, и деплоить с --build.
+- Без необходимости не трогать Caddyfile, docker-compose.prod.yml, Dockerfile, docker-entrypoint.sh, scripts/server-setup.sh.
+- Сервер и бэкапы — у РАЗНЫХ провайдеров: бэкапы в Yandex Object Storage (BACKUP_S3_*), урок взлома Beget. Раз в месяц — тестовое восстановление из бэкапа.
+- Правила проекта из «ПРОЕКТ Buty.ru.txt» в силе: стек фиксирован, адаптеры с mock по умолчанию, решения записывать в docs/decisions.md.
+
+## Полезные команды на сервере (ssh deploy@157.22.173.84, затем cd /opt/buty)
+- Статус: docker compose -f docker-compose.prod.yml ps
+- Логи приложения: docker compose -f docker-compose.prod.yml logs -f --tail=100 app
+- Перезапуск: docker compose -f docker-compose.prod.yml restart app
+- Откат на прошлый коммит: git checkout <sha> && docker compose -f docker-compose.prod.yml up -d --build   (после исправления вернуться: git checkout main && git pull)
+- Бэкап базы вручную: bash scripts/backup.sh   (файлы в /opt/buty-backups + копия в Yandex)
+- Проверка бэкапа: скачать свежий buty-*.sql.gz из бакета, развернуть во временную БД buty_restore_test, сверить число продуктов, удалить тестовую БД.
+
+## Что ещё не сделано
+1. Если Beget отдаст файловый бэкап старого VPS (/opt/buty-backups от ~01.11) — восстановить пользователей, полки и разборы по README «Восстановление из бэкапа» (сначала показать сводку, потом применять только с согласия владельца; регистрации на новом сервере до восстановления пропадут). После этого повторить нормализацию брендов и импорт с сайтов брендов.
+2. Отключить автодеплой в Vercel: Settings → Git → Disconnect (Vercel пересобирает старый сайт на каждый push, на прод не влияет).
+3. Ротация PROXY_SECRET переходника (раз в 6–12 месяцев): придумать новый секрет, обновить переменную функции ocr-proxy (Cloud Run → Edit & deploy new revision) и GOOGLE_VISION_API_KEY + GEMINI_API_KEY в /opt/buty/.env на сервере, затем перезапустить стек (docker compose up -d). Проверка: распознавание фото на сайте.

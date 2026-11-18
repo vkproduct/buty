@@ -43,8 +43,10 @@ export function cleanBrand(raw: string): string {
 /**
  * Ручные правила: каноническое имя → варианты написания (сравнение вариантов
  * по brandKey). Сюда попадают склейки, которые ключ не ловит, и принудительные
- * написания. Намеренно НЕ склеиваем: L'Oréal Professionnel с L'Oréal Paris,
- * Johnson & Johnson с Johnson's, Dove men care с Dove, BIO с Bio+,
+ * написания. Намеренно НЕ склеиваем с L'Oréal Paris суббренды и линейки —
+ * L'Oréal Professionnel, Men Expert, Elseve, Studio Line (правило ниже,
+ * LOREAL_SEPARATE) и эти же алиасы не дублируем здесь; Johnson & Johnson
+ * с Johnson's, Dove men care с Dove, BIO с Bio+,
  * Les Cosmétiques с Les Cosmétiques Design Paris.
  */
 export const BRAND_ALIASES: Record<string, readonly string[]> = {
@@ -54,10 +56,14 @@ export const BRAND_ALIASES: Record<string, readonly string[]> = {
     "l-oreal",
     "L'Oreal Paris",
     "Loreal Paris",
-    "L'Oréal Men Expert",
-    "L'Oreal Men Expert",
   ],
-  "L'Oréal Professionnel": ["LOreal professionnel", "L'Oréal Professionnel"],
+  "L'Oréal Professionnel": [
+    "LOreal professionnel",
+    "L'Oréal Professionnel",
+    "L'Oréal Professionel",
+    "LOreal Professionel",
+    "Loreal Professionel",
+  ],
   Avène: ["Avene", "Avéne", "Eau Thermale Avène", "EAU THERMALE AVENE", "Eau Thermale Avene"],
   "La Roche-Posay": [],
   Vichy: ["VICHY"],
@@ -93,20 +99,26 @@ for (const [canonical, variants] of Object.entries(BRAND_ALIASES)) {
 }
 
 const LOREAL_KEY = "loreal";
-const LOREAL_PROFESSIONNEL_KEY = "lorealprofessionnel";
+/** Суббренды и линейки L'Oréal — отдельные бренды, в L'Oréal Paris не склеиваем. */
+const LOREAL_SEPARATE = ["lorealprofessionnel", "lorealmenexpert", "lorealelseve", "lorealstudioline"];
 
 /**
  * Каноническое имя по алиасам или null. Особое правило: любое значение,
- * чей ключ начинается с «loreal», — L'Oréal Paris, кроме «lorealprofessionnel…»
- * (L'Oréal Professionnel).
+ * чей ключ начинается с «loreal», — L'Oréal Paris, кроме суббрендов и линеек
+ * (L'Oréal Professionnel, Men Expert, Elseve, Studio Line) — они живут
+ * отдельными брендами. Юрлица (L'OREAL NORGE AS, L OREAL SA) склеиваются.
  */
 export function aliasCanonical(raw: string): string | null {
   const key = brandKey(cleanBrand(raw));
   if (!key) return null;
-  if (key.startsWith(LOREAL_KEY) && !key.startsWith(LOREAL_PROFESSIONNEL_KEY)) {
+  // Точные алиасы важнее blanket-правила: «L'Oréal Professionel» (опечатка,
+  // одна n) должно попасть в Professionnel, а не в L'Oréal Paris.
+  const alias = aliasByKey.get(key);
+  if (alias) return alias;
+  if (key.startsWith(LOREAL_KEY) && !LOREAL_SEPARATE.some((p) => key.startsWith(p))) {
     return "L'Oréal Paris";
   }
-  return aliasByKey.get(key) ?? null;
+  return null;
 }
 
 /** Вариант написания бренда с числом средств (для выбора имени группы). */

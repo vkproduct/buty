@@ -54,5 +54,9 @@ COPY --from=build /app/lib ./lib
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml next.config.mjs tsconfig.json ./
 COPY docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
+# Приложение работает не от root: uid node (1000) совпадает с uid deploy на хосте,
+# поэтому volume ./data:/app/data доступен и контейнеру, и скриптам от deploy.
+RUN chown -R node:node /app
+USER node
 EXPOSE 3000
 ENTRYPOINT ["./docker-entrypoint.sh"]

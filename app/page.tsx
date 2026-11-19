@@ -220,8 +220,8 @@ export default async function HomePage() {
       <JsonLd data={faqJsonLd(FAQ)} />
 
       {/* ═══ 1. HERO: градиентная карточка с бесплатным разбором ═══ */}
-      <section id="hero" className="bg-portal pb-12 pt-8 sm:pt-12 lg:pb-16 lg:pt-[clamp(24px,3vh,48px)]">
-        <Container>
+      <section id="hero" className="overflow-x-clip bg-portal pb-12 pt-4 sm:pt-12 lg:pb-16 lg:pt-[clamp(24px,3vh,48px)]">
+        <Container className="px-4 sm:px-10">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-spotlight shadow-sm">
             {/* Декоративные кольца — «молекулы» на фоне, без смысловой нагрузки */}
             <div
@@ -237,8 +237,8 @@ export default async function HomePage() {
               className="pointer-events-none absolute -bottom-32 left-1/3 h-[360px] w-[360px] rounded-full bg-white/5"
             />
 
-            <div className="relative grid items-center gap-10 p-5 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:px-16 lg:py-[clamp(32px,5vh,64px)]">
-              <div className="text-white lg:col-span-7">
+            <div className="relative grid grid-cols-1 items-center gap-8 p-5 sm:gap-10 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:px-16 lg:py-[clamp(32px,5vh,64px)]">
+              <div className="min-w-0 text-white lg:col-span-7">
                 <Badge variant="glass" className="mb-6 px-3.5 lg:mb-4 py-1.5 text-[13px]">
                   Доказательный уход, а не маркетинг
                 </Badge>
@@ -255,24 +255,24 @@ export default async function HomePage() {
                   <li>Готовый порядок нанесения для вашей полки</li>
                 </ul>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-6">
-                  <Button asChild variant="white" size="lg" className="px-8">
+                  <Button asChild variant="white" size="lg" className="h-auto min-h-12 w-full whitespace-normal px-6 py-3 text-center sm:w-auto sm:px-8">
                     <Link href="#razbor">Разобрать состав бесплатно</Link>
                   </Button>
-                  <Button asChild variant="glass" size="lg" className="px-8">
+                  <Button asChild variant="glass" size="lg" className="h-auto min-h-12 w-full whitespace-normal px-6 py-3 text-center sm:w-auto sm:px-8">
                     <Link href="#polka">Что такое «Моя полка»</Link>
                   </Button>
                 </div>
-                <p className="mt-4 text-sm text-white/75 lg:mt-3">
+                <p className="mt-4 text-center text-sm leading-relaxed text-white/80 sm:text-left lg:mt-3">
                   Всё бесплатно. Разбор и полка — вход по email, без пароля.
                 </p>
               </div>
 
               <div
                 id="razbor"
-                className="scroll-mt-28 rounded-2xl bg-white p-6 text-foreground shadow-pop sm:p-8 lg:col-span-5"
+                className="min-w-0 scroll-mt-24 rounded-2xl bg-white p-5 text-foreground shadow-pop sm:p-8 lg:col-span-5"
               >
-                <h2 className="text-[22px] font-bold">Разбор состава</h2>
-                <p className="mb-5 mt-1.5 text-[15px] leading-relaxed text-ink-muted">
+                <h2 className="text-xl font-bold sm:text-[22px]">Разбор состава</h2>
+                <p className="mb-5 mt-1.5 text-[15px] leading-relaxed text-ink-muted [text-wrap:pretty]">
                   Вставьте INCI-список с карточки товара или загрузите фото состава
                   с упаковки — разберём каждый ингредиент за несколько секунд.
                 </p>

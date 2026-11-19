@@ -191,3 +191,38 @@ npx eas-cli@latest build --platform android --profile rustore
   Были у старой TWA-версии, в новом приложении их пока нет. `assetlinks.json` для App Links уже настроен на наш ключ;
   для Google Play нужно будет добавить в него второй отпечаток (Play Console → Целостность приложения → App signing → SHA-256).
 - **Ярлыки на иконке** («Разобрать состав», «Моя полка»).
+
+## Изменения сразу на сайте и в приложении (с 19.11.2026)
+
+Правки попадают к пользователям тремя путями, и для них не нужно выпускать версию в магазинах:
+
+| Что меняем | Где | Как доходит |
+| --- | --- | --- |
+| Логика разбора, данные, API, тексты справочников | сервер (`app/`, `lib/`) | деплой сайта. Мобильная версия buty.app и приложение берут данные из одного API (`/api/mobile/*`), поэтому изменения видны сразу везде |
+| Экраны, тексты и логика самого приложения | `mobile/src/` | **EAS Update**: пуш в `main` → GitHub Action `mobile-update` → обновление на всех телефонах |
+| Нативная часть: новый пакет с нативным кодом, права, иконка, сплэш, версия Expo SDK | `mobile/app.json`, `package.json` | только новая сборка `eas build` и публикация в магазинах |
+
+Как обновление попадает на телефон: при запуске приложение до 3 секунд ждёт новую версию, а при возвращении
+в приложение проверяет её (не чаще раза в минуту), скачивает и сразу перезагружается (`mobile/src/lib/ota.ts`).
+Сборка и обновление должны совпадать по `runtimeVersion` (политика `fingerprint`): если поменялась нативная часть,
+старые сборки такое обновление не получат. Правила Google Play и App Store разрешают такие обновления,
+пока они не меняют назначение приложения.
+
+### Один раз включить
+
+1. **Новая сборка с поддержкой обновлений.** Сборки, сделанные до 19.11 (в т.ч. `builds/buty-rustore-101.apk`), обновления по воздуху не получают:
+   ```bash
+   cd ~/Documents/kimi/Workspaces/Buty/mobile
+   npm install
+   npx eas-cli@latest build --platform android --profile rustore      # RuStore
+   npx eas-cli@latest build --platform android --profile production   # Google Play
+   npx eas-cli@latest build --platform ios --profile production       # App Store
+   ```
+   Все три профиля слушают канал `production`.
+2. **Токен для GitHub.** https://expo.dev → аватар → **Account settings → Access tokens → Create token** → скопировать.
+   GitHub → репозиторий → **Settings → Secrets and variables → Actions → New repository secret** → имя `EXPO_TOKEN`, вставить токен.
+3. Проверка: поменять любой текст в `mobile/src/`, запушить в `main`. В GitHub → **Actions → mobile-update** задача станет зелёной,
+   на expo.dev → проект → **Updates** появится обновление. Закройте и откройте приложение на телефоне: текст поменялся.
+
+Обновить вручную, без GitHub: `cd mobile && npx eas-cli@latest update --channel production --environment production --message "что поменяли"`.
+Откатить неудачное обновление: `npx eas-cli@latest update:republish --channel production` (выбрать прошлую версию) или expo.dev → Updates → Rollback.

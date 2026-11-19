@@ -1,0 +1,49 @@
+name: mobile-update
+
+# Обновление приложения по воздуху (EAS Update) для Android и iOS.
+# Любой пуш в main с изменениями в mobile/ сразу доставляет новый JS-код
+# на установленные приложения (канал production: Google Play, RuStore, App Store).
+# Если изменилась нативная часть (новый пакет с нативным кодом, права, иконка),
+# у обновления будет новый fingerprint: старые сборки его не получат, нужна новая сборка в EAS.
+# Секрет: EXPO_TOKEN (expo.dev → Account settings → Access tokens), добавить в GitHub → Settings → Secrets → Actions.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: mobile-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: npm ci
+      - run: npm run check
+
+      - name: Publish update
+        env:
+          MSG: ${{ github.event.head_commit.message || 'manual' }}
+        run: eas update --channel production --environment production --message "${MSG%%$'\n'*}" --non-interactive

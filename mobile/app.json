@@ -72,6 +72,14 @@
         "projectId": "9e6450a7-5698-485f-bc8a-566337a82fe6"
       }
     },
-    "owner": "mrkuznetsov"
+    "owner": "mrkuznetsov",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9e6450a7-5698-485f-bc8a-566337a82fe6",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 3000
+    }
   }
 }

@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppText } from '@/components/ui/text';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { useOtaUpdates } from '@/lib/ota';
 import { registerPush, useNotificationRouting } from '@/lib/push';
 import { useDictionaries } from '@/lib/queries';
 import { useColors } from '@/theme';
@@ -33,6 +34,7 @@ function RootNavigator() {
   const { status } = useAuth();
   const c = useColors();
   useDictionaries(); // прогреваем справочники подписей
+  useOtaUpdates(); // новые версии экранов приходят по воздуху
 
   useEffect(() => {
     if (status !== 'loading') SplashScreen.hideAsync().catch(() => undefined);
